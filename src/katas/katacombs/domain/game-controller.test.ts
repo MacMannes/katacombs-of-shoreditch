@@ -110,35 +110,35 @@ describe('GameController', () => {
         it('should say "Ok." when the item exists in the room', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
+
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
         it('should say something like Can\'t find ..." when the item can not e found', () => {
             controller.take('keys');
+
             expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
         });
 
-        it('should remove the item from the room when it exists', () => {
+        it('should move the item from the room to the inventory when it exists', () => {
             controller.moveToDirection('NORTH');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             controller.take('keys');
-            expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
-        });
 
-        it('should put the item in the inventory when it exists', () => {
-            controller.moveToDirection('NORTH');
-            controller.take('keys');
+            expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
             expect(controller.findItem('keys')).toBeDefined();
         });
     });
 
     describe('Dropping items', () => {
-        it('should put the item in the room when it is in the inventory', () => {
+        it('should move the item from inventory to the room when it is in the inventory', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
             controller.moveToDirection('SOUTH');
             controller.drop('keys');
+
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
+            expect(controller.findItem('keys')).toBeUndefined();
         });
     });
 });

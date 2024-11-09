@@ -35,6 +35,7 @@ export class Game {
         const item = this.itemRepository.findItem(itemName);
         if (!item) return false;
 
+        this.itemRepository.removeItem(item);
         this.currentRoom.addItem(item);
         return true;
     }

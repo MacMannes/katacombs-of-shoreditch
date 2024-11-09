@@ -16,6 +16,6 @@ export class ItemRepository {
     }
 
     public removeItem(item: Item) {
-        this.items = this.items.filter((it) => it.name === item.name);
+        this.items = this.items.filter((it) => it.name !== item.name);
     }
 }
