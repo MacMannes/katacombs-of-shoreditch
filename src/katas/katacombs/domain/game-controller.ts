@@ -18,7 +18,7 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public go(to: Direction) {
+    public go(to: string) {
         const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');

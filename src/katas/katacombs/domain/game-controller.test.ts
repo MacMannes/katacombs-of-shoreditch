@@ -41,12 +41,17 @@ describe('GameController', () => {
     });
 
     describe('Traveling', () => {
-        it('should print the new room when the move was successful', () => {
+        it('should print the new room when traveling in a direction was successful', () => {
             controller.go('NORTH');
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
         });
 
-        it('should print a message the move could not be made', () => {
+        it('should print the new room when traveling to a synonym of the connection was successful', () => {
+            controller.go('building');
+            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+        });
+
+        it('should print a message when the move could not be made', () => {
             controller.go('WEST');
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
         });

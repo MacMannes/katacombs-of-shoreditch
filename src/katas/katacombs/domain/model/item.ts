@@ -1,5 +1,5 @@
 export class Item {
-    private words: string[] = [];
+    private readonly words: string[] = [];
 
     constructor(
         readonly name: string,

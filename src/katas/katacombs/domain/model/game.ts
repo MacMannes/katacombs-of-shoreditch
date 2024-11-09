@@ -14,8 +14,8 @@ export class Game {
         return this.currentRoom;
     }
 
-    public go(direction: Direction): Room | undefined {
-        const newRoom = this.findRoomInDirection(direction);
+    public go(to: string): Room | undefined {
+        const newRoom = this.findRoom(to);
         if (newRoom) {
             this.currentRoom = newRoom;
         }
@@ -71,7 +71,7 @@ export class Game {
     /**
      * Find a room in a given direction from the current room
      */
-    private findRoomInDirection(direction: Direction): Room | undefined {
+    private findRoom(direction: string): Room | undefined {
         const roomName = this.currentRoom.findConnection(direction)?.roomName;
         return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
     }

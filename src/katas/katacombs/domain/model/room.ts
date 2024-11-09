@@ -18,8 +18,8 @@ export class Room {
         this.connections.push(new Connection(direction, to.name, options));
     }
 
-    public findConnection(direction: Direction, roomName?: string): Connection | undefined {
-        return this.connections.find((it) => it.matches(direction, roomName));
+    public findConnection(direction: string, fromRoomName?: string): Connection | undefined {
+        return this.connections.find((it) => it.matches(direction, fromRoomName));
     }
 
     public addItem(item: Item) {

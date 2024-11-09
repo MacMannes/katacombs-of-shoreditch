@@ -15,6 +15,7 @@ export function createTestRooms(): Room[] {
     );
     start.addConnection('NORTH', building, {
         description: 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+        words: ['building', 'inside'],
     });
     building.addConnection('SOUTH', start);
     building.addItem(

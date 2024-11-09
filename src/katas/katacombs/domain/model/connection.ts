@@ -1,7 +1,8 @@
-import { Direction } from '@katas/katacombs/domain';
+import { Direction, isDirection } from '@katas/katacombs/domain';
 
 export class Connection {
     public readonly description?: string;
+    private readonly words: string[] = [];
 
     constructor(
         readonly direction: Direction,
@@ -9,14 +10,15 @@ export class Connection {
         options?: ConnectionOptions,
     ) {
         this.description = options?.description;
+        if (options?.words) this.words.push(...options.words);
     }
 
-    public matches(direction: Direction, roomName?: string): boolean {
+    public matches(direction: string, roomName?: string): boolean {
         return this.matchesDirection(direction) && this.matchesRoom(roomName);
     }
 
-    public matchesDirection(direction: Direction): boolean {
-        return this.direction === direction;
+    public matchesDirection(direction: string): boolean {
+        return isDirection(direction) ? this.direction === direction : this.words.includes(direction);
     }
 
     public matchesRoom(roomName?: string): boolean {
@@ -28,4 +30,5 @@ export class Connection {
 
 export type ConnectionOptions = {
     description?: string;
+    words?: string[];
 };
