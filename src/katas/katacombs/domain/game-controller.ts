@@ -39,7 +39,9 @@ export class GameController {
     }
 
     public drop(itemName: string) {
-        this.game.drop(itemName);
+        const dropped = this.game.drop(itemName);
+        const message = dropped ? 'OK.' : "You aren't carrying it!";
+        this.ui.displayMessage(message);
     }
 
     public findItem(itemName: string): Item | undefined {

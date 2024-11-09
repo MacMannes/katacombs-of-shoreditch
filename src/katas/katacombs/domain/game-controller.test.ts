@@ -107,20 +107,20 @@ describe('GameController', () => {
             vi.resetAllMocks();
         });
 
-        it('should say "Ok." when the item exists in the room', () => {
+        it('should say "OK." when the item exists in the room', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
-        it('should say something like Can\'t find ..." when the item can not e found', () => {
+        it('should say something like Can\'t find ..." when the item can not be found in the room', () => {
             controller.take('keys');
 
             expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
         });
 
-        it('should move the item from the room to the inventory when it exists', () => {
+        it('should move the item from the room to the inventory when it exists in the room', () => {
             controller.moveToDirection('NORTH');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             controller.take('keys');
@@ -131,7 +131,7 @@ describe('GameController', () => {
     });
 
     describe('Dropping items', () => {
-        it('should move the item from inventory to the room when it is in the inventory', () => {
+        it('should move the item from inventory to the room when the user has the item', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
             controller.moveToDirection('SOUTH');
@@ -139,6 +139,22 @@ describe('GameController', () => {
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             expect(controller.findItem('keys')).toBeUndefined();
+        });
+
+        it('should say "OK" when the item is dropped', () => {
+            controller.moveToDirection('NORTH');
+            controller.take('keys');
+            controller.moveToDirection('SOUTH');
+
+            vi.resetAllMocks();
+            controller.drop('keys');
+            expect(ui.displayMessage).toBeCalledWith('OK.');
+        });
+
+        it('should say "You aren\'t carrying it!" when the user does not have the item', () => {
+            controller.drop('keys');
+
+            expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
         });
     });
 });
