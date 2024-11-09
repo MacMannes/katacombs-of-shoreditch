@@ -10,6 +10,10 @@ export class Room {
         public readonly description: string,
     ) {}
 
+    public getConnections(): Connection[] {
+        return [...this.connections];
+    }
+
     public addConnection(direction: Direction, to: Room, options?: ConnectionOptions) {
         this.connections.push(new Connection(direction, to.name, options));
     }

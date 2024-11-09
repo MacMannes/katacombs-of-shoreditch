@@ -56,7 +56,7 @@ export class RoomRepository {
     private validateConnectionsOfRoom(room: Room) {
         const roomName = room.name;
 
-        room.connections.forEach((connection) => {
+        room.getConnections().forEach((connection) => {
             this.validateConnection(connection, roomName);
         });
     }

@@ -1,4 +1,4 @@
-import { Direction, Item, Room, RoomRepository } from '@katas/katacombs/domain';
+import { Direction, Room, RoomRepository } from '@katas/katacombs/domain';
 
 export class Game {
     private currentRoom: Room;
