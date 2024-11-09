@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestRooms, Game, GameController, NoOpUserInterface, UserInterface } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
-import { RoomRepository } from '@katas/katacombs/domain/model/room-repository';
+import { RoomRepository } from '@katas/katacombs/domain/repository/room-repository';
 
 describe('GameController', () => {
     const testRooms = createTestRooms();

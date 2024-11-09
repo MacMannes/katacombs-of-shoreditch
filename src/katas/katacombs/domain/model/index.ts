@@ -4,4 +4,4 @@ export * from './direction';
 export * from './game';
 export * from './item';
 export * from './room';
-export * from './room-repository';
+export * from '../repository/room-repository';
