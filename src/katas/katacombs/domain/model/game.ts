@@ -64,7 +64,7 @@ export class Game {
     private getMessageForLookingAtItem(itemName: string): string | undefined {
         const item = this.findItem(itemName);
         if (item) {
-            return item.descriptions.look;
+            return item.description.look;
         }
     }
 

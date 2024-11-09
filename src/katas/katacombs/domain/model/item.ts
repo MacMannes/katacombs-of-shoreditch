@@ -3,7 +3,7 @@ export class Item {
 
     constructor(
         readonly name: string,
-        readonly descriptions: {
+        readonly description: {
             inventory: string;
             room: string;
             look: string;
