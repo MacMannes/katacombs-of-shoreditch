@@ -8,7 +8,7 @@ export class ItemRepository {
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.items.find((item) => item.name === itemName);
+        return this.items.find((item) => item.matches(itemName));
     }
 
     public addItem(item: Item) {

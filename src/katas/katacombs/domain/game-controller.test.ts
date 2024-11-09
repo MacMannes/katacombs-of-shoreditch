@@ -160,7 +160,6 @@ describe('GameController', () => {
             controller.go('NORTH');
             controller.take('keys');
             controller.go('SOUTH');
-
             vi.resetAllMocks();
             controller.drop('keys');
             expect(ui.displayMessage).toBeCalledWith('OK.');
@@ -170,6 +169,16 @@ describe('GameController', () => {
             controller.drop('keys');
 
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
+        });
+
+        it('should say "OK." when dropping an item using a synonym', () => {
+            controller.go('NORTH');
+            controller.take('lantern');
+
+            vi.resetAllMocks();
+            controller.drop('light');
+
+            expect(ui.displayMessage).toBeCalledWith('OK.');
         });
     });
 
