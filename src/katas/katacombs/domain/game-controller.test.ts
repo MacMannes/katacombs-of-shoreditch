@@ -32,7 +32,7 @@ describe('GameController', () => {
         vi.resetAllMocks();
     });
 
-    describe('Start Game', () => {
+    describe('Starting the game', () => {
         it('should print the title and description of the starting room', () => {
             controller.startGame();
             expect(ui.displayRoom).toHaveBeenCalledTimes(1);
@@ -40,7 +40,7 @@ describe('GameController', () => {
         });
     });
 
-    describe('Move to another room', () => {
+    describe('Traveling', () => {
         it('should print the new room when the move was successful', () => {
             controller.go('NORTH');
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
@@ -139,7 +139,7 @@ describe('GameController', () => {
             vi.resetAllMocks();
         });
 
-        it('should move the item from inventory to the room when the user has the item', () => {
+        it('should move the item from inventory to the room when the user possesses the item', () => {
             controller.go('NORTH');
             controller.take('keys');
             controller.go('SOUTH');
@@ -159,14 +159,14 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
-        it('should say something like "You are not carrying it!" when the user does not have the item', () => {
+        it('should say something like "You are not carrying it!" when the user does not possess the item', () => {
             controller.drop('keys');
 
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
         });
     });
 
-    describe('Inventory', () => {
+    describe('Showing the inventory', () => {
         beforeEach(() => {
             createGameController();
         });
@@ -175,14 +175,14 @@ describe('GameController', () => {
             vi.resetAllMocks();
         });
 
-        it('should say something like "You are not carrying anything." when the user does not have any items', () => {
+        it('should say something like "You are not carrying anything." when the user does not possess any items', () => {
             controller.inventory();
 
             expect(ui.displayMessage).toBeCalledWith("You're not carrying anything.");
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
 
-        it('should print all the items the user has', () => {
+        it('should print all the items the user has in their possession', () => {
             controller.inventory();
             controller.go('NORTH');
             controller.take('keys');
