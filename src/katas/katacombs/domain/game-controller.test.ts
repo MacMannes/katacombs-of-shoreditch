@@ -128,6 +128,13 @@ describe('GameController', () => {
             expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
             expect(controller.findItem('keys')).toBeDefined();
         });
+
+        it('should say "OK." when taking an item using a synonym', () => {
+            controller.go('NORTH');
+            controller.take('lamp');
+
+            expect(ui.displayMessage).toBeCalledWith('OK.');
+        });
     });
 
     describe('Dropping items', () => {

@@ -27,7 +27,7 @@ export class Room {
     }
 
     public findItem(name: string): Item | undefined {
-        return this.items.find((item) => item.name === name);
+        return this.items.find((item) => item.matches(name));
     }
 
     public removeItem(item: Item) {
