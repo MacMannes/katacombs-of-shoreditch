@@ -1,5 +1,4 @@
-import { Direction, Game, isDirection, Item, Room } from '@katas/katacombs/domain/model';
-import { UserInterface } from '@katas/katacombs/domain/ui';
+import { Direction, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
 
 export class GameController {
     constructor(
@@ -39,17 +38,16 @@ export class GameController {
         this.ui.displayMessage(message);
     }
 
-    public getInventory(): Item[] {
-        return [
-            {
-                name: 'keys',
-                descriptions: {
-                    inventory: '',
-                    room: '',
-                    look: '',
-                },
-            },
-        ];
+    public drop(itemName: string) {
+        this.game.drop(itemName);
+    }
+
+    public findItem(itemName: string): Item | undefined {
+        return this.game.findItem(itemName);
+    }
+
+    public inventory(): Item[] {
+        return this.game.getItems();
     }
 
     private displayCurrentRoom() {

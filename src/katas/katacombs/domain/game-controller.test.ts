@@ -1,18 +1,35 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createTestRooms, Game, GameController, NoOpUserInterface, UserInterface } from '@katas/katacombs/domain';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+    createTestRooms,
+    Game,
+    GameController,
+    ItemRepository,
+    NoOpUserInterface,
+    RoomRepository,
+    UserInterface,
+} from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
-import { RoomRepository } from '@katas/katacombs/domain/repository/room-repository';
 
 describe('GameController', () => {
-    const testRooms = createTestRooms();
     let ui: UserInterface;
     let controller: GameController;
 
-    beforeEach(() => {
+    function createGameController() {
         ui = createMockedObject(NoOpUserInterface);
-        const repository = new RoomRepository(testRooms);
-        const game = new Game(repository);
+
+        const testRooms = createTestRooms();
+        const roomRepository = new RoomRepository(testRooms);
+        const itemRepository = new ItemRepository();
+        const game = new Game(roomRepository, itemRepository);
         controller = new GameController(game, ui);
+    }
+
+    beforeEach(() => {
+        createGameController();
+    });
+
+    afterEach(() => {
+        vi.resetAllMocks();
     });
 
     describe('Start Game', () => {
@@ -82,6 +99,14 @@ describe('GameController', () => {
     });
 
     describe('Taking items', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
         it('should say "Ok." when the item exists in the room', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
@@ -95,6 +120,7 @@ describe('GameController', () => {
 
         it('should remove the item from the room when it exists', () => {
             controller.moveToDirection('NORTH');
+            expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             controller.take('keys');
             expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
         });
@@ -102,7 +128,7 @@ describe('GameController', () => {
         it('should put the item in the inventory when it exists', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
-            expect(controller.getInventory()).toContainEqual(expect.objectContaining({ name: 'keys' }));
+            expect(controller.findItem('keys')).toBeDefined();
         });
     });
 
@@ -111,7 +137,8 @@ describe('GameController', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
             controller.moveToDirection('SOUTH');
-            expect(controller.getInventory()).not.toContainEqual(expect.objectContaining({ name: 'keys' }));
+            controller.drop('keys');
+            expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
         });
     });
 });

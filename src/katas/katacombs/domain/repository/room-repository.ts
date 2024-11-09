@@ -17,7 +17,7 @@ export class RoomRepository {
         return room;
     }
 
-    findRoomByName(name: string): Room | undefined {
+    public findRoomByName(name: string): Room | undefined {
         return this.roomsByName[name];
     }
 

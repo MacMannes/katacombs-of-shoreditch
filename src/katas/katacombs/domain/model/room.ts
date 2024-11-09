@@ -27,10 +27,10 @@ export class Room {
     }
 
     public findItem(name: string): Item | undefined {
-        return this.items.find((item) => item.name == name);
+        return this.items.find((item) => item.name === name);
     }
 
     public removeItem(item: Item) {
-        this.items = this.items.filter((it) => it.name != item.name);
+        this.items = this.items.filter((it) => it.name !== item.name);
     }
 }
