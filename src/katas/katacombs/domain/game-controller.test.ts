@@ -41,24 +41,33 @@ describe('GameController', () => {
     });
 
     describe('Traveling', () => {
-        it('should print the new room when traveling in a direction was successful', () => {
-            controller.go('NORTH');
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+        describe('to an ordinal direction', () => {
+            it('should print the new room when the direction is valid', () => {
+                controller.go('NORTH');
+                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+            });
+
+            it('should print a message when direction is invalid', () => {
+                controller.go('WEST');
+                expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
+            });
+
+            it('should print the current room when the direction is invalid', () => {
+                controller.go('WEST');
+                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+            });
         });
 
-        it('should print the new room when traveling to a synonym of the connection was successful', () => {
-            controller.go('building');
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
-        });
+        describe('using synonyms of the connection', () => {
+            it('should print the new room when traveling to a synonym of the connection was successful', () => {
+                controller.go('building');
+                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+            });
 
-        it('should print a message when the move could not be made', () => {
-            controller.go('WEST');
-            expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
-        });
-
-        it('should print the current room when the move could not be made', () => {
-            controller.go('WEST');
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+            it('should print a message when synonym could not be found', () => {
+                controller.go('left');
+                expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
+            });
         });
     });
 
