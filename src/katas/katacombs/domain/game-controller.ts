@@ -29,7 +29,7 @@ export class GameController {
             return;
         }
 
-        const message = this.getMessageForLookingAt(subject);
+        const message = this.game.getMessageForLookingAt(subject);
         this.ui.displayMessage(message);
     }
 
@@ -50,26 +50,6 @@ export class GameController {
                 },
             },
         ];
-    }
-
-    private getMessageForLookingAt(subject: string): string {
-        if (isDirection(subject)) {
-            return this.getMessageForLookingInDirection(subject);
-        }
-
-        return this.getMessageForLookingAtItem(subject) ?? `I see no ${subject} here.`;
-    }
-
-    private getMessageForLookingInDirection(direction: Direction): string {
-        const connection = this.getCurrentRoom().findConnection(direction);
-        return connection?.description ?? 'Nothing interesting to look at there.';
-    }
-
-    private getMessageForLookingAtItem(itemName: string): string | undefined {
-        const item = this.getCurrentRoom().findItem(itemName);
-        if (item) {
-            return item.descriptions.look;
-        }
     }
 
     private displayCurrentRoom() {

@@ -1,4 +1,4 @@
-import { Direction, Room, RoomRepository } from '@katas/katacombs/domain';
+import { Direction, isDirection, Room, RoomRepository } from '@katas/katacombs/domain';
 
 export class Game {
     private currentRoom: Room;
@@ -27,10 +27,28 @@ export class Game {
         return true;
     }
 
+    public getMessageForLookingAt(subject: string): string {
+        if (isDirection(subject)) {
+            return this.getMessageForLookingInDirection(subject);
+        }
+
+        return this.getMessageForLookingAtItem(subject) ?? `I see no ${subject} here.`;
+    }
+
+    private getMessageForLookingInDirection(direction: Direction): string {
+        const connection = this.getCurrentRoom().findConnection(direction);
+        return connection?.description ?? 'Nothing interesting to look at there.';
+    }
+
+    private getMessageForLookingAtItem(itemName: string): string | undefined {
+        const item = this.getCurrentRoom().findItem(itemName);
+        if (item) {
+            return item.descriptions.look;
+        }
+    }
+
     /**
      * Find a room in a given direction from the current room
-     * @param direction
-     * @private
      */
     private findRoomInDirection(direction: Direction): Room | undefined {
         const roomName = this.getCurrentRoom().findConnection(direction)?.roomName;
