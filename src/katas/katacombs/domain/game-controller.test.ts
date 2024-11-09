@@ -42,17 +42,17 @@ describe('GameController', () => {
 
     describe('Move to another room', () => {
         it('should print the new room when the move was successful', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
         });
 
         it('should print a message the move could not be made', () => {
-            controller.moveToDirection('WEST');
+            controller.go('WEST');
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
         });
 
         it('should print the current room when the move could not be made', () => {
-            controller.moveToDirection('WEST');
+            controller.go('WEST');
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
     });
@@ -88,7 +88,7 @@ describe('GameController', () => {
         });
 
         it('should show the description of the item when found', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
             controller.look('keys');
@@ -108,7 +108,7 @@ describe('GameController', () => {
         });
 
         it('should say "OK." when the item exists in the room', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             controller.take('keys');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
@@ -121,7 +121,7 @@ describe('GameController', () => {
         });
 
         it('should move the item from the room to the inventory when it exists in the room', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             controller.take('keys');
 
@@ -140,9 +140,9 @@ describe('GameController', () => {
         });
 
         it('should move the item from inventory to the room when the user has the item', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             controller.take('keys');
-            controller.moveToDirection('SOUTH');
+            controller.go('SOUTH');
             controller.drop('keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
@@ -150,9 +150,9 @@ describe('GameController', () => {
         });
 
         it('should say "OK" when the item is dropped', () => {
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             controller.take('keys');
-            controller.moveToDirection('SOUTH');
+            controller.go('SOUTH');
 
             vi.resetAllMocks();
             controller.drop('keys');
@@ -184,7 +184,7 @@ describe('GameController', () => {
 
         it('should print all the items the user has', () => {
             controller.inventory();
-            controller.moveToDirection('NORTH');
+            controller.go('NORTH');
             controller.take('keys');
             controller.take('lantern');
             vi.resetAllMocks();

@@ -15,22 +15,22 @@ describe('Game', () => {
         });
 
         it('should return the new room, if the move was successful', () => {
-            const result = game.moveToDirection('SOUTH');
+            const result = game.go('SOUTH');
             expect(result).toBe(room2);
         });
 
         it('should set the current room to the new room, if the move was successful', () => {
-            game.moveToDirection('SOUTH');
+            game.go('SOUTH');
             expect(game.getCurrentRoom()).toBe(room2);
         });
 
         it('should return undefined, if the move could not be made', () => {
-            const result = game.moveToDirection('NORTH');
+            const result = game.go('NORTH');
             expect(result).toBe(undefined);
         });
 
         it('should keep the current room, if the move could not be made', () => {
-            game.moveToDirection('NORTH');
+            game.go('NORTH');
             expect(game.getCurrentRoom()).toBe(room1);
         });
     });

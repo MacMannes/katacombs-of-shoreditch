@@ -14,21 +14,21 @@ export class GameController {
         return this.game.getCurrentRoom();
     }
 
-    public moveToDirection(direction: Direction) {
-        const newRoom = this.game.moveToDirection(direction);
+    public go(to: Direction) {
+        const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');
         }
         this.displayCurrentRoom();
     }
 
-    public look(subject?: Direction | string) {
-        if (!subject) {
+    public look(at?: Direction | string) {
+        if (!at) {
             this.displayCurrentRoom();
             return;
         }
 
-        const message = this.game.getMessageForLookingAt(subject);
+        const message = this.game.look(at);
         this.ui.displayMessage(message);
     }
 

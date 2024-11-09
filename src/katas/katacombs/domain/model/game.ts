@@ -14,7 +14,7 @@ export class Game {
         return this.currentRoom;
     }
 
-    public moveToDirection(direction: Direction): Room | undefined {
+    public go(direction: Direction): Room | undefined {
         const newRoom = this.findRoomInDirection(direction);
         if (newRoom) {
             this.currentRoom = newRoom;
@@ -48,12 +48,12 @@ export class Game {
         return this.itemRepository.findItem(itemName);
     }
 
-    public getMessageForLookingAt(subject: string): string {
-        if (isDirection(subject)) {
-            return this.getMessageForLookingInDirection(subject);
+    public look(at: string): string {
+        if (isDirection(at)) {
+            return this.getMessageForLookingInDirection(at);
         }
 
-        return this.getMessageForLookingAtItem(subject) ?? `I see no ${subject} here.`;
+        return this.getMessageForLookingAtItem(at) ?? `I see no ${at} here.`;
     }
 
     private getMessageForLookingInDirection(direction: Direction): string {
