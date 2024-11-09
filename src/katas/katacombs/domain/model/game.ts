@@ -45,7 +45,7 @@ export class Game {
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.itemRepository.findItem(itemName);
+        return this.currentRoom.findItem(itemName) ?? this.itemRepository.findItem(itemName);
     }
 
     public look(at: string): string {
@@ -62,7 +62,7 @@ export class Game {
     }
 
     private getMessageForLookingAtItem(itemName: string): string | undefined {
-        const item = this.currentRoom.findItem(itemName);
+        const item = this.findItem(itemName);
         if (item) {
             return item.descriptions.look;
         }

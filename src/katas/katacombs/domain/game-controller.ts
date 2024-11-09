@@ -14,6 +14,10 @@ export class GameController {
         return this.game.getCurrentRoom();
     }
 
+    public getInventory(): Item[] {
+        return this.game.getItems();
+    }
+
     public go(to: Direction) {
         const newRoom = this.game.go(to);
         if (!newRoom) {
@@ -48,7 +52,7 @@ export class GameController {
         return this.game.findItem(itemName);
     }
 
-    public inventory(): void {
+    public displayInventory(): void {
         const items = this.game.getItems();
         if (items.length == 0) {
             this.ui.displayMessage("You're not carrying anything.");

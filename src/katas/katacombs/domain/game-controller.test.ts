@@ -57,7 +57,7 @@ describe('GameController', () => {
         });
     });
 
-    describe('Looking', () => {
+    describe('Looking around', () => {
         it('should show the description of the room when looking in no specific direction', () => {
             controller.look();
 
@@ -86,7 +86,9 @@ describe('GameController', () => {
             expect(ui.displayMessage).toHaveBeenCalledWith('I see no keys here.');
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
+    });
 
+    describe('Looking at items', () => {
         it('should show the description of the item when found', () => {
             controller.go('NORTH');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
@@ -95,6 +97,25 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).toHaveBeenCalledWith("It's a key ring with three rusty keys on it.");
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
+        });
+
+        it('should show the description of the item in the room when when looking at it using a synonym', () => {
+            controller.go('NORTH');
+            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
+
+            controller.look('lamp');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
+        });
+
+        it('should show the description of the item in the inventory when when looking at it using a synonym', () => {
+            controller.go('NORTH');
+            controller.take('lantern');
+            vi.resetAllMocks();
+
+            controller.look('lamp');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
         });
     });
 
@@ -126,7 +147,7 @@ describe('GameController', () => {
             controller.take('keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
-            expect(controller.findItem('keys')).toBeDefined();
+            expect(controller.getInventory().find((item) => item.matches('keys'))).toBeDefined();
         });
 
         it('should say "OK." when taking an item using a synonym', () => {
@@ -153,7 +174,7 @@ describe('GameController', () => {
             controller.drop('keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
-            expect(controller.findItem('keys')).toBeUndefined();
+            expect(controller.getInventory().find((item) => item.matches('keys'))).toBeUndefined();
         });
 
         it('should say "OK" when the item is dropped', () => {
@@ -192,20 +213,20 @@ describe('GameController', () => {
         });
 
         it('should say something like "You are not carrying anything." when the user does not possess any items', () => {
-            controller.inventory();
+            controller.displayInventory();
 
             expect(ui.displayMessage).toBeCalledWith("You're not carrying anything.");
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
 
         it('should print all the items the user has in their possession', () => {
-            controller.inventory();
+            controller.displayInventory();
             controller.go('NORTH');
             controller.take('keys');
             controller.take('lantern');
             vi.resetAllMocks();
 
-            controller.inventory();
+            controller.displayInventory();
 
             expect(ui.displayMessage).toBeCalledWith(
                 expect.stringContaining('You are currently holding the following:'),
