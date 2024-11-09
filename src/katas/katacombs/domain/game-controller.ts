@@ -48,8 +48,16 @@ export class GameController {
         return this.game.findItem(itemName);
     }
 
-    public inventory(): Item[] {
-        return this.game.getItems();
+    public inventory(): void {
+        const items = this.game.getItems();
+        if (items.length == 0) {
+            this.ui.displayMessage("You're not carrying anything.");
+            return;
+        }
+
+        const itemMessages = items.map((item) => item.descriptions.inventory).join('\n');
+        const message = `You are currently holding the following:\n${itemMessages}`;
+        this.ui.displayMessage(message);
     }
 
     private displayCurrentRoom() {

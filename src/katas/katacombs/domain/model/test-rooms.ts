@@ -24,6 +24,13 @@ export function createTestRooms(): Room[] {
             look: "It's a key ring with three rusty keys on it.",
         }),
     );
+    building.addItem(
+        new Item('lantern', {
+            inventory: 'Brass lantern',
+            room: 'There is a shiny brass lantern nearby.',
+            look: "It's a shiny brass lantern, which runs on oil.",
+        }),
+    );
 
     const nowhere = new Room('nowhere', 'Nowhere', "You're on the road to Nowhere");
 

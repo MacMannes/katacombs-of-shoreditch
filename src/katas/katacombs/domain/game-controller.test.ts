@@ -114,7 +114,7 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
-        it('should say something like Can\'t find ..." when the item can not be found in the room', () => {
+        it('should say something like can not find ..." when the item can not be found in the room', () => {
             controller.take('keys');
 
             expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
@@ -131,6 +131,14 @@ describe('GameController', () => {
     });
 
     describe('Dropping items', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
         it('should move the item from inventory to the room when the user has the item', () => {
             controller.moveToDirection('NORTH');
             controller.take('keys');
@@ -151,10 +159,44 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
-        it('should say "You aren\'t carrying it!" when the user does not have the item', () => {
+        it('should say something like "You are not carrying it!" when the user does not have the item', () => {
             controller.drop('keys');
 
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
+        });
+    });
+
+    describe('Inventory', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should say something like "You are not carrying anything." when the user does not have any items', () => {
+            controller.inventory();
+
+            expect(ui.displayMessage).toBeCalledWith("You're not carrying anything.");
+            expect(ui.displayMessage).toHaveBeenCalledTimes(1);
+        });
+
+        it('should print all the items the user has', () => {
+            controller.inventory();
+            controller.moveToDirection('NORTH');
+            controller.take('keys');
+            controller.take('lantern');
+            vi.resetAllMocks();
+
+            controller.inventory();
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.stringContaining('You are currently holding the following:'),
+            );
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Brass lantern'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
+            expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });
 });
