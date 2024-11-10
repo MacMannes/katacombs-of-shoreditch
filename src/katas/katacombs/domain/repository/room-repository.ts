@@ -31,6 +31,7 @@ export class RoomRepository {
     private validateItemsInRooms(rooms: Room[]) {
         const items = rooms.flatMap((room) => room.getItems());
         this.ensureUniquePropertyInItems(items, 'name');
+        this.ensureUniqueInventoryDescriptionsInItems(items);
     }
 
     private ensureUniquePropertyInRooms(rooms: Room[], propertyName: keyof Room) {
@@ -39,6 +40,7 @@ export class RoomRepository {
             throw new Error(`Rooms should have unique ${propertyName}s`);
         }
     }
+
     private ensureUniquePropertyInItems(items: Item[], propertyName: keyof Item) {
         const uniqueValues = new Set(items.map((item) => item[propertyName]));
         if (uniqueValues.size !== items.length) {
@@ -46,6 +48,16 @@ export class RoomRepository {
         }
     }
 
+    private ensureUniqueInventoryDescriptionsInItems(items: Item[]) {
+        const descriptions = items.map((item) => item.description.inventory);
+        if (!this.hasUniqueStrings(descriptions)) {
+            throw new Error(`Items should have unique inventory descriptions`);
+        }
+    }
+
+    private hasUniqueStrings(array: string[]): boolean {
+        return new Set(array).size === array.length;
+    }
     private groupRooms(rooms: Room[]): Record<string, Room> {
         const result: Record<string, Room> = {};
 

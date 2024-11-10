@@ -67,6 +67,27 @@ describe('RoomRepository', () => {
                 const rooms = [room1, room2];
                 expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique names');
             });
+
+            it('should not allow two items with the inventory description', () => {
+                const room1 = new Room('start', 'Room 1', '');
+                const room2 = new Room('room2', 'Room 2', '');
+                room1.addItem(
+                    new Item('stapler', {
+                        inventory: 'A Stapler',
+                        room: 'There is a stapler on the table',
+                        look: 'It is an ordinary stapler.',
+                    }),
+                );
+                room2.addItem(
+                    new Item('old-stapler', {
+                        inventory: 'A Stapler',
+                        room: 'There is an antique stapler on the table',
+                        look: 'It is a very old stapler.',
+                    }),
+                );
+                const rooms = [room1, room2];
+                expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique inventory descriptions');
+            });
         });
     });
 });
