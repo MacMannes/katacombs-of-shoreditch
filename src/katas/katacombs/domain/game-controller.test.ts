@@ -141,13 +141,13 @@ describe('GameController', () => {
 
     describe('Looking around', () => {
         it('should show the description of the room when looking in no specific direction', () => {
-            controller.look();
+            controller.processCommand('look');
 
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
         it('should show the description when looking in a specific direction with a connection', () => {
-            controller.look('north');
+            controller.processCommand('look', 'north');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
@@ -156,7 +156,7 @@ describe('GameController', () => {
         });
 
         it('should show the description when looking at one of the synonyms of a connection', () => {
-            controller.look('building');
+            controller.processCommand('look', 'building');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
@@ -165,7 +165,7 @@ describe('GameController', () => {
         });
 
         it('should show something like "Nothing interesting" when looking in a specific direction with NO connection', () => {
-            controller.look('west');
+            controller.processCommand('look', 'west');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('Nothing interesting'));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
@@ -175,14 +175,14 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks();
 
-            controller.look('outside');
+            controller.processCommand('look', 'outside');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('Nothing interesting'));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
         it('should show "I see no ... here" when looking at something that is not here', () => {
-            controller.look('keys');
+            controller.processCommand('look', 'keys');
 
             expect(ui.displayMessage).toHaveBeenCalledWith('I see no keys here.');
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
@@ -194,7 +194,7 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
-            controller.look('keys');
+            controller.processCommand('look', 'keys');
 
             expect(ui.displayMessage).toHaveBeenCalledWith("It's a key ring with three rusty keys on it.");
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
@@ -204,7 +204,7 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
-            controller.look('lamp');
+            controller.processCommand('look', 'lamp');
 
             expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
         });
@@ -214,7 +214,7 @@ describe('GameController', () => {
             controller.take('lantern');
             vi.resetAllMocks();
 
-            controller.look('lamp');
+            controller.processCommand('look', 'lamp');
 
             expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
         });

@@ -55,7 +55,7 @@ export class GameController {
         this.displayCurrentRoom();
     }
 
-    public look(at?: string) {
+    private look(at?: string) {
         if (!at) {
             this.displayCurrentRoom();
             return;
