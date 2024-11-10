@@ -31,6 +31,7 @@ export class GameController {
     private commandHandlers: Record<string, (subject: string) => void> = {
         go: (subject) => this.go(subject),
         look: (subject) => this.look(subject),
+        take: (subject) => this.take(subject),
     };
 
     public go(to: string) {

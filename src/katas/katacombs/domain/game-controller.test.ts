@@ -86,6 +86,11 @@ describe('GameController', () => {
             controller.processCommand('go', 'building');
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
         });
+
+        it('should process the take command', () => {
+            controller.processCommand('take', 'watch');
+            expect(ui.displayMessage).toBeCalledWith("Can't find watch here.");
+        });
     });
 
     describe('Traveling', () => {
