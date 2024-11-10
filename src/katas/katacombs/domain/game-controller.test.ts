@@ -92,9 +92,19 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith("Can't find watch here.");
         });
 
+        it('should say "What?" when the take command was given without a target', () => {
+            controller.processCommand('take');
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
         it('should process the drop command', () => {
             controller.processCommand('drop', 'watch');
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
+        });
+
+        it('should say "What?" when the drop command was given without a target', () => {
+            controller.processCommand('drop');
+            expect(ui.displayMessage).toBeCalledWith('What?');
         });
     });
 

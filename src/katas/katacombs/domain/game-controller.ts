@@ -56,12 +56,16 @@ export class GameController {
     }
 
     public take(itemName: string) {
+        if (!itemName) this.ui.displayMessage('What?');
+
         const taken = this.game.take(itemName);
         const message = taken ? 'OK.' : `Can't find ${itemName} here.`;
         this.ui.displayMessage(message);
     }
 
     public drop(itemName: string) {
+        if (!itemName) this.ui.displayMessage('What?');
+
         const dropped = this.game.drop(itemName);
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);
