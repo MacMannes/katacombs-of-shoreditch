@@ -32,6 +32,7 @@ export class GameController {
         go: (subject) => this.go(subject),
         look: (subject) => this.look(subject),
         take: (subject) => this.take(subject),
+        drop: (subject) => this.drop(subject),
     };
 
     public go(to: string) {

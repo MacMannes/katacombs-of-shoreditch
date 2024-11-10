@@ -91,6 +91,11 @@ describe('GameController', () => {
             controller.processCommand('take', 'watch');
             expect(ui.displayMessage).toBeCalledWith("Can't find watch here.");
         });
+
+        it('should process the drop command', () => {
+            controller.processCommand('drop', 'watch');
+            expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
+        });
     });
 
     describe('Traveling', () => {
