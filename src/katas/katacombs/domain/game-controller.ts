@@ -19,20 +19,23 @@ export class GameController {
     }
 
     public processCommand(verb: string, subject?: string) {
-        if (verb === 'look') {
-            this.look(subject);
+        const handler = this.commandHandlers[verb];
+        if (!handler) {
+            this.ui.displayMessage('What?');
             return;
         }
 
-        if (verb === 'go' && subject) {
-            this.go(subject);
-            return;
-        }
-
-        this.ui.displayMessage('What?');
+        handler(subject ?? '');
     }
 
+    private commandHandlers: Record<string, (subject: string) => void> = {
+        go: (subject) => this.go(subject),
+        look: (subject) => this.look(subject),
+    };
+
     public go(to: string) {
+        if (!to) this.ui.displayMessage('What?');
+
         const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');
