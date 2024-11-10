@@ -1,4 +1,4 @@
-import { Connection, oppositeOf, Room } from '@katas/katacombs/domain';
+import { Connection, Item, oppositeOf, Room } from '@katas/katacombs/domain';
 import { groupBy } from '@utils/array';
 
 export class RoomRepository {
@@ -6,6 +6,7 @@ export class RoomRepository {
 
     constructor(rooms: Room[]) {
         this.validateRooms(rooms);
+        this.validateItemsInRooms(rooms);
 
         this.roomsByName = this.groupRooms(rooms);
         this.validateConnections();
@@ -23,14 +24,25 @@ export class RoomRepository {
 
     private validateRooms(rooms: Room[]) {
         this.ensureRoomExists(rooms, 'start');
-        this.ensureUniqueProperty(rooms, 'name');
-        this.ensureUniqueProperty(rooms, 'title');
+        this.ensureUniquePropertyInRooms(rooms, 'name');
+        this.ensureUniquePropertyInRooms(rooms, 'title');
     }
 
-    private ensureUniqueProperty(rooms: Room[], propertyName: keyof Room) {
+    private validateItemsInRooms(rooms: Room[]) {
+        const items = rooms.flatMap((room) => room.getItems());
+        this.ensureUniquePropertyInItems(items, 'name');
+    }
+
+    private ensureUniquePropertyInRooms(rooms: Room[], propertyName: keyof Room) {
         const uniqueValues = new Set(rooms.map((room) => room[propertyName]));
         if (uniqueValues.size !== rooms.length) {
             throw new Error(`Rooms should have unique ${propertyName}s`);
+        }
+    }
+    private ensureUniquePropertyInItems(items: Item[], propertyName: keyof Item) {
+        const uniqueValues = new Set(items.map((item) => item[propertyName]));
+        if (uniqueValues.size !== items.length) {
+            throw new Error(`Items should have unique ${propertyName}s`);
         }
     }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Room, RoomRepository } from '@katas/katacombs/domain';
+import { Item, Room, RoomRepository } from '@katas/katacombs/domain';
 
 describe('RoomRepository', () => {
     describe('Create new Repository', () => {
@@ -43,6 +43,29 @@ describe('RoomRepository', () => {
 
                 const rooms = [room1, room2];
                 expect(() => new RoomRepository(rooms)).not.toThrowError();
+            });
+        });
+
+        describe('Item Validation', () => {
+            it('should not allow two items with the same name', () => {
+                const room1 = new Room('start', 'Room 1', '');
+                const room2 = new Room('room2', 'Room 2', '');
+                room1.addItem(
+                    new Item('stapler', {
+                        inventory: 'A Stapler',
+                        room: 'There is a stapler on the table',
+                        look: 'It is an ordinary stapler.',
+                    }),
+                );
+                room2.addItem(
+                    new Item('stapler', {
+                        inventory: 'An old Stapler',
+                        room: 'There is an antique stapler on the table',
+                        look: 'It is a very old stapler.',
+                    }),
+                );
+                const rooms = [room1, room2];
+                expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique names');
             });
         });
     });

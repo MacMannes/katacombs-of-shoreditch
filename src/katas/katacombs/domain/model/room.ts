@@ -22,6 +22,10 @@ export class Room {
         return this.connections.find((it) => it.matches(direction, fromRoomName));
     }
 
+    public getItems(): Item[] {
+        return [...this.items];
+    }
+
     public addItem(item: Item) {
         this.items.push(item);
     }
