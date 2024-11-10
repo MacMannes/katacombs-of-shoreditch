@@ -18,7 +18,7 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public processCommand(verb: string, subject: string) {
+    public processCommand(verb: string, subject?: string) {
         this.ui.displayMessage('What?');
     }
 

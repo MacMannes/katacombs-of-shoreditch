@@ -43,6 +43,12 @@ describe('GameController', () => {
     describe('Processing commands', () => {
         it('should print "What?" when the command could not be interpreted', () => {
             controller.processCommand('Print', 'invoice');
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should allow for commands with only a verb', () => {
+            controller.processCommand('Relax');
+            expect(ui.displayMessage).toBeCalledWith('What?');
         });
     });
 
