@@ -47,7 +47,7 @@ export class GameController {
         drop: { handle: (subject) => this.drop(subject) },
     };
 
-    public go(to: string) {
+    private go(to: string) {
         const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');
