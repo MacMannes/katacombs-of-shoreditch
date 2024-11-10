@@ -71,7 +71,7 @@ export class GameController {
         this.ui.displayMessage(message);
     }
 
-    public drop(itemName: string) {
+    private drop(itemName: string) {
         const dropped = this.game.drop(itemName);
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);

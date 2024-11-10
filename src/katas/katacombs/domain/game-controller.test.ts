@@ -272,7 +272,7 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             controller.processCommand('take', 'keys');
             controller.processCommand('go', 'south');
-            controller.drop('keys');
+            controller.processCommand('drop', 'keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             expect(controller.getInventory().find((item) => item.matches('keys'))).toBeUndefined();
@@ -283,12 +283,14 @@ describe('GameController', () => {
             controller.processCommand('take', 'keys');
             controller.processCommand('go', 'south');
             vi.resetAllMocks();
-            controller.drop('keys');
+
+            controller.processCommand('drop', 'keys');
+
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
         it('should say something like "You are not carrying it!" when the user does not possess the item', () => {
-            controller.drop('keys');
+            controller.processCommand('drop', 'keys');
 
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
         });
@@ -298,7 +300,7 @@ describe('GameController', () => {
             controller.processCommand('take', 'lantern');
 
             vi.resetAllMocks();
-            controller.drop('light');
+            controller.processCommand('drop', 'light');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
