@@ -19,6 +19,11 @@ export class GameController {
     }
 
     public processCommand(verb: string, subject?: string) {
+        if (verb === 'look') {
+            this.displayCurrentRoom();
+            return;
+        }
+
         this.ui.displayMessage('What?');
     }
 

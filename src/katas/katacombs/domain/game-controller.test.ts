@@ -41,7 +41,7 @@ describe('GameController', () => {
     });
 
     describe('Processing commands', () => {
-        it('should print "What?" when the command could not be interpreted', () => {
+        it('should say "What?" when the command could not be interpreted', () => {
             controller.processCommand('Print', 'invoice');
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
@@ -49,6 +49,17 @@ describe('GameController', () => {
         it('should allow for commands with only a verb', () => {
             controller.processCommand('Relax');
             expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should not say "What?" when command "look" was given', () => {
+            controller.processCommand('look');
+            expect(ui.displayMessage).not.toBeCalledWith('What?');
+        });
+
+        it('should display the current room when command "look" was given', () => {
+            controller.processCommand('look');
+            expect(ui.displayRoom).toHaveBeenCalledTimes(1);
+            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
     });
 
