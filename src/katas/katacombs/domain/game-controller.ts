@@ -20,7 +20,7 @@ export class GameController {
 
     public processCommand(verb: string, subject?: string) {
         if (verb === 'look') {
-            this.displayCurrentRoom();
+            this.look(subject);
             return;
         }
 
@@ -35,7 +35,7 @@ export class GameController {
         this.displayCurrentRoom();
     }
 
-    public look(at?: Direction | string) {
+    public look(at?: string) {
         if (!at) {
             this.displayCurrentRoom();
             return;

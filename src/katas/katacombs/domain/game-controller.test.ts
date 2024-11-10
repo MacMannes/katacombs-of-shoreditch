@@ -41,13 +41,16 @@ describe('GameController', () => {
     });
 
     describe('Processing commands', () => {
-        it('should say "What?" when the command could not be interpreted', () => {
-            controller.processCommand('Print', 'invoice');
-            expect(ui.displayMessage).toBeCalledWith('What?');
+        beforeEach(() => {
+            createGameController();
         });
 
-        it('should allow for commands with only a verb', () => {
-            controller.processCommand('Relax');
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should say "What?" when the command could not be interpreted', () => {
+            controller.processCommand('print', 'invoice');
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
 
@@ -60,6 +63,18 @@ describe('GameController', () => {
             controller.processCommand('look');
             expect(ui.displayRoom).toHaveBeenCalledTimes(1);
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+        });
+
+        it('should allow for commands with only a verb', () => {
+            controller.processCommand('relax');
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should allow for commands with a verb and a subject', () => {
+            controller.processCommand('look', 'NORTH');
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+            );
         });
     });
 
