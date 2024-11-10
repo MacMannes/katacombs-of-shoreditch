@@ -211,7 +211,7 @@ describe('GameController', () => {
 
         it('should show the description of the item in the inventory when when looking at it using a synonym', () => {
             controller.processCommand('go', 'north');
-            controller.take('lantern');
+            controller.processCommand('take', 'lantern');
             vi.resetAllMocks();
 
             controller.processCommand('look', 'lamp');
@@ -231,13 +231,13 @@ describe('GameController', () => {
 
         it('should say "OK." when the item exists in the room', () => {
             controller.processCommand('go', 'north');
-            controller.take('keys');
+            controller.processCommand('take', 'keys');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
         it('should say something like can not find ..." when the item can not be found in the room', () => {
-            controller.take('keys');
+            controller.processCommand('take', 'keys');
 
             expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
         });
@@ -245,7 +245,7 @@ describe('GameController', () => {
         it('should move the item from the room to the inventory when it exists in the room', () => {
             controller.processCommand('go', 'north');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
-            controller.take('keys');
+            controller.processCommand('take', 'keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
             expect(controller.getInventory().find((item) => item.matches('keys'))).toBeDefined();
@@ -253,7 +253,7 @@ describe('GameController', () => {
 
         it('should say "OK." when taking an item using a synonym', () => {
             controller.processCommand('go', 'north');
-            controller.take('lamp');
+            controller.processCommand('take', 'lamp');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
@@ -270,7 +270,7 @@ describe('GameController', () => {
 
         it('should move the item from inventory to the room when the user possesses the item', () => {
             controller.processCommand('go', 'north');
-            controller.take('keys');
+            controller.processCommand('take', 'keys');
             controller.processCommand('go', 'south');
             controller.drop('keys');
 
@@ -280,7 +280,7 @@ describe('GameController', () => {
 
         it('should say "OK" when the item is dropped', () => {
             controller.processCommand('go', 'north');
-            controller.take('keys');
+            controller.processCommand('take', 'keys');
             controller.processCommand('go', 'south');
             vi.resetAllMocks();
             controller.drop('keys');
@@ -295,7 +295,7 @@ describe('GameController', () => {
 
         it('should say "OK." when dropping an item using a synonym', () => {
             controller.processCommand('go', 'north');
-            controller.take('lantern');
+            controller.processCommand('take', 'lantern');
 
             vi.resetAllMocks();
             controller.drop('light');
@@ -323,8 +323,8 @@ describe('GameController', () => {
         it('should print all the items the user has in their possession', () => {
             controller.displayInventory();
             controller.processCommand('go', 'north');
-            controller.take('keys');
-            controller.take('lantern');
+            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'lantern');
             vi.resetAllMocks();
 
             controller.displayInventory();
