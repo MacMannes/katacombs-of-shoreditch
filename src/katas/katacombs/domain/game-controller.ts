@@ -1,4 +1,4 @@
-import { Command, Direction, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
+import { CommandHandler, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
 
 export class GameController {
     constructor(
@@ -25,10 +25,10 @@ export class GameController {
             return;
         }
 
-        handler.process(subject ?? '');
+        handler.handle(subject ?? '');
     }
 
-    private getCommandHandler(verb: string, subject?: string): Command | undefined {
+    private getCommandHandler(verb: string, subject?: string): CommandHandler | undefined {
         const handler = this.commandHandlers[verb];
         if (!handler) return undefined;
 
@@ -40,11 +40,11 @@ export class GameController {
         return handler;
     }
 
-    private commandHandlers: Record<string, Command> = {
-        go: { process: (subject) => this.go(subject) }, // requiresSubject defaults to true
-        look: { requiresSubject: false, process: (subject) => this.look(subject) }, // explicit no subject
-        take: { process: (subject) => this.take(subject) },
-        drop: { process: (subject) => this.drop(subject) },
+    private commandHandlers: Record<string, CommandHandler> = {
+        go: { handle: (subject) => this.go(subject) }, // requiresSubject defaults to true
+        look: { requiresSubject: false, handle: (subject) => this.look(subject) }, // explicit no subject
+        take: { handle: (subject) => this.take(subject) },
+        drop: { handle: (subject) => this.drop(subject) },
     };
 
     public go(to: string) {

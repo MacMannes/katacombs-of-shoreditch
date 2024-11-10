@@ -1,4 +1,4 @@
-export type Command = {
+export type CommandHandler = {
     requiresSubject?: boolean; // Optional, defaults to true if not specified
-    process: (subject: string) => void;
+    handle: (subject: string) => void;
 };

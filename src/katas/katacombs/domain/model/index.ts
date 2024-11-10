@@ -1,4 +1,4 @@
-export * from './command';
+export * from './command-handler';
 export * from './connection';
 export * from './test-rooms';
 export * from './direction';
