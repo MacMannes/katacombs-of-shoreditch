@@ -19,18 +19,25 @@ export class GameController {
     }
 
     public processCommand(verb: string, subject?: string) {
-        const handler = this.commandHandlers[verb];
+        const handler = this.getCommandHandler(verb, subject);
         if (!handler) {
             this.ui.displayMessage('What?');
             return;
         }
 
+        handler.process(subject ?? '');
+    }
+
+    private getCommandHandler(verb: string, subject?: string): Command | undefined {
+        const handler = this.commandHandlers[verb];
+        if (!handler) return undefined;
+
         const requiresSubject = handler.requiresSubject ?? true;
         if (requiresSubject && !subject) {
-            this.ui.displayMessage('What?');
-            return;
+            return undefined;
         }
-        handler.process(subject ?? '');
+
+        return handler;
     }
 
     private commandHandlers: Record<string, Command> = {
