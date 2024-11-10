@@ -24,6 +24,11 @@ export class GameController {
             return;
         }
 
+        if (verb === 'go' && subject) {
+            this.go(subject);
+            return;
+        }
+
         this.ui.displayMessage('What?');
     }
 

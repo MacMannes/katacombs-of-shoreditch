@@ -76,6 +76,16 @@ describe('GameController', () => {
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
             );
         });
+
+        it('should say "What?" when the go command was given without a direction', () => {
+            controller.processCommand('go');
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should process the go command when a direction was given', () => {
+            controller.processCommand('go', 'building');
+            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+        });
     });
 
     describe('Traveling', () => {
