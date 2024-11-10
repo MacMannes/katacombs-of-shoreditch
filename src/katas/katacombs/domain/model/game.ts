@@ -53,6 +53,11 @@ export class Game {
             return this.getMessageForLookingInDirection(at);
         }
 
+        const connection = this.currentRoom.findConnection(at);
+        if (connection) {
+            return connection?.description ?? 'Nothing interesting to look at there.';
+        }
+
         return this.getMessageForLookingAtItem(at) ?? `I see no ${at} here.`;
     }
 

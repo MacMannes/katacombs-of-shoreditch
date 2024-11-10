@@ -125,6 +125,15 @@ describe('GameController', () => {
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
+        it('should show the description when looking at one of the synonyms of a connection', () => {
+            controller.look('building');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+            );
+            expect(ui.displayRoom).toHaveBeenCalledTimes(0);
+        });
+
         it('should show something like "Nothing interesting" when looking in a specific direction with NO connection', () => {
             controller.look('WEST');
 
