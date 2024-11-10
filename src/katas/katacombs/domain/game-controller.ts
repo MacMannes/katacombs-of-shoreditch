@@ -1,4 +1,4 @@
-import { Direction, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
+import { Command, Direction, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
 
 export class GameController {
     constructor(
@@ -25,19 +25,22 @@ export class GameController {
             return;
         }
 
-        handler(subject ?? '');
+        const requiresSubject = handler.requiresSubject ?? true;
+        if (requiresSubject && !subject) {
+            this.ui.displayMessage('What?');
+            return;
+        }
+        handler.process(subject ?? '');
     }
 
-    private commandHandlers: Record<string, (subject: string) => void> = {
-        go: (subject) => this.go(subject),
-        look: (subject) => this.look(subject),
-        take: (subject) => this.take(subject),
-        drop: (subject) => this.drop(subject),
+    private commandHandlers: Record<string, Command> = {
+        go: { process: (subject) => this.go(subject) }, // requiresSubject defaults to true
+        look: { requiresSubject: false, process: (subject) => this.look(subject) }, // explicit no subject
+        take: { process: (subject) => this.take(subject) },
+        drop: { process: (subject) => this.drop(subject) },
     };
 
     public go(to: string) {
-        if (!to) this.ui.displayMessage('What?');
-
         const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');
@@ -56,16 +59,12 @@ export class GameController {
     }
 
     public take(itemName: string) {
-        if (!itemName) this.ui.displayMessage('What?');
-
         const taken = this.game.take(itemName);
         const message = taken ? 'OK.' : `Can't find ${itemName} here.`;
         this.ui.displayMessage(message);
     }
 
     public drop(itemName: string) {
-        if (!itemName) this.ui.displayMessage('What?');
-
         const dropped = this.game.drop(itemName);
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);
