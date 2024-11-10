@@ -40,6 +40,12 @@ describe('GameController', () => {
         });
     });
 
+    describe('Processing commands', () => {
+        it('should print "What?" when the command could not be interpreted', () => {
+            controller.processCommand('Print', 'invoice');
+        });
+    });
+
     describe('Traveling', () => {
         describe('to an ordinal direction', () => {
             it('should print the new room when the direction is valid', () => {

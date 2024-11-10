@@ -18,6 +18,10 @@ export class GameController {
         return this.game.getItems();
     }
 
+    public processCommand(verb: string, subject: string) {
+        this.ui.displayMessage('What?');
+    }
+
     public go(to: string) {
         const newRoom = this.game.go(to);
         if (!newRoom) {
