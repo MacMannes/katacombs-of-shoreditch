@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Game, Room, RoomRepository } from '@katas/katacombs/domain';
+import { Game, ItemRepository, Room, RoomRepository } from '@katas/katacombs/domain';
 
 describe('Game', () => {
     describe('Move to a new room', () => {
@@ -10,8 +10,8 @@ describe('Game', () => {
         let game: Game;
 
         beforeEach(() => {
-            const repository = new RoomRepository([room1, room2]);
-            game = new Game(repository);
+            const roomRepository = new RoomRepository([room1, room2]);
+            game = new Game(roomRepository, new ItemRepository());
         });
 
         it('should return the new room, if the move was successful', () => {
