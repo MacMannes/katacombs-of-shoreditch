@@ -141,6 +141,16 @@ describe('GameController', () => {
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
+        it('should show something like "Nothing interesting" when looking at a connection with no description', () => {
+            controller.go('NORTH');
+            vi.resetAllMocks();
+
+            controller.look('outside');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('Nothing interesting'));
+            expect(ui.displayRoom).toHaveBeenCalledTimes(0);
+        });
+
         it('should show "I see no ... here" when looking at something that is not here', () => {
             controller.look('keys');
 

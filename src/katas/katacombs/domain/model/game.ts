@@ -1,4 +1,12 @@
-import { Direction, isDirection, Item, ItemRepository, Room, RoomRepository } from '@katas/katacombs/domain';
+import {
+    Connection,
+    Direction,
+    isDirection,
+    Item,
+    ItemRepository,
+    Room,
+    RoomRepository,
+} from '@katas/katacombs/domain';
 
 export class Game {
     private currentRoom: Room;
@@ -55,10 +63,14 @@ export class Game {
 
         const connection = this.currentRoom.findConnection(at);
         if (connection) {
-            return connection?.description ?? 'Nothing interesting to look at there.';
+            return this.getMessageForLookingAtConnection(connection);
         }
 
         return this.getMessageForLookingAtItem(at) ?? `I see no ${at} here.`;
+    }
+
+    private getMessageForLookingAtConnection(connection?: Connection) {
+        return connection?.description ?? 'Nothing interesting to look at there.';
     }
 
     private getMessageForLookingInDirection(direction: Direction): string {
