@@ -16,7 +16,7 @@ describe('RoomRepository', () => {
         it('should not allow non-traversable connections to rooms', () => {
             const room1 = new Room('start', 'Room 1', '');
             const room2 = new Room('room2', 'Room 2', '');
-            room1.addConnection('NORTH', room2);
+            room1.addConnection('north', room2);
 
             const rooms = [room1, room2];
             expect(() => new RoomRepository(rooms)).toThrowError('The connection from start to room2 is not reversed.');
@@ -25,8 +25,8 @@ describe('RoomRepository', () => {
         it('should not fail when all connections are reversed', () => {
             const room1 = new Room('start', 'Room 1', '');
             const room2 = new Room('room2', 'Room 2', '');
-            room1.addConnection('SOUTH', room2);
-            room2.addConnection('NORTH', room1);
+            room1.addConnection('south', room2);
+            room2.addConnection('north', room1);
 
             const rooms = [room1, room2];
             expect(() => new RoomRepository(rooms)).not.toThrowError();

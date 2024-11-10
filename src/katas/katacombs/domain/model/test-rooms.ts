@@ -13,11 +13,11 @@ export function createTestRooms(): Room[] {
         'Inside the building' +
             'Uou are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
     );
-    start.addConnection('NORTH', building, {
+    start.addConnection('north', building, {
         description: 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
         words: ['building', 'inside'],
     });
-    building.addConnection('SOUTH', start, {
+    building.addConnection('south', start, {
         words: ['outside', 'door'],
     });
     building.addItem(

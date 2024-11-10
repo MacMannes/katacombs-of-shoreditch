@@ -71,7 +71,7 @@ describe('GameController', () => {
         });
 
         it('should allow for commands with a verb and a subject', () => {
-            controller.processCommand('look', 'NORTH');
+            controller.processCommand('look', 'north');
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
             );
@@ -91,17 +91,17 @@ describe('GameController', () => {
     describe('Traveling', () => {
         describe('to an ordinal direction', () => {
             it('should print the new room when the direction is valid', () => {
-                controller.go('NORTH');
+                controller.go('north');
                 expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
             });
 
             it('should print a message when direction is invalid', () => {
-                controller.go('WEST');
+                controller.go('west');
                 expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('no way'));
             });
 
             it('should print the current room when the direction is invalid', () => {
-                controller.go('WEST');
+                controller.go('west');
                 expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
             });
         });
@@ -127,7 +127,7 @@ describe('GameController', () => {
         });
 
         it('should show the description when looking in a specific direction with a connection', () => {
-            controller.look('NORTH');
+            controller.look('north');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
@@ -145,14 +145,14 @@ describe('GameController', () => {
         });
 
         it('should show something like "Nothing interesting" when looking in a specific direction with NO connection', () => {
-            controller.look('WEST');
+            controller.look('west');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('Nothing interesting'));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
         it('should show something like "Nothing interesting" when looking at a connection with no description', () => {
-            controller.go('NORTH');
+            controller.go('north');
             vi.resetAllMocks();
 
             controller.look('outside');
@@ -171,7 +171,7 @@ describe('GameController', () => {
 
     describe('Looking at items', () => {
         it('should show the description of the item when found', () => {
-            controller.go('NORTH');
+            controller.go('north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
             controller.look('keys');
@@ -181,7 +181,7 @@ describe('GameController', () => {
         });
 
         it('should show the description of the item in the room when when looking at it using a synonym', () => {
-            controller.go('NORTH');
+            controller.go('north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
             controller.look('lamp');
@@ -190,7 +190,7 @@ describe('GameController', () => {
         });
 
         it('should show the description of the item in the inventory when when looking at it using a synonym', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('lantern');
             vi.resetAllMocks();
 
@@ -210,7 +210,7 @@ describe('GameController', () => {
         });
 
         it('should say "OK." when the item exists in the room', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('keys');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
@@ -223,7 +223,7 @@ describe('GameController', () => {
         });
 
         it('should move the item from the room to the inventory when it exists in the room', () => {
-            controller.go('NORTH');
+            controller.go('north');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
             controller.take('keys');
 
@@ -232,7 +232,7 @@ describe('GameController', () => {
         });
 
         it('should say "OK." when taking an item using a synonym', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('lamp');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
@@ -249,9 +249,9 @@ describe('GameController', () => {
         });
 
         it('should move the item from inventory to the room when the user possesses the item', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('keys');
-            controller.go('SOUTH');
+            controller.go('south');
             controller.drop('keys');
 
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
@@ -259,9 +259,9 @@ describe('GameController', () => {
         });
 
         it('should say "OK" when the item is dropped', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('keys');
-            controller.go('SOUTH');
+            controller.go('south');
             vi.resetAllMocks();
             controller.drop('keys');
             expect(ui.displayMessage).toBeCalledWith('OK.');
@@ -274,7 +274,7 @@ describe('GameController', () => {
         });
 
         it('should say "OK." when dropping an item using a synonym', () => {
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('lantern');
 
             vi.resetAllMocks();
@@ -302,7 +302,7 @@ describe('GameController', () => {
 
         it('should print all the items the user has in their possession', () => {
             controller.displayInventory();
-            controller.go('NORTH');
+            controller.go('north');
             controller.take('keys');
             controller.take('lantern');
             vi.resetAllMocks();

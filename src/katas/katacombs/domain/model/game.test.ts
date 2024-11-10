@@ -5,8 +5,8 @@ describe('Game', () => {
     describe('Move to a new room', () => {
         const room1 = new Room('start', 'Room 1', '');
         const room2 = new Room('room2', 'Room 2', '');
-        room1.addConnection('SOUTH', room2);
-        room2.addConnection('NORTH', room1);
+        room1.addConnection('south', room2);
+        room2.addConnection('north', room1);
         let game: Game;
 
         beforeEach(() => {
@@ -15,22 +15,22 @@ describe('Game', () => {
         });
 
         it('should return the new room, if the move was successful', () => {
-            const result = game.go('SOUTH');
+            const result = game.go('south');
             expect(result).toBe(room2);
         });
 
         it('should set the current room to the new room, if the move was successful', () => {
-            game.go('SOUTH');
+            game.go('south');
             expect(game.getCurrentRoom()).toBe(room2);
         });
 
         it('should return undefined, if the move could not be made', () => {
-            const result = game.go('NORTH');
+            const result = game.go('north');
             expect(result).toBe(undefined);
         });
 
         it('should keep the current room, if the move could not be made', () => {
-            game.go('NORTH');
+            game.go('north');
             expect(game.getCurrentRoom()).toBe(room1);
         });
     });
