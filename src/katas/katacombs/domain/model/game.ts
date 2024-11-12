@@ -80,9 +80,9 @@ export class Game {
 
     private getMessageForLookingAtItem(itemName: string): string | undefined {
         const item = this.findItem(itemName);
-        if (item) {
-            return item.description.look;
-        }
+        if (!item || !item.visible) return undefined;
+
+        return item.description.look;
     }
 
     /**

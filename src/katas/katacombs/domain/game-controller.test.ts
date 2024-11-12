@@ -180,13 +180,6 @@ describe('GameController', () => {
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('Nothing interesting'));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
-
-        it('should show "I see no ... here" when looking at something that is not here', () => {
-            controller.processCommand('look', 'keys');
-
-            expect(ui.displayMessage).toHaveBeenCalledWith('I see no keys here.');
-            expect(ui.displayRoom).toHaveBeenCalledTimes(0);
-        });
     });
 
     describe('Looking at items', () => {
@@ -217,6 +210,23 @@ describe('GameController', () => {
             controller.processCommand('look', 'lamp');
 
             expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
+        });
+
+        it('should show "I see no ... here" when looking at something that is not here', () => {
+            controller.processCommand('look', 'keys');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith('I see no keys here.');
+            expect(ui.displayRoom).toHaveBeenCalledTimes(0);
+        });
+
+        it('should show "I see no ... here" when looking at something that is not visible', () => {
+            controller.processCommand('go', 'north');
+            vi.resetAllMocks();
+
+            controller.processCommand('look', 'key');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith('I see no key here.');
+            expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
     });
 

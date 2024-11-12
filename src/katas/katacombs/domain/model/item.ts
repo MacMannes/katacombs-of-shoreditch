@@ -1,5 +1,7 @@
 export class Item {
     public readonly description: Description;
+    public readonly visible: boolean;
+
     private readonly words: string[] = [];
 
     constructor(
@@ -8,6 +10,7 @@ export class Item {
     ) {
         this.description = options.description;
         if (options.words) this.words.push(...options.words);
+        this.visible = options.visible ?? true;
     }
 
     public matches(word: string): boolean {
@@ -24,4 +27,5 @@ type Description = {
 type ItemOptions = {
     description: Description;
     words?: string[];
+    visible?: boolean; // Visibility of the item. Default: true;
 };

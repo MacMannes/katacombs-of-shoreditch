@@ -36,6 +36,7 @@ export function createTestRooms(): Room[] {
                 room: "There's rusty key on the ground here.",
                 look: "It's a very rusty key. You wonder if it's still usable'",
             },
+            visible: false,
         }),
     );
     building.addItem(
