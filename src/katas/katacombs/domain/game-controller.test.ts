@@ -252,6 +252,15 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
         });
 
+        it('should say something like can not find ..." when the item in the room is invisible', () => {
+            controller.processCommand('go', 'north');
+            vi.resetAllMocks();
+
+            controller.processCommand('take', 'key');
+
+            expect(ui.displayMessage).toBeCalledWith("Can't find key here.");
+        });
+
         it('should move the item from the room to the inventory when it exists in the room', () => {
             controller.processCommand('go', 'north');
             expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
