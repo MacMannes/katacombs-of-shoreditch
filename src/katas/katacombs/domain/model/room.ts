@@ -22,16 +22,16 @@ export class Room {
         return this.connections.find((it) => it.matches(direction, fromRoomName));
     }
 
-    public getItems(includeHiddenItems = false): Item[] {
-        return [...this.items.filter((item) => includeHiddenItems || item.visible)];
+    public getItems(allowInvisibleItems = false): Item[] {
+        return [...this.items.filter((item) => allowInvisibleItems || item.visible)];
     }
 
     public addItem(item: Item) {
         this.items.push(item);
     }
 
-    public findItem(name: string): Item | undefined {
-        return this.items.find((item) => item.matches(name));
+    public findItem(name: string, allowInvisibleItem = false): Item | undefined {
+        return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.visible));
     }
 
     public removeItem(item: Item) {

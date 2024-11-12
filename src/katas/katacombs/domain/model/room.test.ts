@@ -38,8 +38,18 @@ describe('Room', () => {
         expect(items[0].name).toBe('lantern');
     });
 
-    it('Getting items should also return invisible items when includeHiddenItems==true', () => {
+    it('Getting items should also return invisible items when explicitly allowing invisible items', () => {
         const items = room.getItems(true);
         expect(items).toHaveLength(2);
+    });
+
+    it('Finding an item should not return a hidden item by default', () => {
+        const item = room.findItem('key');
+        expect(item).toBeUndefined();
+    });
+
+    it('Finding an item should return a hidden item when explicitly allowing invisible items', () => {
+        const item = room.findItem('key', true);
+        expect(item).toBeDefined();
     });
 });
