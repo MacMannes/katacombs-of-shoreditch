@@ -32,7 +32,7 @@ export class Game {
 
     public take(itemName: string): boolean {
         const item = this.currentRoom.findItem(itemName);
-        if (!item || !item.visible) return false;
+        if (!item) return false;
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
@@ -80,7 +80,7 @@ export class Game {
 
     private getMessageForLookingAtItem(itemName: string): string | undefined {
         const item = this.findItem(itemName);
-        if (!item || !item.visible) return undefined;
+        if (!item) return undefined;
 
         return item.description.look;
     }
