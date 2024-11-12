@@ -322,7 +322,7 @@ describe('GameController', () => {
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
 
-        it('should print all the items the user has in their possession', () => {
+        it('should print all the visible items the user has in their possession', () => {
             controller.displayInventory();
             controller.processCommand('go', 'north');
             controller.processCommand('take', 'keys');
