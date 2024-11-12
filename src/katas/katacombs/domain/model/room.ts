@@ -22,8 +22,8 @@ export class Room {
         return this.connections.find((it) => it.matches(direction, fromRoomName));
     }
 
-    public getItems(): Item[] {
-        return [...this.items];
+    public getItems(includeHiddenItems = false): Item[] {
+        return [...this.items.filter((item) => includeHiddenItems || item.visible)];
     }
 
     public addItem(item: Item) {
