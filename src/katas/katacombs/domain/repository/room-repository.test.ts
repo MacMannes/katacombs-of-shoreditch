@@ -52,16 +52,20 @@ describe('RoomRepository', () => {
                 const room2 = new Room('room2', 'Room 2', '');
                 room1.addItem(
                     new Item('stapler', {
-                        inventory: 'A Stapler',
-                        room: 'There is a stapler on the table',
-                        look: 'It is an ordinary stapler.',
+                        description: {
+                            inventory: 'A Stapler',
+                            room: 'There is a stapler on the table',
+                            look: 'It is an ordinary stapler.',
+                        },
                     }),
                 );
                 room2.addItem(
                     new Item('stapler', {
-                        inventory: 'An old Stapler',
-                        room: 'There is an antique stapler on the table',
-                        look: 'It is a very old stapler.',
+                        description: {
+                            inventory: 'An old Stapler',
+                            room: 'There is an antique stapler on the table',
+                            look: 'It is a very old stapler.',
+                        },
                     }),
                 );
                 const rooms = [room1, room2];
@@ -73,16 +77,20 @@ describe('RoomRepository', () => {
                 const room2 = new Room('room2', 'Room 2', '');
                 room1.addItem(
                     new Item('stapler', {
-                        inventory: 'A Stapler',
-                        room: 'There is a stapler on the table',
-                        look: 'It is an ordinary stapler.',
+                        description: {
+                            inventory: 'A Stapler',
+                            room: 'There is a stapler on the table',
+                            look: 'It is an ordinary stapler.',
+                        },
                     }),
                 );
                 room2.addItem(
                     new Item('old-stapler', {
-                        inventory: 'A Stapler',
-                        room: 'There is an antique stapler on the table',
-                        look: 'It is a very old stapler.',
+                        description: {
+                            inventory: 'A Stapler',
+                            room: 'There is an antique stapler on the table',
+                            look: 'It is a very old stapler.',
+                        },
                     }),
                 );
                 const rooms = [room1, room2];

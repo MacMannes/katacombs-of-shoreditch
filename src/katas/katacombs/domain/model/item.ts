@@ -1,16 +1,13 @@
 export class Item {
+    public readonly description: Description;
     private readonly words: string[] = [];
 
     constructor(
         readonly name: string,
-        readonly description: {
-            inventory: string;
-            room: string;
-            look: string;
-        },
-        readonly options?: ItemOptions,
+        readonly options: ItemOptions,
     ) {
-        if (options?.words) this.words.push(...options.words);
+        this.description = options.description;
+        if (options.words) this.words.push(...options.words);
     }
 
     public matches(word: string): boolean {
@@ -18,6 +15,13 @@ export class Item {
     }
 }
 
+type Description = {
+    inventory: string;
+    room: string;
+    look: string;
+};
+
 type ItemOptions = {
+    description: Description;
     words?: string[];
 };
