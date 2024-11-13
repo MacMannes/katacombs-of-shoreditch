@@ -35,6 +35,18 @@ describe('RoomRepository', () => {
                 );
             });
 
+            it('should not allow non-traversable connections to rooms', () => {
+                const room1 = new Room('start', 'Room 1', '');
+                const room2 = new Room('room2', 'Room 2', '');
+                const room3 = new Room('room3', 'Room 3', '');
+                room1.addConnection('north', room3);
+
+                const rooms = [room1, room2];
+                expect(() => new RoomRepository(rooms)).toThrowError(
+                    'Invalid connection from start to room3. Room room3 does not exist.',
+                );
+            });
+
             it('should not fail when all connections are reversed', () => {
                 const room1 = new Room('start', 'Room 1', '');
                 const room2 = new Room('room2', 'Room 2', '');
@@ -96,6 +108,14 @@ describe('RoomRepository', () => {
                 const rooms = [room1, room2];
                 expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique inventory descriptions');
             });
+        });
+    });
+
+    describe('Getting rooms', () => {
+        it('should not throw an error when getting a room that does not exists', () => {
+            const rooms = [new Room('start', 'Room', '')];
+            const roomRepository = new RoomRepository(rooms);
+            expect(() => roomRepository.getRoomByName('room2')).toThrowError();
         });
     });
 });
