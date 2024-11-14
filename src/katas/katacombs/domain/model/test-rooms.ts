@@ -30,11 +30,11 @@ export function createTestRooms(): Room[] {
         }),
     );
     building.addItem(
-        new Item('key', {
+        new Item('coin', {
             description: {
-                inventory: 'A rusty key',
-                room: "There's rusty key on the ground here.",
-                look: "It's a very rusty key. You wonder if it's still usable'",
+                inventory: 'A coin',
+                room: "There's a coin here.",
+                look: "It's an old coin. You wonder if you can still buy something with it'",
             },
             visible: false,
         }),
