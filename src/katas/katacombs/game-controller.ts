@@ -19,22 +19,22 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public processCommand(verb: string, subject?: string) {
-        const handler = this.getCommandHandler(verb, subject);
+    public processCommand(verb: string, target?: string) {
+        const handler = this.getCommandHandler(verb, target);
         if (!handler) {
             this.ui.displayMessage('What?');
             return;
         }
 
-        handler.handle(subject ?? '');
+        handler.handle(target ?? '');
     }
 
-    private getCommandHandler(verb: string, subject?: string): CommandHandler | undefined {
+    private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
         const handler = this.commandHandlers[verb];
         if (!handler) return undefined;
 
-        const requiresSubject = handler.requiresSubject ?? true;
-        if (requiresSubject && !subject) {
+        const requiresTarget = handler.requiresTarget ?? true;
+        if (requiresTarget && !target) {
             return undefined;
         }
 
@@ -42,10 +42,10 @@ export class GameController {
     }
 
     private commandHandlers: Record<string, CommandHandler> = {
-        go: { handle: (subject) => this.go(subject) }, // requiresSubject defaults to true
-        look: { requiresSubject: false, handle: (subject) => this.look(subject) }, // explicit no subject
-        take: { handle: (subject) => this.take(subject) },
-        drop: { handle: (subject) => this.drop(subject) },
+        go: { handle: (target) => this.go(target) }, // requiresTarget defaults to true
+        look: { requiresTarget: false, handle: (target) => this.look(target) }, // explicit no target
+        take: { handle: (target) => this.take(target) },
+        drop: { handle: (target) => this.drop(target) },
     };
 
     private go(to: string) {
