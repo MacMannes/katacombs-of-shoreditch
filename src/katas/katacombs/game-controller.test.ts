@@ -252,7 +252,7 @@ describe('GameController', () => {
 
             controller.processCommand('take', 'coin');
 
-            expect(ui.displayMessage).toBeCalledWith("Can't find key here.");
+            expect(ui.displayMessage).toBeCalledWith("Can't find coin here.");
         });
 
         it('should move the item from the room to the inventory when it exists in the room', () => {
