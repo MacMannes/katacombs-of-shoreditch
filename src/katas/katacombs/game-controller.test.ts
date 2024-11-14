@@ -1,14 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-    createTestRooms,
-    Game,
-    GameController,
-    ItemRepository,
-    NoOpUserInterface,
-    RoomRepository,
-    UserInterface,
-} from '@katas/katacombs/domain';
+import { createTestRooms, Game, ItemRepository, RoomRepository } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
+import { NoOpUserInterface, UserInterface } from '@katas/katacombs/ui';
+import { GameController } from '@katas/katacombs';
 
 describe('GameController', () => {
     let ui: UserInterface;

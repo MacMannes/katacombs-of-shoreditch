@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { UserInterface } from '@katas/katacombs/domain';
+import { UserInterface } from '@katas/katacombs/ui';
 import { Room } from '@katas/katacombs/domain';
 
 export class NoOpUserInterface implements UserInterface {

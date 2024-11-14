@@ -1,4 +1,5 @@
-import { CommandHandler, Game, Item, Room, UserInterface } from '@katas/katacombs/domain';
+import { CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
+import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
     constructor(
