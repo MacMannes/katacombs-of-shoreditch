@@ -48,23 +48,23 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
 
-        it('should not say "What?" when command "look" was given', () => {
+        it('should say "What?" when an invalid commans with only a verb was given', () => {
+            controller.processCommand('relax');
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should not say "What?" when command "look" was given without a target', () => {
             controller.processCommand('look');
             expect(ui.displayMessage).not.toBeCalledWith('What?');
         });
 
-        it('should display the current room when command "look" was given', () => {
+        it('should display the current room when command "look" was given without a target', () => {
             controller.processCommand('look');
             expect(ui.displayRoom).toHaveBeenCalledTimes(1);
             expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
-        it('should allow for commands with only a verb', () => {
-            controller.processCommand('relax');
-            expect(ui.displayMessage).toBeCalledWith('What?');
-        });
-
-        it('should allow for commands with a verb and a subject', () => {
+        it('should process look commands with a target', () => {
             controller.processCommand('look', 'north');
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
