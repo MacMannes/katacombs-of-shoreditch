@@ -250,7 +250,7 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks();
 
-            controller.processCommand('take', 'key');
+            controller.processCommand('take', 'coin');
 
             expect(ui.displayMessage).toBeCalledWith("Can't find key here.");
         });
