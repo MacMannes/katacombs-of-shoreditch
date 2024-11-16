@@ -22,7 +22,7 @@ export class Item {
         }
     }
 
-    public getDescription(context: 'room' | 'inventory' | 'look'): string {
+    public getDescription(context: keyof Description): string {
         return this.description[context];
     }
 
