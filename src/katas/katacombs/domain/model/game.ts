@@ -35,10 +35,11 @@ export class Game {
     public take(itemName: string): TakeItemResult {
         const item = this.currentRoom.findItem(itemName);
         if (!item) return { success: false, error: new NotFoundError(`Can't find ${itemName} here.`) };
-        if (item.immovable) return { success: false, error: new ItemImmovableError(`You can't carry ${itemName}`) };
+        if (item.immovable) return { success: false, error: new ItemImmovableError(`You can't carry a ${itemName}`) };
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
+
         return { success: true, value: item };
     }
 
