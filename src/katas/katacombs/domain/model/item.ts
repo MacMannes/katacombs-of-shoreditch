@@ -22,6 +22,10 @@ export class Item {
         }
     }
 
+    public getDescription(context: 'room' | 'inventory' | 'look'): string {
+        return this.description[context];
+    }
+
     public getCurrentState(): string | undefined {
         return this.currentState;
     }
