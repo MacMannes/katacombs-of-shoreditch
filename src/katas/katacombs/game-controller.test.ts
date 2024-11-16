@@ -279,11 +279,11 @@ describe('GameController', () => {
             expect(items).not.toContain('desk');
         });
 
-        it('should say something like "You can not carry ..." when trying to take an immovable object', () => {
+        it('should say "You can`t be serious!" when trying to take an immovable object', () => {
             controller.processCommand('go', 'north');
             controller.processCommand('take', 'desk');
 
-            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining("You can't carry"));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining("You can't be serious!"));
         });
     });
 
