@@ -270,6 +270,14 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
+
+        it('should not allow immovable objects to be taken', () => {
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'desk');
+
+            const items = controller.getInventory().map((item) => item.name);
+            expect(items).not.toContain('desk');
+        });
     });
 
     describe('Dropping items', () => {

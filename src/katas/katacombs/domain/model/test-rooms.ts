@@ -49,6 +49,16 @@ export function createTestRooms(): Room[] {
             words: ['light', 'lamp'],
         }),
     );
+    building.addItem(
+        new Item('desk', {
+            description: {
+                inventory: '*desk',
+                room: 'There is a an old desk at one side ',
+                look: "You look at the desk. It's covered in papers, pens, and existential dread.",
+            },
+            immovable: true,
+        }),
+    );
 
     const nowhere = new Room('nowhere', 'Nowhere', "You're on the road to Nowhere");
 

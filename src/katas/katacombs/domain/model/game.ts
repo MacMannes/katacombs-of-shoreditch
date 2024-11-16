@@ -32,7 +32,7 @@ export class Game {
 
     public take(itemName: string): boolean {
         const item = this.currentRoom.findItem(itemName);
-        if (!item) return false;
+        if (!item || item.immovable) return false;
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
