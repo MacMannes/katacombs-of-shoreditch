@@ -3,7 +3,8 @@ export class Item {
     public readonly visible: boolean;
     public readonly immovable: boolean;
     public readonly states?: string[];
-    public currentState?: string;
+
+    private currentState?: string;
 
     private readonly words: string[] = [];
 
@@ -19,6 +20,10 @@ export class Item {
             this.states = options.states;
             this.currentState = options.initialState ?? options.states.at(0);
         }
+    }
+
+    public getCurrentState(): string | undefined {
+        return this.currentState;
     }
 
     public matches(word: string): boolean {

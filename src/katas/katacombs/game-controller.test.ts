@@ -349,7 +349,7 @@ describe('GameController', () => {
             controller.processCommand('take', 'lantern');
 
             const lamp = controller.findItem('lamp');
-            expect(lamp?.currentState).toBe('unlit');
+            expect(lamp?.getCurrentState()).toBe('unlit');
         });
     });
 

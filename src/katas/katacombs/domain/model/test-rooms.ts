@@ -47,6 +47,7 @@ export function createTestRooms(): Room[] {
                 look: "It's a shiny brass lantern, which runs on oil.",
             },
             words: ['light', 'lamp'],
+            states: ['unlit', 'lit'],
             initialState: 'unlit',
         }),
     );

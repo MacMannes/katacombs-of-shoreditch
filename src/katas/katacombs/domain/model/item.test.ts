@@ -12,7 +12,7 @@ describe('Item', () => {
             states: ['lit', 'unlit'],
         });
 
-        expect(item.currentState).toBe('lit');
+        expect(item.getCurrentState()).toBe('lit');
     });
 
     it('should set the current state given initial state', () => {
@@ -26,6 +26,6 @@ describe('Item', () => {
             initialState: 'unlit',
         });
 
-        expect(item.currentState).toBe('unlit');
+        expect(item.getCurrentState()).toBe('unlit');
     });
 });
