@@ -73,4 +73,25 @@ describe('Item', () => {
             expect(description).toBe("It's a shiny brass lantern, which runs on oil. It looks like it could be lit.");
         });
     });
+
+    describe('Getting a contextual description for the lamp with lit state', () => {
+        const item = new Item('lantern', { ...defaultItemOptions, initialState: 'lit' });
+
+        it('should return the description and the current state for a room', () => {
+            const description = item.getDescription('room');
+            expect(description).toBe(
+                'There is a shiny brass lantern nearby. It shines brightly, illuminating the surroundings.',
+            );
+        });
+
+        it('should return the description and the current state for the inventory', () => {
+            const description = item.getDescription('inventory');
+            expect(description).toBe('Brass lantern (lit)');
+        });
+
+        it('should return the description and the current state for a room', () => {
+            const description = item.getDescription('look');
+            expect(description).toBe("It's a shiny brass lantern, which runs on oil. The flame dances steadily.");
+        });
+    });
 });
