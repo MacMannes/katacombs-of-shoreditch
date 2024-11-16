@@ -33,6 +33,8 @@ export class Item {
     }
 
     public setState(newState: string) {
+        if (!this.states || !Object.keys(this.states).includes(newState)) return;
+
         this.currentState = newState;
     }
 

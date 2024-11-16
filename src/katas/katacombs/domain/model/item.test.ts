@@ -40,8 +40,21 @@ describe('Item', () => {
         const item = new Item('lantern', { ...defaultItemOptions, initialState: 'unlit' });
 
         it('should set the state to lit', () => {
+            const currentState = item.getCurrentState();
             item.setState('lit');
-            expect(item.getCurrentState()).toBe('lit');
+
+            const newState = item.getCurrentState();
+
+            expect(newState).not.toBe(currentState);
+            expect(newState).toBe('lit');
+        });
+
+        it('should not set the state when the new state is invalid', () => {
+            const currentState = item.getCurrentState();
+
+            item.setState('broken');
+
+            expect(item.getCurrentState()).toBe(currentState);
         });
     });
 
