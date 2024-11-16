@@ -1,12 +1,14 @@
 import {
     Connection,
     Direction,
+    FunctionResult,
     isDirection,
     Item,
     ItemRepository,
     Room,
     RoomRepository,
 } from '@katas/katacombs/domain';
+import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error';
 
 export class Game {
     private currentRoom: Room;
@@ -30,13 +32,14 @@ export class Game {
         return newRoom;
     }
 
-    public take(itemName: string): boolean {
+    public take(itemName: string): TakeItemResult {
         const item = this.currentRoom.findItem(itemName);
-        if (!item || item.immovable) return false;
+        if (!item) return { success: false, error: new NotFoundError(`Can't find ${itemName} here.`) };
+        if (item.immovable) return { success: false, error: new ItemImmovableError(`You can't carry ${itemName}`) };
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
-        return true;
+        return { success: true, value: item };
     }
 
     public drop(itemName: string): boolean {
@@ -93,3 +96,5 @@ export class Game {
         return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
     }
 }
+
+export type TakeItemResult = FunctionResult<NotFoundError | ItemImmovableError, Item>;

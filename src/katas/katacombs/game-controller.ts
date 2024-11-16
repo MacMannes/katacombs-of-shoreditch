@@ -67,8 +67,8 @@ export class GameController {
     }
 
     private take(itemName: string) {
-        const taken = this.game.take(itemName);
-        const message = taken ? 'OK.' : `Can't find ${itemName} here.`;
+        const result = this.game.take(itemName);
+        const message = result.success ? 'OK.' : result.error.message;
         this.ui.displayMessage(message);
     }
 
