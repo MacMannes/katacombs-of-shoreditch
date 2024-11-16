@@ -2,7 +2,7 @@ export class Item {
     public readonly description: Description;
     public readonly visible: boolean;
     public readonly immovable: boolean;
-    public readonly states?: string[];
+    public readonly states?: Record<string, Description>;
 
     private currentState?: string;
 
@@ -18,7 +18,7 @@ export class Item {
         this.immovable = options.immovable ?? false;
         if (options.states) {
             this.states = options.states;
-            this.currentState = options.initialState ?? options.states.at(0);
+            this.currentState = options.initialState ?? Object.keys(options.states).at(0);
         }
     }
 
@@ -46,6 +46,6 @@ type ItemOptions = {
     words?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
-    states?: string[];
+    states?: Record<string, Description>;
     initialState?: string;
 };

@@ -47,7 +47,18 @@ export function createTestRooms(): Room[] {
                 look: "It's a shiny brass lantern, which runs on oil.",
             },
             words: ['light', 'lamp'],
-            states: ['unlit', 'lit'],
+            states: {
+                lit: {
+                    room: 'It shines brightly, illuminating the surroundings.',
+                    inventory: 'The lamp is currently lit.',
+                    look: 'The flame dances steadily.',
+                },
+                unlit: {
+                    room: 'It is dark and cold.',
+                    inventory: 'The lamp is unlit.',
+                    look: 'It looks like it could be lit.',
+                },
+            },
             initialState: 'unlit',
         }),
     );
