@@ -14,7 +14,7 @@ export class Item {
         if (options.words) this.words.push(...options.words);
         this.visible = options.visible ?? true;
         this.immovable = options.immovable ?? false;
-        this.currentState = 'unlit';
+        this.currentState = options.initialState;
     }
 
     public matches(word: string): boolean {
