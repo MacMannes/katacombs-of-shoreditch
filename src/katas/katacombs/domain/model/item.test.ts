@@ -11,12 +11,12 @@ describe('Item', () => {
         states: {
             unlit: {
                 room: 'It is dark and cold.',
-                inventory: 'The lamp is unlit.',
+                inventory: '(unlit)',
                 look: 'It looks like it could be lit.',
             },
             lit: {
                 room: 'It shines brightly, illuminating the surroundings.',
-                inventory: 'The lamp is currently lit.',
+                inventory: '(lit)',
                 look: 'The flame dances steadily.',
             },
         },
@@ -37,7 +37,7 @@ describe('Item', () => {
     });
 
     describe('Getting a contextual description', () => {
-        const item = new Item('lantern', defaultItemOptions);
+        const item = new Item('lantern', { ...defaultItemOptions, states: undefined });
 
         it('should return the description for a room', () => {
             const description = item.getDescription('room');
@@ -52,6 +52,25 @@ describe('Item', () => {
         it('should return the description for a room', () => {
             const description = item.getDescription('look');
             expect(description).toBe("It's a shiny brass lantern, which runs on oil.");
+        });
+    });
+
+    describe('Getting a contextual description for the lamp with unlit state', () => {
+        const item = new Item('lantern', { ...defaultItemOptions });
+
+        it('should return the description and the current state for a room', () => {
+            const description = item.getDescription('room');
+            expect(description).toBe('There is a shiny brass lantern nearby. It is dark and cold.');
+        });
+
+        it('should return the description and the current state for the inventory', () => {
+            const description = item.getDescription('inventory');
+            expect(description).toBe('Brass lantern (unlit)');
+        });
+
+        it('should return the description and the current state for a room', () => {
+            const description = item.getDescription('look');
+            expect(description).toBe("It's a shiny brass lantern, which runs on oil. It looks like it could be lit.");
         });
     });
 });

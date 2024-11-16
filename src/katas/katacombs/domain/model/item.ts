@@ -23,7 +23,9 @@ export class Item {
     }
 
     public getDescription(context: keyof Description): string {
-        return this.description[context];
+        const baseDescription = this.description[context];
+        const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
+        return stateDescription ? `${baseDescription} ${stateDescription}` : baseDescription;
     }
 
     public getCurrentState(): string | undefined {
