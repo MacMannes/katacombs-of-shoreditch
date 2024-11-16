@@ -36,6 +36,15 @@ describe('Item', () => {
         });
     });
 
+    describe('Setting the state of an item', () => {
+        const item = new Item('lantern', { ...defaultItemOptions, initialState: 'unlit' });
+
+        it('should set the state to lit', () => {
+            item.setState('lit');
+            expect(item.getCurrentState()).toBe('lit');
+        });
+    });
+
     describe('Getting a contextual description', () => {
         const item = new Item('lantern', { ...defaultItemOptions, states: undefined });
 
@@ -56,7 +65,7 @@ describe('Item', () => {
     });
 
     describe('Getting a contextual description for the lamp with unlit state', () => {
-        const item = new Item('lantern', { ...defaultItemOptions });
+        const item = new Item('lantern', defaultItemOptions);
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('room');

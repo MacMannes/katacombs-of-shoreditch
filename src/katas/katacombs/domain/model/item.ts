@@ -32,6 +32,10 @@ export class Item {
         return this.currentState;
     }
 
+    public setState(newState: string) {
+        this.currentState = newState;
+    }
+
     public matches(word: string): boolean {
         return this.name === word || this.words.includes(word);
     }
