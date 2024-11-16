@@ -334,6 +334,25 @@ describe('GameController', () => {
         });
     });
 
+    describe('Changing the state of items', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should show the initial state of the lamp', () => {
+            controller.displayInventory();
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'lantern');
+
+            const lamp = controller.findItem('lamp');
+            expect(lamp?.currentState).toBe('unlit');
+        });
+    });
+
     describe('Showing the inventory', () => {
         beforeEach(() => {
             createGameController();

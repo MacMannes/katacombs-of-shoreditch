@@ -2,6 +2,7 @@ export class Item {
     public readonly description: Description;
     public readonly visible: boolean;
     public readonly immovable: boolean;
+    public readonly currentState?: string;
 
     private readonly words: string[] = [];
 
@@ -13,6 +14,7 @@ export class Item {
         if (options.words) this.words.push(...options.words);
         this.visible = options.visible ?? true;
         this.immovable = options.immovable ?? false;
+        this.currentState = 'unlit';
     }
 
     public matches(word: string): boolean {
@@ -31,4 +33,5 @@ type ItemOptions = {
     words?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
+    initialState?: string;
 };
