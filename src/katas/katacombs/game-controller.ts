@@ -1,5 +1,6 @@
 import { CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
+import * as process from 'node:process';
 
 export class GameController {
     constructor(
@@ -9,6 +10,10 @@ export class GameController {
 
     public startGame(): void {
         this.displayCurrentRoom();
+    }
+
+    public quitGame() {
+        process.exit();
     }
 
     public getCurrentRoom(): Room {
