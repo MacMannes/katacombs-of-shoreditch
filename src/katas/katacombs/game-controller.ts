@@ -73,11 +73,12 @@ export class GameController {
     }
 
     private commandHandlers: Record<string, CommandHandler> = {
-        go: { handle: (target) => this.go(target) }, // requiresTarget defaults to true
-        look: { requiresTarget: false, handle: (target) => this.look(target) }, // explicit no target
+        go: { handle: (target) => this.go(target) },
+        look: { requiresTarget: false, handle: (target) => this.look(target) },
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
+        quit: { requiresTarget: false, handle: () => this.quitGame() },
     };
 
     private go(to: string) {

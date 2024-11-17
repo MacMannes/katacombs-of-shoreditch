@@ -35,9 +35,15 @@ describe('GameController', () => {
     });
 
     describe('Quiting the game', () => {
-        it('should call process.exit()', () => {
+        it('should call process.exit() when the game is quit', () => {
             expect(() => {
                 controller.quitGame();
+            }).toThrow('process.exit unexpectedly called with "0"');
+        });
+
+        it('should process the "quit" commando', () => {
+            expect(() => {
+                controller.processCommand('quit');
             }).toThrow('process.exit unexpectedly called with "0"');
         });
     });
