@@ -1,4 +1,4 @@
-import { CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
+import { CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
@@ -20,6 +20,15 @@ export class GameController {
     }
 
     public processCommand(verb: string, target?: string) {
+        const targetItem = target ? this.findItem(target) : undefined;
+        if (targetItem) {
+            targetItem.triggers
+                ?.filter((trigger) => trigger.verb === verb)
+                ?.forEach((trigger) => {
+                    this.executeAction(trigger.action);
+                });
+        }
+
         const handler = this.getCommandHandler(verb, target);
         if (!handler) {
             this.ui.displayMessage('What?');
@@ -27,6 +36,15 @@ export class GameController {
         }
 
         handler.handle(target ?? '');
+    }
+
+    private executeAction(action: CommandAction): void {
+        const handler = this.getCommandHandler(action.command, action.target);
+        if (!handler) {
+            return;
+        }
+
+        handler.handle(action.target, action.value);
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -47,8 +65,6 @@ export class GameController {
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
         changeState: { handle: (target, value) => this.changeState(target, value) },
-        light: { handle: (target) => this.changeState(target, 'lit') },
-        extinguish: { handle: (target) => this.changeState(target, 'unlit') },
     };
 
     private go(to: string) {
