@@ -36,14 +36,12 @@ export class GameController {
         let executedTrigger = false;
 
         const targetItem = target ? this.findItem(target) : undefined;
-        if (targetItem) {
-            targetItem.triggers
-                ?.filter((trigger) => trigger.verb === verb)
-                ?.forEach((trigger) => {
-                    this.executeAction(trigger.action);
-                    executedTrigger = true;
-                });
-        }
+        targetItem?.triggers
+            ?.filter((trigger) => trigger.verb === verb)
+            ?.forEach((trigger) => {
+                this.executeAction(trigger.action);
+                executedTrigger = true;
+            });
 
         return executedTrigger;
     }
