@@ -24,7 +24,7 @@ export class GameController {
         if (executedItemTriggers) return;
 
         const handler = this.getCommandHandler(verb, target);
-        if (!handler) {
+        if (!handler || handler.isInternal) {
             this.ui.displayMessage('What?');
             return;
         }
@@ -72,7 +72,7 @@ export class GameController {
         look: { requiresTarget: false, handle: (target) => this.look(target) }, // explicit no target
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
-        changeState: { handle: (target, value) => this.changeState(target, value) },
+        changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
     private go(to: string) {

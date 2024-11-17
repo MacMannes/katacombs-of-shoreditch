@@ -375,6 +375,13 @@ describe('GameController', () => {
 
             expect(lamp?.getCurrentState()).toBe('unlit');
         });
+
+        it('The player should not be allowed to trigger internal commands like "changeState lamp"', () => {
+            vi.resetAllMocks();
+            controller.processCommand('changeState', 'lamp');
+
+            expect(ui.displayMessage).toBeCalledWith('What?');
+        });
     });
 
     describe('Showing the inventory', () => {
