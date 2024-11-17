@@ -34,7 +34,15 @@ describe('GameController', () => {
         });
     });
 
-    describe('Quiting the game', () => {
+    describe('Quitting the game', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
         it('should call process.exit() when the game is quit', () => {
             expect(() => {
                 controller.quitGame();
@@ -45,6 +53,14 @@ describe('GameController', () => {
             expect(() => {
                 controller.processCommand('quit');
             }).toThrow('process.exit unexpectedly called with "0"');
+        });
+
+        it('should say "Bye!', () => {
+            expect(() => {
+                controller.processCommand('quit');
+            }).toThrow();
+
+            expect(ui.displayMessage).toBeCalledWith('Bye!');
         });
     });
 

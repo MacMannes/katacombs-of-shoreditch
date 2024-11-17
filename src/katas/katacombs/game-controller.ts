@@ -13,6 +13,7 @@ export class GameController {
     }
 
     public quitGame() {
+        this.ui.displayMessage('Bye!');
         process.exit();
     }
 
