@@ -1,20 +1,29 @@
 import { CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import * as process from 'node:process';
 
 export class GameController {
+    private isPlaying: boolean;
+
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
-    ) {}
+    ) {
+        this.isPlaying = true;
+    }
 
-    public startGame(): void {
+    public async startGame() {
         this.displayCurrentRoom();
+
+        while (this.isPlaying) {
+            const userInput = (await this.ui.getUserInput()) ?? '';
+            const [verb, target] = userInput.split(' ');
+            this.processCommand(verb, target);
+        }
     }
 
     public quitGame() {
         this.ui.displayMessage('Bye!');
-        process.exit();
+        this.isPlaying = false;
     }
 
     public getCurrentRoom(): Room {

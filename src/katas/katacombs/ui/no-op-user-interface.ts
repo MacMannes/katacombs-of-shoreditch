@@ -10,4 +10,8 @@ export class NoOpUserInterface implements UserInterface {
     displayRoom(room: Room): void {
         // NO-OP
     }
+
+    async getUserInput(): Promise<string | undefined> {
+        return '';
+    }
 }

@@ -1,16 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestRooms, Game, ItemRepository, RoomRepository } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
-import { NoOpUserInterface, UserInterface } from '@katas/katacombs/ui';
+import { NoOpUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs';
 
 describe('GameController', () => {
-    let ui: UserInterface;
+    const ui = createMockedObject(NoOpUserInterface);
     let controller: GameController;
 
     function createGameController() {
-        ui = createMockedObject(NoOpUserInterface);
-
         const testRooms = createTestRooms();
         const roomRepository = new RoomRepository(testRooms);
         const itemRepository = new ItemRepository();
@@ -26,39 +24,37 @@ describe('GameController', () => {
         vi.resetAllMocks();
     });
 
-    describe('Starting the game', () => {
-        it('should print the title and description of the starting room', () => {
-            controller.startGame();
-            expect(ui.displayRoom).toHaveBeenCalledTimes(1);
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
-        });
-    });
-
-    describe('Quitting the game', () => {
+    describe('Starting the game', async () => {
         beforeEach(() => {
             createGameController();
+            ui.getUserInput.mockResolvedValue('quit');
         });
 
         afterEach(() => {
             vi.resetAllMocks();
         });
 
-        it('should call process.exit() when the game is quit', () => {
-            expect(() => {
-                controller.quitGame();
-            }).toThrow('process.exit unexpectedly called with "0"');
+        it('should print the title and description of the starting room', async () => {
+            await controller.startGame();
+            expect(ui.displayRoom).toHaveBeenCalledTimes(1);
+            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
-        it('should process the "quit" commando', () => {
-            expect(() => {
-                controller.processCommand('quit');
-            }).toThrow('process.exit unexpectedly called with "0"');
-        });
+        it('should continue to ask for user input until the user says "quit"', async () => {
+            ui.getUserInput.mockResolvedValueOnce('look');
+            ui.getUserInput.mockResolvedValueOnce('go north');
+            ui.getUserInput.mockResolvedValueOnce('take lamp');
 
+            await controller.startGame();
+            expect(ui.displayRoom).toHaveBeenCalledTimes(3);
+            expect(ui.displayMessage).toHaveBeenCalledWith('OK.');
+            expect(ui.displayMessage).toHaveBeenCalledWith('Bye!');
+        });
+    });
+
+    describe('Quitting the game', () => {
         it('should say "Bye!', () => {
-            expect(() => {
-                controller.processCommand('quit');
-            }).toThrow();
+            controller.processCommand('quit');
 
             expect(ui.displayMessage).toBeCalledWith('Bye!');
         });
