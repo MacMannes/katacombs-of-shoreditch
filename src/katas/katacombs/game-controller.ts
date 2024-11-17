@@ -20,14 +20,8 @@ export class GameController {
     }
 
     public processCommand(verb: string, target?: string) {
-        const targetItem = target ? this.findItem(target) : undefined;
-        if (targetItem) {
-            targetItem.triggers
-                ?.filter((trigger) => trigger.verb === verb)
-                ?.forEach((trigger) => {
-                    this.executeAction(trigger.action);
-                });
-        }
+        const executedItemTriggers = this.executeItemTriggers(target, verb);
+        if (executedItemTriggers) return;
 
         const handler = this.getCommandHandler(verb, target);
         if (!handler) {
@@ -36,6 +30,22 @@ export class GameController {
         }
 
         handler.handle(target ?? '');
+    }
+
+    private executeItemTriggers(target: string | undefined, verb: string): boolean {
+        let executedTrigger = false;
+
+        const targetItem = target ? this.findItem(target) : undefined;
+        if (targetItem) {
+            targetItem.triggers
+                ?.filter((trigger) => trigger.verb === verb)
+                ?.forEach((trigger) => {
+                    this.executeAction(trigger.action);
+                    executedTrigger = true;
+                });
+        }
+
+        return executedTrigger;
     }
 
     private executeAction(action: CommandAction): void {

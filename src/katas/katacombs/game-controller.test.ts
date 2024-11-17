@@ -359,6 +359,11 @@ describe('GameController', () => {
             expect(lamp?.getCurrentState()).toBe('lit');
         });
 
+        it('should not say "What?" after giving the command "light lamp"', () => {
+            controller.processCommand('light', 'lamp');
+            expect(ui.displayMessage).not.toBeCalledWith('What?');
+        });
+
         it('should set the lamp to lit with the command "extinguish lamp"', () => {
             const lamp = controller.findItem('lamp');
             expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
