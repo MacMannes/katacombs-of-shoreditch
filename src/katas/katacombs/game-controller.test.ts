@@ -337,6 +337,8 @@ describe('GameController', () => {
     describe('Changing the state of items', () => {
         beforeEach(() => {
             createGameController();
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'lantern');
         });
 
         afterEach(() => {
@@ -344,16 +346,11 @@ describe('GameController', () => {
         });
 
         it('should show the initial state of the lamp', () => {
-            controller.processCommand('go', 'north');
-            controller.processCommand('take', 'lantern');
-
             const lamp = controller.findItem('lamp');
             expect(lamp?.getCurrentState()).toBe('unlit');
         });
 
         it('should set the lamp to lit with the command "light lamp"', () => {
-            controller.processCommand('go', 'north');
-            controller.processCommand('take', 'lantern');
             const lamp = controller.findItem('lamp');
             expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
 
@@ -363,8 +360,6 @@ describe('GameController', () => {
         });
 
         it('should set the lamp to lit with the command "extinguish lamp"', () => {
-            controller.processCommand('go', 'north');
-            controller.processCommand('take', 'lantern');
             const lamp = controller.findItem('lamp');
             expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
 
