@@ -361,6 +361,18 @@ describe('GameController', () => {
 
             expect(lamp?.getCurrentState()).toBe('lit');
         });
+
+        it('should set the lamp to lit with the command "extinguish lamp"', () => {
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'lantern');
+            const lamp = controller.findItem('lamp');
+            expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
+
+            controller.processCommand('light', 'lamp');
+            controller.processCommand('extinguish', 'lamp');
+
+            expect(lamp?.getCurrentState()).toBe('unlit');
+        });
     });
 
     describe('Showing the inventory', () => {

@@ -47,6 +47,7 @@ export class GameController {
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
         light: { handle: (target) => this.changeState(target, 'lit') },
+        extinguish: { handle: (target) => this.changeState(target, 'unlit') },
     };
 
     private go(to: string) {
