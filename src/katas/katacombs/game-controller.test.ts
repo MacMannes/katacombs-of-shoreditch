@@ -369,6 +369,8 @@ describe('GameController', () => {
             expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
 
             controller.processCommand('light', 'lamp');
+            expect(lamp?.getCurrentState()).toBe('lit');
+
             controller.processCommand('extinguish', 'lamp');
 
             expect(lamp?.getCurrentState()).toBe('unlit');
