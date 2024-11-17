@@ -1,3 +1,5 @@
+export * from './action-trigger';
+export * from './command-action';
 export * from './command-handler';
 export * from './connection';
 export * from './test-rooms';

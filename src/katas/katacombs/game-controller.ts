@@ -46,6 +46,7 @@ export class GameController {
         look: { requiresTarget: false, handle: (target) => this.look(target) }, // explicit no target
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
+        changeState: { handle: (target, value) => this.changeState(target, value) },
         light: { handle: (target) => this.changeState(target, 'lit') },
         extinguish: { handle: (target) => this.changeState(target, 'unlit') },
     };
@@ -80,11 +81,13 @@ export class GameController {
         this.ui.displayMessage(message);
     }
 
-    private changeState(target: string, newState: string) {
+    private changeState(target: string, value?: string) {
+        if (!value) return;
+
         const item = this.findItem(target);
         if (!item) return;
 
-        item.setState(newState);
+        item.setState(value);
     }
 
     public findItem(itemName: string): Item | undefined {

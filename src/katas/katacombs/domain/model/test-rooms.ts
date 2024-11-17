@@ -60,6 +60,24 @@ export function createTestRooms(): Room[] {
                 },
             },
             initialState: 'unlit',
+            triggers: [
+                {
+                    verb: 'light',
+                    action: {
+                        command: 'changeState',
+                        target: 'lamp',
+                        value: 'lit',
+                    },
+                },
+                {
+                    verb: 'extinguish',
+                    action: {
+                        command: 'changeState',
+                        target: 'lamp',
+                        value: 'unlit',
+                    },
+                },
+            ],
         }),
     );
     building.addItem(

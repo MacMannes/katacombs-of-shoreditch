@@ -1,8 +1,11 @@
+import { ActionTrigger } from '@katas/katacombs/domain';
+
 export class Item {
     public readonly description: Description;
     public readonly visible: boolean;
     public readonly immovable: boolean;
     public readonly states?: Record<string, Description>;
+    public readonly triggers?: ActionTrigger[];
 
     private currentState?: string;
 
@@ -20,6 +23,7 @@ export class Item {
             this.states = options.states;
             this.currentState = options.initialState ?? Object.keys(options.states).at(0);
         }
+        this.triggers = options.triggers;
     }
 
     public getDescription(context: keyof Description): string {
@@ -56,4 +60,5 @@ type ItemOptions = {
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
     states?: Record<string, Description>;
     initialState?: string;
+    triggers?: ActionTrigger[];
 };
