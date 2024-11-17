@@ -46,6 +46,7 @@ export class GameController {
         look: { requiresTarget: false, handle: (target) => this.look(target) }, // explicit no target
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
+        light: { handle: (target) => this.changeState(target, 'lit') },
     };
 
     private go(to: string) {
@@ -76,6 +77,13 @@ export class GameController {
         const dropped = this.game.drop(itemName);
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);
+    }
+
+    private changeState(target: string, newState: string) {
+        const item = this.findItem(target);
+        if (!item) return;
+
+        item.setState(newState);
     }
 
     public findItem(itemName: string): Item | undefined {
