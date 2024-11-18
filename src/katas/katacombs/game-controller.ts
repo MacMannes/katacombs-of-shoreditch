@@ -2,14 +2,12 @@ import { CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacomb
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
-    private isPlaying: boolean;
+    private isPlaying = true;
 
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
-    ) {
-        this.isPlaying = true;
-    }
+    ) {}
 
     public async startGame() {
         this.displayCurrentRoom();
