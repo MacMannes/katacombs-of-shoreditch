@@ -2,6 +2,10 @@ import { Room } from '../domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class DefaultUserInterface implements UserInterface {
+    public displayWelcomeMessage(): void {
+        // NO-OP
+    }
+
     public displayRoom(room: Room): void {
         console.log(room.description);
         this.setWindowTitle(room.title);
@@ -11,7 +15,7 @@ export class DefaultUserInterface implements UserInterface {
         console.log(message);
     }
 
-    public getUserInput(): Promise<string | undefined> {
+    public async getUserInput(): Promise<string | undefined> {
         throw new Error('Method not implemented.');
     }
 

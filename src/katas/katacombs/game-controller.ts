@@ -10,6 +10,7 @@ export class GameController {
     ) {}
 
     public async startGame() {
+        this.ui.displayWelcomeMessage();
         this.displayCurrentRoom();
 
         while (this.isPlaying) {

@@ -34,6 +34,11 @@ describe('GameController', () => {
             vi.resetAllMocks();
         });
 
+        it('should print the welcome message', async () => {
+            await controller.startGame();
+            expect(ui.displayWelcomeMessage).toHaveBeenCalledTimes(1);
+        });
+
         it('should print the title and description of the starting room', async () => {
             await controller.startGame();
             expect(ui.displayRoom).toHaveBeenCalledTimes(1);
