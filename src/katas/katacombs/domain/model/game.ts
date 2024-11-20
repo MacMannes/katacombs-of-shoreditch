@@ -86,7 +86,7 @@ export class Game {
         const item = this.findItem(itemName);
         if (!item) return undefined;
 
-        return item.description.look;
+        return item.getDescription('look');
     }
 
     /**

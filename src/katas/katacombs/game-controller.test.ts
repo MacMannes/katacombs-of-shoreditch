@@ -224,7 +224,9 @@ describe('GameController', () => {
 
             controller.processCommand('look', 'lamp');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
+            );
         });
 
         it('should show the description of the item in the inventory when when looking at it using a synonym', () => {
@@ -234,7 +236,9 @@ describe('GameController', () => {
 
             controller.processCommand('look', 'lamp');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith("It's a shiny brass lantern, which runs on oil.");
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
+            );
         });
 
         it('should show "I see no ... here" when looking at something that is not here', () => {
