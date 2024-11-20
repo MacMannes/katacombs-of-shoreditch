@@ -38,7 +38,9 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public async getUserInput(): Promise<string | undefined> {
-        return this.rl.question('> ');
+        const userInput = await this.rl.question('> ');
+        console.log('');
+        return userInput;
     }
 
     private setWindowTitle(title: string) {
