@@ -8,8 +8,7 @@ describe('Room', () => {
         room = new Room(
             'building',
             'Inside the building',
-            'Inside the building' +
-                'Uou are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
+            'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
         );
         room.addItem(
             new Item('key', {
