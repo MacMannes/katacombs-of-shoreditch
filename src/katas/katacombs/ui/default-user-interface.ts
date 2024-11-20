@@ -7,7 +7,7 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     displayMessage(message: string): void {
-        throw new Error('Method not implemented.');
+        console.log(message);
     }
 
     getUserInput(): Promise<string | undefined> {

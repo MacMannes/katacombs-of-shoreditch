@@ -23,4 +23,12 @@ describe('Default UserInterface', () => {
             );
         });
     });
+
+    describe('displayMessage', () => {
+        it('Should print provided message', () => {
+            ui.displayMessage('Hello World!');
+
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Hello World!'));
+        });
+    });
 });
