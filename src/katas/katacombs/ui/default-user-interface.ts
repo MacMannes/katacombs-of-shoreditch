@@ -31,6 +31,12 @@ export class DefaultUserInterface implements UserInterface {
     public displayRoom(room: Room): void {
         this.displayMessage(room.description);
         this.setWindowTitle(room.title);
+
+        const items = room
+            .getItems()
+            .map((item) => item.getDescription('room'))
+            .join('\n');
+        this.displayMessage(items);
     }
 
     public displayMessage(message: string): void {

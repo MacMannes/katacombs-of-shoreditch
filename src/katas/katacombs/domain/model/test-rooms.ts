@@ -83,7 +83,7 @@ export function createTestRooms(): Room[] {
         new Item('desk', {
             description: {
                 inventory: '*desk',
-                room: 'There is a an old desk at one side ',
+                room: 'In one corner of the room you see an old desk.',
                 look: "You look at the desk. It's covered in papers, pens, and existential dread.",
             },
             immovable: true,
