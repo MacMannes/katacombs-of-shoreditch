@@ -10,3 +10,4 @@ const game = new Game(roomRepository, itemRepository);
 const controller = new GameController(game, ui);
 
 await controller.startGame();
+process.exit(0);

@@ -1,7 +1,13 @@
 import { Room } from '../domain';
 import { UserInterface } from '@katas/katacombs/ui';
+import { createInterface } from 'node:readline/promises';
 
 export class DefaultUserInterface implements UserInterface {
+    private rl = createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+
     public displayWelcomeMessage(): void {
         console.log('\n\n====================================================');
         console.log(`\x1b[33m  _  __     _                            _          
@@ -23,23 +29,23 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayRoom(room: Room): void {
-        console.log(room.description);
+        this.displayMessage(room.description);
         this.setWindowTitle(room.title);
     }
 
     public displayMessage(message: string): void {
-        console.log(message);
+        console.log(message + '\n');
     }
 
     public async getUserInput(): Promise<string | undefined> {
-        throw new Error('Method not implemented.');
+        return this.rl.question('> ');
     }
 
     private setWindowTitle(title: string) {
         if (process.platform == 'win32') {
             process.title = title;
         } else {
-            console.log('\x1b]2;' + title + '\x1b\x5c');
+            process.stdout.write('\x1b]2;' + title + '\x1b\x5c');
         }
     }
 }
