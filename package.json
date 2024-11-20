@@ -13,7 +13,8 @@
     "test:ci": "vitest run src/ --silent --coverage",
     "test:report": "vitest run --outputFile test-results/junit.xml --reporter default --reporter junit",
     "lint": "eslint src/",
-    "start": "tsx src/index.ts"
+    "start": "tsx src/index.ts",
+    "katacombs": "tsx src/katas/katacombs/app.ts"
   },
   "dependencies": {
     "prettier": "^3.3.3",
