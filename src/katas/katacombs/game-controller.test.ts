@@ -450,7 +450,7 @@ describe('GameController', () => {
             controller.displayInventory();
 
             expect(ui.displayMessage).toBeCalledWith(
-                expect.stringContaining('You are currently holding the following:'),
+                expect.stringContaining('You are currently holding the following:\n - '),
             );
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Brass lantern'));
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
