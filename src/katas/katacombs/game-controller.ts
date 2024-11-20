@@ -86,8 +86,9 @@ export class GameController {
         look: { requiresTarget: false, handle: (target) => this.look(target) },
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
-        changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
+        inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         quit: { requiresTarget: false, handle: () => this.quitGame() },
+        changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
     private go(to: string) {

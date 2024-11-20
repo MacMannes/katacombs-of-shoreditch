@@ -79,7 +79,7 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
 
-        it('should say "What?" when an invalid commans with only a verb was given', () => {
+        it('should say "What?" when an invalid commands with only a verb was given', () => {
             controller.processCommand('relax');
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
@@ -130,6 +130,11 @@ describe('GameController', () => {
         it('should say "What?" when the drop command was given without a target', () => {
             controller.processCommand('drop');
             expect(ui.displayMessage).toBeCalledWith('What?');
+        });
+
+        it('should process inventory', () => {
+            controller.processCommand('inventory');
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('carrying'));
         });
     });
 
