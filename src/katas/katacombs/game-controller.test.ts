@@ -411,6 +411,16 @@ describe('GameController', () => {
             expect(ui.displayMessage).not.toBeCalledWith('What?');
         });
 
+        it('should execute the speak command after giving the command "light lamp"', () => {
+            controller.processCommand('light', 'lamp');
+            expect(ui.displayMessage).toBeCalledWith('The lamp is now lit.');
+        });
+
+        it('should execute the speak command after giving the command "distinguish lamp"', () => {
+            controller.processCommand('extinguish', 'lamp');
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('You blow out the flame'));
+        });
+
         it('should set the lamp to lit with the command "extinguish lamp"', () => {
             const lamp = controller.findItem('lamp');
             expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state

@@ -68,6 +68,10 @@ export function createTestRooms(): Room[] {
                             argument: 'lamp',
                             parameter: 'lit',
                         },
+                        {
+                            command: 'speak',
+                            argument: 'The lamp is now lit.',
+                        },
                     ],
                 },
                 {
@@ -77,6 +81,10 @@ export function createTestRooms(): Room[] {
                             command: 'changeState',
                             argument: 'lamp',
                             parameter: 'unlit',
+                        },
+                        {
+                            command: 'speak',
+                            argument: 'You blow out the flame. The lamp is not burning anymore.',
                         },
                     ],
                 },
