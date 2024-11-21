@@ -49,12 +49,12 @@ export function createTestRooms(): Room[] {
             states: {
                 lit: {
                     room: 'It shines brightly, illuminating the surroundings.',
-                    inventory: 'The lamp is currently lit.',
+                    inventory: 'The flame dances steadily.',
                     look: 'The flame dances steadily.',
                 },
                 unlit: {
                     room: 'It is dark and cold.',
-                    inventory: 'The lamp is unlit.',
+                    inventory: '',
                     look: 'It looks like it could be lit.',
                 },
             },

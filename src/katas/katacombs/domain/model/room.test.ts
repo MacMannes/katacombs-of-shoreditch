@@ -31,24 +31,28 @@ describe('Room', () => {
         );
     });
 
-    it('Getting items should not return invisible items by default', () => {
-        const items = room.getItems();
-        expect(items).toHaveLength(1);
-        expect(items[0].name).toBe('lantern');
+    describe('Getting items', () => {
+        it('should not return invisible items by default', () => {
+            const items = room.getItems();
+            expect(items).toHaveLength(1);
+            expect(items[0].name).toBe('lantern');
+        });
+
+        it('should also return invisible items when explicitly allowing invisible items', () => {
+            const items = room.getItems(true);
+            expect(items).toHaveLength(2);
+        });
     });
 
-    it('Getting items should also return invisible items when explicitly allowing invisible items', () => {
-        const items = room.getItems(true);
-        expect(items).toHaveLength(2);
-    });
+    describe('Finding an item', () => {
+        it('Finding an item should not return a hidden item by default', () => {
+            const item = room.findItem('key');
+            expect(item).toBeUndefined();
+        });
 
-    it('Finding an item should not return a hidden item by default', () => {
-        const item = room.findItem('key');
-        expect(item).toBeUndefined();
-    });
-
-    it('Finding an item should return a hidden item when explicitly allowing invisible items', () => {
-        const item = room.findItem('key', true);
-        expect(item).toBeDefined();
+        it('Finding an item should return a hidden item when explicitly allowing invisible items', () => {
+            const item = room.findItem('key', true);
+            expect(item).toBeDefined();
+        });
     });
 });
