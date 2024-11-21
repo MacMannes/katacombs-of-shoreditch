@@ -62,19 +62,23 @@ export function createTestRooms(): Room[] {
             triggers: [
                 {
                     verb: 'light',
-                    action: {
-                        command: 'changeState',
-                        argument: 'lamp',
-                        parameter: 'lit',
-                    },
+                    actions: [
+                        {
+                            command: 'changeState',
+                            argument: 'lamp',
+                            parameter: 'lit',
+                        },
+                    ],
                 },
                 {
                     verb: 'extinguish',
-                    action: {
-                        command: 'changeState',
-                        argument: 'lamp',
-                        parameter: 'unlit',
-                    },
+                    actions: [
+                        {
+                            command: 'changeState',
+                            argument: 'lamp',
+                            parameter: 'unlit',
+                        },
+                    ],
                 },
             ],
         }),

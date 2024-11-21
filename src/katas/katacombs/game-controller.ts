@@ -53,7 +53,7 @@ export class GameController {
         targetItem?.triggers
             ?.filter((trigger) => trigger.verb === verb)
             ?.forEach((trigger) => {
-                this.executeAction(trigger.action);
+                trigger.actions.forEach((action) => this.executeAction(action));
                 executedTrigger = true;
             });
 
