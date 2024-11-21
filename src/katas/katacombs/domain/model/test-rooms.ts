@@ -67,10 +67,14 @@ export function createTestRooms(): Room[] {
                             command: 'changeState',
                             argument: 'lamp',
                             parameter: 'lit',
-                        },
-                        {
-                            command: 'speak',
-                            argument: 'The lamp is now lit.',
+                            onSuccess: {
+                                command: 'speak',
+                                argument: 'The lamp is now lit.',
+                            },
+                            onFailure: {
+                                command: 'speak',
+                                argument: "The lamp is already shining brightly! Trying to overachieve, aren't we?",
+                            },
                         },
                     ],
                 },
@@ -81,10 +85,15 @@ export function createTestRooms(): Room[] {
                             command: 'changeState',
                             argument: 'lamp',
                             parameter: 'unlit',
-                        },
-                        {
-                            command: 'speak',
-                            argument: 'You blow out the flame. The lamp is not burning anymore.',
+                            onSuccess: {
+                                command: 'speak',
+                                argument: 'You blow out the flame. The lamp is not burning anymore.',
+                            },
+                            onFailure: {
+                                command: 'speak',
+                                argument:
+                                    'An epic battle ensues between you and... wait, no. The lamp is already off. Victory without lifting a finger.',
+                            },
                         },
                     ],
                 },
