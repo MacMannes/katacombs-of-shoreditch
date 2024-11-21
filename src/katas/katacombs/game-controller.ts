@@ -61,10 +61,10 @@ export class GameController {
     }
 
     private executeAction(action: CommandAction): void {
-        if (!action.target && !action.value) return;
-
         const handler = this.getCommandHandler(action.command, action.target);
-        if (!handler) return;
+        if (!handler) {
+            return;
+        }
 
         handler.handle(action.target, action.value);
     }
