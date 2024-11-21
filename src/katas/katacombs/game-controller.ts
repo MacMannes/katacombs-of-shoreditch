@@ -61,12 +61,12 @@ export class GameController {
     }
 
     private executeAction(action: CommandAction): void {
-        const handler = this.getCommandHandler(action.command, action.target);
+        const handler = this.getCommandHandler(action.command, action.argument);
         if (!handler) {
             return;
         }
 
-        handler.handle(action.target, action.value);
+        handler.handle(action.argument, action.parameter);
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -86,8 +86,9 @@ export class GameController {
         look: { requiresTarget: false, handle: (target) => this.look(target) },
         take: { handle: (target) => this.take(target) },
         drop: { handle: (target) => this.drop(target) },
-        inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         quit: { requiresTarget: false, handle: () => this.quitGame() },
+        inventory: { requiresTarget: false, handle: () => this.displayInventory() },
+        speak: { isInternal: true, handle: (value) => this.ui.displayMessage(value) },
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 

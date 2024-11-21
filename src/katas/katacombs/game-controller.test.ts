@@ -132,9 +132,16 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('What?');
         });
 
-        it('should process inventory', () => {
+        it('should process the inventory command', () => {
             controller.processCommand('inventory');
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('carrying'));
+        });
+
+        it('should say "What?" when the speak command is used by the user', () => {
+            controller.processCommand('speak', 'Hello World!');
+
+            expect(ui.displayMessage).toBeCalledWith('What?');
+            expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });
 

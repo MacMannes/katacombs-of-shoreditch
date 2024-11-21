@@ -64,16 +64,16 @@ export function createTestRooms(): Room[] {
                     verb: 'light',
                     action: {
                         command: 'changeState',
-                        target: 'lamp',
-                        value: 'lit',
+                        argument: 'lamp',
+                        parameter: 'lit',
                     },
                 },
                 {
                     verb: 'extinguish',
                     action: {
                         command: 'changeState',
-                        target: 'lamp',
-                        value: 'unlit',
+                        argument: 'lamp',
+                        parameter: 'unlit',
                     },
                 },
             ],
