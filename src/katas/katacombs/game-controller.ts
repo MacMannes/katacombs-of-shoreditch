@@ -142,7 +142,7 @@ export class GameController {
         }
 
         const itemMessages = items.map((item) => item.description.inventory).join('\n- ');
-        const message = `You are currently holding the following:\n - ${itemMessages}`;
+        const message = `You are currently holding the following:\n- ${itemMessages}`;
         this.ui.displayMessage(message);
     }
 
