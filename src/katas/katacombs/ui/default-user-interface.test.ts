@@ -40,11 +40,11 @@ describe('Default UserInterface', () => {
 
             ui.displayRoom(building);
 
-            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('There is a strong smell of hops'));
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('strong smell'));
             expect(consoleSpy).toHaveBeenCalledWith(
                 expect.stringContaining('In one corner of the room you see an old desk.'),
             );
-            expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell of hops'));
+            expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell'));
             expect(consoleSpy).not.toHaveBeenCalledWith(
                 expect.stringContaining('\nIn one corner of the room you see an old desk.'),
             );

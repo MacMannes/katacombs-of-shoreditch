@@ -1,6 +1,7 @@
 import { Room } from '../domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
+import wrap from 'word-wrap';
 
 export class DefaultUserInterface implements UserInterface {
     private rl = createInterface({
@@ -25,7 +26,7 @@ export class DefaultUserInterface implements UserInterface {
   ____) | | | | (_) | | |  __/ (_| | | || (__| | | |
  |_____/|_| |_|\\___/|_|  \\___|\\__,_|_|\\__\\___|_| |_|
 \x1b[0m`);
-        console.log('====================================================\n\n');
+        console.log('  ====================================================\n\n');
     }
 
     public displayRoom(room: Room): void {
@@ -47,7 +48,7 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayMessage(message: string): void {
-        console.log(message + '\n');
+        console.log(wrap(message, { width: 80, indent: '' }) + '\n');
     }
 
     public async getUserInput(): Promise<string | undefined> {
