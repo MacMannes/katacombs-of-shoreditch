@@ -20,9 +20,10 @@ export class GameController {
         }
     }
 
-    public quitGame() {
+    public quitGame(): boolean {
         this.ui.displayMessage('Bye!');
         this.isPlaying = false;
+        return true;
     }
 
     public getCurrentRoom(): Room {
@@ -60,13 +61,21 @@ export class GameController {
         return executedTrigger;
     }
 
-    private executeAction(action: CommandAction): void {
+    private executeAction(action: CommandAction) {
         const handler = this.getCommandHandler(action.command, action.argument);
         if (!handler) {
-            return;
+            return false;
         }
 
-        handler.handle(action.argument, action.parameter);
+        const result = handler.handle(action.argument, action.parameter);
+        this.displayActionResultMessage(action, result);
+    }
+
+    private displayActionResultMessage(action: CommandAction, result: boolean) {
+        const message = result ? action.responses?.success : action.responses?.failure;
+        if (!message) return;
+
+        this.ui.displayMessage(message);
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -88,66 +97,77 @@ export class GameController {
         drop: { handle: (target) => this.drop(target) },
         quit: { requiresTarget: false, handle: () => this.quitGame() },
         inventory: { requiresTarget: false, handle: () => this.displayInventory() },
-        speak: { isInternal: true, handle: (value) => this.ui.displayMessage(value) },
+        speak: { isInternal: true, handle: (value) => this.speak(value) },
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
-    private go(to: string) {
+    private go(to: string): boolean {
         const newRoom = this.game.go(to);
         if (!newRoom) {
             this.ui.displayMessage('There is no way to go that direction.');
         }
         this.displayCurrentRoom();
+        return true;
     }
 
-    private look(at?: string) {
+    private look(at?: string): boolean {
         if (!at) {
             this.displayCurrentRoom();
-            return;
+            return false;
         }
 
         const message = this.game.look(at);
         this.ui.displayMessage(message);
+        return true;
     }
 
-    private take(itemName: string) {
+    private take(itemName: string): boolean {
         const result = this.game.take(itemName);
         const message = result.success ? 'OK.' : result.error.message;
         this.ui.displayMessage(message);
+        return result.success;
     }
 
-    private drop(itemName: string) {
+    private drop(itemName: string): boolean {
         const dropped = this.game.drop(itemName);
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);
+        return dropped;
     }
 
-    private changeState(target: string, value?: string) {
-        if (!value) return;
+    private changeState(target: string, value?: string): boolean {
+        if (!value) return false;
 
         const item = this.findItem(target);
-        if (!item) return;
+        if (!item) return false;
 
         item.setState(value);
+        return true;
     }
 
     public findItem(itemName: string): Item | undefined {
         return this.game.findItem(itemName);
     }
 
-    public displayInventory(): void {
+    public displayInventory(): boolean {
         const items = this.game.getItems();
         if (items.length == 0) {
             this.ui.displayMessage("You're not carrying anything.");
-            return;
+            return true;
         }
 
         const itemMessages = items.map((item) => item.description.inventory).join('\n- ');
         const message = `You are currently holding the following:\n- ${itemMessages}`;
         this.ui.displayMessage(message);
+        return true;
     }
 
     private displayCurrentRoom() {
         this.ui.displayRoom(this.getCurrentRoom());
+    }
+
+    private speak(value: string): boolean {
+        this.ui.displayMessage(value);
+        return true;
     }
 }

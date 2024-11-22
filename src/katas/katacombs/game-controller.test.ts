@@ -413,12 +413,12 @@ describe('GameController', () => {
 
         it('should execute the speak command after giving the command "light lamp"', () => {
             controller.processCommand('light', 'lamp');
-            expect(ui.displayMessage).toBeCalledWith('The lamp is now lit.');
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('bursts into a steady flame'));
         });
 
         it('should execute the speak command after giving the command "distinguish lamp"', () => {
             controller.processCommand('extinguish', 'lamp');
-            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('You blow out the flame'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('you extinguish the lamp'));
         });
 
         it('should set the lamp to lit with the command "extinguish lamp"', () => {
