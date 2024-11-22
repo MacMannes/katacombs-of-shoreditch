@@ -91,6 +91,65 @@ export function createTestRooms(): Room[] {
                         },
                     ],
                 },
+                {
+                    verb: 'rub',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You rub the lamp. Nothing happens. Maybe it’s out of genies, or maybe you’re just not their type.',
+                        },
+                    ],
+                },
+                {
+                    verb: 'kick',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You kick the lamp. It wobbles dangerously, then tips over and lands on your foot. Well played, lamp.',
+                        },
+                    ],
+                },
+                {
+                    verb: 'talk',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You say a few kind words to the lamp. It doesn’t say anything back, but it seems to shine a little brighter. How sweet.',
+                        },
+                    ],
+                },
+                {
+                    verb: 'eat',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument: 'You nibble at the lamp. It’s oily, crunchy, and incredibly bad for your teeth.',
+                        },
+                    ],
+                },
+                {
+                    verb: 'push',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You push the object. It wobbles, then stays exactly where it was. Maybe you should push your luck instead.',
+                        },
+                    ],
+                },
+                {
+                    verb: 'touch',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You touch the lamp. It’s oddly smooth and slightly sticky. You immediately regret your curiosity.',
+                        },
+                    ],
+                },
             ],
         }),
     );
