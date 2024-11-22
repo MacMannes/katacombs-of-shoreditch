@@ -411,14 +411,33 @@ describe('GameController', () => {
             expect(ui.displayMessage).not.toBeCalledWith('What?');
         });
 
-        it('should execute the speak command after giving the command "light lamp"', () => {
+        it('should say the success response after giving the command "light lamp"', () => {
             controller.processCommand('light', 'lamp');
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('bursts into a steady flame'));
         });
 
-        it('should execute the speak command after giving the command "distinguish lamp"', () => {
+        it('should say the failure response after giving the command "light lamp" twice', () => {
+            controller.processCommand('light', 'lamp');
+            vi.resetAllMocks();
+
+            controller.processCommand('light', 'lamp');
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('overachieve'));
+        });
+
+        it('should say the success response after giving the command "distinguish lamp"', () => {
+            controller.processCommand('light', 'lamp');
+            vi.resetAllMocks();
+
             controller.processCommand('extinguish', 'lamp');
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('you extinguish the lamp'));
+        });
+
+        it('should say the failure response after giving the command "distinguish lamp"', () => {
+            controller.processCommand('extinguish', 'lamp');
+            vi.resetAllMocks();
+
+            controller.processCommand('extinguish', 'lamp');
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('An epic battle'));
         });
 
         it('should set the lamp to lit with the command "extinguish lamp"', () => {

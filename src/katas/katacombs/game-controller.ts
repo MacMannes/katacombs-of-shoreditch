@@ -139,7 +139,7 @@ export class GameController {
         if (!value) return false;
 
         const item = this.findItem(target);
-        if (!item) return false;
+        if (!item || item.getCurrentState() === value) return false;
 
         item.setState(value);
         return true;
