@@ -166,6 +166,16 @@ export function createTestRooms(): Room[] {
                         },
                     ],
                 },
+                {
+                    verb: 'kiss',
+                    actions: [
+                        {
+                            command: 'speak',
+                            argument:
+                                'You kiss the lamp, and for a brief moment, you think you hear a genie laughing. Must be your imagination.',
+                        },
+                    ],
+                },
             ],
         }),
     );
