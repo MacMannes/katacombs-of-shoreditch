@@ -57,7 +57,7 @@ export function createTestRooms(): Room[] {
             description: {
                 inventory: 'A coin',
                 room: "There's a coin here.",
-                look: "It's an old coin. You wonder if you can still buy something with it'",
+                look: 'It’s an old coin, worn and tarnished. You wonder if it’s worth anything — or if it’s just another relic for your growing junk collection.',
             },
             visible: false,
         }),

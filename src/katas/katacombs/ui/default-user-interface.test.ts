@@ -33,6 +33,22 @@ describe('Default UserInterface', () => {
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('keys'));
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('lantern'));
         });
+
+        it('Should print the immovable items in the room without a leading newline', () => {
+            const building = rooms.find((room) => room.name === 'building');
+            if (!building) throw new Error('Building room not found');
+
+            ui.displayRoom(building);
+
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('There is a strong smell of hops'));
+            expect(consoleSpy).toHaveBeenCalledWith(
+                expect.stringContaining('In one corner of the room you see an old desk.'),
+            );
+            expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell of hops'));
+            expect(consoleSpy).not.toHaveBeenCalledWith(
+                expect.stringContaining('\nIn one corner of the room you see an old desk.'),
+            );
+        });
     });
 
     describe('displayMessage', () => {

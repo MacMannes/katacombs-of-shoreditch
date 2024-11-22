@@ -29,14 +29,21 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayRoom(room: Room): void {
-        this.displayMessage(room.description);
+        const immovableItems = room
+            .getItems()
+            .filter((item) => item.immovable)
+            .map((item) => item.getDescription('room'))
+            .join(' ');
+
+        this.displayMessage(`${room.description} ${immovableItems}`);
         this.setWindowTitle(room.title);
 
-        const items = room
+        const movableItems = room
             .getItems()
+            .filter((item) => !item.immovable)
             .map((item) => item.getDescription('room'))
             .join('\n');
-        this.displayMessage(items);
+        this.displayMessage(movableItems);
     }
 
     public displayMessage(message: string): void {
