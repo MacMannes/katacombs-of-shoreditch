@@ -48,7 +48,7 @@ export function createTestRooms(): Room[] {
             description: {
                 inventory: 'Set of keys',
                 room: 'There are some keys on the ground here.',
-                look: "It's a key ring with three rusty keys on it.",
+                look: 'It’s a key ring with three rusty keys on it.',
             },
         }),
     );
@@ -56,7 +56,7 @@ export function createTestRooms(): Room[] {
         new Item('coin', {
             description: {
                 inventory: 'A coin',
-                room: "There's a coin here.",
+                room: 'There’s a coin here.',
                 look: 'It’s an old coin, worn and tarnished. You wonder if it’s worth anything — or if it’s just another relic for your growing junk collection.',
             },
             visible: false,
@@ -66,8 +66,8 @@ export function createTestRooms(): Room[] {
         new Item('lantern', {
             description: {
                 inventory: 'Brass lantern',
-                room: 'There is a shiny brass lantern nearby.',
-                look: "It's a shiny brass lantern, which runs on oil.",
+                room: 'You spot a shiny brass lantern. It’s so polished you can see your reflection, which is both exciting and mildly unsettling.',
+                look: 'It’s a shiny brass lantern, which runs on oil.',
             },
             words: ['light', 'lamp'],
             states: {
@@ -207,7 +207,7 @@ export function createTestRooms(): Room[] {
             description: {
                 inventory: '*desk',
                 room: 'In one corner of the room you see an old desk.',
-                look: "You look at the desk. It's covered in papers, pens, and existential dread.",
+                look: 'You look at the desk. It’s covered in papers, pens, and existential dread.',
             },
             immovable: true,
         }),
