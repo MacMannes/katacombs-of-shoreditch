@@ -67,13 +67,10 @@ export function createTestRooms(): Room[] {
                             command: 'changeState',
                             argument: 'lamp',
                             parameter: 'lit',
-                            onSuccess: {
-                                command: 'speak',
-                                argument: 'The lamp is now lit.',
-                            },
-                            onFailure: {
-                                command: 'speak',
-                                argument: "The lamp is already shining brightly! Trying to overachieve, aren't we?",
+                            responses: {
+                                success:
+                                    'The lamp sputters for a moment, as if clearing its throat, then bursts into a steady flame. It seems proud of itself.',
+                                failure: "The lamp is already shining brightly! Trying to overachieve, aren't we?",
                             },
                         },
                     ],
@@ -85,13 +82,10 @@ export function createTestRooms(): Room[] {
                             command: 'changeState',
                             argument: 'lamp',
                             parameter: 'unlit',
-                            onSuccess: {
-                                command: 'speak',
-                                argument: 'You blow out the flame. The lamp is not burning anymore.',
-                            },
-                            onFailure: {
-                                command: 'speak',
-                                argument:
+                            responses: {
+                                success:
+                                    'As you extinguish the lamp, it lets out a final flicker, as if saying, "But I was just getting started!"',
+                                failure:
                                     'An epic battle ensues between you and... wait, no. The lamp is already off. Victory without lifting a finger.',
                             },
                         },
