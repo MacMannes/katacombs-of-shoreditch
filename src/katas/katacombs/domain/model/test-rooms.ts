@@ -66,8 +66,8 @@ export function createTestRooms(): Room[] {
         new Item('lantern', {
             description: {
                 inventory: 'Brass lantern',
-                room: 'You spot a shiny brass lantern. It’s so polished you can see your reflection, which is both exciting and mildly unsettling.',
-                look: 'It’s a shiny brass lantern, which runs on oil.',
+                room: 'There’s a shiny brass lantern nearby. It practically screams, ‘Take me! I’m functional and stylish!’',
+                look: 'It’s so polished you can see your reflection, which is both exciting and mildly unsettling.',
             },
             words: ['light', 'lamp'],
             states: {
