@@ -7,11 +7,7 @@ export function createTestRooms(): Room[] {
         'You are standing at the end of a brick lane before a small brick building called "The Old Truman Brewery". ' +
             'Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of the building and down a gully.',
     );
-    const building = new Room(
-        'building',
-        'Inside the building',
-        'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks.',
-    );
+    const building = new Room('building', 'Inside the building', 'You are inside the main room of the Truman Brewery.');
     start.addConnection('north', building, {
         description: 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
         words: ['building', 'inside'],
@@ -19,6 +15,33 @@ export function createTestRooms(): Room[] {
     building.addConnection('south', start, {
         words: ['outside', 'door'],
     });
+    building.addItem(
+        new Item('casks', {
+            description: {
+                inventory: '*casks',
+                room: 'There is a strong smell of hops and a dozen empty casks.',
+                look: '',
+            },
+            immovable: true,
+            triggers: [
+                {
+                    verb: 'look',
+                    actions: [
+                        {
+                            command: 'reveal',
+                            argument: 'coin',
+                            responses: {
+                                success:
+                                    'You peer closely at the casks. Amidst the dust and cobwebs, a glint catches your eye — a single coin nestled against the wood. A hidden treasure or someone’s forgotten tip?',
+                                failure:
+                                    'You take another look at the casks, hoping for a second coin. All you find is disappointment.',
+                            },
+                        },
+                    ],
+                },
+            ],
+        }),
+    );
     building.addItem(
         new Item('keys', {
             words: ['keyring'],

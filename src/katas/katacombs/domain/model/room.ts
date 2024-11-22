@@ -11,7 +11,7 @@ export class Room {
     ) {}
 
     public getConnections(): Connection[] {
-        return [...this.connections];
+        return this.connections;
     }
 
     public addConnection(direction: Direction, to: Room, options?: ConnectionOptions) {
@@ -23,7 +23,7 @@ export class Room {
     }
 
     public getItems(allowInvisibleItems = false): Item[] {
-        return [...this.items.filter((item) => allowInvisibleItems || item.visible)];
+        return this.items.filter((item) => allowInvisibleItems || item.isVisible());
     }
 
     public addItem(item: Item) {
@@ -31,7 +31,7 @@ export class Room {
     }
 
     public findItem(name: string, allowInvisibleItem = false): Item | undefined {
-        return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.visible));
+        return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.isVisible()));
     }
 
     public removeItem(item: Item) {

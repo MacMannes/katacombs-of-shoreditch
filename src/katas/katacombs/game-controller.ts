@@ -98,6 +98,7 @@ export class GameController {
         quit: { requiresTarget: false, handle: () => this.quitGame() },
         inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         speak: { isInternal: true, handle: (value) => this.speak(value) },
+        reveal: { isInternal: true, handle: (target) => this.reveal(target) },
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
@@ -144,6 +145,14 @@ export class GameController {
         if (!item || item.getCurrentState() === value) return false;
 
         item.setState(value);
+        return true;
+    }
+
+    private reveal(target: string): boolean {
+        const item = this.getCurrentRoom().findItem(target, true);
+        if (!item || item.isVisible()) return false;
+
+        item.reveal();
         return true;
     }
 

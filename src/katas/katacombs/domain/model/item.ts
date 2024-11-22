@@ -2,12 +2,12 @@ import { ActionTrigger } from '@katas/katacombs/domain';
 
 export class Item {
     public readonly description: Description;
-    public readonly visible: boolean;
     public readonly immovable: boolean;
     public readonly states?: Record<string, Description>;
     public readonly triggers?: ActionTrigger[];
 
     private currentState?: string;
+    private visible: boolean;
 
     private readonly words: string[] = [];
 
@@ -40,6 +40,14 @@ export class Item {
         if (!this.states || !Object.keys(this.states).includes(newState)) return;
 
         this.currentState = newState;
+    }
+
+    public isVisible(): boolean {
+        return this.visible;
+    }
+
+    public reveal() {
+        this.visible = true;
     }
 
     public matches(word: string): boolean {

@@ -471,6 +471,26 @@ describe('GameController', () => {
         });
     });
 
+    describe('Revealing an item after triggering an action', () => {
+        beforeEach(() => {
+            createGameController();
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should reveal the coin when looking at the casks', () => {
+            controller.processCommand('go', 'north');
+            const coins = controller.getCurrentRoom().findItem('coin', true)!;
+            expect(coins.isVisible()).toBeFalsy();
+
+            controller.processCommand('look', 'casks');
+
+            expect(coins.isVisible()).toBeTruthy();
+        });
+    });
+
     describe('Showing the inventory', () => {
         beforeEach(() => {
             createGameController();
