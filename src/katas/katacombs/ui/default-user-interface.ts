@@ -30,6 +30,8 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayRoom(room: Room): void {
+        this.setWindowTitle(room.title);
+
         const immovableItems = room
             .getItems()
             .filter((item) => item.immovable)
@@ -37,14 +39,15 @@ export class DefaultUserInterface implements UserInterface {
             .join(' ');
 
         this.displayMessage(`${room.description} ${immovableItems}`);
-        this.setWindowTitle(room.title);
 
         const movableItems = room
             .getItems()
             .filter((item) => !item.immovable)
             .map((item) => item.getDescription('room'))
-            .join('\n');
-        this.displayMessage(movableItems);
+            .join('\n\n');
+        if (movableItems.length > 0) {
+            this.displayMessage(movableItems);
+        }
     }
 
     public displayMessage(message: string): void {
