@@ -1,4 +1,4 @@
-import { CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
+import { CallerId, CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
@@ -44,7 +44,7 @@ export class GameController {
             return;
         }
 
-        handler.handle(target ?? '');
+        handler.handle(target ?? '', 'commandProcessor');
     }
 
     private executeItemTriggers(target: string | undefined, verb: string): boolean {
@@ -54,20 +54,20 @@ export class GameController {
         targetItem?.triggers
             ?.filter((trigger) => trigger.verb === verb)
             ?.forEach((trigger) => {
-                trigger.actions.forEach((action) => this.executeAction(action));
+                trigger.actions.forEach((action) => this.executeTriggerAction(action));
                 executedTrigger = true;
             });
 
         return executedTrigger;
     }
 
-    private executeAction(action: CommandAction) {
+    private executeTriggerAction(action: CommandAction) {
         const handler = this.getCommandHandler(action.command, action.argument);
         if (!handler) {
             return false;
         }
 
-        const result = handler.handle(action.argument, action.parameter);
+        const result = handler.handle(action.argument, action.parameter, 'triggerAction');
         this.displayActionResultMessage(action, result);
     }
 
@@ -94,7 +94,7 @@ export class GameController {
         go: { handle: (target) => this.go(target) },
         look: { requiresTarget: false, handle: (target) => this.look(target) },
         take: { handle: (target) => this.take(target) },
-        drop: { handle: (target) => this.drop(target) },
+        drop: { handle: (target, value, caller) => this.drop(target, caller) },
         quit: { requiresTarget: false, handle: () => this.quitGame() },
         inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         speak: { isInternal: true, handle: (value) => this.speak(value) },
@@ -128,8 +128,10 @@ export class GameController {
         return result.success;
     }
 
-    private drop(itemName: string): boolean {
+    private drop(itemName: string, caller?: CallerId): boolean {
         const dropped = this.game.drop(itemName);
+        if (caller === 'triggerAction') return dropped;
+
         const message = dropped ? 'OK.' : "You aren't carrying it!";
         this.ui.displayMessage(message);
         return dropped;

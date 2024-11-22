@@ -21,6 +21,7 @@ export function createTestRooms(): Room[] {
     });
     building.addItem(
         new Item('keys', {
+            words: ['keyring'],
             description: {
                 inventory: 'Set of keys',
                 room: 'There are some keys on the ground here.',

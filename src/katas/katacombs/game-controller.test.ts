@@ -364,6 +364,17 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
+        it('should NOT say "OK" when an item is dropped by a trigger action', () => {
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'lamp');
+            controller.processCommand('go', 'south');
+            vi.resetAllMocks();
+
+            controller.processCommand('drop', 'lamp');
+
+            expect(ui.displayMessage).not.toBeCalledWith('OK.');
+        });
+
         it('should say something like "You are not carrying it!" when the user does not possess the item', () => {
             controller.processCommand('drop', 'keys');
 
@@ -372,10 +383,10 @@ describe('GameController', () => {
 
         it('should say "OK." when dropping an item using a synonym', () => {
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'lantern');
+            controller.processCommand('take', 'keys');
 
             vi.resetAllMocks();
-            controller.processCommand('drop', 'light');
+            controller.processCommand('drop', 'keyring');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
