@@ -92,6 +92,21 @@ export function createTestRooms(): Room[] {
                     ],
                 },
                 {
+                    verb: 'drop',
+                    actions: [
+                        {
+                            command: 'drop',
+                            argument: 'lamp',
+                            responses: {
+                                success:
+                                    'You drop the lamp. It bounces once, lands upright, and seems smug about its durability.',
+                                failure:
+                                    'You try to drop the lamp, but you’re not holding it. How do you drop something you never had? Deep thoughts.',
+                            },
+                        },
+                    ],
+                },
+                {
                     verb: 'rub',
                     actions: [
                         {
