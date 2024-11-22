@@ -3,6 +3,7 @@ import { UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
+import { pastel } from 'gradient-string';
 
 export class DefaultUserInterface implements UserInterface {
     private rl = createInterface({
@@ -12,7 +13,7 @@ export class DefaultUserInterface implements UserInterface {
 
     public displayWelcomeMessage(): void {
         console.log('\n\n====================================================');
-        console.log(`\x1b[33m  _  __     _                            _          
+        const title = `  _  __     _                            _          
  | |/ /    | |                          | |         
  | ' / __ _| |_ __ _  ___ ___  _ __ ___ | |__  ___  
  |  < / _\` | __/ _\` |/ __/ _ \\| '_ \` _ \\| '_ \\/ __| 
@@ -25,8 +26,8 @@ export class DefaultUserInterface implements UserInterface {
  | (___ | |__   ___ \\___/|_|_  __| |_| |_ ___| |__  
   \\___ \\| '_ \\ / _ \\| '__/ _ \\/ _\` | | __/ __| '_ \\ 
   ____) | | | | (_) | | |  __/ (_| | | || (__| | | |
- |_____/|_| |_|\\___/|_|  \\___|\\__,_|_|\\__\\___|_| |_|
-\x1b[0m`);
+ |_____/|_| |_|\\___/|_|  \\___|\\__,_|_|\\__\\___|_| |_|`;
+        console.log(pastel.multiline(title));
         console.log('====================================================\n\n');
     }
 
