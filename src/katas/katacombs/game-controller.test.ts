@@ -226,7 +226,7 @@ describe('GameController', () => {
 
             controller.processCommand('look', 'keys');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith("It's a key ring with three rusty keys on it.");
+            expect(ui.displayMessage).toHaveBeenCalledWith('It’s a key ring with three rusty keys on it.');
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
@@ -237,7 +237,7 @@ describe('GameController', () => {
             controller.processCommand('look', 'lamp');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
+                expect.stringContaining('It’s so polished you can see your reflection'),
             );
         });
 
@@ -249,7 +249,7 @@ describe('GameController', () => {
             controller.processCommand('look', 'lamp');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
+                expect.stringContaining('It’s so polished you can see your reflection'),
             );
         });
 
