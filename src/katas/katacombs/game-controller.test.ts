@@ -523,5 +523,24 @@ describe('GameController', () => {
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
+
+        it('should print the item state.', () => {
+            controller.displayInventory();
+            controller.processCommand('go', 'north');
+            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'lantern');
+            controller.processCommand('light', 'lantern');
+            vi.resetAllMocks();
+
+            controller.displayInventory();
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.stringContaining('You are currently holding the following:\n- '),
+            );
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Brass lantern'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('flame'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
+            expect(ui.displayMessage).toBeCalledTimes(1);
+        });
     });
 });

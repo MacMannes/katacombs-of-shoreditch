@@ -167,7 +167,7 @@ export class GameController {
             return true;
         }
 
-        const itemMessages = items.map((item) => item.description.inventory).join('\n- ');
+        const itemMessages = items.map((item) => item.getDescription('inventory')).join('\n- ');
         const message = `You are currently holding the following:\n- ${itemMessages}`;
         this.ui.displayMessage(message);
         return true;

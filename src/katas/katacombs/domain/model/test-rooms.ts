@@ -73,7 +73,7 @@ export function createTestRooms(): Room[] {
             states: {
                 lit: {
                     room: 'It shines brightly, illuminating the surroundings.',
-                    inventory: 'The flame dances steadily.',
+                    inventory: '- the flame dances steadily.',
                     look: 'The flame dances steadily.',
                 },
                 unlit: {
