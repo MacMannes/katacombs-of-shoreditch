@@ -1,7 +1,7 @@
 rooms:
   - name: nowhere
     title: Nowhere
-    description: "You're on the road to Nowhere"
+    description: You’re on the road to Nowhere
 
   - name: start
     title: Lost in Shoreditch
@@ -14,8 +14,7 @@ rooms:
       - direction: north
         target: building
         description: >
-          I see a brick building with a sign saying 
-          "Truman Brewery and a wooden white door".
+          I see a brick building with a sign saying "Truman Brewery and a wooden white door".
         words: [ building, inside ]
 
   - name: building
@@ -28,7 +27,7 @@ rooms:
     items:
       - name: casks
         description:
-          room: "There is a strong smell of hops and a dozen empty casks."
+          room: There is a strong smell of hops and a dozen empty casks.
         immovable: true
         triggers:
           - verb: look
@@ -47,14 +46,14 @@ rooms:
       - name: keys
         words: [ keyring ]
         description:
-          inventory: "Set of keys"
-          room: "There are some keys on the ground here."
-          look: "It’s a key ring with three rusty keys on it."
+          inventory: Set of keys
+          room: There are some keys on the ground here.
+          look: It’s a key ring with three rusty keys on it.
 
       - name: coin
         description:
-          inventory: "A coin"
-          room: "There’s a coin here."
+          inventory: A coin
+          room: There’s a coin here.
           look: >
             It’s an old coin, worn and tarnished. You wonder if it’s worth anything 
             — or if it’s just another relic for your growing junk collection.
@@ -63,7 +62,7 @@ rooms:
       - name: lantern
         words: [ light, lamp ]
         description:
-          inventory: "Brass lantern"
+          inventory: Brass lantern
           room: >
             There’s a shiny brass lantern nearby. 
             It practically screams, ‘Take me! I’m functional and stylish!’
@@ -71,12 +70,12 @@ rooms:
             It’s so polished you can see your reflection, which is both exciting and mildly unsettling.
         states:
           lit:
-            room: "It shines brightly, illuminating the surroundings."
+            room: It shines brightly, illuminating the surroundings.
             inventory: "- the flame dances steadily."
-            look: "The flame dances steadily."
+            look: The flame dances steadily.
           unlit:
-            room: "It is dark and cold."
-            look: "It looks like it could be lit."
+            room: It is dark and cold.
+            look: It looks like it could be lit.
         initialState: unlit
         triggers:
           - verb: light
