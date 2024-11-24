@@ -30,7 +30,18 @@ describe('YamlDataLoader', () => {
         const building = result.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
-        expect(building?.findItem('lamp')).toBeDefined();
+        const lamp = building?.findItem('lamp');
+        expect(lamp).toBeDefined();
+        expect(lamp?.getDescription('room')).toContain('lantern');
+        expect(lamp?.getDescription('inventory')).toContain('lantern');
+        expect(lamp?.getDescription('look')).toContain('polished');
+    });
+
+    it('should add invisible items to the rooms', async () => {
+        const result = await loader.loadGameDate(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
         const coin = building?.findItem('coin', true);
         expect(coin).toBeDefined();
         expect(coin?.isVisible()).toBeFalsy();
