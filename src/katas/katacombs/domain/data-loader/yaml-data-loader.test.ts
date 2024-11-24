@@ -7,7 +7,7 @@ describe('YamlDataLoader', () => {
     const loader = new YamlDataLoader();
 
     it('should load the rooms', async () => {
-        const result = await loader.loadGameDate(gameDataPath);
+        const result = await loader.loadGameFromFile(gameDataPath);
         expect(result.length).toBeGreaterThan(2);
         expect(result.find((room) => room.name === 'nowhere')).toBeDefined();
         expect(result.find((room) => room.name === 'start')).toBeDefined();
@@ -15,7 +15,7 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add connections to  the rooms', async () => {
-        const result = await loader.loadGameDate(gameDataPath);
+        const result = await loader.loadGameFromFile(gameDataPath);
         const fromStartToBuilding = result.find((room) => room.name === 'start')?.findConnection('north');
         expect(fromStartToBuilding).toBeDefined();
         expect(fromStartToBuilding?.description).toBeDefined();
@@ -26,7 +26,7 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add items to the rooms', async () => {
-        const result = await loader.loadGameDate(gameDataPath);
+        const result = await loader.loadGameFromFile(gameDataPath);
         const building = result.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
@@ -38,7 +38,7 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add invisible items to the rooms', async () => {
-        const result = await loader.loadGameDate(gameDataPath);
+        const result = await loader.loadGameFromFile(gameDataPath);
         const building = result.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
@@ -48,7 +48,7 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add immovable items to the rooms', async () => {
-        const result = await loader.loadGameDate(gameDataPath);
+        const result = await loader.loadGameFromFile(gameDataPath);
         const building = result.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
