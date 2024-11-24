@@ -14,8 +14,8 @@ export class Room {
         return this.connections;
     }
 
-    public addConnection(direction: Direction, to: Room, options?: ConnectionOptions) {
-        this.connections.push(new Connection(direction, to.name, options));
+    public addConnection(direction: Direction, to: string, options?: ConnectionOptions) {
+        this.connections.push(new Connection(direction, to, options));
     }
 
     public findConnection(direction: string, fromRoomName?: string): Connection | undefined {

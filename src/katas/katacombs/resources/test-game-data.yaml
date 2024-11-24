@@ -12,7 +12,7 @@ rooms:
       the building and down a gully.
     connections:
       - direction: north
-        target: building
+        to: building
         description: >
           I see a brick building with a sign saying “Truman Brewery“.
         words: [ building, inside ]
@@ -22,7 +22,7 @@ rooms:
     description: You are inside the main room of the Truman Brewery.
     connections:
       - direction: south
-        target: start
+        to: start
         words: [ outside, door ]
     items:
       - name: casks

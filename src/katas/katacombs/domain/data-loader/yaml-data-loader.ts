@@ -1,4 +1,4 @@
-import { GameData, Room, RoomData } from '@katas/katacombs/domain';
+import { GameData, isDirection, Room, RoomData } from '@katas/katacombs/domain';
 import { readFile } from 'node:fs/promises';
 import { load } from 'js-yaml';
 
@@ -7,16 +7,17 @@ export class YamlDataLoader {
         const data = await readFile(filePath, 'utf-8');
         const gameData: GameData = load(data) as GameData;
 
-        return this.createRooms(gameData);
-    }
-
-    private createRooms(gameData: GameData): Room[] {
-        const rooms = gameData.rooms.map((roomData) => this.mapRoom(roomData));
-
-        return rooms;
+        return gameData.rooms.map((roomData) => this.mapRoom(roomData));
     }
 
     private mapRoom(roomData: RoomData): Room {
-        return new Room(roomData.name, roomData.title, roomData.description);
+        const room = new Room(roomData.name, roomData.title, roomData.description);
+
+        roomData?.connections?.forEach((connection) => {
+            if (!isDirection(connection.direction)) return;
+            room.addConnection(connection.direction, connection.to);
+        });
+
+        return room;
     }
 }

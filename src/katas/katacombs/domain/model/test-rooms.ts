@@ -8,11 +8,11 @@ export function createTestRooms(): Room[] {
             'Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of the building and down a gully.',
     );
     const building = new Room('building', 'Inside the building', 'You are inside the main room of the Truman Brewery.');
-    start.addConnection('north', building, {
+    start.addConnection('north', 'building', {
         description: 'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
         words: ['building', 'inside'],
     });
-    building.addConnection('south', start, {
+    building.addConnection('south', 'start', {
         words: ['outside', 'door'],
     });
     building.addItem(
