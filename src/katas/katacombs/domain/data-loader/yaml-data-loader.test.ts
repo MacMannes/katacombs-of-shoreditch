@@ -16,9 +16,12 @@ describe('YamlDataLoader', () => {
 
     it('should add connections to  the rooms', async () => {
         const result = await loader.loadGameDate(gameDataPath);
-        const connection1 = result.find((room) => room.name === 'start')?.findConnection('north');
-        expect(connection1).toBeDefined();
-        const connection2 = result.find((room) => room.name === 'building')?.findConnection('south');
-        expect(connection2).toBeDefined();
+        const fromStartToBuilding = result.find((room) => room.name === 'start')?.findConnection('north');
+        expect(fromStartToBuilding).toBeDefined();
+        expect(fromStartToBuilding?.description).toBeDefined();
+        expect(fromStartToBuilding?.matchesDirection('inside')).toBeTruthy();
+
+        const fromuildingToStart = result.find((room) => room.name === 'building')?.findConnection('south');
+        expect(fromuildingToStart).toBeDefined();
     });
 });

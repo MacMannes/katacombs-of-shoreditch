@@ -15,7 +15,11 @@ export class YamlDataLoader {
 
         roomData?.connections?.forEach((connection) => {
             if (!isDirection(connection.direction)) return;
-            room.addConnection(connection.direction, connection.to);
+
+            room.addConnection(connection.direction, connection.to, {
+                description: connection.description,
+                words: connection.words,
+            });
         });
 
         return room;
