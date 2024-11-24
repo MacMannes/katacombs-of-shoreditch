@@ -68,7 +68,6 @@ rooms:
             It practically screams, ‘Take me! I’m functional and stylish!’
           look: >
             It’s so polished you can see your reflection, which is both exciting and mildly unsettling.
-        states:
           lit:
             room: It shines brightly, illuminating the surroundings.
             inventory: "- the flame dances steadily."
