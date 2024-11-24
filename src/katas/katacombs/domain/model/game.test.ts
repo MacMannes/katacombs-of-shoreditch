@@ -3,14 +3,14 @@ import { Game, ItemRepository, Room, RoomRepository } from '@katas/katacombs/dom
 
 describe('Game', () => {
     describe('Move to a new room', () => {
-        const room1 = new Room('start', 'Room 1', '');
+        const start = new Room('start', 'Room 1', '');
         const room2 = new Room('room2', 'Room 2', '');
-        room1.addConnection('south', room2);
-        room2.addConnection('north', room1);
+        start.addConnection('south', 'room2');
+        room2.addConnection('north', 'start');
         let game: Game;
 
         beforeEach(() => {
-            const roomRepository = new RoomRepository([room1, room2]);
+            const roomRepository = new RoomRepository([start, room2]);
             game = new Game(roomRepository, new ItemRepository());
         });
 
@@ -31,7 +31,7 @@ describe('Game', () => {
 
         it('should keep the current room, if the move could not be made', () => {
             game.go('north');
-            expect(game.getCurrentRoom()).toBe(room1);
+            expect(game.getCurrentRoom()).toBe(start);
         });
     });
 });
