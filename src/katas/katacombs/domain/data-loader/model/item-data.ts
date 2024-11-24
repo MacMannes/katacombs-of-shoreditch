@@ -7,4 +7,5 @@ export type ItemData = {
     };
     words?: string[];
     visible?: boolean;
+    immovable?: boolean;
 };

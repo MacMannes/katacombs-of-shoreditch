@@ -46,4 +46,18 @@ describe('YamlDataLoader', () => {
         expect(coin).toBeDefined();
         expect(coin?.isVisible()).toBeFalsy();
     });
+
+    it('should add immovable items to the rooms', async () => {
+        const result = await loader.loadGameDate(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        const desk = building?.findItem('desk', true);
+        expect(desk).toBeDefined();
+        expect(desk?.immovable).toBeTruthy();
+
+        const coin = building?.findItem('coin', true);
+        expect(coin).toBeDefined();
+        expect(coin?.immovable).toBeFalsy();
+    });
 });

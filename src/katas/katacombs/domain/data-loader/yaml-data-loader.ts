@@ -25,6 +25,7 @@ export class YamlDataLoader {
                     },
                     words: item.words,
                     visible: item.visible,
+                    immovable: item.immovable,
                 }),
             );
         });
