@@ -24,4 +24,15 @@ describe('YamlDataLoader', () => {
         const fromuildingToStart = result.find((room) => room.name === 'building')?.findConnection('south');
         expect(fromuildingToStart).toBeDefined();
     });
+
+    it('should add items to the rooms', async () => {
+        const result = await loader.loadGameDate(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        expect(building?.findItem('lamp')).toBeDefined();
+        const coin = building?.findItem('coin', true);
+        expect(coin).toBeDefined();
+        expect(coin?.isVisible()).toBeFalsy();
+    });
 });
