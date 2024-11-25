@@ -1,4 +1,4 @@
-import { GameData, isDirection, Item, Room, RoomData } from '@katas/katacombs/domain';
+import { ActionTrigger, ActionTriggerData, GameData, isDirection, Item, Room, RoomData } from '@katas/katacombs/domain';
 import { readFile } from 'node:fs/promises';
 import { load } from 'js-yaml';
 
@@ -26,6 +26,7 @@ export class YamlDataLoader {
                     words: item.words,
                     visible: item.visible,
                     immovable: item.immovable,
+                    triggers: this.mapTriggers(item.triggers),
                 }),
             );
         });
@@ -42,5 +43,19 @@ export class YamlDataLoader {
                 words: connection.words,
             });
         });
+    }
+
+    private mapTriggers(triggers: ActionTriggerData[] | undefined): ActionTrigger[] | undefined {
+        if (!triggers) return undefined;
+
+        return triggers.map((trigger) => ({
+            verb: trigger.verb,
+            actions: trigger.actions.map((action) => ({
+                command: action.command,
+                argument: action.argument,
+                parameter: action.parameter,
+                responses: action.responses,
+            })),
+        }));
     }
 }

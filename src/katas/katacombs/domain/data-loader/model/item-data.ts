@@ -1,3 +1,5 @@
+import { ActionTriggerData } from '@katas/katacombs/domain/data-loader/model';
+
 export type ItemData = {
     name: string;
     description: {
@@ -8,4 +10,5 @@ export type ItemData = {
     words?: string[];
     visible?: boolean;
     immovable?: boolean;
+    triggers?: ActionTriggerData[];
 };

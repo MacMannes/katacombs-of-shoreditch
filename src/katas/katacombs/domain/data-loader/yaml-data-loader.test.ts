@@ -21,8 +21,8 @@ describe('YamlDataLoader', () => {
         expect(fromStartToBuilding?.description).toBeDefined();
         expect(fromStartToBuilding?.matchesDirection('inside')).toBeTruthy();
 
-        const fromuildingToStart = result.find((room) => room.name === 'building')?.findConnection('south');
-        expect(fromuildingToStart).toBeDefined();
+        const fromBuildingToStart = result.find((room) => room.name === 'building')?.findConnection('south');
+        expect(fromBuildingToStart).toBeDefined();
     });
 
     it('should add items to the rooms', async () => {
@@ -59,5 +59,32 @@ describe('YamlDataLoader', () => {
         const coin = building?.findItem('coin', true);
         expect(coin).toBeDefined();
         expect(coin?.immovable).toBeFalsy();
+    });
+
+    it('should add triggers to the items', async () => {
+        const result = await loader.loadGameFromFile(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        const casks = building?.findItem('casks', true);
+
+        expect(casks).toBeDefined();
+        expect(casks?.triggers).toHaveLength(1);
+        expect(casks?.triggers?.[0]).toStrictEqual({
+            verb: 'look',
+            actions: [
+                {
+                    command: 'reveal',
+                    argument: 'coin',
+                    parameter: undefined,
+                    responses: {
+                        success:
+                            'You peer closely at the casks. Amidst the dust and cobwebs,  a glint catches your eye — a single coin nestled against the wood.  A hidden treasure or someone’s forgotten tip?\n',
+                        failure:
+                            'You take another look at the casks, hoping for a second coin.  All you find is disappointment.\n',
+                    },
+                },
+            ],
+        });
     });
 });
