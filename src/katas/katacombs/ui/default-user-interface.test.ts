@@ -9,7 +9,7 @@ describe('Default UserInterface', () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
     afterEach(() => {
-        vi.clearAllMocks;
+        vi.clearAllMocks();
     });
 
     describe('displayRoom', () => {
