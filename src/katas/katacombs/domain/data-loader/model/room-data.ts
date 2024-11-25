@@ -1,4 +1,4 @@
-import { ConnectionData } from '@katas/katacombs/domain';
+import { ConnectionData, Room, toConnections, toItems } from '@katas/katacombs/domain';
 import { ItemData } from '@katas/katacombs/domain';
 
 export type RoomData = {
@@ -8,3 +8,12 @@ export type RoomData = {
     connections?: ConnectionData[];
     items?: ItemData[];
 };
+
+export function toRoom(roomData: RoomData): Room {
+    const room = new Room(roomData.name, roomData.title, roomData.description);
+
+    room.addConnections(toConnections(roomData.connections));
+    room.addItems(toItems(roomData.items));
+
+    return room;
+}
