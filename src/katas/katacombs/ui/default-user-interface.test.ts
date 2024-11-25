@@ -6,7 +6,7 @@ describe('Default UserInterface', () => {
     const ui = new DefaultUserInterface();
     const rooms = createTestRooms();
 
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'log');
 
     afterEach(() => {
         vi.clearAllMocks();
