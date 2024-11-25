@@ -1,4 +1,13 @@
-import { ActionTrigger, ActionTriggerData, GameData, isDirection, Item, Room, RoomData } from '@katas/katacombs/domain';
+import {
+    ActionTrigger,
+    ActionTriggerData,
+    GameData,
+    isDirection,
+    Item,
+    ItemData,
+    Room,
+    RoomData,
+} from '@katas/katacombs/domain';
 import { readFile } from 'node:fs/promises';
 import { load } from 'js-yaml';
 
@@ -15,23 +24,29 @@ export class YamlDataLoader {
 
         this.addConnections(roomData, room);
 
-        roomData.items?.forEach((item) => {
-            room.addItem(
-                new Item(item.name, {
-                    description: {
-                        room: item.description.room ?? '',
-                        look: item.description.look ?? '',
-                        inventory: item.description.inventory ?? '',
-                    },
-                    words: item.words,
-                    visible: item.visible,
-                    immovable: item.immovable,
-                    triggers: this.mapTriggers(item.triggers),
-                }),
-            );
-        });
+        room.addItems(this.mapItems(roomData.items));
 
         return room;
+    }
+
+    private mapItems(items?: ItemData[]): Item[] {
+        if (!items) return [];
+
+        return items.map((item) => this.mapItem(item));
+    }
+
+    private mapItem(item: ItemData): Item {
+        return new Item(item.name, {
+            description: {
+                room: item.description.room ?? '',
+                look: item.description.look ?? '',
+                inventory: item.description.inventory ?? '',
+            },
+            words: item.words,
+            visible: item.visible,
+            immovable: item.immovable,
+            triggers: this.mapTriggers(item.triggers),
+        });
     }
 
     private addConnections(roomData: RoomData, room: Room) {

@@ -26,6 +26,10 @@ export class Room {
         return this.items.filter((item) => allowInvisibleItems || item.isVisible());
     }
 
+    public addItems(item: Item[]) {
+        this.items.push(...item);
+    }
+
     public addItem(item: Item) {
         this.items.push(item);
     }
