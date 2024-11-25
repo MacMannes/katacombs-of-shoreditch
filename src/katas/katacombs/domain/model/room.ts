@@ -18,6 +18,10 @@ export class Room {
         this.connections.push(new Connection(direction, to, options));
     }
 
+    public addConnections(connections: Connection[]) {
+        this.connections.push(...connections);
+    }
+
     public findConnection(direction: string, fromRoomName?: string): Connection | undefined {
         return this.connections.find((it) => it.matches(direction, fromRoomName));
     }
