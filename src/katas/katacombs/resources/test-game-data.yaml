@@ -5,7 +5,7 @@ rooms:
 
   - name: start
     title: Lost in Shoreditch
-    description: >
+    description: >-
       You are standing at the end of a brick lane before a small brick building called 
       "The Old Truman Brewery". 
       Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of 
@@ -13,7 +13,7 @@ rooms:
     connections:
       - direction: north
         to: building
-        description: >
+        description: >-
           I see a brick building with a sign saying “Truman Brewery“.
         words: [ building, inside ]
 
@@ -35,11 +35,11 @@ rooms:
               - command: reveal
                 argument: coin
                 responses:
-                  success: >
+                  success: >-
                     You peer closely at the casks. Amidst the dust and cobwebs, 
                     a glint catches your eye — a single coin nestled against the wood. 
                     A hidden treasure or someone’s forgotten tip?
-                  failure: >
+                  failure: >-
                     You take another look at the casks, hoping for a second coin. 
                     All you find is disappointment.
 
@@ -54,7 +54,7 @@ rooms:
         description:
           inventory: A coin
           room: There’s a coin here.
-          look: >
+          look: >-
             It’s an old coin, worn and tarnished. You wonder if it’s worth anything 
             — or if it’s just another relic for your growing junk collection.
         visible: false
@@ -63,10 +63,10 @@ rooms:
         words: [ light, lamp ]
         description:
           inventory: Brass lantern
-          room: >
+          room: >-
             There’s a shiny brass lantern nearby. 
             It practically screams, ‘Take me! I’m functional and stylish!’
-          look: >
+          look: >-
             It’s so polished you can see your reflection, which is both exciting and mildly unsettling.
         states:
           lit:
@@ -84,11 +84,11 @@ rooms:
                 argument: lamp
                 parameter: lit
                 responses:
-                  success: >
+                  success: >-
                     The lamp sputters for a moment, as if clearing its throat, 
                     then bursts into a steady flame. 
                     It seems proud of itself.
-                  failure: >
+                  failure: >-
                     The lamp is already shining brightly! Trying to overachieve, aren't we?
           - verb: extinguish
             actions:
@@ -96,10 +96,10 @@ rooms:
                 argument: lamp
                 parameter: unlit
                 responses:
-                  success: >
+                  success: >-
                     As you extinguish the lamp, it lets out a final flicker, as if saying, 
                     "But I was just getting started!"
-                  failure: >
+                  failure: >-
                     An epic battle ensues between you and... wait, no. The lamp is already off. 
                     Victory without lifting a finger.
           - verb: drop
@@ -107,58 +107,58 @@ rooms:
               - command: drop
                 argument: lamp
                 responses:
-                  success: >
+                  success: >-
                     You drop the lamp. It bounces once, lands upright, and seems smug about its durability.
-                  failure: >
+                  failure: >-
                     You try to drop the lamp, but you’re not holding it. How do you drop something 
                     you never had? Deep thoughts.
           - verb: rub
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You rub the lamp. Nothing happens. Maybe it’s out of genies, 
                   or maybe you’re just not their type.
           - verb: kick
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You kick the lamp. It wobbles dangerously, then tips over and lands on your foot. 
                   Well played, lamp.
           - verb: talk
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You say a few kind words to the lamp. It doesn’t say anything back, 
                   but it seems to shine a little brighter. How sweet.
           - verb: eat
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You nibble at the lamp. It’s oily, crunchy, and incredibly bad for your teeth.
           - verb: push
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You push the object. It wobbles, then stays exactly where it was. 
                   Maybe you should push your luck instead.
           - verb: touch
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You touch the lamp. It’s oddly smooth and slightly sticky. 
                   You immediately regret your curiosity.
           - verb: kiss
             actions:
               - command: speak
-                argument: >
+                argument: >-
                   You kiss the lamp, and for a brief moment, you think you hear a genie laughing. 
                   Must be your imagination.
 
       - name: desk
         description:
-          room: > 
+          room: >- 
             Tucked into the corner of the room, an old desk leans slightly, its weathered 
             surface cluttered with the echoes of forgotten tasks.
-          look: >
+          look: >-
             You look at the desk. It’s covered in papers, pens, and existential dread.
         immovable: true
