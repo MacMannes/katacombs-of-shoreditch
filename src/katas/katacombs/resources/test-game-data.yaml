@@ -43,6 +43,15 @@ rooms:
                     You take another look at the casks, hoping for a second coin. 
                     All you find is disappointment.
 
+      - name: rat
+        immovable: true
+        description:
+          room: >-
+            A plucky rat is stationed in front of a small hole in the wall, its tail curling like a question mark.
+          look: >-
+            The rat glares at you with beady eyes, its whiskers twitching in what you can only assume is suspicion. 
+            It's guarding the hole like a tiny, furry bouncer.
+
       - name: keys
         words: [ keyring ]
         description:
