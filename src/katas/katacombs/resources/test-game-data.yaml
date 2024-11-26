@@ -16,6 +16,20 @@ rooms:
         description: >-
           I see a brick building with a sign saying “Truman Brewery“.
         words: [ building, inside ]
+    items:
+      - name: cheese
+        words: [ cheddar ]
+        description:
+          inventory: A wedge of fine cheddar, compact and aromatic, promising a savory escape.
+          room: A wedge of cheese lies on the floor, its golden hue and rich aroma filling the air with savory promise.
+          look: It's a piece of cheddar. It has a crumbly texture with glinting crystals, exuding a mature, sharp scent that teases your senses."
+        triggers:
+          - verb: eat
+            actions:
+              - command: speak
+                argument: >-
+                  As you lift the cheese to your lips, a thought skitters through your mind:
+                  better save this savory delight for a moment of true need.
 
   - name: building
     title: Inside the building
