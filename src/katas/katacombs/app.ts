@@ -5,14 +5,27 @@ import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
 import path from 'node:path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const GAME_DATA_PATH = './resources/test-game-data.yaml';
 
-const gameFactory = new GameFactory(new YamlDataLoader());
-const gameDataPath = path.resolve(__dirname, './resources/test-game-data.yaml');
-const game = await gameFactory.createGame(gameDataPath);
+function getAbsolutePath(relativePath: string) {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
 
-const controller = new GameController(game, new DefaultUserInterface());
+    return path.resolve(__dirname, relativePath);
+}
 
-await controller.startGame();
-process.exit(0);
+async function createGameController() {
+    const gameFactory = new GameFactory(new YamlDataLoader());
+    const game = await gameFactory.createGame(getAbsolutePath(GAME_DATA_PATH));
+
+    return new GameController(game, new DefaultUserInterface());
+}
+
+async function startGame() {
+    const controller = await createGameController();
+
+    await controller.startGame();
+    process.exit(0);
+}
+
+await startGame();
