@@ -224,9 +224,9 @@ describe('GameController', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
-            controller.processCommand('look', 'keys');
+            controller.processCommand('look', 'note');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith('It’s a key ring with three rusty keys on it.');
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.stringContaining('The note is crumpled'));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
@@ -254,9 +254,9 @@ describe('GameController', () => {
         });
 
         it('should show "I see no ... here" when looking at something that is not here', () => {
-            controller.processCommand('look', 'keys');
+            controller.processCommand('look', 'note');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith('I see no keys here.');
+            expect(ui.displayMessage).toHaveBeenCalledWith('I see no note here.');
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
@@ -282,15 +282,15 @@ describe('GameController', () => {
 
         it('should say "OK." when the item exists in the room', () => {
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
 
         it('should say something like can not find ..." when the item can not be found in the room', () => {
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
 
-            expect(ui.displayMessage).toBeCalledWith("Can't find keys here.");
+            expect(ui.displayMessage).toBeCalledWith("Can't find note here.");
         });
 
         it('should say something like can not find ..." when the item in the room is invisible', () => {
@@ -304,11 +304,11 @@ describe('GameController', () => {
 
         it('should move the item from the room to the inventory when it exists in the room', () => {
             controller.processCommand('go', 'north');
-            expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
-            controller.processCommand('take', 'keys');
+            expect(controller.getCurrentRoom().findItem('note')).toBeDefined();
+            controller.processCommand('take', 'note');
 
-            expect(controller.getCurrentRoom().findItem('keys')).toBeUndefined();
-            expect(controller.getInventory().find((item) => item.matches('keys'))).toBeDefined();
+            expect(controller.getCurrentRoom().findItem('note')).toBeUndefined();
+            expect(controller.getInventory().find((item) => item.matches('note'))).toBeDefined();
         });
 
         it('should say "OK." when taking an item using a synonym', () => {
@@ -345,21 +345,21 @@ describe('GameController', () => {
 
         it('should move the item from inventory to the room when the user possesses the item', () => {
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
             controller.processCommand('go', 'south');
-            controller.processCommand('drop', 'keys');
+            controller.processCommand('drop', 'note');
 
-            expect(controller.getCurrentRoom().findItem('keys')).toBeDefined();
-            expect(controller.getInventory().find((item) => item.matches('keys'))).toBeUndefined();
+            expect(controller.getCurrentRoom().findItem('note')).toBeDefined();
+            expect(controller.getInventory().find((item) => item.matches('note'))).toBeUndefined();
         });
 
         it('should say "OK" when the item is dropped', () => {
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
             controller.processCommand('go', 'south');
             vi.resetAllMocks();
 
-            controller.processCommand('drop', 'keys');
+            controller.processCommand('drop', 'note');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
@@ -376,17 +376,17 @@ describe('GameController', () => {
         });
 
         it('should say something like "You are not carrying it!" when the user does not possess the item', () => {
-            controller.processCommand('drop', 'keys');
+            controller.processCommand('drop', 'note');
 
             expect(ui.displayMessage).toBeCalledWith("You aren't carrying it!");
         });
 
         it('should say "OK." when dropping an item using a synonym', () => {
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
 
             vi.resetAllMocks();
-            controller.processCommand('drop', 'keyring');
+            controller.processCommand('drop', 'memo');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
@@ -510,7 +510,7 @@ describe('GameController', () => {
         it('should print all the visible items the user has in their possession', () => {
             controller.displayInventory();
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
             controller.processCommand('take', 'lantern');
             vi.resetAllMocks();
 
@@ -520,14 +520,14 @@ describe('GameController', () => {
                 expect.stringContaining('You are currently holding the following:\n- '),
             );
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Brass lantern'));
-            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('note'));
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
 
         it('should print the item state.', () => {
             controller.displayInventory();
             controller.processCommand('go', 'north');
-            controller.processCommand('take', 'keys');
+            controller.processCommand('take', 'note');
             controller.processCommand('take', 'lantern');
             controller.processCommand('light', 'lantern');
             vi.resetAllMocks();
@@ -539,7 +539,7 @@ describe('GameController', () => {
             );
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Brass lantern'));
             expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('flame'));
-            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('Set of keys'));
+            expect(ui.displayMessage).toBeCalledWith(expect.stringContaining('note'));
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });

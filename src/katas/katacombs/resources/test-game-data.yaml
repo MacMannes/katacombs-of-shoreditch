@@ -52,12 +52,26 @@ rooms:
             The rat glares at you with beady eyes, its whiskers twitching in what you can only assume is suspicion. 
             It's guarding the hole like a tiny, furry bouncer.
 
-      - name: keys
-        words: [ keyring ]
+      - name: key
+        visible: false
         description:
-          inventory: Set of keys
-          room: There are some keys on the ground here.
-          look: It’s a key ring with three rusty keys on it.
+          inventory: A small key
+          room: There is a small key here.
+          look: It’s a small rusted key.
+
+      - name: note
+        description:
+          inventory: A small note
+          room: A small note lies on the floor.
+          look: >-
+            The note is crumpled and stained, but you can still make out the words: 
+            “Beware the rat. It’s a crafty one.”
+        words: [ memo, paper, reminder ]
+        triggers:
+          - verb: read
+            actions:
+              - command: look
+                argument: note
 
       - name: coin
         description:

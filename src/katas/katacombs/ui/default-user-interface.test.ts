@@ -30,7 +30,7 @@ describe('Default UserInterface', async () => {
 
             ui.displayRoom(building);
 
-            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('keys'));
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('note'));
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('lantern'));
         });
 
