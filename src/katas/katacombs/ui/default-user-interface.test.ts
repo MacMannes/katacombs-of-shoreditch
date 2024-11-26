@@ -43,9 +43,7 @@ describe('Default UserInterface', async () => {
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('strong smell'));
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Tucked into the corner'));
             expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell'));
-            expect(consoleSpy).not.toHaveBeenCalledWith(
-                expect.stringContaining('\nIn one corner of the room you see an old desk.'),
-            );
+            expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nTucked into the corner'));
         });
     });
 
