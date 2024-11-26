@@ -7,5 +7,6 @@ export * from './test-rooms';
 export * from './direction';
 export * from './function-result';
 export * from './game';
+export * from './game-factory';
 export * from './item';
 export * from './room';

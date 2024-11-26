@@ -9,5 +9,5 @@ const __dirname = dirname(__filename);
 export async function createTestRooms(): Promise<Room[]> {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
     const loader = new YamlDataLoader();
-    return loader.loadGameFromFile(gameDataPath);
+    return loader.load(gameDataPath);
 }
