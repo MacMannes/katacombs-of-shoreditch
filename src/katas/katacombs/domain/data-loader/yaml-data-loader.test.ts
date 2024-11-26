@@ -79,9 +79,9 @@ describe('YamlDataLoader', () => {
                     parameter: undefined,
                     responses: {
                         success:
-                            'You peer closely at the casks. Amidst the dust and cobwebs,  a glint catches your eye — a single coin nestled against the wood.  A hidden treasure or someone’s forgotten tip?\n',
+                            'You peer closely at the casks. Amidst the dust and cobwebs,  a glint catches your eye — a single coin nestled against the wood.  A hidden treasure or someone’s forgotten tip?',
                         failure:
-                            'You take another look at the casks, hoping for a second coin.  All you find is disappointment.\n',
+                            'You take another look at the casks, hoping for a second coin.  All you find is disappointment.',
                     },
                 },
             ],

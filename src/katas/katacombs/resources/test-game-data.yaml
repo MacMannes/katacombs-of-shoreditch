@@ -157,7 +157,7 @@ rooms:
       - name: desk
         description:
           room: >- 
-            Tucked into the corner of the room, an old desk leans slightly, its weathered 
+            Tucked into the corner of the room, an old desk leans slightly, its weathered
             surface cluttered with the echoes of forgotten tasks.
           look: >-
             You look at the desk. It’s covered in papers, pens, and existential dread.
