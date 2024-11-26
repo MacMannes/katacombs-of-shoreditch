@@ -87,4 +87,17 @@ describe('YamlDataLoader', () => {
             ],
         });
     });
+
+    it('should add states to the room', async () => {
+        const result = await loader.loadGameFromFile(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        const lamp = building?.findItem('lamp');
+        expect(lamp).toBeDefined();
+        expect(lamp?.getCurrentState()).toBe('unlit');
+
+        lamp?.setState('lit');
+        expect(lamp?.getCurrentState()).toBe('lit');
+    });
 });

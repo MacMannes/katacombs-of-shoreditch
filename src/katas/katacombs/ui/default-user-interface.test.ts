@@ -2,9 +2,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DefaultUserInterface } from '@katas/katacombs/ui';
 import { createTestRooms } from '@katas/katacombs/domain';
 
-describe('Default UserInterface', () => {
+describe('Default UserInterface', async () => {
     const ui = new DefaultUserInterface();
-    const rooms = createTestRooms();
+    const rooms = await createTestRooms();
 
     const consoleSpy = vi.spyOn(console, 'log');
 
@@ -41,9 +41,7 @@ describe('Default UserInterface', () => {
             ui.displayRoom(building);
 
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('strong smell'));
-            expect(consoleSpy).toHaveBeenCalledWith(
-                expect.stringContaining('In one corner of the room you see an old desk.'),
-            );
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Tucked into the corner of the room'));
             expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell'));
             expect(consoleSpy).not.toHaveBeenCalledWith(
                 expect.stringContaining('\nIn one corner of the room you see an old desk.'),

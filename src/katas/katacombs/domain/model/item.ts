@@ -1,9 +1,9 @@
 import { ActionTrigger } from '@katas/katacombs/domain';
 
 export class Item {
-    public readonly description: Description;
+    public readonly description: ItemDescription;
     public readonly immovable: boolean;
-    public readonly states?: Record<string, Description>;
+    public readonly states?: Record<string, ItemDescription>;
     public readonly triggers?: ActionTrigger[];
 
     private currentState?: string;
@@ -26,7 +26,7 @@ export class Item {
         this.triggers = options.triggers;
     }
 
-    public getDescription(context: keyof Description): string {
+    public getDescription(context: keyof ItemDescription): string {
         const baseDescription = this.description[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
         return stateDescription ? `${baseDescription} ${stateDescription}` : baseDescription;
@@ -55,18 +55,18 @@ export class Item {
     }
 }
 
-type Description = {
+export type ItemDescription = {
     inventory: string;
     room: string;
     look: string;
 };
 
 type ItemOptions = {
-    description: Description;
+    description: ItemDescription;
     words?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
-    states?: Record<string, Description>;
+    states?: Record<string, ItemDescription>;
     initialState?: string;
     triggers?: ActionTrigger[];
 };

@@ -49,7 +49,7 @@ export class RoomRepository {
     }
 
     private ensureUniqueInventoryDescriptionsInItems(items: Item[]) {
-        const descriptions = items.map((item) => item.description.inventory);
+        const descriptions = items.filter((item) => !item.immovable).map((item) => item.description.inventory);
         if (!this.hasUniqueStrings(descriptions)) {
             throw new Error(`Items should have unique inventory descriptions`);
         }

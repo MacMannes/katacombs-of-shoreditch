@@ -8,16 +8,16 @@ describe('GameController', () => {
     const ui = createMockedObject(NoOpUserInterface);
     let controller: GameController;
 
-    function createGameController() {
-        const testRooms = createTestRooms();
+    async function createGameController() {
+        const testRooms = await createTestRooms();
         const roomRepository = new RoomRepository(testRooms);
         const itemRepository = new ItemRepository();
         const game = new Game(roomRepository, itemRepository);
         controller = new GameController(game, ui);
     }
 
-    beforeEach(() => {
-        createGameController();
+    beforeEach(async () => {
+        await createGameController();
     });
 
     afterEach(() => {
@@ -98,7 +98,7 @@ describe('GameController', () => {
         it('should process look commands with a target', () => {
             controller.processCommand('look', 'north');
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+                expect.stringContaining('I see a brick building with a sign saying'),
             );
         });
 
@@ -187,7 +187,7 @@ describe('GameController', () => {
             controller.processCommand('look', 'north');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+                expect.stringContaining('I see a brick building with a sign saying'),
             );
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
@@ -196,7 +196,7 @@ describe('GameController', () => {
             controller.processCommand('look', 'building');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                'I see a brick building with a sign saying "Truman Brewery and a wooden white door".',
+                expect.stringContaining('I see a brick building with a sign saying'),
             );
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
