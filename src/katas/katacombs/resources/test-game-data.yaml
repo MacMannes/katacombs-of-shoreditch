@@ -30,6 +30,18 @@ rooms:
                 argument: >-
                   As you lift the cheese to your lips, a thought skitters through your mind:
                   better save this savory delight for a moment of true need.
+          - verb: drop
+            conditions:
+              - inRoom: building
+            actions:
+              - command: drop
+                argument: cheese
+                responses:
+                  success: >-
+                    As you drop the cheese, it lands softly on the floor, its aroma mingling with the room's scents.
+                  failure: >-
+                    As you reach into your inventory to drop the cheese, your hand comes up empty. 
+                    It seems the cheese has taken its own path to freedom.          
 
   - name: building
     title: Inside the building
