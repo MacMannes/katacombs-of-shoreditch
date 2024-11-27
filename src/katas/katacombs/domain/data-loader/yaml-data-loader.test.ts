@@ -72,6 +72,7 @@ describe('YamlDataLoader', () => {
         expect(casks?.triggers).toHaveLength(1);
         expect(casks?.triggers?.[0]).toStrictEqual({
             verb: 'look',
+            conditions: undefined,
             actions: [
                 {
                     command: 'reveal',
