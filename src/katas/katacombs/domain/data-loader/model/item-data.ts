@@ -1,4 +1,4 @@
-import { ActionTriggerData, toTriggers, ConditionData } from '@katas/katacombs/domain/data-loader/model';
+import { ActionTriggerData, toTriggers } from '@katas/katacombs/domain/data-loader/model';
 import { Item, ItemDescription } from '@katas/katacombs/domain';
 
 export type ItemData = {

@@ -1,5 +1,7 @@
 export type Condition = {
-    type: string;
+    type: ConditionType;
     key: string;
     value: string;
 };
+
+export type ConditionType = 'location' | 'inventory' | 'state';

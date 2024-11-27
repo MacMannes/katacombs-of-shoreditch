@@ -115,7 +115,12 @@ describe('YamlDataLoader', () => {
 
         expect(dropTrigger).toBeDefined();
         expect(dropTrigger?.verb).toBe('drop');
-        expect(dropTrigger?.conditions).toHaveLength(0);
+        expect(dropTrigger?.conditions).toHaveLength(1);
+        expect(dropTrigger?.conditions?.[0]).toStrictEqual({
+            type: 'location',
+            key: 'currentLocation',
+            value: 'building',
+        });
     });
 
     it('should add states to the items', async () => {
