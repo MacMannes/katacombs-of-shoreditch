@@ -335,14 +335,6 @@ describe('GameController', () => {
     });
 
     describe('Dropping items', () => {
-        beforeEach(() => {
-            createGameController();
-        });
-
-        afterEach(() => {
-            vi.resetAllMocks();
-        });
-
         it('should move the item from inventory to the room when the user possesses the item', () => {
             controller.processCommand('go', 'north');
             controller.processCommand('take', 'note');
@@ -387,6 +379,17 @@ describe('GameController', () => {
 
             vi.resetAllMocks();
             controller.processCommand('drop', 'memo');
+
+            expect(ui.displayMessage).toBeCalledWith('OK.');
+        });
+    });
+
+    describe('Dropping items with trigger conditions', () => {
+        it('should say "OK." when dropping cheese in start room, because trigger conditions are not met', () => {
+            controller.processCommand('take', 'cheese');
+
+            vi.resetAllMocks();
+            controller.processCommand('drop', 'cheese');
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
@@ -482,12 +485,12 @@ describe('GameController', () => {
 
         it('should reveal the coin when looking at the casks', () => {
             controller.processCommand('go', 'north');
-            const coins = controller.getCurrentRoom().findItem('coin', true)!;
-            expect(coins.isVisible()).toBeFalsy();
+            const coins = controller.getCurrentRoom().findItem('coin', true);
+            expect(coins?.isVisible()).toBeFalsy();
 
             controller.processCommand('look', 'casks');
 
-            expect(coins.isVisible()).toBeTruthy();
+            expect(coins?.isVisible()).toBeTruthy();
         });
     });
 
