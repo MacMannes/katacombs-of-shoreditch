@@ -1,4 +1,13 @@
-import { CallerId, CommandAction, CommandHandler, Game, Item, Room } from '@katas/katacombs/domain';
+import {
+    ActionTrigger,
+    CallerId,
+    CommandAction,
+    CommandHandler,
+    Condition,
+    Game,
+    Item,
+    Room,
+} from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
@@ -52,13 +61,27 @@ export class GameController {
 
         const targetItem = target ? this.findItem(target) : undefined;
         targetItem?.triggers
-            ?.filter((trigger) => trigger.verb === verb)
+            ?.filter((trigger) => this.shouldExecuteTrigger(trigger, verb))
             ?.forEach((trigger) => {
                 trigger.actions.forEach((action) => this.executeTriggerAction(action));
                 executedTrigger = true;
             });
 
         return executedTrigger;
+    }
+
+    private shouldExecuteTrigger(trigger: ActionTrigger, verb: string): boolean {
+        if (trigger.verb !== verb) return false;
+
+        if (trigger.conditions) {
+            return this.verifyConditions(trigger.conditions);
+        }
+
+        return true;
+    }
+
+    private verifyConditions(conditions: Condition[]): boolean {
+        return false;
     }
 
     private executeTriggerAction(action: CommandAction) {
