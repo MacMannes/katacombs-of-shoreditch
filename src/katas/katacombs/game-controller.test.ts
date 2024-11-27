@@ -393,6 +393,15 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).toBeCalledWith('OK.');
         });
+
+        it('should not say "OK." when dropping cheese in building, because trigger conditions are met', () => {
+            controller.processCommand('take', 'cheese');
+
+            vi.resetAllMocks();
+            controller.processCommand('drop', 'cheese');
+
+            expect(ui.displayMessage).not.toBeCalledWith('OK.');
+        });
     });
 
     describe('Changing the state of items', () => {
