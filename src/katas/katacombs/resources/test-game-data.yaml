@@ -38,10 +38,16 @@ rooms:
                 argument: cheese
                 responses:
                   success: >-
-                    As you drop the cheese, it lands softly on the floor, its aroma mingling with the room's scents.
+                    The rat sniffs the air, its nose twitching like mad. With lightning speed, 
+                    it grabs the cheese and scurries into the hole, leaving you in the quiet triumph 
+                    of rodent-free solitude.
                   failure: >-
                     As you reach into your inventory to drop the cheese, your hand comes up empty. 
-                    It seems the cheese has taken its own path to freedom.          
+                    It seems the cheese has taken its own path to freedom.
+              - command: hide
+                argument: rat
+              - command: hide
+                argument: cheese
 
   - name: building
     title: Inside the building

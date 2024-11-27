@@ -403,6 +403,19 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).not.toBeCalledWith('OK.');
         });
+
+        it('should hide the rat and the cheese when dropping cheese in building', () => {
+            controller.processCommand('take', 'cheese');
+            controller.processCommand('go', 'north');
+
+            vi.resetAllMocks();
+            controller.processCommand('drop', 'cheese');
+
+            const rat = controller.getCurrentRoom().findItem('rat', true);
+            expect(rat?.isVisible()).toBeFalsy();
+            const cheese = controller.getCurrentRoom().findItem('cheese', true);
+            expect(cheese?.isVisible()).toBeFalsy();
+        });
     });
 
     describe('Changing the state of items', () => {
