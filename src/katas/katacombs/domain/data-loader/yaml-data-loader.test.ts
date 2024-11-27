@@ -88,7 +88,36 @@ describe('YamlDataLoader', () => {
         });
     });
 
-    it('should add states to the room', async () => {
+    it('should not add conditions to the triggers for "drop lamp"', async () => {
+        const result = await loader.load(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        const lamp = building?.findItem('lantern', true);
+        expect(lamp).toBeDefined();
+        const dropTrigger = lamp?.triggers?.find((trigger) => trigger.verb === 'drop');
+
+        expect(dropTrigger).toBeDefined();
+        expect(dropTrigger?.verb).toBe('drop');
+        expect(dropTrigger?.conditions).toBeUndefined();
+    });
+
+    it('should add conditions to the triggers for "drop cheese"', async () => {
+        const result = await loader.load(gameDataPath);
+        const start = result.find((room) => room.name === 'start');
+        expect(start).toBeDefined();
+
+        const cheese = start?.findItem('cheese', true);
+        expect(cheese).toBeDefined();
+        expect(cheese?.triggers).toHaveLength(2);
+        const dropTrigger = cheese?.triggers?.[1];
+
+        expect(dropTrigger).toBeDefined();
+        expect(dropTrigger?.verb).toBe('drop');
+        expect(dropTrigger?.conditions).toHaveLength(0);
+    });
+
+    it('should add states to the items', async () => {
         const result = await loader.load(gameDataPath);
         const building = result.find((room) => room.name === 'building');
         expect(building).toBeDefined();

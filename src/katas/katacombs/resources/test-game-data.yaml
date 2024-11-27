@@ -32,7 +32,7 @@ rooms:
                   better save this savory delight for a moment of true need.
           - verb: drop
             conditions:
-              - inRoom: building
+              - currentLocation: building
             actions:
               - command: drop
                 argument: cheese
