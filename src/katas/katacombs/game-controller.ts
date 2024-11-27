@@ -81,6 +81,15 @@ export class GameController {
     }
 
     private verifyConditions(conditions: Condition[]): boolean {
+        const checkConditions = conditions.map((condition) => this.verifyCondition(condition));
+        return checkConditions.every((value) => value);
+    }
+
+    private verifyCondition(condition: Condition): boolean {
+        if (condition.type === 'location' && condition.key === 'currentLocation') {
+            return this.game.getCurrentRoom().name === condition.value;
+        }
+
         return false;
     }
 

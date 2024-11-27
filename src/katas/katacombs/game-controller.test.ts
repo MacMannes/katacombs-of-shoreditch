@@ -396,6 +396,7 @@ describe('GameController', () => {
 
         it('should not say "OK." when dropping cheese in building, because trigger conditions are met', () => {
             controller.processCommand('take', 'cheese');
+            controller.processCommand('go', 'north');
 
             vi.resetAllMocks();
             controller.processCommand('drop', 'cheese');
