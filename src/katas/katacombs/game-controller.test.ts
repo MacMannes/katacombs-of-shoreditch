@@ -288,6 +288,18 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(expect.stringContaining('tiny key'));
         });
+
+        it('should set the hole state to "examined" after looking at it and the state was "unguarded"', () => {
+            controller.processCommand('take', 'cheese');
+            controller.processCommand('go', 'north');
+            controller.processCommand('drop', 'cheese');
+
+            const hole = controller.getCurrentRoom().findItem('hole');
+            expect(hole?.getCurrentState()).toBe('unguarded');
+
+            controller.processCommand('look', 'hole');
+            expect(hole?.getCurrentState()).toBe('examined');
+        });
     });
 
     describe('Taking items', () => {

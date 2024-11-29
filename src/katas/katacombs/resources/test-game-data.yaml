@@ -78,6 +78,15 @@ rooms:
                     You take another look at the casks, hoping for a second coin. 
                     All you find is disappointment.
 
+      - name: desk
+        description:
+          room: >-
+            Tucked into the corner of the room, an old desk leans slightly, its weathered
+            surface cluttered with the echoes of forgotten tasks.
+          look: >-
+            You look at the desk. It’s covered in papers, pens, and existential dread.
+        immovable: true
+
       - name: hole
         description:
           look: ''
@@ -90,6 +99,11 @@ rooms:
             room: >- 
               Your eyes are drawn to a small, inconspicuous hole near the base of the wall. 
               It’s easy to miss, but something about it feels... significant.
+          examined:
+            room: There’s a small hole near the base of the wall.
+            look: >-
+              The hole is empty now, its secrets already uncovered. 
+              A faint draft whispers through it, as if the room itself is sighing in relief.
         initialState: guarded
         immovable: true
         triggers:
@@ -97,6 +111,9 @@ rooms:
             conditions:
               - hasState: [ hole, unguarded ]
             actions:
+              - command: changeState
+                argument: hole
+                parameter: examined
               - command: reveal
                 argument: key
                 responses:
@@ -240,12 +257,3 @@ rooms:
                 argument: >-
                   You kiss the lamp, and for a brief moment, you think you hear a genie laughing. 
                   Must be your imagination.
-
-      - name: desk
-        description:
-          room: >- 
-            Tucked into the corner of the room, an old desk leans slightly, its weathered
-            surface cluttered with the echoes of forgotten tasks.
-          look: >-
-            You look at the desk. It’s covered in papers, pens, and existential dread.
-        immovable: true
