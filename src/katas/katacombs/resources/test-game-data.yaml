@@ -87,6 +87,21 @@ rooms:
             look: ''
         initialState: guarded
         immovable: true
+        triggers:
+          - verb: look
+            conditions:
+              - hasState: [ hole, unguarded ]
+            actions:
+              - command: reveal
+                argument: key
+                responses:
+                  success: >-
+                    The rat's absence reveals a small, dark hole in the wall.
+                    Amid the faint smell of old wood and dust, you spot a tiny key gleaming inside,
+                    as if the rat had been guarding it all along.
+                  failure: >-
+                    The hole in the wall now lies empty, its secrets already uncovered. 
+                    A faint draft whispers through it, as if the room itself is sighing in relief
 
       - name: rat
         immovable: true

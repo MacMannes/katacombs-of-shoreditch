@@ -123,6 +123,26 @@ describe('YamlDataLoader', () => {
         });
     });
 
+    it('should add conditions to the triggers for "look hole"', async () => {
+        const result = await loader.load(gameDataPath);
+        const building = result.find((room) => room.name === 'building');
+        expect(building).toBeDefined();
+
+        const hole = building?.findItem('hole', true);
+        expect(hole).toBeDefined();
+        expect(hole?.triggers).toHaveLength(1);
+        const lookTrigger = hole?.triggers?.[0];
+
+        expect(lookTrigger).toBeDefined();
+        expect(lookTrigger?.verb).toBe('look');
+        expect(lookTrigger?.conditions).toHaveLength(1);
+        expect(lookTrigger?.conditions?.[0]).toStrictEqual({
+            type: 'hasState',
+            key: 'hole',
+            value: 'unguarded',
+        });
+    });
+
     it('should add states to the items', async () => {
         const result = await loader.load(gameDataPath);
         const building = result.find((room) => room.name === 'building');

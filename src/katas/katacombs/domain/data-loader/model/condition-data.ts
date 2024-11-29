@@ -4,7 +4,7 @@ import { Condition } from '@katas/katacombs/domain';
 export type ConditionData = {
     currentLocation?: string;
     inInventory?: string;
-    hasState?: Record<string, string>; // E.g. { "lamp": "lit" }
+    hasState?: [string, string]; // E.g. { "lamp": "lit" }
 };
 
 export function toConditions(conditions: ConditionData[] | undefined) {
@@ -17,6 +17,16 @@ export function toConditions(conditions: ConditionData[] | undefined) {
                 key: 'currentLocation',
                 value: condition.currentLocation,
             };
+        }
+        if (condition.hasState) {
+            const [item, state] = condition.hasState;
+            if (item && state) {
+                return {
+                    type: 'hasState',
+                    key: item,
+                    value: state,
+                };
+            }
         }
 
         return undefined;
