@@ -279,6 +279,15 @@ describe('GameController', () => {
             expect(ui.displayMessage).toHaveBeenLastCalledWith(expect.stringContaining('The rat blocks the hole'));
             expect(ui.displayMessage).not.toHaveBeenLastCalledWith(expect.stringContaining(' The rat blocks the hole'));
         });
+
+        it('should tell a key is found when looking at the hole and the rat is gone', () => {
+            controller.processCommand('take', 'cheese');
+            controller.processCommand('go', 'north');
+            controller.processCommand('drop', 'cheese');
+            controller.processCommand('look', 'hole');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(expect.stringContaining('tiny key'));
+        });
     });
 
     describe('Taking items', () => {

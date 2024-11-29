@@ -48,6 +48,9 @@ rooms:
                 argument: rat
               - command: hide
                 argument: cheese
+              - command: changeState
+                argument: hole
+                parameter: unguarded
 
   - name: building
     title: Inside the building
@@ -84,7 +87,9 @@ rooms:
               The rat blocks the hole like a self-appointed sentry, its whiskers twitching with defiance. 
               Whatever is inside the hole, it clearly doesn’t want you to find out.
           unguarded:
-            look: ''
+            room: >- 
+              Your eyes are drawn to a small, inconspicuous hole near the base of the wall. 
+              It’s easy to miss, but something about it feels... significant.
         initialState: guarded
         immovable: true
         triggers:
@@ -96,9 +101,8 @@ rooms:
                 argument: key
                 responses:
                   success: >-
-                    The rat's absence reveals a small, dark hole in the wall.
-                    Amid the faint smell of old wood and dust, you spot a tiny key gleaming inside,
-                    as if the rat had been guarding it all along.
+                    With the rat gone, you cautiously peer into the wall. Amid the faint smell of old wood and dust, 
+                    you catch a glimpse of a tiny key gleaming in the shadows, as if the rat had been guarding it all along.
                   failure: >-
                     The hole in the wall now lies empty, its secrets already uncovered. 
                     A faint draft whispers through it, as if the room itself is sighing in relief

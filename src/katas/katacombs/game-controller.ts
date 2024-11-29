@@ -89,6 +89,9 @@ export class GameController {
         if (condition.type === 'location' && condition.key === 'currentLocation') {
             return this.game.getCurrentRoom().name === condition.value;
         }
+        if (condition.type === 'hasState') {
+            return this.game.getCurrentRoom().findItem(condition.key)?.getCurrentState() === condition.value;
+        }
 
         return false;
     }
