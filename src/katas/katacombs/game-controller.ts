@@ -131,6 +131,7 @@ export class GameController {
         inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         speak: { isInternal: true, handle: (value) => this.speak(value) },
         reveal: { isInternal: true, handle: (target) => this.reveal(target) },
+        hide: { isInternal: true, handle: (target) => this.hide(target) },
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
@@ -185,6 +186,14 @@ export class GameController {
         if (!item || item.isVisible()) return false;
 
         item.reveal();
+        return true;
+    }
+
+    private hide(target: string): boolean {
+        const item = this.getCurrentRoom().findItem(target, true);
+        if (!item || !item.isVisible()) return false;
+
+        item.hide();
         return true;
     }
 

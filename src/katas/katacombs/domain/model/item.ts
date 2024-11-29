@@ -50,6 +50,10 @@ export class Item {
         this.visible = true;
     }
 
+    public hide() {
+        this.visible = false;
+    }
+
     public matches(word: string): boolean {
         return this.name === word || this.words.includes(word);
     }
