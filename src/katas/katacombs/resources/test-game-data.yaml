@@ -75,6 +75,19 @@ rooms:
                     You take another look at the casks, hoping for a second coin. 
                     All you find is disappointment.
 
+      - name: hole
+        description:
+          look: ''
+        states:
+          guarded:
+            look: >-
+              The rat blocks the hole like a self-appointed sentry, its whiskers twitching with defiance. 
+              Whatever is inside the hole, it clearly doesn’t want you to find out.
+          unguarded:
+            look: ''
+        initialState: guarded
+        immovable: true
+
       - name: rat
         immovable: true
         description:

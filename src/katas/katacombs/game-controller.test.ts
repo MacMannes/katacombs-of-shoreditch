@@ -416,6 +416,14 @@ describe('GameController', () => {
             const cheese = controller.getCurrentRoom().findItem('cheese', true);
             expect(cheese?.isVisible()).toBeFalsy();
         });
+
+        it('should tell the rat is guarding the hole when looking at it', () => {
+            controller.processCommand('go', 'north');
+            controller.processCommand('look', 'hole');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(expect.stringContaining('The rat blocks the hole'));
+            expect(ui.displayMessage).not.toHaveBeenLastCalledWith(expect.stringContaining(' The rat blocks the hole'));
+        });
     });
 
     describe('Changing the state of items', () => {
