@@ -1,11 +1,13 @@
 import { Room } from '../domain';
-import { UserInterface } from '@katas/katacombs/ui';
+import { AudioPlayer, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
 
 export class DefaultUserInterface implements UserInterface {
+    constructor(private audioPlayer: AudioPlayer) {}
+
     private rl = createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -40,7 +42,7 @@ export class DefaultUserInterface implements UserInterface {
             .map((item) => item.getDescription('room'))
             .join(' ');
 
-        this.displayMessage(`${room.description} ${immovableItems}`);
+        await this.displayMessage(`${room.description} ${immovableItems}`);
 
         const movableItems = room
             .getItems()
@@ -48,12 +50,17 @@ export class DefaultUserInterface implements UserInterface {
             .map((item) => item.getDescription('room'))
             .join('\n\n');
         if (movableItems.length > 0) {
-            this.displayMessage(movableItems);
+            await this.displayMessage(movableItems);
         }
     }
 
-    public async displayMessage(message: string, audioKeys?: string[]): Promise<void> {
+    public async displayMessage(message: string, audioFiles?: string[]): Promise<void> {
         console.log(chalk.white(wrap(message, { width: 80, indent: '' }) + '\n'));
+        if (!audioFiles) return;
+
+        for (const file of audioFiles) {
+            await this.audioPlayer.play(file);
+        }
     }
 
     public async getUserInput(): Promise<string | undefined> {
