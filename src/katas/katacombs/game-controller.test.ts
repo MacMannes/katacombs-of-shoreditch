@@ -53,15 +53,15 @@ describe('GameController', () => {
             await controller.startGame();
             expect(ui.displayRoom).toHaveBeenCalledTimes(3);
             expect(ui.displayMessage).toHaveBeenCalledWith('OK.');
-            expect(ui.displayMessage).toHaveBeenCalledWith('Bye!');
+            expect(ui.displayMessage).toHaveBeenCalledWith('Bye!', ['bye']);
         });
     });
 
     describe('Quitting the game', () => {
-        it('should say "Bye!', () => {
+        it('should say "Bye!" and pass the audioKey "bye"', () => {
             controller.processCommand('quit');
 
-            expect(ui.displayMessage).toBeCalledWith('Bye!');
+            expect(ui.displayMessage).toBeCalledWith('Bye!', ['bye']);
         });
     });
 

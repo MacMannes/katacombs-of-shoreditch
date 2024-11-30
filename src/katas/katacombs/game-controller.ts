@@ -30,7 +30,7 @@ export class GameController {
     }
 
     public quitGame(): boolean {
-        this.ui.displayMessage('Bye!');
+        this.ui.displayMessage('Bye!', ['bye']);
         this.isPlaying = false;
         return true;
     }
