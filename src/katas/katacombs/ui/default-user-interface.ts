@@ -53,6 +53,11 @@ export class DefaultUserInterface implements UserInterface {
         if (movableItems.length > 0) {
             await this.displayMessage(movableItems);
         }
+
+        if (room.name === 'start') {
+            await this.audioPlayer.play('room-start');
+            await this.audioPlayer.play('item-cheese-room');
+        }
     }
 
     public async displayMessage(message: string, audioFiles?: string[]): Promise<void> {
