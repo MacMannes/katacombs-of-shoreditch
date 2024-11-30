@@ -31,6 +31,7 @@ export class DefaultUserInterface implements UserInterface {
  |_____/|_| |_|\\___/|_|  \\___|\\__,_|_|\\__\\___|_| |_|`;
         console.log(pastel.multiline(title));
         console.log('====================================================\n\n');
+        await this.audioPlayer.play('welcome');
     }
 
     public async displayRoom(room: Room): Promise<void> {
