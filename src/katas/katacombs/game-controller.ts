@@ -19,18 +19,18 @@ export class GameController {
     ) {}
 
     public async startGame() {
-        this.ui.displayWelcomeMessage();
-        this.displayCurrentRoom();
+        await this.ui.displayWelcomeMessage();
+        await this.displayCurrentRoom();
 
         while (this.isPlaying) {
             const userInput = (await this.ui.getUserInput()) ?? '';
             const [verb, target] = userInput.split(' ');
-            this.processCommand(verb, target);
+            await this.processCommand(verb, target);
         }
     }
 
-    public quitGame(): boolean {
-        this.ui.displayMessage('Bye!', ['bye']);
+    public async quitGame(): Promise<boolean> {
+        await this.ui.displayMessage('Bye!', ['bye']);
         this.isPlaying = false;
         return true;
     }
@@ -43,17 +43,17 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public processCommand(verb: string, target?: string) {
+    public async processCommand(verb: string, target?: string) {
         const executedItemTriggers = this.executeItemTriggers(target, verb);
         if (executedItemTriggers) return;
 
         const handler = this.getCommandHandler(verb, target);
         if (!handler || handler.isInternal) {
-            this.ui.displayMessage('What?');
+            await this.ui.displayMessage('What?');
             return;
         }
 
-        handler.handle(target ?? '', 'commandProcessor');
+        await handler.handle(target ?? '', 'commandProcessor');
     }
 
     private executeItemTriggers(target: string | undefined, verb: string): boolean {
@@ -96,21 +96,21 @@ export class GameController {
         return false;
     }
 
-    private executeTriggerAction(action: CommandAction) {
+    private async executeTriggerAction(action: CommandAction) {
         const handler = this.getCommandHandler(action.command, action.argument);
         if (!handler) {
             return false;
         }
 
-        const result = handler.handle(action.argument, action.parameter, 'triggerAction');
-        this.displayActionResultMessage(action, result);
+        const result = await handler.handle(action.argument, action.parameter, 'triggerAction');
+        await this.displayActionResultMessage(action, result);
     }
 
-    private displayActionResultMessage(action: CommandAction, result: boolean) {
+    private async displayActionResultMessage(action: CommandAction, result: boolean) {
         const message = result ? action.responses?.success : action.responses?.failure;
         if (!message) return;
 
-        this.ui.displayMessage(message);
+        await this.ui.displayMessage(message);
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -138,43 +138,43 @@ export class GameController {
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
-    private go(to: string): boolean {
+    private async go(to: string): Promise<boolean> {
         const newRoom = this.game.go(to);
         if (!newRoom) {
-            this.ui.displayMessage('There is no way to go that direction.');
+            await this.ui.displayMessage('There is no way to go that direction.');
         }
-        this.displayCurrentRoom();
+        await this.displayCurrentRoom();
         return true;
     }
 
-    private look(at?: string): boolean {
+    private async look(at?: string): Promise<boolean> {
         if (!at) {
-            this.displayCurrentRoom();
+            await this.displayCurrentRoom();
             return false;
         }
 
         const message = this.game.look(at);
-        this.ui.displayMessage(message);
+        await this.ui.displayMessage(message);
         return true;
     }
 
-    private take(itemName: string): boolean {
+    private async take(itemName: string): Promise<boolean> {
         const result = this.game.take(itemName);
         const message = result.success ? 'OK.' : result.error.message;
-        this.ui.displayMessage(message);
+        await this.ui.displayMessage(message);
         return result.success;
     }
 
-    private drop(itemName: string, caller?: CallerId): boolean {
+    private async drop(itemName: string, caller?: CallerId): Promise<boolean> {
         const dropped = this.game.drop(itemName);
         if (caller === 'triggerAction') return dropped;
 
         const message = dropped ? 'OK.' : "You aren't carrying it!";
-        this.ui.displayMessage(message);
+        await this.ui.displayMessage(message);
         return dropped;
     }
 
-    private changeState(target: string, value?: string): boolean {
+    private async changeState(target: string, value?: string): Promise<boolean> {
         if (!value) return false;
 
         const item = this.findItem(target);
@@ -184,7 +184,7 @@ export class GameController {
         return true;
     }
 
-    private reveal(target: string): boolean {
+    private async reveal(target: string): Promise<boolean> {
         const item = this.getCurrentRoom().findItem(target, true);
         if (!item || item.isVisible()) return false;
 
@@ -192,7 +192,7 @@ export class GameController {
         return true;
     }
 
-    private hide(target: string): boolean {
+    private async hide(target: string): Promise<boolean> {
         const item = this.getCurrentRoom().findItem(target, true);
         if (!item || !item.isVisible()) return false;
 
@@ -204,25 +204,25 @@ export class GameController {
         return this.game.findItem(itemName);
     }
 
-    public displayInventory(): boolean {
+    public async displayInventory(): Promise<boolean> {
         const items = this.game.getItems();
         if (items.length == 0) {
-            this.ui.displayMessage("You're not carrying anything.");
+            await this.ui.displayMessage("You're not carrying anything.");
             return true;
         }
 
         const itemMessages = items.map((item) => item.getDescription('inventory')).join('\n- ');
         const message = `You are currently holding the following:\n- ${itemMessages}`;
-        this.ui.displayMessage(message);
+        await this.ui.displayMessage(message);
         return true;
     }
 
-    private displayCurrentRoom() {
-        this.ui.displayRoom(this.getCurrentRoom());
+    private async displayCurrentRoom() {
+        await this.ui.displayRoom(this.getCurrentRoom());
     }
 
-    private speak(value: string): boolean {
-        this.ui.displayMessage(value);
+    private async speak(value: string): Promise<boolean> {
+        await this.ui.displayMessage(value);
         return true;
     }
 }
