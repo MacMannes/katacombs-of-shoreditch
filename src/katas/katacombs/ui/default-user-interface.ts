@@ -11,7 +11,7 @@ export class DefaultUserInterface implements UserInterface {
         output: process.stdout,
     });
 
-    public displayWelcomeMessage(): void {
+    public async displayWelcomeMessage(): Promise<void> {
         console.log('\n\n====================================================');
         const title = `  _  __     _                            _          
  | |/ /    | |                          | |         
@@ -31,7 +31,7 @@ export class DefaultUserInterface implements UserInterface {
         console.log('====================================================\n\n');
     }
 
-    public displayRoom(room: Room): void {
+    public async displayRoom(room: Room): Promise<void> {
         this.setWindowTitle(room.title);
 
         const immovableItems = room
@@ -52,7 +52,7 @@ export class DefaultUserInterface implements UserInterface {
         }
     }
 
-    public displayMessage(message: string, audioKeys?: string[]): void {
+    public async displayMessage(message: string, audioKeys?: string[]): Promise<void> {
         console.log(chalk.white(wrap(message, { width: 80, indent: '' }) + '\n'));
     }
 

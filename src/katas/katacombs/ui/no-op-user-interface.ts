@@ -3,15 +3,15 @@ import { UserInterface } from '@katas/katacombs/ui';
 import { Room } from '@katas/katacombs/domain';
 
 export class NoOpUserInterface implements UserInterface {
-    public displayWelcomeMessage(): void {
+    public async displayWelcomeMessage(): Promise<void> {
         // NO-OP
     }
 
-    public displayMessage(message: string): void {
+    public async displayMessage(message: string): Promise<void> {
         // NO-OP
     }
 
-    public displayRoom(room: Room): void {
+    public async displayRoom(room: Room): Promise<void> {
         // NO-OP
     }
 
