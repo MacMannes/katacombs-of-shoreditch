@@ -1,4 +1,4 @@
-import { DefaultUserInterface } from '@katas/katacombs/ui';
+import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs/game-controller';
 import { GameFactory, YamlDataLoader } from '@katas/katacombs/domain';
 import { fileURLToPath } from 'node:url';
@@ -18,7 +18,7 @@ async function createGameController() {
     const gameFactory = new GameFactory(new YamlDataLoader());
     const game = await gameFactory.createGame(getAbsolutePath(GAME_DATA_PATH));
 
-    return new GameController(game, new DefaultUserInterface());
+    return new GameController(game, new DefaultUserInterface(new DefaultAudioPlayer()));
 }
 
 async function startGame() {
