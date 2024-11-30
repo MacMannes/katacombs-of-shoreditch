@@ -52,7 +52,7 @@ export class DefaultUserInterface implements UserInterface {
         }
     }
 
-    public displayMessage(message: string): void {
+    public displayMessage(message: string, audioKeys?: string[]): void {
         console.log(chalk.white(wrap(message, { width: 80, indent: '' }) + '\n'));
     }
 
