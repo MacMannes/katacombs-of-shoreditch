@@ -1,5 +1,6 @@
 import {
     Connection,
+    TextWithAudioFiles,
     Direction,
     FunctionResult,
     isDirection,
@@ -62,7 +63,7 @@ export class Game {
         return this.currentRoom.findItem(itemName) ?? this.itemRepository.findItem(itemName);
     }
 
-    public look(at: string): string {
+    public look(at: string): TextWithAudioFiles {
         if (isDirection(at)) {
             return this.getMessageForLookingInDirection(at);
         }
@@ -72,19 +73,21 @@ export class Game {
             return this.getMessageForLookingAtConnection(connection);
         }
 
-        return this.getMessageForLookingAtItem(at) ?? `I see no ${at} here.`;
+        return this.getMessageForLookingAtItem(at) ?? new TextWithAudioFiles(`I see no ${at} here.`);
     }
 
-    private getMessageForLookingAtConnection(connection?: Connection) {
-        return connection?.description ?? 'Nothing interesting to look at there.';
+    private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
+        const text = connection?.description ?? 'Nothing interesting to look at there.';
+        return new TextWithAudioFiles(text);
     }
 
-    private getMessageForLookingInDirection(direction: Direction): string {
+    private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
         const connection = this.currentRoom.findConnection(direction);
-        return connection?.description ?? 'Nothing interesting to look at there.';
+        const text = connection?.description ?? 'Nothing interesting to look at there.';
+        return new TextWithAudioFiles(text);
     }
 
-    private getMessageForLookingAtItem(itemName: string): string | undefined {
+    private getMessageForLookingAtItem(itemName: string): TextWithAudioFiles | undefined {
         const item = this.findItem(itemName);
         if (!item) return undefined;
 

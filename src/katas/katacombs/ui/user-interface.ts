@@ -1,8 +1,8 @@
-import { Room } from '@katas/katacombs/domain/model';
+import { Room, TextWithAudioFiles } from '@katas/katacombs/domain/model';
 
 export type UserInterface = {
     displayWelcomeMessage(): Promise<void>;
     displayRoom(room: Room): Promise<void>;
-    displayMessage(message: string, audioFiles?: string[]): Promise<void>;
+    displayMessage(message: TextWithAudioFiles): Promise<void>;
     getUserInput(): Promise<string | undefined>;
 };

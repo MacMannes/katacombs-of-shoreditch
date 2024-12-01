@@ -3,6 +3,7 @@ export * from './caller-id';
 export * from './command-action';
 export * from './command-handler';
 export * from './connection';
+export * from './text-with-audio-files';
 export * from './test-rooms';
 export * from './direction';
 export * from './function-result';

@@ -63,17 +63,17 @@ describe('Item', () => {
 
         it('should return the description for a room', () => {
             const description = item.getDescription('room');
-            expect(description).toBe('There is a shiny brass lantern nearby.');
+            expect(description.text).toBe('There is a shiny brass lantern nearby.');
         });
 
         it('should return the description for the inventory', () => {
             const description = item.getDescription('inventory');
-            expect(description).toBe('Brass lantern');
+            expect(description.text).toBe('Brass lantern');
         });
 
-        it('should return the description for a room', () => {
+        it('should return the description for looking', () => {
             const description = item.getDescription('look');
-            expect(description).toBe("It's a shiny brass lantern, which runs on oil.");
+            expect(description.text).toBe("It's a shiny brass lantern, which runs on oil.");
         });
     });
 
@@ -82,17 +82,19 @@ describe('Item', () => {
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('room');
-            expect(description).toBe('There is a shiny brass lantern nearby. It is dark and cold.');
+            expect(description.text).toBe('There is a shiny brass lantern nearby. It is dark and cold.');
         });
 
         it('should return the description and the current state for the inventory', () => {
             const description = item.getDescription('inventory');
-            expect(description).toBe('Brass lantern (unlit)');
+            expect(description.text).toBe('Brass lantern (unlit)');
         });
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('look');
-            expect(description).toBe("It's a shiny brass lantern, which runs on oil. It looks like it could be lit.");
+            expect(description.text).toBe(
+                "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
+            );
         });
     });
 
@@ -101,19 +103,19 @@ describe('Item', () => {
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('room');
-            expect(description).toBe(
+            expect(description.text).toBe(
                 'There is a shiny brass lantern nearby. It shines brightly, illuminating the surroundings.',
             );
         });
 
         it('should return the description and the current state for the inventory', () => {
             const description = item.getDescription('inventory');
-            expect(description).toBe('Brass lantern (lit)');
+            expect(description.text).toBe('Brass lantern (lit)');
         });
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('look');
-            expect(description).toBe("It's a shiny brass lantern, which runs on oil. The flame dances steadily.");
+            expect(description.text).toBe("It's a shiny brass lantern, which runs on oil. The flame dances steadily.");
         });
     });
 });

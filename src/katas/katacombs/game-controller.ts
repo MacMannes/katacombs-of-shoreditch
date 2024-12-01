@@ -7,6 +7,7 @@ import {
     Game,
     Item,
     Room,
+    TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
@@ -30,7 +31,7 @@ export class GameController {
     }
 
     public async quitGame(): Promise<boolean> {
-        await this.ui.displayMessage('Bye!', ['bye']);
+        await this.ui.displayMessage(new TextWithAudioFiles('Bye!', ['bye']));
         this.isPlaying = false;
         return true;
     }
@@ -49,7 +50,7 @@ export class GameController {
 
         const handler = this.getCommandHandler(verb, target);
         if (!handler || handler.isInternal) {
-            await this.ui.displayMessage('What?');
+            await this.ui.displayMessage(new TextWithAudioFiles('What?'));
             return;
         }
 
@@ -110,7 +111,7 @@ export class GameController {
         const message = result ? action.responses?.success : action.responses?.failure;
         if (!message) return;
 
-        await this.ui.displayMessage(message);
+        await this.ui.displayMessage(new TextWithAudioFiles(message));
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -129,7 +130,7 @@ export class GameController {
         go: { handle: (target) => this.go(target) },
         look: { requiresTarget: false, handle: (target) => this.look(target) },
         take: { handle: (target) => this.take(target) },
-        drop: { handle: (target, value, caller) => this.drop(target, caller) },
+        drop: { handle: (target, _value, caller) => this.drop(target, caller) },
         quit: { requiresTarget: false, handle: () => this.quitGame() },
         inventory: { requiresTarget: false, handle: () => this.displayInventory() },
         speak: { isInternal: true, handle: (value) => this.speak(value) },
@@ -141,7 +142,7 @@ export class GameController {
     private async go(to: string): Promise<boolean> {
         const newRoom = this.game.go(to);
         if (!newRoom) {
-            await this.ui.displayMessage('There is no way to go that direction.');
+            await this.ui.displayMessage(new TextWithAudioFiles('There is no way to go that direction.'));
         }
         await this.displayCurrentRoom();
         return true;
@@ -160,8 +161,8 @@ export class GameController {
 
     private async take(itemName: string): Promise<boolean> {
         const result = this.game.take(itemName);
-        const message = result.success ? 'OK.' : result.error.message;
-        await this.ui.displayMessage(message);
+        const text = result.success ? 'OK.' : result.error.message;
+        await this.ui.displayMessage(new TextWithAudioFiles(text));
         return result.success;
     }
 
@@ -169,8 +170,8 @@ export class GameController {
         const dropped = this.game.drop(itemName);
         if (caller === 'triggerAction') return dropped;
 
-        const message = dropped ? 'OK.' : "You aren't carrying it!";
-        await this.ui.displayMessage(message);
+        const text = dropped ? 'OK.' : "You aren't carrying it!";
+        await this.ui.displayMessage(new TextWithAudioFiles(text));
         return dropped;
     }
 
@@ -207,13 +208,13 @@ export class GameController {
     public async displayInventory(): Promise<boolean> {
         const items = this.game.getItems();
         if (items.length == 0) {
-            await this.ui.displayMessage("You're not carrying anything.");
+            await this.ui.displayMessage(new TextWithAudioFiles("You're not carrying anything."));
             return true;
         }
 
-        const itemMessages = items.map((item) => item.getDescription('inventory')).join('\n- ');
-        const message = `You are currently holding the following:\n- ${itemMessages}`;
-        await this.ui.displayMessage(message);
+        const itemMessages = items.map((item) => item.getDescription('inventory').text).join('\n- ');
+        const text = `You are currently holding the following:\n- ${itemMessages}`;
+        await this.ui.displayMessage(new TextWithAudioFiles(text));
         return true;
     }
 
@@ -222,7 +223,7 @@ export class GameController {
     }
 
     private async speak(value: string): Promise<boolean> {
-        await this.ui.displayMessage(value);
+        await this.ui.displayMessage(new TextWithAudioFiles(value));
         return true;
     }
 }

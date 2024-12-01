@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Room } from '../domain';
+import { Room, TextWithAudioFiles } from '../domain';
 import { AudioPlayer, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
@@ -52,18 +52,19 @@ export class DefaultUserInterface implements UserInterface {
 
         const optionalNewLines = movableItems.length > 0 ? '\n\n' : '';
 
-        await this.displayMessage(`${room.getDescription()} ${immovableItems}${optionalNewLines}${movableItems}`);
+        const text = `${room.getDescription()} ${immovableItems}${optionalNewLines}${movableItems}`;
+        await this.displayMessage(new TextWithAudioFiles(text));
 
         if (room.name === 'start') {
             this.audioPlayer.play('room-start', 'item-cheese-room').catch(() => {});
         }
     }
 
-    public async displayMessage(message: string, audioFiles?: string[]): Promise<void> {
-        console.log(chalk.white(wrap(message, { width: 80, indent: '' }) + '\n'));
-        if (!audioFiles) return;
+    public async displayMessage(message: TextWithAudioFiles): Promise<void> {
+        console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
+        if (!message.audioFiles) return;
 
-        this.audioPlayer.play(...audioFiles).catch(() => {});
+        this.audioPlayer.play(...message.audioFiles).catch(() => {});
     }
 
     public async getUserInput(): Promise<string | undefined> {

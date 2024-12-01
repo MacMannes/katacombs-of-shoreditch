@@ -1,4 +1,4 @@
-import { ActionTrigger } from '@katas/katacombs/domain';
+import { ActionTrigger, TextWithAudioFiles } from '@katas/katacombs/domain';
 
 export class Item {
     public readonly description: ItemDescription;
@@ -26,10 +26,11 @@ export class Item {
         this.triggers = options.triggers;
     }
 
-    public getDescription(context: keyof ItemDescription): string {
+    public getDescription(context: keyof ItemDescription): TextWithAudioFiles {
         const baseDescription = this.description[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
-        return stateDescription ? `${baseDescription} ${stateDescription}`.trim() : baseDescription;
+        const text = stateDescription ? `${baseDescription} ${stateDescription}`.trim() : baseDescription;
+        return new TextWithAudioFiles(text);
     }
 
     public getCurrentState(): string | undefined {
