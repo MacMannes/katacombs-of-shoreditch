@@ -3,7 +3,7 @@ import { Connection, ConnectionOptions, Direction, Item } from '@katas/katacombs
 export class Room {
     private readonly connections: Connection[] = [];
     private items: Item[] = [];
-    private visits = 0;
+    private numberOfVisits = 0;
 
     constructor(
         public readonly name: string,
@@ -13,18 +13,18 @@ export class Room {
     ) {}
 
     public addVisit(): number {
-        return this.visits++;
+        return this.numberOfVisits++;
     }
 
     public getNumberOfVisits(): number {
-        return this.visits;
+        return this.numberOfVisits;
     }
 
     public getDescription(preferredLength?: 'short' | 'long'): string {
         if (preferredLength === 'long') return this.description;
         if (preferredLength === 'short') return this.getShortDescription();
 
-        return this.visits > 0 ? this.getShortDescription() : this.description;
+        return this.numberOfVisits > 0 ? this.getShortDescription() : this.description;
     }
 
     private getShortDescription(): string {

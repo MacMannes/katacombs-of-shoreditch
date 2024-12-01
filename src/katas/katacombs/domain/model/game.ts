@@ -18,6 +18,7 @@ export class Game {
         private readonly itemRepository: ItemRepository,
     ) {
         this.currentRoom = roomRepository.getRoomByName('start');
+        this.currentRoom.addVisit();
     }
 
     public getCurrentRoom(): Room {
@@ -28,6 +29,7 @@ export class Game {
         const newRoom = this.findRoom(to);
         if (newRoom) {
             this.currentRoom = newRoom;
+            this.currentRoom.addVisit();
         }
         return newRoom;
     }
