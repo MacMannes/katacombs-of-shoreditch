@@ -33,10 +33,10 @@ export class DefaultAudioPlayer implements AudioPlayer {
                 this.currentProcess.kill();
             }
 
-            const child: ChildProcess = player.play(filePath);
-            this.currentProcess = child;
+            const process: ChildProcess = player.play(filePath);
+            this.currentProcess = process;
 
-            child.on('close', (code) => {
+            process.on('close', (code) => {
                 if (code === 0) {
                     this.currentProcess = null;
                     resolve();
@@ -46,7 +46,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
                 }
             });
 
-            child.on('error', (error) => {
+            process.on('error', (error) => {
                 this.currentProcess = null;
                 reject(error);
             });
