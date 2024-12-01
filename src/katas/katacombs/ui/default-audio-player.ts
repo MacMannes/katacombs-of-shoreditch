@@ -14,6 +14,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     public async play(...fileNames: string[]): Promise<void> {
         if (this.currentProcess) {
             this.stop();
+            await this.playFile('msg-narrator-interrupt-1');
         }
 
         for (const fileName of fileNames) {
