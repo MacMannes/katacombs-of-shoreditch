@@ -17,7 +17,7 @@ describe('YamlDataLoader', () => {
     it('should load short descriptions of the rooms', async () => {
         const result = await loader.load(gameDataPath);
         expect(result.find((room) => room.name === 'nowhere')?.shortDescription).toBeUndefined();
-        expect(result.find((room) => room.name === 'building')?.shortDescription).toBeDefined();
+        expect(result.find((room) => room.name === 'start')?.shortDescription).toBeDefined();
     });
 
     it('should add connections to  the rooms', async () => {
