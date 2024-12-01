@@ -1,5 +1,5 @@
 import { Room } from '@katas/katacombs/domain';
 
-export interface DataLoader {
+export type DataLoader = {
     load(filePath: string): Promise<Room[]>;
-}
+};
