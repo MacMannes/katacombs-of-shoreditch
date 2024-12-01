@@ -39,6 +39,13 @@ describe('Room', () => {
             expect(description).toBe("You're inside the brewery");
         });
 
+        it('should return the long description when preferredType is "short", ut there is no short description', () => {
+            const room2 = new Room('room2', 'Title', 'Long description');
+            const description = room2.getDescription('short');
+
+            expect(description).toBe('Long description');
+        });
+
         it('should return the long description when preferredType is "long"', () => {
             const description = room.getDescription('long');
 
@@ -47,12 +54,19 @@ describe('Room', () => {
             );
         });
 
-        it('should return the long description not asked for a preferred type and the room was not visited', () => {
+        it('should return the long description not asked for a preferred type and the room was not visited before', () => {
             const description = room.getDescription();
 
             expect(description).toBe(
                 'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
             );
+        });
+
+        it('should return the short description when not asked for a preferred type and has visited the room before', () => {
+            room.addVisit();
+            const description = room.getDescription();
+
+            expect(description).toBe("You're inside the brewery");
         });
     });
 

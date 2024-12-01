@@ -20,11 +20,11 @@ export class Room {
         if (preferredLength === 'long') return this.description;
         if (preferredLength === 'short') return this.getShortDescription();
 
-        return this.description;
+        return this.visits > 0 ? this.getShortDescription() : this.description;
     }
 
     private getShortDescription(): string {
-        return this.shortDescription ?? '';
+        return this.shortDescription ?? this.description;
     }
 
     public getConnections(): Connection[] {
