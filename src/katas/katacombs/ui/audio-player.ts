@@ -1,3 +1,3 @@
 export type AudioPlayer = {
-    play(fileName: string): Promise<void>;
+    play(...fileNames: string[]): Promise<void>;
 };

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
 import { createTestRooms } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
@@ -9,6 +9,10 @@ describe('Default UserInterface', async () => {
     const rooms = await createTestRooms();
 
     const consoleSpy = vi.spyOn(console, 'log');
+
+    beforeEach(() => {
+        audioPlayer.play.mockResolvedValue();
+    });
 
     afterEach(() => {
         vi.clearAllMocks();
@@ -58,8 +62,7 @@ describe('Default UserInterface', async () => {
 
         it('should call the audio player when audioKeys were passed', async () => {
             await ui.displayMessage('Hello World!', ['hello', 'world']);
-            expect(audioPlayer.play).toHaveBeenCalledWith('hello');
-            expect(audioPlayer.play).toHaveBeenCalledWith('world');
+            expect(audioPlayer.play).toHaveBeenCalledWith('hello', 'world');
         });
     });
 });

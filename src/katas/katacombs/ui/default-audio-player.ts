@@ -9,22 +9,54 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export class DefaultAudioPlayer implements AudioPlayer {
-    public async play(fileName: string): Promise<void> {
+    private currentProcess: ChildProcess | null = null;
+
+    public async play(...fileNames: string[]): Promise<void> {
+        if (this.currentProcess) {
+            this.stop();
+        }
+
+        for (const fileName of fileNames) {
+            try {
+                await this.playFile(fileName);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            } catch (error) {
+                break;
+            }
+        }
+    }
+
+    private async playFile(fileName: string): Promise<void> {
         const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
         return new Promise((resolve, reject) => {
+            if (this.currentProcess) {
+                this.currentProcess.kill();
+            }
+
             const child: ChildProcess = player.play(filePath);
+            this.currentProcess = child;
 
             child.on('close', (code) => {
                 if (code === 0) {
-                    resolve(); // Playback finished successfully
+                    this.currentProcess = null;
+                    resolve();
                 } else {
-                    reject(new Error(`Playback failed with exit code ${code}`));
+                    this.currentProcess = null;
+                    reject(new Error(`Playback failed for ${fileName} with exit code ${code}`));
                 }
             });
 
             child.on('error', (error) => {
-                reject(error); // Handle any process errors
+                this.currentProcess = null;
+                reject(error);
             });
         });
+    }
+
+    public stop(): void {
+        if (!this.currentProcess) return;
+
+        this.currentProcess.kill();
+        this.currentProcess = null;
     }
 }
