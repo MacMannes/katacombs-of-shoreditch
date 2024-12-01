@@ -1,23 +1,6 @@
 # Katacombs of Shoreditch by Marco Consolaro
 
-```
-  _  __     _                            _          
- | |/ /    | |                          | |         
- | ' / __ _| |_ __ _  ___ ___  _ __ ___ | |__  ___  
- |  < / _` | __/ _` |/ __/ _ \| '_ ` _ \| '_ \/ __| 
- | . \ (_| | || (_| | (_| (_) | | | | | | |_) \__ \ 
- |_|\_\__,_|\__\__,_|\___\___/|_| |_| |_|_.__/|___/ 
-                          / _|                      
-                     ___ | |_                       
-   _____ _          / _ \|  _|    _ _ _       _     
-  / ____| |        | (_) | |     | (_) |     | |    
- | (___ | |__   ___ \___/|_|_  __| |_| |_ ___| |__  
-  \___ \| '_ \ / _ \| '__/ _ \/ _` | | __/ __| '_ \ 
-  ____) | | | | (_) | | |  __/ (_| | | || (__| | | |
- |_____/|_| |_|\___/|_|  \___|\__,_|_|\__\___|_| |_|
-                                                    
-                                                   
-```
+![Katacombs of Shoreditch](resources/images/welcome.webp)
 
 This kata is a little more structured and challenging so you can try to put many concepts and principles into practice in a domain that can benefit from them. This is quite a large kata, so expect to spend some time with it.
 
@@ -38,6 +21,9 @@ Other important aspects:
 ### Starting the game
 
 The game at startup shows the title and main description of the initial location. When the player moves to another location, the system always prompts title and main description for the new location.
+
+![Truman Brewery](resources/images/start.webp)
+
 
 ```
 1 LOST IN SHOREDITCH.
