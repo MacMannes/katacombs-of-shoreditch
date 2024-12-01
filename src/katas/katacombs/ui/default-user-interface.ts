@@ -38,21 +38,23 @@ export class DefaultUserInterface implements UserInterface {
     public async displayRoom(room: Room): Promise<void> {
         this.setWindowTitle(room.title);
 
-        const immovableItems = room
+        const immovableItemTextsWithAudioFiles = room
             .getItems()
             .filter((item) => item.immovable)
-            .map((item) => item.getDescription('room'))
-            .join(' ');
+            .map((item) => item.getDescription('room'));
 
-        const movableItems = room
+        const immovableItemsText = immovableItemTextsWithAudioFiles.map((it) => it.text).join(' ');
+
+        const movableItemsTextsWithAudioFiles = room
             .getItems()
             .filter((item) => !item.immovable)
-            .map((item) => item.getDescription('room'))
-            .join('\n\n');
+            .map((item) => item.getDescription('room'));
 
-        const optionalNewLines = movableItems.length > 0 ? '\n\n' : '';
+        const movableItemsText = movableItemsTextsWithAudioFiles.map((it) => it.text).join('\n\n');
 
-        const text = `${room.getDescription()} ${immovableItems}${optionalNewLines}${movableItems}`;
+        const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
+
+        const text = `${room.getDescription()} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
         await this.displayMessage(new TextWithAudioFiles(text));
 
         if (room.name === 'start') {

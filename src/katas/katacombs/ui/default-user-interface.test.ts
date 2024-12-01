@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
-import { createTestRooms } from '@katas/katacombs/domain';
+import { createTestRooms, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 
 describe('Default UserInterface', async () => {
@@ -66,13 +66,13 @@ describe('Default UserInterface', async () => {
 
     describe('displayMessage', () => {
         it('should print provided message', () => {
-            ui.displayMessage('Hello World!');
+            ui.displayMessage(new TextWithAudioFiles('Hello World!'));
 
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Hello World!'));
         });
 
         it('should call the audio player when audioKeys were passed', async () => {
-            await ui.displayMessage('Hello World!', ['hello', 'world']);
+            await ui.displayMessage(new TextWithAudioFiles('Hello World!', ['hello', 'world']));
             expect(audioPlayer.play).toHaveBeenCalledWith('hello', 'world');
         });
     });
