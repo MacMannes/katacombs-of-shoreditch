@@ -581,14 +581,14 @@ describe('GameController', async () => {
         });
 
         it('should say something like "You are not carrying anything." when the user does not possess any items', async () => {
-            controller.displayInventory();
+            await controller.displayInventory();
 
             expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("You're not carrying anything."));
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
 
         it('should print all the visible items the user has in their possession', async () => {
-            controller.displayInventory();
+            await controller.displayInventory();
             await controller.processCommand('go', 'north');
             await controller.processCommand('take', 'note');
             await controller.processCommand('take', 'lantern');
@@ -611,7 +611,7 @@ describe('GameController', async () => {
         });
 
         it('should print the item state.', async () => {
-            controller.displayInventory();
+            await controller.displayInventory();
             await controller.processCommand('go', 'north');
             await controller.processCommand('take', 'note');
             await controller.processCommand('take', 'lantern');
