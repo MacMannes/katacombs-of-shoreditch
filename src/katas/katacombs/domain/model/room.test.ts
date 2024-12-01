@@ -46,6 +46,14 @@ describe('Room', () => {
                 'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
             );
         });
+
+        it('should return the long description not asked for a preferred type and the room was not visited', () => {
+            const description = room.getDescription();
+
+            expect(description).toBe(
+                'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
+            );
+        });
     });
 
     describe('Getting items', () => {
