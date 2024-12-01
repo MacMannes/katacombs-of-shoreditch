@@ -24,7 +24,7 @@ export class Room {
         if (preferredLength === 'long') return this.description;
         if (preferredLength === 'short') return this.getShortDescription();
 
-        return this.numberOfVisits > 0 ? this.getShortDescription() : this.description;
+        return this.numberOfVisits > 1 ? this.getShortDescription() : this.description;
     }
 
     private getShortDescription(): string {

@@ -64,6 +64,7 @@ describe('Room', () => {
 
         it('should return the short description when not asked for a preferred type and has visited the room before', () => {
             room.addVisit();
+            room.addVisit();
             const description = room.getDescription();
 
             expect(description).toBe("You're inside the brewery");

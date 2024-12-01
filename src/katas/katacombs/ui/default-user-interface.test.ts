@@ -30,6 +30,17 @@ describe('Default UserInterface', async () => {
             );
         });
 
+        it('should print the short description of the room when the user already visited it', () => {
+            const startRoom = rooms.find((room) => room.name === 'start');
+            if (!startRoom) throw new Error('Start room not found');
+            startRoom.addVisit();
+            startRoom.addVisit();
+
+            ui.displayRoom(startRoom);
+
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('You’re in front of'));
+        });
+
         it('should print the items in the room', async () => {
             const building = rooms.find((room) => room.name === 'building');
             if (!building) throw new Error('Building room not found');

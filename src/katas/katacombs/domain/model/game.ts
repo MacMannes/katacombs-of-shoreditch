@@ -28,8 +28,8 @@ export class Game {
     public go(to: string): Room | undefined {
         const newRoom = this.findRoom(to);
         if (newRoom) {
+            newRoom.addVisit();
             this.currentRoom = newRoom;
-            this.currentRoom.addVisit();
         }
         return newRoom;
     }
