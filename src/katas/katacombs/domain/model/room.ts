@@ -8,6 +8,7 @@ export class Room {
         public readonly name: string,
         public readonly title: string,
         public readonly description: string,
+        public readonly shortDescription?: string,
     ) {}
 
     public getConnections(): Connection[] {
