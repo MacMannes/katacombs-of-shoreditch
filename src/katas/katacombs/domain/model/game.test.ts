@@ -19,6 +19,10 @@ describe('Game', () => {
             expect(result).toBe(room2);
         });
 
+        it('should set add the visit to the start room when the game is started', () => {
+            expect(room2.getNumberOfVisits()).toBe(1);
+        });
+
         it('should set the current room to the new room, if the move was successful', () => {
             game.go('south');
             expect(game.getCurrentRoom()).toBe(room2);

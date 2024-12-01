@@ -16,6 +16,10 @@ export class Room {
         return this.visits++;
     }
 
+    public getNumberOfVisits(): number {
+        return this.visits;
+    }
+
     public getDescription(preferredLength?: 'short' | 'long'): string {
         if (preferredLength === 'long') return this.description;
         if (preferredLength === 'short') return this.getShortDescription();
