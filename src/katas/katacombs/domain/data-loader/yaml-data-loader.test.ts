@@ -14,6 +14,12 @@ describe('YamlDataLoader', () => {
         expect(result.find((room) => room.name === 'building')).toBeDefined();
     });
 
+    it('should load short descriptions of the rooms', async () => {
+        const result = await loader.load(gameDataPath);
+        expect(result.find((room) => room.name === 'nowhere')?.shortDescription).toBeUndefined();
+        expect(result.find((room) => room.name === 'building')?.shortDescription).toBeDefined();
+    });
+
     it('should add connections to  the rooms', async () => {
         const result = await loader.load(gameDataPath);
         const fromStartToBuilding = result.find((room) => room.name === 'start')?.findConnection('north');
