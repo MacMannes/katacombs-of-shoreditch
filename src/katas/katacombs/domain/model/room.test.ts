@@ -9,6 +9,7 @@ describe('Room', () => {
             'building',
             'Inside the building',
             'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
+            "You're inside the brewery",
         );
         room.addItem(
             new Item('key', {
@@ -29,6 +30,14 @@ describe('Room', () => {
                 },
             }),
         );
+    });
+
+    describe('Getting the room description', () => {
+        it('should return the short description when preferredType is "short"', () => {
+            const description = room.getDescription('short');
+
+            expect(description).toBe("You're inside the brewery");
+        });
     });
 
     describe('Getting items', () => {

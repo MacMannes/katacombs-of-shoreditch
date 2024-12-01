@@ -11,6 +11,16 @@ export class Room {
         public readonly shortDescription?: string,
     ) {}
 
+    public getDescription(preferredLength: 'short' | 'long'): string {
+        if (preferredLength === 'short') return this.getShortDescription();
+
+        return '';
+    }
+
+    private getShortDescription(): string {
+        return this.shortDescription ?? this.description;
+    }
+
     public getConnections(): Connection[] {
         return this.connections;
     }
