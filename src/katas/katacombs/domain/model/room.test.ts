@@ -38,6 +38,14 @@ describe('Room', () => {
 
             expect(description).toBe("You're inside the brewery");
         });
+
+        it('should return the long description when preferredType is "long"', () => {
+            const description = room.getDescription('long');
+
+            expect(description).toBe(
+                'You are inside the main room of the Truman Brewery. There is a strong smell of hops and a dozen empty casks',
+            );
+        });
     });
 
     describe('Getting items', () => {

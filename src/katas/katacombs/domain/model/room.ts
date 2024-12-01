@@ -12,13 +12,14 @@ export class Room {
     ) {}
 
     public getDescription(preferredLength: 'short' | 'long'): string {
+        if (preferredLength === 'long') return this.description;
         if (preferredLength === 'short') return this.getShortDescription();
 
         return '';
     }
 
     private getShortDescription(): string {
-        return this.shortDescription ?? this.description;
+        return this.shortDescription ?? '';
     }
 
     public getConnections(): Connection[] {
