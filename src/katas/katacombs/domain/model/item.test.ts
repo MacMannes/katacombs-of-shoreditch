@@ -75,11 +75,6 @@ describe('Item', () => {
             const description = item.getDescription('look');
             expect(description.text).toBe("It's a shiny brass lantern, which runs on oil.");
         });
-
-        it('should return the expected audioFiles for looking', () => {
-            const description = item.getDescription('look');
-            expect(description.audioFiles).toContain('item-lantern-look');
-        });
     });
 
     describe('Getting a contextual description for the lamp with unlit state', () => {
@@ -101,6 +96,11 @@ describe('Item', () => {
                 "It's a shiny brass lantern, which runs on oil. It looks like it could be lit.",
             );
         });
+
+        it('should return the expected audioFiles for looking', () => {
+            const description = item.getDescription('look');
+            expect(description.audioFiles).toStrictEqual(['item-lantern-look', 'item-lantern-look-unlit']);
+        });
     });
 
     describe('Getting a contextual description for the lamp with lit state', () => {
@@ -121,6 +121,11 @@ describe('Item', () => {
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('look');
             expect(description.text).toBe("It's a shiny brass lantern, which runs on oil. The flame dances steadily.");
+        });
+
+        it('should return the expected audioFiles for looking', () => {
+            const description = item.getDescription('look');
+            expect(description.audioFiles).toStrictEqual(['item-lantern-look', 'item-lantern-look-lit']);
         });
     });
 

@@ -31,6 +31,7 @@ export class Item {
 
         const baseDescription = this.description[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
+        if (stateDescription) audioFiles.push(`item-${this.name}-${context}-${this.currentState}`);
 
         const text = stateDescription ? `${baseDescription} ${stateDescription}`.trim() : baseDescription;
         return new TextWithAudioFiles(text, audioFiles);
