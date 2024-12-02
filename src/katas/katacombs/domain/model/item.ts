@@ -27,10 +27,13 @@ export class Item {
     }
 
     public getDescription(context: keyof ItemDescription): TextWithAudioFiles {
+        const audioFiles: string[] = [`item-${this.name}-${context}`];
+
         const baseDescription = this.description[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
+
         const text = stateDescription ? `${baseDescription} ${stateDescription}`.trim() : baseDescription;
-        return new TextWithAudioFiles(text);
+        return new TextWithAudioFiles(text, audioFiles);
     }
 
     public getCurrentState(): string | undefined {

@@ -75,6 +75,11 @@ describe('Item', () => {
             const description = item.getDescription('look');
             expect(description.text).toBe("It's a shiny brass lantern, which runs on oil.");
         });
+
+        it('should return the expected audioFiles for looking', () => {
+            const description = item.getDescription('look');
+            expect(description.audioFiles).toContain('item-lantern-look');
+        });
     });
 
     describe('Getting a contextual description for the lamp with unlit state', () => {
@@ -116,6 +121,31 @@ describe('Item', () => {
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('look');
             expect(description.text).toBe("It's a shiny brass lantern, which runs on oil. The flame dances steadily.");
+        });
+    });
+
+    describe('Getting a contextual description for an object without state', () => {
+        const item = new Item('cheese', {
+            description: {
+                inventory: 'A piece of cheese',
+                look: 'It looks like a piece of cheese.',
+                room: 'There is a piece of cheese here.',
+            },
+        });
+
+        it('should return the expected audioFiles for looking', () => {
+            const description = item.getDescription('look');
+            expect(description.audioFiles).toStrictEqual(['item-cheese-look']);
+        });
+
+        it('should return the expected audioFiles for inventory context', () => {
+            const description = item.getDescription('inventory');
+            expect(description.audioFiles).toStrictEqual(['item-cheese-inventory']);
+        });
+
+        it('should return the expected audioFiles for room context', () => {
+            const description = item.getDescription('room');
+            expect(description.audioFiles).toStrictEqual(['item-cheese-room']);
         });
     });
 });
