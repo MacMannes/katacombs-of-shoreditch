@@ -150,7 +150,7 @@ export class GameController {
 
     private async look(at?: string): Promise<boolean> {
         if (!at) {
-            await this.displayCurrentRoom();
+            await this.displayCurrentRoom('long');
             return false;
         }
 
@@ -218,8 +218,8 @@ export class GameController {
         return true;
     }
 
-    private async displayCurrentRoom() {
-        await this.ui.displayRoom(this.getCurrentRoom());
+    private async displayCurrentRoom(preferredLength?: 'short' | 'long') {
+        await this.ui.displayRoom(this.getCurrentRoom(), preferredLength);
     }
 
     private async speak(value: string): Promise<boolean> {

@@ -178,10 +178,10 @@ describe('GameController', async () => {
     });
 
     describe('Looking around', async () => {
-        it('should show the description of the room when looking in no specific direction', async () => {
+        it('should show the long description of the room when looking in no specific direction', async () => {
             await controller.processCommand('look');
 
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }), 'long');
         });
 
         it('should show the description when looking in a specific direction with a connection', async () => {

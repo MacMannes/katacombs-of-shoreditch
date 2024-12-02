@@ -35,7 +35,7 @@ export class DefaultUserInterface implements UserInterface {
         await this.audioPlayer.play('welcome');
     }
 
-    public async displayRoom(room: Room): Promise<void> {
+    public async displayRoom(room: Room, preferredLength?: 'short' | 'long'): Promise<void> {
         this.setWindowTitle(room.title);
 
         const immovableItemTextsWithAudioFiles = room
@@ -54,7 +54,7 @@ export class DefaultUserInterface implements UserInterface {
 
         const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
 
-        const text = `${room.getDescription()} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+        const text = `${room.getDescription(preferredLength)} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
         await this.displayMessage(new TextWithAudioFiles(text));
 
         if (room.name === 'start') {
