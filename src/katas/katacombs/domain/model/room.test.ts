@@ -69,6 +69,18 @@ describe('Room', () => {
 
             expect(description.text).toBe("You're inside the brewery");
         });
+
+        it('should return the audioFile "room-building" when preferredType is "long"', () => {
+            const description = room.getDescription('long');
+
+            expect(description.audioFiles).toStrictEqual(['room-building']);
+        });
+
+        it('should return the audioFile "room-building-short" when preferredType is "short"', () => {
+            const description = room.getDescription('short');
+
+            expect(description.audioFiles).toStrictEqual(['room-building-short']);
+        });
     });
 
     describe('Getting items', () => {

@@ -28,13 +28,13 @@ export class Room {
     }
 
     private getLongDescription(): TextWithAudioFiles {
-        return new TextWithAudioFiles(this.description);
+        return new TextWithAudioFiles(this.description, [`room-${this.name}`]);
     }
 
     private getShortDescription(): TextWithAudioFiles {
         if (!this.shortDescription) return this.getLongDescription();
 
-        return new TextWithAudioFiles(this.shortDescription);
+        return new TextWithAudioFiles(this.shortDescription, [`room-${this.name}-short`]);
     }
 
     public getConnections(): Connection[] {
