@@ -69,7 +69,15 @@ describe('Default UserInterface', async () => {
             if (!building) throw new Error('Building room not found');
 
             await ui.displayRoom(building);
-            expect(audioPlayer.play).toHaveBeenCalledWith('room-building');
+            expect(audioPlayer.play).toHaveBeenCalledWith(
+                'room-building',
+                'item-casks-room',
+                'item-desk-room',
+                'item-rat-room',
+                'item-note-room',
+                'item-lantern-room',
+                'item-lantern-room-unlit',
+            );
         });
     });
 

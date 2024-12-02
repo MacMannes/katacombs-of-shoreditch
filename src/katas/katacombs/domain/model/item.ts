@@ -27,9 +27,11 @@ export class Item {
     }
 
     public getDescription(context: keyof ItemDescription): TextWithAudioFiles {
-        const audioFiles: string[] = [`item-${this.name}-${context}`];
+        const audioFiles: string[] = [];
 
         const baseDescription = this.description[context];
+        if (baseDescription.trim().length > 0) audioFiles.push(`item-${this.name}-${context}`);
+
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
         if (stateDescription) audioFiles.push(`item-${this.name}-${context}-${this.currentState}`);
 

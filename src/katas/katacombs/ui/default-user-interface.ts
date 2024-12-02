@@ -47,6 +47,7 @@ export class DefaultUserInterface implements UserInterface {
             .map((item) => item.getDescription('room'));
 
         const immovableItemsText = immovableItemTextsWithAudioFiles.map((it) => it.text).join(' ');
+        audioFiles.push(...immovableItemTextsWithAudioFiles.flatMap((it) => it.audioFiles));
 
         const movableItemsTextsWithAudioFiles = room
             .getItems()
@@ -54,6 +55,7 @@ export class DefaultUserInterface implements UserInterface {
             .map((item) => item.getDescription('room'));
 
         const movableItemsText = movableItemsTextsWithAudioFiles.map((it) => it.text).join('\n\n');
+        audioFiles.push(...movableItemsTextsWithAudioFiles.flatMap((it) => it.audioFiles));
 
         const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
 
