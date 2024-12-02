@@ -1,10 +1,9 @@
-import { AudioPlayer } from '@katas/katacombs/ui/audio-player';
+import { AudioPlayer, AudioQueue } from '@katas/katacombs/ui';
 import path from 'node:path';
 import play_sound from 'play-sound';
 import { fileURLToPath } from 'node:url';
 import { ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { isDefined } from '@utils/array';
 
 const player = play_sound();
 const __filename = fileURLToPath(import.meta.url);
@@ -13,31 +12,36 @@ const __dirname = path.dirname(__filename);
 export class DefaultAudioPlayer implements AudioPlayer {
     private currentProcess: ChildProcess | null = null;
     private hasInterruptedNarrator = false;
-    private isPlaying = false;
+    private queue = new AudioQueue();
 
-    public async play(...fileNames: string[]): Promise<void> {
-        if (this.isPlaying) {
-            this.stop();
-        }
-
-        this.isPlaying = true;
-
-        for (const fileName of fileNames) {
-            if (this.isPlaying) {
-                try {
-                    await this.playFile(fileName);
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                } catch (error) {
-                    break;
-                }
+    public play(...fileNames: string[]): void {
+        const playlist: string[] = [...fileNames];
+        if (!this.queue.isEmpty() && this.currentProcess) {
+            const interruptMessage = this.interruptNarrator();
+            if (interruptMessage) {
+                playlist.unshift(interruptMessage); // Add interrupt message to the beginning of the playlist
             }
         }
 
-        this.isPlaying = false;
+        this.queue.clear();
+        this.queue.add(...playlist);
+
+        if (this.currentProcess) {
+            this.stop();
+        } else {
+            this.playNext();
+        }
+    }
+
+    private playNext() {
+        const next = this.queue.next();
+        if (next) {
+            this.playFile(next);
+        }
     }
 
     public interruptNarrator(): string | undefined {
-        const randomNumber = Math.floor(Math.random() * 20) + 1;
+        const randomNumber = Math.floor(Math.random() * 15) + 1;
         if (!this.hasInterruptedNarrator || randomNumber === 1) {
             this.hasInterruptedNarrator = true;
             return 'msg-narrator-interrupt-1';
@@ -46,13 +50,26 @@ export class DefaultAudioPlayer implements AudioPlayer {
         return undefined;
     }
 
-    private async playFile(fileName: string): Promise<void> {
+    private playFile(fileName: string): void {
         const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
         if (!existsSync(filePath)) return;
 
-        return new Promise((resolve, reject) => {
-            this.isPlaying = true;
+        const process: ChildProcess = player.play(filePath);
+        this.currentProcess = process;
 
+        process.on('exit', (code) => {
+            this.currentProcess = null;
+            this.playNext();
+        });
+
+        process.on('error', (error) => {
+            this.currentProcess = null;
+        });
+    }
+
+    public async playAsync(fileName: string): Promise<void> {
+        const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
+        return new Promise((resolve, reject) => {
             const process: ChildProcess = player.play(filePath);
             this.currentProcess = process;
 
@@ -74,10 +91,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     public stop(): void {
-        if (!this.currentProcess) return;
-
-        this.currentProcess.kill('SIGINT');
+        this.currentProcess?.kill();
         this.currentProcess = null;
-        this.isPlaying = false;
     }
 }

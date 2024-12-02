@@ -5,14 +5,17 @@ import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
+import { isDefined } from '@utils/array';
 
 export class DefaultUserInterface implements UserInterface {
-    constructor(private audioPlayer: AudioPlayer) {}
+    private hasInterruptedNarrator: boolean = false;
 
     private rl = createInterface({
         input: process.stdin,
         output: process.stdout,
     });
+
+    constructor(private audioPlayer: AudioPlayer) {}
 
     public async displayWelcomeMessage(): Promise<void> {
         console.log('\n\n====================================================');
@@ -32,7 +35,7 @@ export class DefaultUserInterface implements UserInterface {
  |_____/|_| |_|\\___/|_|  \\___|\\__,_|_|\\__\\___|_| |_|`;
         console.log(pastel.multiline(title));
         console.log('====================================================\n\n');
-        await this.audioPlayer.play('welcome');
+        await this.audioPlayer.playAsync('welcome');
     }
 
     public async displayRoom(room: Room, preferredLength?: 'short' | 'long'): Promise<void> {
@@ -65,9 +68,9 @@ export class DefaultUserInterface implements UserInterface {
 
     public async displayMessage(message: TextWithAudioFiles): Promise<void> {
         console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
-        if (!message.audioFiles) return;
 
-        this.audioPlayer.play(...message.audioFiles).catch(() => {});
+        if (!message.audioFiles) return;
+        this.audioPlayer.play(...message.audioFiles);
     }
 
     public async getUserInput(): Promise<string | undefined> {
@@ -82,5 +85,15 @@ export class DefaultUserInterface implements UserInterface {
         } else {
             process.stdout.write('\x1b]2;' + title + '\x1b\x5c');
         }
+    }
+
+    private interruptNarrator(): string | undefined {
+        const randomNumber = Math.floor(Math.random() * 20) + 1;
+        if (!this.hasInterruptedNarrator || randomNumber === 1) {
+            this.hasInterruptedNarrator = true;
+            return 'msg-narrator-interrupt-1';
+        }
+
+        return undefined;
     }
 }
