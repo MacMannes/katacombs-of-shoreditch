@@ -41,7 +41,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     public interruptNarrator(): string | undefined {
-        const randomNumber = Math.floor(Math.random() * 15) + 1;
+        const randomNumber = Math.floor(Math.random() * 7) + 1;
         if (!this.hasInterruptedNarrator || randomNumber === 1) {
             this.hasInterruptedNarrator = true;
             return 'msg-narrator-interrupt-1';
