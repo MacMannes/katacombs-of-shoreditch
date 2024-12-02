@@ -1,17 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
-import { createTestRooms, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { createTestRooms, Room, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 
 describe('Default UserInterface', async () => {
     const audioPlayer = createMockedObject(DefaultAudioPlayer);
     const ui = new DefaultUserInterface(audioPlayer);
-    const rooms = await createTestRooms();
-
     const consoleSpy = vi.spyOn(console, 'log');
 
-    beforeEach(() => {
+    let rooms: Room[];
+
+    beforeEach(async () => {
         audioPlayer.play.mockResolvedValue();
+        rooms = await createTestRooms();
     });
 
     afterEach(() => {
@@ -61,6 +62,14 @@ describe('Default UserInterface', async () => {
             expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Tucked into the corner'));
             expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nThere is a strong smell'));
             expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining('\nTucked into the corner'));
+        });
+
+        it('should play the audioFile for the room', async () => {
+            const building = rooms.find((room) => room.name === 'building');
+            if (!building) throw new Error('Building room not found');
+
+            await ui.displayRoom(building);
+            expect(audioPlayer.play).toHaveBeenCalledWith('room-building');
         });
     });
 

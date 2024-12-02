@@ -38,6 +38,9 @@ export class DefaultUserInterface implements UserInterface {
     public async displayRoom(room: Room, preferredLength?: 'short' | 'long'): Promise<void> {
         this.setWindowTitle(room.title);
 
+        const roomDescription = room.getDescription(preferredLength);
+        const audioFiles: string[] = [...roomDescription.audioFiles];
+
         const immovableItemTextsWithAudioFiles = room
             .getItems()
             .filter((item) => item.immovable)
@@ -54,12 +57,8 @@ export class DefaultUserInterface implements UserInterface {
 
         const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
 
-        const text = `${room.getDescription(preferredLength).text} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
-        this.displayMessage(new TextWithAudioFiles(text)).catch(() => {});
-
-        if (room.name === 'start') {
-            this.audioPlayer.play('room-start', 'item-cheese-room').catch(() => {});
-        }
+        const text = `${roomDescription.text} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+        this.displayMessage(new TextWithAudioFiles(text, audioFiles)).catch(() => {});
     }
 
     public async displayMessage(message: TextWithAudioFiles): Promise<void> {
