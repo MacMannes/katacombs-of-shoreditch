@@ -10,11 +10,12 @@ const __dirname = path.dirname(__filename);
 
 export class DefaultAudioPlayer implements AudioPlayer {
     private currentProcess: ChildProcess | null = null;
+    private hasInterruptedNarrator = false;
 
     public async play(...fileNames: string[]): Promise<void> {
         if (this.currentProcess) {
             this.stop();
-            await this.playFile('msg-narrator-interrupt-1');
+            await this.interruptNarrator();
         }
 
         for (const fileName of fileNames) {
@@ -24,6 +25,14 @@ export class DefaultAudioPlayer implements AudioPlayer {
             } catch (error) {
                 break;
             }
+        }
+    }
+
+    private async interruptNarrator(): Promise<void> {
+        const randomNumber = Math.floor(Math.random() * 20) + 1;
+        if (!this.hasInterruptedNarrator || randomNumber === 1) {
+            this.hasInterruptedNarrator = true;
+            await this.playFile('msg-narrator-interrupt-1');
         }
     }
 

@@ -55,7 +55,7 @@ export class DefaultUserInterface implements UserInterface {
         const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
 
         const text = `${room.getDescription(preferredLength)} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
-        await this.displayMessage(new TextWithAudioFiles(text));
+        this.displayMessage(new TextWithAudioFiles(text)).catch(() => {});
 
         if (room.name === 'start') {
             this.audioPlayer.play('room-start', 'item-cheese-room').catch(() => {});
