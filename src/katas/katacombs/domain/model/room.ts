@@ -1,4 +1,4 @@
-import { Connection, ConnectionOptions, Direction, Item } from '@katas/katacombs/domain';
+import { Connection, ConnectionOptions, Direction, Item, TextWithAudioFiles } from '@katas/katacombs/domain';
 
 export class Room {
     private readonly connections: Connection[] = [];
@@ -20,21 +20,21 @@ export class Room {
         return this.numberOfVisits;
     }
 
-    public getDescription(preferredLength?: 'short' | 'long'): string {
+    public getDescription(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
         if (preferredLength === 'long') return this.getLongDescription();
         if (preferredLength === 'short') return this.getShortDescription();
 
         return this.numberOfVisits > 1 ? this.getShortDescription() : this.getLongDescription();
     }
 
-    private getLongDescription(): string {
-        return this.description;
+    private getLongDescription(): TextWithAudioFiles {
+        return new TextWithAudioFiles(this.description);
     }
 
-    private getShortDescription(): string {
+    private getShortDescription(): TextWithAudioFiles {
         if (!this.shortDescription) return this.getLongDescription();
 
-        return this.shortDescription;
+        return new TextWithAudioFiles(this.shortDescription);
     }
 
     public getConnections(): Connection[] {
