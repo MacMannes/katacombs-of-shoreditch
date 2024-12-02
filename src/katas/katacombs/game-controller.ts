@@ -143,6 +143,7 @@ export class GameController {
         const newRoom = this.game.go(to);
         if (!newRoom) {
             await this.ui.displayMessage(new TextWithAudioFiles('There is no way to go that direction.'));
+            return false;
         }
         await this.displayCurrentRoom();
         return true;

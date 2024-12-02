@@ -155,11 +155,6 @@ describe('GameController', async () => {
                     expect.objectContaining({ text: expect.stringContaining('no way') }),
                 );
             });
-
-            it('should print the current room when the direction is invalid', async () => {
-                await controller.processCommand('go', 'west');
-                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }), undefined);
-            });
         });
 
         describe('using synonyms of the connection', async () => {
