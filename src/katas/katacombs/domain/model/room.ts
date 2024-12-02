@@ -21,14 +21,20 @@ export class Room {
     }
 
     public getDescription(preferredLength?: 'short' | 'long'): string {
-        if (preferredLength === 'long') return this.description;
+        if (preferredLength === 'long') return this.getLongDescription();
         if (preferredLength === 'short') return this.getShortDescription();
 
-        return this.numberOfVisits > 1 ? this.getShortDescription() : this.description;
+        return this.numberOfVisits > 1 ? this.getShortDescription() : this.getLongDescription();
+    }
+
+    private getLongDescription(): string {
+        return this.description;
     }
 
     private getShortDescription(): string {
-        return this.shortDescription ?? this.description;
+        if (!this.shortDescription) return this.getLongDescription();
+
+        return this.shortDescription;
     }
 
     public getConnections(): Connection[] {
