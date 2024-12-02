@@ -52,7 +52,10 @@ export class DefaultAudioPlayer implements AudioPlayer {
 
     private playFile(fileName: string): void {
         const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
-        if (!existsSync(filePath)) return;
+        if (!existsSync(filePath)) {
+            this.playNext();
+            return;
+        }
 
         const process: ChildProcess = player.play(filePath);
         this.currentProcess = process;
