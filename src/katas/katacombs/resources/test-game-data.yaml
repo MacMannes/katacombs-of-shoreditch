@@ -355,3 +355,8 @@ texts:
   kiss-lantern: >-
     You kiss the lantern, and for a brief moment, you think you hear a genie laughing. 
     Must be your imagination.
+
+  # Various responses
+
+  msg-nothing-interesting: >-
+    'Nothing interesting to look at there.'

@@ -83,14 +83,16 @@ export class Game {
     }
 
     private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
-        const text = connection?.description ?? 'Nothing interesting to look at there.';
-        return new TextWithAudioFiles(text);
+        const textKey = connection?.description ?? 'msg-nothing-interesting';
+        const text = this.textRepository.getText(textKey);
+        return new TextWithAudioFiles(text ?? '', [textKey]);
     }
 
     private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
         const connection = this.currentRoom.findConnection(direction);
-        const text = connection?.description ?? 'Nothing interesting to look at there.';
-        return new TextWithAudioFiles(text);
+        const textKey = connection?.description ?? 'msg-nothing-interesting';
+        const text = this.textRepository.getText(textKey);
+        return new TextWithAudioFiles(text ?? '', [textKey]);
     }
 
     private getMessageForLookingAtItem(itemName: string): TextWithAudioFiles | undefined {
