@@ -43,8 +43,8 @@ export class Game {
 
     public take(itemName: string): TakeItemResult {
         const item = this.currentRoom.findItem(itemName);
-        if (!item) return { success: false, error: new NotFoundError(`Can't find ${itemName} here.`) };
-        if (item.immovable) return { success: false, error: new ItemImmovableError(`You can't be serious!`) };
+        if (!item) return { success: false, error: new NotFoundError('msg-cant-find-that') };
+        if (item.immovable) return { success: false, error: new ItemImmovableError('msg-cant-be-serious') };
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
@@ -79,20 +79,18 @@ export class Game {
             return this.getMessageForLookingAtConnection(connection);
         }
 
-        return this.getMessageForLookingAtItem(at) ?? new TextWithAudioFiles(`I see no ${at} here.`);
+        return this.getMessageForLookingAtItem(at) ?? this.getTextWithAudioFiles('msg-cant-see-that');
     }
 
     private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
         const textKey = connection?.description ?? 'msg-nothing-interesting';
-        const text = this.textRepository.getText(textKey);
-        return new TextWithAudioFiles(text ?? '', [textKey]);
+        return this.getTextWithAudioFiles(textKey);
     }
 
     private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
         const connection = this.currentRoom.findConnection(direction);
         const textKey = connection?.description ?? 'msg-nothing-interesting';
-        const text = this.textRepository.getText(textKey);
-        return new TextWithAudioFiles(text ?? '', [textKey]);
+        return this.getTextWithAudioFiles(textKey);
     }
 
     private getMessageForLookingAtItem(itemName: string): TextWithAudioFiles | undefined {
@@ -102,6 +100,10 @@ export class Game {
         const textKeys = item.getDescription('look');
         const text = this.textRepository.getConcatenatedText(textKeys);
         return new TextWithAudioFiles(text, textKeys);
+    }
+
+    public getTextWithAudioFiles(key: string): TextWithAudioFiles {
+        return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [key]);
     }
 
     /**

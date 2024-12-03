@@ -358,5 +358,12 @@ texts:
 
   # Various responses
 
-  msg-nothing-interesting: >-
-    'Nothing interesting to look at there.'
+  msg-ok: OK.
+  msg-what: What?
+  msg-nothing-interesting: Nothing interesting to look at there.
+  msg-not-carrying-it: You're not carrying it!
+  msg-not-carrying-anything: You're not carrying anything.
+  msg-cant-find-that: Can't find that here.
+  msg-cant-see-that: Can't see that here.
+  msg-cant-be-serious: You can't be serious!
+  msg-no-way: There is no way to go that direction.

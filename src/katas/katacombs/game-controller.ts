@@ -111,7 +111,7 @@ export class GameController {
         const message = result ? action.responses?.success : action.responses?.failure;
         if (!message) return;
 
-        await this.ui.displayMessage(new TextWithAudioFiles(message));
+        await this.ui.displayMessage(this.game.getTextWithAudioFiles(message));
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -142,7 +142,7 @@ export class GameController {
     private async go(to: string): Promise<boolean> {
         const newRoom = this.game.go(to);
         if (!newRoom) {
-            await this.ui.displayMessage(new TextWithAudioFiles('There is no way to go that direction.'));
+            await this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-no-way'));
             return false;
         }
         await this.displayCurrentRoom();
@@ -162,8 +162,8 @@ export class GameController {
 
     private async take(itemName: string): Promise<boolean> {
         const result = this.game.take(itemName);
-        const text = result.success ? 'OK.' : result.error.message;
-        await this.ui.displayMessage(new TextWithAudioFiles(text));
+        const textKey = result.success ? 'msg-ok' : result.error.message;
+        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
         return result.success;
     }
 
@@ -171,8 +171,8 @@ export class GameController {
         const dropped = this.game.drop(itemName);
         if (caller === 'triggerAction') return dropped;
 
-        const text = dropped ? 'OK.' : "You aren't carrying it!";
-        await this.ui.displayMessage(new TextWithAudioFiles(text));
+        const textKey = dropped ? 'msg-ok' : 'msg-not-carrying-it';
+        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
         return dropped;
     }
 
@@ -209,7 +209,7 @@ export class GameController {
     public async displayInventory(): Promise<boolean> {
         const items = this.game.getItems();
         if (items.length == 0) {
-            await this.ui.displayMessage(new TextWithAudioFiles("You're not carrying anything."));
+            await this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
             return true;
         }
 

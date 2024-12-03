@@ -122,7 +122,9 @@ describe('GameController', async () => {
 
         it('should process the take command', async () => {
             await controller.processCommand('take', 'watch');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("Can't find watch here."));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("Can't find that here.", ['msg-cant-find-that']),
+            );
         });
 
         it('should say "What?" when the take command was given without a target', async () => {
@@ -132,7 +134,9 @@ describe('GameController', async () => {
 
         it('should process the drop command', async () => {
             await controller.processCommand('drop', 'watch');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("You aren't carrying it!"));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You're not carrying it!", ['msg-not-carrying-it']),
+            );
         });
 
         it('should say "What?" when the drop command was given without a target', async () => {
@@ -275,7 +279,7 @@ describe('GameController', async () => {
         it('should show "I see no ... here" when looking at something that is not here', async () => {
             await controller.processCommand('look', 'note');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'I see no note here.' }));
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
 
@@ -285,7 +289,7 @@ describe('GameController', async () => {
 
             await controller.processCommand('look', 'key');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'I see no key here.' }));
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
             expect(ui.displayRoom).toHaveBeenCalledTimes(0);
         });
     });
@@ -338,13 +342,13 @@ describe('GameController', async () => {
             await controller.processCommand('go', 'north');
             await controller.processCommand('take', 'note');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
 
         it('should say something like can not find ..." when the item can not be found in the room', async () => {
             await controller.processCommand('take', 'note');
 
-            expect(ui.displayMessage).toBeCalledWith(expect.objectContaining({ text: "Can't find note here." }));
+            expect(ui.displayMessage).toBeCalledWith(expect.objectContaining({ text: "Can't find that here." }));
         });
 
         it('should say something like can not find ..." when the item in the room is invisible', async () => {
@@ -353,7 +357,9 @@ describe('GameController', async () => {
 
             await controller.processCommand('take', 'coin');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("Can't find coin here."));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("Can't find that here.", ['msg-cant-find-that']),
+            );
         });
 
         it('should move the item from the room to the inventory when it exists in the room', async () => {
