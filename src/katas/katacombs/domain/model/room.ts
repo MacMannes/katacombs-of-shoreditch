@@ -20,21 +20,19 @@ export class Room {
         return this.numberOfVisits;
     }
 
-    public getDescription(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
+    public getDescription(preferredLength?: 'short' | 'long'): string {
         if (preferredLength === 'long') return this.getLongDescription();
         if (preferredLength === 'short') return this.getShortDescription();
 
         return this.numberOfVisits > 1 ? this.getShortDescription() : this.getLongDescription();
     }
 
-    private getLongDescription(): TextWithAudioFiles {
-        return new TextWithAudioFiles(this.description, [`room-${this.name}`]);
+    private getLongDescription(): string {
+        return this.description;
     }
 
-    private getShortDescription(): TextWithAudioFiles {
-        if (!this.shortDescription) return this.getLongDescription();
-
-        return new TextWithAudioFiles(this.shortDescription, [`room-${this.name}-short`]);
+    private getShortDescription(): string {
+        return this.shortDescription ?? this.getLongDescription();
     }
 
     public getConnections(): Connection[] {
