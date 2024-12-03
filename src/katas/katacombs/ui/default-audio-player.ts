@@ -15,11 +15,11 @@ export class DefaultAudioPlayer implements AudioPlayer {
     private queue = new AudioQueue();
 
     public play(...fileNames: string[]): void {
-        const playlist: string[] = [...fileNames];
+        let playlist: string[] = [...fileNames];
         if (!this.queue.isEmpty() && this.currentProcess) {
             const interruptMessage = this.interruptNarrator();
             if (interruptMessage) {
-                playlist.unshift(interruptMessage); // Add interrupt message to the beginning of the playlist
+                playlist = [interruptMessage];
             }
         }
 
@@ -41,7 +41,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     public interruptNarrator(): string | undefined {
-        const randomNumber = Math.floor(Math.random() * 7) + 1;
+        const randomNumber = Math.floor(Math.random() * 5) + 1;
         if (!this.hasInterruptedNarrator || randomNumber === 1) {
             this.hasInterruptedNarrator = true;
             return 'msg-narrator-interrupt-1';
