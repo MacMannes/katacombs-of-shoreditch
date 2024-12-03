@@ -38,9 +38,9 @@ describe('YamlDataLoader', () => {
 
         const lamp = building?.findItem('lamp');
         expect(lamp).toBeDefined();
-        expect(lamp?.getDescription('room')?.text).toContain('item-lantern-room');
-        expect(lamp?.getDescription('inventory')?.text).toContain('item-lantern-inventory');
-        expect(lamp?.getDescription('look')?.text).toContain('item-lantern-look');
+        expect(lamp?.getDescription('room')).toContain('item-lantern-room');
+        expect(lamp?.getDescription('inventory')).toContain('item-lantern-inventory');
+        expect(lamp?.getDescription('look')).toContain('item-lantern-look');
     });
 
     it('should add invisible items to the rooms', async () => {
