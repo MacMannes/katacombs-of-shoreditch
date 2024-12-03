@@ -375,7 +375,7 @@ describe('GameController', async () => {
             await controller.processCommand('go', 'north');
             await controller.processCommand('take', 'lamp');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
 
         it('should not allow immovable objects to be taken', async () => {
@@ -390,7 +390,9 @@ describe('GameController', async () => {
             await controller.processCommand('go', 'north');
             await controller.processCommand('take', 'desk');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("You can't be serious!"));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You can't be serious!", ['msg-cant-be-serious']),
+            );
         });
     });
 
@@ -413,7 +415,7 @@ describe('GameController', async () => {
 
             await controller.processCommand('drop', 'note');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
 
         it('should NOT say "OK" when an item is dropped by a trigger action', async () => {
@@ -430,7 +432,9 @@ describe('GameController', async () => {
         it('should say something like "You are not carrying it!" when the user does not possess the item', async () => {
             await controller.processCommand('drop', 'note');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("You aren't carrying it!"));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You're not carrying it!", ['msg-not-carrying-it']),
+            );
         });
 
         it('should say "OK." when dropping an item using a synonym', async () => {
@@ -440,7 +444,7 @@ describe('GameController', async () => {
             vi.resetAllMocks();
             await controller.processCommand('drop', 'memo');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
     });
 
@@ -451,7 +455,7 @@ describe('GameController', async () => {
             vi.resetAllMocks();
             await controller.processCommand('drop', 'cheese');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
 
         it('should not say "OK." when dropping cheese in building, because trigger conditions are met', async () => {
@@ -597,7 +601,9 @@ describe('GameController', async () => {
         it('should say something like "You are not carrying anything." when the user does not possess any items', async () => {
             await controller.displayInventory();
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles("You're not carrying anything."));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You're not carrying anything.", ['msg-not-carrying-anything']),
+            );
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
 
