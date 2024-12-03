@@ -512,7 +512,7 @@ describe('GameController', async () => {
 
             await controller.processCommand('extinguish', 'lamp');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('you extinguish the lamp') }),
+                expect.objectContaining({ text: expect.stringContaining('you extinguish the lantern') }),
             );
         });
 

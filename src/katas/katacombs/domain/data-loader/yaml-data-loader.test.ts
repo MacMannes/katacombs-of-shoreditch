@@ -38,9 +38,9 @@ describe('YamlDataLoader', () => {
 
         const lamp = building?.findItem('lamp');
         expect(lamp).toBeDefined();
-        expect(lamp?.getDescription('room')?.text).toContain('lantern');
-        expect(lamp?.getDescription('inventory')?.text).toContain('lantern');
-        expect(lamp?.getDescription('look')?.text).toContain('polished');
+        expect(lamp?.getDescription('room')?.text).toContain('item-lantern-room');
+        expect(lamp?.getDescription('inventory')?.text).toContain('item-lantern-inventory');
+        expect(lamp?.getDescription('look')?.text).toContain('item-lantern-look');
     });
 
     it('should add invisible items to the rooms', async () => {
@@ -85,10 +85,8 @@ describe('YamlDataLoader', () => {
                     argument: 'coin',
                     parameter: undefined,
                     responses: {
-                        success:
-                            'You peer closely at the casks. Amidst the dust and cobwebs,  a glint catches your eye — a single coin nestled against the wood.  A hidden treasure or someone’s forgotten tip?',
-                        failure:
-                            'You take another look at the casks, hoping for a second coin.  All you find is disappointment.',
+                        success: 'look-casks-success',
+                        failure: 'look-casks-failure',
                     },
                 },
             ],

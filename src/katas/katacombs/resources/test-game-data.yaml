@@ -1,3 +1,7 @@
+#---------------------
+# Rooms
+#---------------------
+
 rooms:
   - name: nowhere
     title: Nowhere
@@ -5,32 +9,25 @@ rooms:
 
   - name: start
     title: Lost in Shoreditch
-    description: >-
-      You are standing at the end of a brick lane before a small brick building called 
-      "The Old Truman Brewery". 
-      Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of
-      the building and down a gully.
-    shortDescription: You’re in front of the brewery
+    description: room-start
+    shortDescription: room-start-short
     connections:
       - direction: north
         to: building
-        description: >-
-          I see a brick building with a sign saying “Truman Brewery“.
+        description: connection-start-north
         words: [ building, inside ]
     items:
       - name: cheese
         words: [ cheddar ]
         description:
-          inventory: A wedge of fine cheddar
-          room: A wedge of cheese lies on the floor, its golden hue and rich aroma filling the air with savory promise.
-          look: It's a piece of cheddar. It has a crumbly texture with glinting crystals, exuding a mature, sharp scent that teases your senses."
+          inventory: item-cheese-inventory
+          room: item-cheese-room
+          look: item-cheese-look
         triggers:
           - verb: eat
             actions:
               - command: speak
-                argument: >-
-                  As you lift the cheese to your lips, a thought skitters through your mind:
-                  better save this savory delight for a moment of true need.
+                argument: eat-cheese
           - verb: drop
             conditions:
               - currentLocation: building
@@ -38,13 +35,8 @@ rooms:
               - command: drop
                 argument: cheese
                 responses:
-                  success: >-
-                    The rat sniffs the air, its nose twitching like mad. With lightning speed, 
-                    it grabs the cheese and scurries into the hole, leaving you in the quiet triumph 
-                    of rodent-free solitude.
-                  failure: >-
-                    As you reach into your inventory to drop the cheese, your hand comes up empty. 
-                    It seems the cheese has taken its own path to freedom.
+                  success: drop-cheese-success
+                  failure: drop-cheese-failure
               - command: hide
                 argument: rat
               - command: hide
@@ -55,7 +47,7 @@ rooms:
 
   - name: building
     title: Inside the building
-    description: You are inside the main room of the Truman Brewery.
+    description: room-building
     connections:
       - direction: south
         to: start
@@ -63,7 +55,7 @@ rooms:
     items:
       - name: casks
         description:
-          room: There is a strong smell of hops and a dozen empty casks.
+          room: item-casks-room
         immovable: true
         triggers:
           - verb: look
@@ -71,21 +63,13 @@ rooms:
               - command: reveal
                 argument: coin
                 responses:
-                  success: >-
-                    You peer closely at the casks. Amidst the dust and cobwebs, 
-                    a glint catches your eye — a single coin nestled against the wood. 
-                    A hidden treasure or someone’s forgotten tip?
-                  failure: >-
-                    You take another look at the casks, hoping for a second coin. 
-                    All you find is disappointment.
+                  success: look-casks-success
+                  failure: look-casks-failure
 
       - name: desk
         description:
-          room: >-
-            Tucked into the corner of the room, an old desk leans slightly, its weathered
-            surface cluttered with the echoes of forgotten tasks.
-          look: >-
-            You look at the desk. It’s covered in papers, pens, and existential dread.
+          room: item-desk-room
+          look: item-desk-look
         immovable: true
 
       - name: hole
@@ -93,18 +77,12 @@ rooms:
           look: ''
         states:
           guarded:
-            look: >-
-              The rat blocks the hole like a self-appointed sentry, its whiskers twitching with defiance. 
-              Whatever is inside the hole, it clearly doesn’t want you to find out.
+            look: item-hole-guarded-look
           unguarded:
-            room: >- 
-              Your eyes are drawn to a small, inconspicuous hole near the base of the wall. 
-              It’s easy to miss, but something about it feels... significant.
+            room: item-hole-unguarded-room
           examined:
-            room: There’s a small hole near the base of the wall.
-            look: >-
-              The hole is empty now, its secrets already uncovered. 
-              A faint draft whispers through it, as if the room itself is sighing in relief.
+            room: item-hole-examined-room
+            look: item-hole-examined-look
         initialState: guarded
         immovable: true
         triggers:
@@ -118,36 +96,26 @@ rooms:
               - command: reveal
                 argument: key
                 responses:
-                  success: >-
-                    With the rat gone, you cautiously peer into the wall. Amid the faint smell of old wood and dust, 
-                    you catch a glimpse of a tiny key gleaming in the shadows, as if the rat had been guarding it all along.
-                  failure: >-
-                    The hole in the wall now lies empty, its secrets already uncovered. 
-                    A faint draft whispers through it, as if the room itself is sighing in relief
+                  success: look-hole-success
 
       - name: rat
         immovable: true
         description:
-          room: >-
-            A plucky rat is stationed in front of a small hole in the wall, its tail curling like a question mark.
-          look: >-
-            The rat glares at you with beady eyes, its whiskers twitching in what you can only assume is suspicion. 
-            It's guarding the hole like a tiny, furry bouncer.
+          room: item-rat-room
+          look: item-rat-look
 
       - name: key
         visible: false
         description:
-          inventory: A small key
-          room: There is a small key here.
-          look: It’s a small rusted key.
+          inventory: item-key-inventory
+          room: item-key-room
+          look: item-key-look
 
       - name: note
         description:
-          inventory: A small note
-          room: A small note lies on the floor.
-          look: >-
-            The note is crumpled and stained, but you can still make out the words: 
-            “Beware the rat. It’s a crafty one.”
+          inventory: item-note-inventory
+          room: item-note-room
+          look: item-note-look
         words: [ memo, paper, reminder ]
         triggers:
           - verb: read
@@ -157,104 +125,232 @@ rooms:
 
       - name: coin
         description:
-          inventory: A coin
-          room: There’s a coin here.
-          look: >-
-            It’s an old coin, worn and tarnished. You wonder if it’s worth anything 
-            — or if it’s just another relic for your growing junk collection.
+          inventory: item-coin-inventory
+          room: item-coin-room
+          look: item-coin-look
         visible: false
 
       - name: lantern
         words: [ light, lamp ]
         description:
-          inventory: Brass lantern
-          room: >-
-            There’s a shiny brass lantern nearby. 
-            It practically screams, ‘Take me! I’m functional and stylish!’
-          look: >-
-            It’s so polished you can see your reflection, which is both exciting and mildly unsettling.
+          inventory: item-lantern-inventory
+          room: item-lantern-room
+          look: item-lantern-look
         states:
           lit:
-            room: It shines brightly, illuminating the surroundings.
-            inventory: "- the flame dances steadily."
-            look: The flame dances steadily.
+            room: item-lantern-lit-room
+            inventory: item-lantern-lit-inventory
+            look: item-lantern-lit-look
           unlit:
-            room: It is dark and cold.
-            look: It looks like it could be lit.
+            room: item-lantern-unlit-room
+            look: item-lantern-unlit-look
         initialState: unlit
         triggers:
           - verb: light
             actions:
               - command: changeState
-                argument: lamp
+                argument: lantern
                 parameter: lit
                 responses:
-                  success: >-
-                    The lamp sputters for a moment, as if clearing its throat, 
-                    then bursts into a steady flame. 
-                    It seems proud of itself.
-                  failure: >-
-                    The lamp is already shining brightly! Trying to overachieve, aren't we?
+                  success: light-lantern-success
+                  failure: light-lantern-failure
           - verb: extinguish
             actions:
               - command: changeState
-                argument: lamp
+                argument: lantern
                 parameter: unlit
                 responses:
-                  success: >-
-                    As you extinguish the lamp, it lets out a final flicker, as if saying, 
-                    "But I was just getting started!"
-                  failure: >-
-                    An epic battle ensues between you and... wait, no. The lamp is already off. 
-                    Victory without lifting a finger.
+                  success: extinguish-lantern-success
+                  failure: extinguish-lantern-failure
           - verb: drop
             actions:
               - command: drop
-                argument: lamp
+                argument: lantern
                 responses:
-                  success: >-
-                    You drop the lamp. It bounces once, lands upright, and seems smug about its durability.
-                  failure: >-
-                    You try to drop the lamp, but you’re not holding it. How do you drop something 
-                    you never had? Deep thoughts.
+                  success: drop-lantern-success
+                  failure: drop-lantern-failure
           - verb: rub
             actions:
               - command: speak
-                argument: >-
-                  You rub the lamp. Nothing happens. Maybe it’s out of genies, 
-                  or maybe you’re just not their type.
+                argument: rub-lantern
           - verb: kick
             actions:
               - command: speak
-                argument: >-
-                  You kick the lamp. It wobbles dangerously, then tips over and lands on your foot. 
-                  Well played, lamp.
+                argument: kick-lantern
           - verb: talk
             actions:
               - command: speak
-                argument: >-
-                  You say a few kind words to the lamp. It doesn’t say anything back, 
-                  but it seems to shine a little brighter. How sweet.
+                argument: talk-lantern
           - verb: eat
             actions:
               - command: speak
-                argument: >-
-                  You nibble at the lamp. It’s oily, crunchy, and incredibly bad for your teeth.
+                argument: eat-lantern
           - verb: push
             actions:
               - command: speak
-                argument: >-
-                  You push the object. It wobbles, then stays exactly where it was. 
-                  Maybe you should push your luck instead.
+                argument: push-lantern
           - verb: touch
             actions:
               - command: speak
-                argument: >-
-                  You touch the lamp. It’s oddly smooth and slightly sticky. 
-                  You immediately regret your curiosity.
+                argument: touch-lantern
           - verb: kiss
             actions:
               - command: speak
-                argument: >-
-                  You kiss the lamp, and for a brief moment, you think you hear a genie laughing. 
-                  Must be your imagination.
+                argument: kiss-lantern
+
+#---------------------
+# Texts
+#---------------------
+
+texts:
+  # Room and Connection descriptions
+
+  ## Nowhere
+  room-nowhere: >-
+    You’re on the road to Nowhere
+
+  ## Start
+  room-start: >-
+    You are standing at the end of a brick lane before a small brick building called 
+    "The Old Truman Brewery". 
+    Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of
+    the building and down a gully.
+
+  connection-start-north: >-
+    I see a brick building with a sign saying “Truman Brewery“.    
+
+  ## Building
+  room-building: You are inside the main room of the Truman Brewery.
+  room-building-short: You’re inside the brewery
+
+  # Item and action descriptions
+
+  ## Cheese
+  item-cheese-inventory: A wedge of fine cheddar
+  item-cheese-room: A wedge of cheese lies on the floor, its golden hue and rich aroma filling the air with savory promise.
+  item-cheese-look: It's a piece of cheddar. It has a crumbly texture with glinting crystals, exuding a mature, sharp scent that teases your senses."
+
+  eat-cheese: >-
+    As you lift the cheese to your lips, a thought skitters through your mind:
+    better save this savory delight for a moment of true need.
+  drop-cheese-success: >-
+    The rat sniffs the air, its nose twitching like mad. With lightning speed, 
+    it grabs the cheese and scurries into the hole, leaving you in the quiet triumph 
+    of rodent-free solitude.
+  drop-cheese-failure: >-
+    As you reach into your inventory to drop the cheese, your hand comes up empty. 
+    It seems the cheese has taken its own path to freedom.
+
+  item-casks-room: There is a strong smell of hops and a dozen empty casks.
+
+  ## Casks
+  look-casks-success: >-
+    You peer closely at the casks. Amidst the dust and cobwebs, 
+    a glint catches your eye — a single coin nestled against the wood. 
+    A hidden treasure or someone’s forgotten tip?
+  look-casks-failure: >-
+    You take another look at the casks, hoping for a second coin. 
+    All you find is disappointment.
+
+  ## Desk
+  item-desk-room: >-
+    Tucked into the corner of the room, an old desk leans slightly, its weathered
+    surface cluttered with the echoes of forgotten tasks.
+  item-desk-look: >-
+    You look at the desk. It’s covered in papers, pens, and existential dread.
+
+  ## Hole
+  item-hole-guarded-look: >-
+    The rat blocks the hole like a self-appointed sentry, its whiskers twitching with defiance. 
+    Whatever is inside the hole, it clearly doesn’t want you to find out.
+  item-hole-unguarded-room: >- 
+    Your eyes are drawn to a small, inconspicuous hole near the base of the wall. 
+    It’s easy to miss, but something about it feels... significant.
+  item-hole-examined-room: >-
+    There’s a small hole near the base of the wall.
+  item-hole-examined-look: >-
+    The hole is empty now, its secrets already uncovered. 
+    A faint draft whispers through it, as if the room itself is sighing in relief.
+
+  look-hole-success: >-
+    With the rat gone, you cautiously peer into the wall. Amid the faint smell of old wood and dust, 
+    you catch a glimpse of a tiny key gleaming in the shadows, as if the rat had been guarding it all along.
+
+  ## Rat
+  item-rat-room: >-
+      A plucky rat is stationed in front of a small hole in the wall, its tail curling like a question mark.
+  item-rat-look: >-
+    The rat glares at you with beady eyes, its whiskers twitching in what you can only assume is suspicion. 
+    It's guarding the hole like a tiny, furry bouncer.
+
+  ## Key
+  item-key-inventory: A small key
+  item-key-room: There is a small key here.
+  item-key-look: It’s a small rusted key.
+
+  ## Note
+  item-note-inventory: A small note
+  item-note-room: A small note lies on the floor.
+  item-note-look: >-
+    The note is crumpled and stained, but you can still make out the words: 
+    “Beware the rat. It’s a crafty one.”
+
+  ## Coin
+  item-coin-inventory: A coin
+  item-coin-room: There’s a coin here.
+  item-coin-look: >-
+      It’s an old coin, worn and tarnished. You wonder if it’s worth anything 
+      — or if it’s just another relic for your growing junk collection.
+
+  ## Lantern
+  item-lantern-inventory: Brass lantern
+  item-lantern-room: >-
+    There’s a shiny brass lantern nearby. 
+    It practically screams, ‘Take me! I’m functional and stylish!’
+  item-lantern-look: >-
+    It’s so polished you can see your reflection, which is both exciting and mildly unsettling.
+
+  item-lantern-lit-room: It shines brightly, illuminating the surroundings.
+  item-lantern-lit-inventory: "- the flame dances steadily."
+  item-lantern-lit-look: The flame dances steadily.
+
+  item-lantern-unlit-room: It is dark and cold.
+  item-lantern-unlit-look: It looks like it could be lit.
+
+  light-lantern-success: >-
+    The lantern sputters for a moment, as if clearing its throat, 
+    then bursts into a steady flame. 
+    It seems proud of itself.
+  light-lantern-failure: >-
+    The lantern is already shining brightly! Trying to overachieve, aren't we?
+  extinguish-lantern-success: >-
+    As you extinguish the lantern, it lets out a final flicker, as if saying, 
+    "But I was just getting started!"
+  extinguish-lantern-failure: >-
+    An epic battle ensues between you and... wait, no. The lantern is already off. 
+    Victory without lifting a finger.
+  drop-lantern-success: >-
+    You drop the lantern. It bounces once, lands upright, and seems smug about its durability.
+  drop-lantern-failure: >-  
+    You try to drop the lantern, but you’re not holding it. How do you drop something 
+    you never had? Deep thoughts.
+  rub-lantern: >-
+    You rub the lantern. Nothing happens. Maybe it’s out of genies,
+    or maybe you’re just not their type.
+  kick-lantern: >-
+    You kick the lantern. It wobbles dangerously, then tips over and lands on your foot. 
+    Well played, lantern.
+  talk-lantern: >-
+    You say a few kind words to the lantern. It doesn’t say anything back, 
+    but it seems to shine a little brighter. How sweet.
+  eat-lantern: >-
+    You nibble at the lantern. It’s oily, crunchy, and incredibly bad for your teeth.
+  push-lantern: >-
+    You push the object. It wobbles, then stays exactly where it was. 
+    Maybe you should push your luck instead.
+  touch-lantern: >-
+    You touch the lantern. It’s oddly smooth and slightly sticky. 
+    You immediately regret your curiosity.
+  kiss-lantern: >-
+    You kiss the lantern, and for a brief moment, you think you hear a genie laughing. 
+    Must be your imagination.
