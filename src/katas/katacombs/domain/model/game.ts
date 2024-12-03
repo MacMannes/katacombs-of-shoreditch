@@ -28,6 +28,10 @@ export class Game {
         return this.currentRoom;
     }
 
+    public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
+        return this.textRepository.describeRoom(this.getCurrentRoom(), preferredLength);
+    }
+
     public go(to: string): Room | undefined {
         const newRoom = this.findRoom(to);
         if (newRoom) {

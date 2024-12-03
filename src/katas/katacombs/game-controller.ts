@@ -213,7 +213,7 @@ export class GameController {
             return true;
         }
 
-        const itemMessages = items.map((item) => item.getDescription('inventory').text).join('\n- ');
+        const itemMessages = items.map((item) => item.getDescription('inventory')).join('\n- ');
         const text = `You are currently holding the following:\n- ${itemMessages}`;
         await this.ui.displayMessage(new TextWithAudioFiles(text));
         return true;
@@ -221,33 +221,12 @@ export class GameController {
 
     private async displayCurrentRoom(preferredLength?: 'short' | 'long') {
         await this.ui.displayRoomTitle(this.getCurrentRoom());
-        await this.displayRoom(this.getCurrentRoom(), preferredLength);
+        await this.displayRoom(preferredLength);
     }
 
-    private async displayRoom(room: Room, preferredLength?: 'short' | 'long') {
-        const roomDescription = room.getDescription(preferredLength);
-        const audioFiles: string[] = [roomDescription];
-
-        const immovableItemTextsWithAudioFiles = room
-            .getItems()
-            .filter((item) => item.immovable)
-            .map((item) => item.getDescription('room'));
-
-        const immovableItemsText = immovableItemTextsWithAudioFiles.map((it) => it.text).join(' ');
-        audioFiles.push(...immovableItemTextsWithAudioFiles.flatMap((it) => it.audioFiles));
-
-        const movableItemsTextsWithAudioFiles = room
-            .getItems()
-            .filter((item) => !item.immovable)
-            .map((item) => item.getDescription('room'));
-
-        const movableItemsText = movableItemsTextsWithAudioFiles.map((it) => it.text).join('\n\n');
-        audioFiles.push(...movableItemsTextsWithAudioFiles.flatMap((it) => it.audioFiles));
-
-        const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
-
-        const text = `${roomDescription} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
-        await this.ui.displayMessage(new TextWithAudioFiles(text, audioFiles));
+    private async displayRoom(preferredLength?: 'short' | 'long') {
+        const roomDescription = this.game.describeRoom(preferredLength);
+        await this.ui.displayMessage(roomDescription);
     }
 
     private async speak(value: string): Promise<boolean> {

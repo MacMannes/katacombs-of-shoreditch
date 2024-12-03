@@ -215,6 +215,7 @@ texts:
     "The Old Truman Brewery". 
     Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of
     the building and down a gully.
+  room-start-short: You're in front of the brewery
 
   connection-start-north: >-
     I see a brick building with a sign saying “Truman Brewery“.    
