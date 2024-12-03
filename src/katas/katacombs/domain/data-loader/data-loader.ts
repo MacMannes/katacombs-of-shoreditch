@@ -1,5 +1,5 @@
-import { Room } from '@katas/katacombs/domain';
+import { GameRealm } from '@katas/katacombs/domain';
 
 export type DataLoader = {
-    load(filePath: string): Promise<Room[]>;
+    load(filePath: string): Promise<GameRealm>;
 };

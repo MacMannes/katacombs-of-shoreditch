@@ -9,6 +9,7 @@ export * from './direction';
 export * from './function-result';
 export * from './game';
 export * from './game-factory';
+export * from './game-realm';
 export * from './item';
 export * from './room';
 export * from './text-repository';

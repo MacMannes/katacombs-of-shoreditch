@@ -8,6 +8,7 @@ import {
     ItemRepository,
     Room,
     RoomRepository,
+    TextRepository,
 } from '@katas/katacombs/domain';
 import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error';
 
@@ -17,6 +18,7 @@ export class Game {
     constructor(
         private readonly roomRepository: RoomRepository,
         private readonly itemRepository: ItemRepository,
+        private readonly textRepository: TextRepository,
     ) {
         this.currentRoom = roomRepository.getRoomByName('start');
         this.currentRoom.addVisit();
@@ -91,7 +93,9 @@ export class Game {
         const item = this.findItem(itemName);
         if (!item) return undefined;
 
-        return item.getDescription('look');
+        const textKeys = item.getDescription('look');
+        const text = this.textRepository.getConcatenatedText(textKeys);
+        return new TextWithAudioFiles(text, textKeys);
     }
 
     /**

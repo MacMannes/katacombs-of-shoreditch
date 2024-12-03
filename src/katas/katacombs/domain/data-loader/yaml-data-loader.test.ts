@@ -1,39 +1,44 @@
-import { describe, expect, it } from 'vitest';
-import { YamlDataLoader } from '@katas/katacombs/domain';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { GameRealm, YamlDataLoader } from '@katas/katacombs/domain';
 import path from 'node:path';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
     const loader = new YamlDataLoader();
+    let realm: GameRealm;
+
+    beforeEach(async () => {
+        realm = await loader.load(gameDataPath);
+    });
 
     it('should load the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        expect(result.length).toBeGreaterThan(2);
-        expect(result.find((room) => room.name === 'nowhere')).toBeDefined();
-        expect(result.find((room) => room.name === 'start')).toBeDefined();
-        expect(result.find((room) => room.name === 'building')).toBeDefined();
+        const rooms = realm.rooms;
+        expect(rooms.length).toBeGreaterThan(2);
+        expect(rooms.find((room) => room.name === 'nowhere')).toBeDefined();
+        expect(rooms.find((room) => room.name === 'start')).toBeDefined();
+        expect(rooms.find((room) => room.name === 'building')).toBeDefined();
     });
 
     it('should load short descriptions of the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        expect(result.find((room) => room.name === 'nowhere')?.shortDescription).toBeUndefined();
-        expect(result.find((room) => room.name === 'start')?.shortDescription).toBeDefined();
+        const rooms = realm.rooms;
+        expect(rooms.find((room) => room.name === 'nowhere')?.shortDescription).toBeUndefined();
+        expect(rooms.find((room) => room.name === 'start')?.shortDescription).toBeDefined();
     });
 
     it('should add connections to  the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        const fromStartToBuilding = result.find((room) => room.name === 'start')?.findConnection('north');
+        const rooms = realm.rooms;
+        const fromStartToBuilding = rooms.find((room) => room.name === 'start')?.findConnection('north');
         expect(fromStartToBuilding).toBeDefined();
         expect(fromStartToBuilding?.description).toBeDefined();
         expect(fromStartToBuilding?.matchesDirection('inside')).toBeTruthy();
 
-        const fromBuildingToStart = result.find((room) => room.name === 'building')?.findConnection('south');
+        const fromBuildingToStart = rooms.find((room) => room.name === 'building')?.findConnection('south');
         expect(fromBuildingToStart).toBeDefined();
     });
 
     it('should add items to the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const lamp = building?.findItem('lamp');
@@ -44,8 +49,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add invisible items to the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const coin = building?.findItem('coin', true);
@@ -54,8 +59,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add immovable items to the rooms', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const desk = building?.findItem('desk', true);
@@ -68,8 +73,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add triggers to the items', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const casks = building?.findItem('casks', true);
@@ -94,8 +99,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should not add conditions to the triggers for "drop lamp"', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const lamp = building?.findItem('lantern', true);
@@ -108,8 +113,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add conditions to the triggers for "drop cheese"', async () => {
-        const result = await loader.load(gameDataPath);
-        const start = result.find((room) => room.name === 'start');
+        const rooms = realm.rooms;
+        const start = rooms.find((room) => room.name === 'start');
         expect(start).toBeDefined();
 
         const cheese = start?.findItem('cheese', true);
@@ -128,8 +133,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add conditions to the triggers for "look hole"', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const hole = building?.findItem('hole', true);
@@ -148,8 +153,8 @@ describe('YamlDataLoader', () => {
     });
 
     it('should add states to the items', async () => {
-        const result = await loader.load(gameDataPath);
-        const building = result.find((room) => room.name === 'building');
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'building');
         expect(building).toBeDefined();
 
         const lamp = building?.findItem('lamp');

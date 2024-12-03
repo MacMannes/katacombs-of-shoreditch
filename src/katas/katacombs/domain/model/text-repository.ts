@@ -8,7 +8,7 @@ export class TextRepository {
         return this.texts[key];
     }
 
-    public getConcatenatedText(keys: string[], separator: string = ' '): string {
+    public getConcatenatedText(keys: string[], separator = ' '): string {
         return keys
             .map((key) => this.getText(key))
             .filter(isDefined)
