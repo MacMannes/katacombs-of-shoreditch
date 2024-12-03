@@ -1,18 +1,31 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createTestRooms, Game, ItemRepository, RoomRepository, TextWithAudioFiles } from '@katas/katacombs/domain';
+import {
+    Game,
+    GameFactory,
+    ItemRepository,
+    RoomRepository,
+    TextWithAudioFiles,
+    YamlDataLoader,
+} from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'path';
+import path from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe('GameController', async () => {
+    const gameDataPath = path.resolve(__dirname, './resources/test-game-data.yaml'); // Converts to absolute path
+    const gameFactory = new GameFactory(new YamlDataLoader());
+
     const ui = createMockedObject(NoOpUserInterface);
     let controller: GameController;
 
     async function createGameController() {
-        const testRooms = await createTestRooms();
-        const roomRepository = new RoomRepository(testRooms);
-        const itemRepository = new ItemRepository();
-        const game = new Game(roomRepository, itemRepository);
+        const game = await gameFactory.createGame(gameDataPath);
         controller = new GameController(game, ui);
     }
 
