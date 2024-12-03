@@ -11,4 +11,5 @@ export * from './game';
 export * from './game-factory';
 export * from './item';
 export * from './room';
+export * from './text-repository';
 export * from './condition';
