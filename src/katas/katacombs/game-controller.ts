@@ -226,7 +226,7 @@ export class GameController {
 
     private async displayRoom(room: Room, preferredLength?: 'short' | 'long') {
         const roomDescription = room.getDescription(preferredLength);
-        const audioFiles: string[] = [...roomDescription.audioFiles];
+        const audioFiles: string[] = [roomDescription];
 
         const immovableItemTextsWithAudioFiles = room
             .getItems()
@@ -246,7 +246,7 @@ export class GameController {
 
         const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
 
-        const text = `${roomDescription.text} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+        const text = `${roomDescription} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
         await this.ui.displayMessage(new TextWithAudioFiles(text, audioFiles));
     }
 
