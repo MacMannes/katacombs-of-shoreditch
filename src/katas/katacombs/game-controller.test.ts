@@ -40,8 +40,8 @@ describe('GameController', async () => {
 
         it('should print the title and description of the starting room', async () => {
             await controller.startGame();
-            expect(ui.displayRoom).toHaveBeenCalledTimes(1);
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }), undefined);
+            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(1);
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
         it('should continue to ask for user input until the user says "quit"', async () => {
@@ -50,7 +50,7 @@ describe('GameController', async () => {
             ui.getUserInput.mockResolvedValueOnce('take lamp');
 
             await controller.startGame();
-            expect(ui.displayRoom).toHaveBeenCalledTimes(3);
+            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(3);
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'OK.' }));
             expect(ui.displayMessage).toHaveBeenCalledWith(new TextWithAudioFiles('Bye!', ['bye']));
         });
@@ -86,8 +86,8 @@ describe('GameController', async () => {
 
         it('should display the current room when command "look" was given without a target', async () => {
             await controller.processCommand('look');
-            expect(ui.displayRoom).toHaveBeenCalledTimes(1);
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }), expect.anything());
+            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(1);
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
         it('should process look commands with a target', async () => {
@@ -104,7 +104,7 @@ describe('GameController', async () => {
 
         it('should process the go command when a direction was given', async () => {
             await controller.processCommand('go', 'building');
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }), undefined);
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
         });
 
         it('should process the take command', async () => {
@@ -146,7 +146,7 @@ describe('GameController', async () => {
         describe('to an ordinal direction', async () => {
             it('should print the new room when the direction is valid', async () => {
                 await controller.processCommand('go', 'north');
-                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }), undefined);
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
             });
 
             it('should print a message when direction is invalid', async () => {
@@ -160,7 +160,7 @@ describe('GameController', async () => {
         describe('using synonyms of the connection', async () => {
             it('should print the new room when traveling to a synonym of the connection was successful', async () => {
                 await controller.processCommand('go', 'building');
-                expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }), undefined);
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
             });
 
             it('should print a message when synonym could not be found', async () => {
@@ -176,7 +176,7 @@ describe('GameController', async () => {
         it('should show the long description of the room when looking in no specific direction', async () => {
             await controller.processCommand('look');
 
-            expect(ui.displayRoom).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }), 'long');
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
         });
 
         it('should show the description when looking in a specific direction with a connection', async () => {

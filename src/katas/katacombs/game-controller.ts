@@ -220,7 +220,34 @@ export class GameController {
     }
 
     private async displayCurrentRoom(preferredLength?: 'short' | 'long') {
-        await this.ui.displayRoom(this.getCurrentRoom(), preferredLength);
+        await this.ui.displayRoomTitle(this.getCurrentRoom());
+        await this.displayRoom(this.getCurrentRoom(), preferredLength);
+    }
+
+    private async displayRoom(room: Room, preferredLength?: 'short' | 'long') {
+        const roomDescription = room.getDescription(preferredLength);
+        const audioFiles: string[] = [...roomDescription.audioFiles];
+
+        const immovableItemTextsWithAudioFiles = room
+            .getItems()
+            .filter((item) => item.immovable)
+            .map((item) => item.getDescription('room'));
+
+        const immovableItemsText = immovableItemTextsWithAudioFiles.map((it) => it.text).join(' ');
+        audioFiles.push(...immovableItemTextsWithAudioFiles.flatMap((it) => it.audioFiles));
+
+        const movableItemsTextsWithAudioFiles = room
+            .getItems()
+            .filter((item) => !item.immovable)
+            .map((item) => item.getDescription('room'));
+
+        const movableItemsText = movableItemsTextsWithAudioFiles.map((it) => it.text).join('\n\n');
+        audioFiles.push(...movableItemsTextsWithAudioFiles.flatMap((it) => it.audioFiles));
+
+        const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
+
+        const text = `${roomDescription.text} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+        await this.ui.displayMessage(new TextWithAudioFiles(text, audioFiles));
     }
 
     private async speak(value: string): Promise<boolean> {

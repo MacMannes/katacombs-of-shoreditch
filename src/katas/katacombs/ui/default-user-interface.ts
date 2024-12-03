@@ -38,32 +38,8 @@ export class DefaultUserInterface implements UserInterface {
         await this.audioPlayer.playAsync('welcome');
     }
 
-    public async displayRoom(room: Room, preferredLength?: 'short' | 'long'): Promise<void> {
+    public async displayRoomTitle(room: Room): Promise<void> {
         this.setWindowTitle(room.title);
-
-        const roomDescription = room.getDescription(preferredLength);
-        const audioFiles: string[] = [...roomDescription.audioFiles];
-
-        const immovableItemTextsWithAudioFiles = room
-            .getItems()
-            .filter((item) => item.immovable)
-            .map((item) => item.getDescription('room'));
-
-        const immovableItemsText = immovableItemTextsWithAudioFiles.map((it) => it.text).join(' ');
-        audioFiles.push(...immovableItemTextsWithAudioFiles.flatMap((it) => it.audioFiles));
-
-        const movableItemsTextsWithAudioFiles = room
-            .getItems()
-            .filter((item) => !item.immovable)
-            .map((item) => item.getDescription('room'));
-
-        const movableItemsText = movableItemsTextsWithAudioFiles.map((it) => it.text).join('\n\n');
-        audioFiles.push(...movableItemsTextsWithAudioFiles.flatMap((it) => it.audioFiles));
-
-        const optionalNewLines = movableItemsTextsWithAudioFiles.length > 0 ? '\n\n' : '';
-
-        const text = `${roomDescription.text} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
-        this.displayMessage(new TextWithAudioFiles(text, audioFiles)).catch(() => {});
     }
 
     public async displayMessage(message: TextWithAudioFiles): Promise<void> {
