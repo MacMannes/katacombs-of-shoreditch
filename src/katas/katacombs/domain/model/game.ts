@@ -11,6 +11,7 @@ import {
     TextRepository,
 } from '@katas/katacombs/domain';
 import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error';
+import { isDefined } from '@utils/array';
 
 export class Game {
     private currentRoom: Room;
@@ -26,10 +27,6 @@ export class Game {
 
     public getCurrentRoom(): Room {
         return this.currentRoom;
-    }
-
-    public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
-        return this.textRepository.describeRoom(this.getCurrentRoom(), preferredLength);
     }
 
     public go(to: string): Room | undefined {
@@ -107,11 +104,46 @@ export class Game {
     }
 
     public getConcatenatedText(keys: string[], separator = ' '): string {
-        return this.textRepository.getConcatenatedText(keys, separator);
+        return keys
+            .map((key) => this.textRepository.getText(key))
+            .filter(isDefined)
+            .join(separator)
+            .trim();
     }
 
     public getConcatenatedTextForItemKeys(keys: string[][], separator: string): string {
-        return this.textRepository.getConcatenatedTextForItemKeys(keys, separator);
+        return keys
+            .map((keys) => this.getConcatenatedText(keys, ' '))
+            .filter(isDefined)
+            .join(separator)
+            .trim();
+    }
+
+    public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
+        const room = this.currentRoom;
+        const roomDescriptionTextKey = room.getDescription(preferredLength);
+        const roomDescriptionText = this.textRepository.getText(roomDescriptionTextKey);
+
+        const immovableItemTextKeys = room
+            .getItems()
+            .filter((item) => item.immovable)
+            .map((item) => item.getDescription('room'));
+        const immovableItemsText = this.getConcatenatedTextForItemKeys(immovableItemTextKeys, ' ');
+
+        const movableItemsTextKeys = room
+            .getItems()
+            .filter((item) => !item.immovable)
+            .map((item) => item.getDescription('room'));
+        const movableItemsText = this.getConcatenatedTextForItemKeys(movableItemsTextKeys, '\n\n');
+
+        const optionalNewLines = movableItemsTextKeys.length > 0 ? '\n\n' : '';
+        const text = `${roomDescriptionText} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+
+        return new TextWithAudioFiles(text, [
+            roomDescriptionTextKey,
+            ...immovableItemTextKeys.flat(),
+            ...movableItemsTextKeys.flat(),
+        ]);
     }
 
     /**
