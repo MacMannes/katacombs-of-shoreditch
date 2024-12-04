@@ -18,6 +18,7 @@ export class DefaultUserInterface implements UserInterface {
     constructor(private audioPlayer: AudioPlayer) {}
 
     public async displayWelcomeMessage(): Promise<void> {
+        this.setWindowTitle('Welcome to Katacombs of Shoreditch');
         console.log('\n\n====================================================');
         const title = `  _  __     _                            _          
  | |/ /    | |                          | |         

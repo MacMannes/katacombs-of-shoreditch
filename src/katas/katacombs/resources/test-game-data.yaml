@@ -361,6 +361,7 @@ texts:
   msg-ok: OK.
   msg-what: What?
   msg-nothing-interesting: Nothing interesting to look at there.
+  msg-carrying-the-following: "You are currently holding the following:"
   msg-not-carrying-it: You're not carrying it!
   msg-not-carrying-anything: You're not carrying anything.
   msg-cant-find-that: Can't find that here.

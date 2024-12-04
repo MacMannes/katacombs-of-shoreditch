@@ -98,12 +98,20 @@ export class Game {
         if (!item) return undefined;
 
         const textKeys = item.getDescription('look');
-        const text = this.textRepository.getConcatenatedText(textKeys);
+        const text = this.getConcatenatedText(textKeys);
         return new TextWithAudioFiles(text, textKeys);
     }
 
     public getTextWithAudioFiles(key: string): TextWithAudioFiles {
         return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [key]);
+    }
+
+    public getConcatenatedText(keys: string[], separator = ' '): string {
+        return this.textRepository.getConcatenatedText(keys, separator);
+    }
+
+    public getConcatenatedTextForItemKeys(keys: string[][], separator: string): string {
+        return this.textRepository.getConcatenatedTextForItemKeys(keys, separator);
     }
 
     /**

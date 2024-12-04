@@ -213,8 +213,9 @@ export class GameController {
             return true;
         }
 
-        const itemMessages = items.map((item) => item.getDescription('inventory')).join('\n- ');
-        const text = `You are currently holding the following:\n- ${itemMessages}`;
+        const textKeys = items.map((item) => item.getDescription('inventory'));
+        textKeys.unshift(['msg-carrying-the-following', 'msg-nothing']); // Add these to the beginning of the array
+        const text = this.game.getConcatenatedTextForItemKeys(textKeys, '\n- ');
         await this.ui.displayMessage(new TextWithAudioFiles(text));
         return true;
     }
