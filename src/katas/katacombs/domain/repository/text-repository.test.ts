@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Item, Room, TextRepository } from '@katas/katacombs/domain';
+import { TextRepository } from '@katas/katacombs/domain';
 
 describe('TextRepository', () => {
     describe('getText', () => {
