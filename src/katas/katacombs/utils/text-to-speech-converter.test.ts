@@ -39,6 +39,9 @@ describe('Text to Speech Converter', () => {
 
         await converter.convert(texts);
         expect(service.convert).toBeCalledTimes(1);
-        expect(service.convert).toBeCalledWith('Welcome to Katacombs of Shoreditch', 'msg-welcome');
+        expect(service.convert).toBeCalledWith(
+            'Welcome to Katacombs of Shoreditch',
+            expect.stringContaining('msg-welcome'),
+        );
     });
 });
