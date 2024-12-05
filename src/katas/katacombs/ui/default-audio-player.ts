@@ -51,7 +51,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     private playFile(fileName: string): void {
-        const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
+        const filePath = path.join(__dirname, `../resources/audio/${fileName}.mp3`);
         if (!existsSync(filePath)) {
             this.playNext();
             return;
@@ -71,7 +71,7 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     public async playAsync(fileName: string): Promise<void> {
-        const filePath = path.join(__dirname, `../resources/sounds/${fileName}.mp3`);
+        const filePath = path.join(__dirname, `../resources/audio/${fileName}.mp3`);
         return new Promise((resolve, reject) => {
             const process: ChildProcess = player.play(filePath);
             this.currentProcess = process;
