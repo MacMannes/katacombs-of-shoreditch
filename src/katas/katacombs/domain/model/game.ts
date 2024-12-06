@@ -144,10 +144,17 @@ export class Game {
         room: Room,
         options: { immovable: boolean; preferredLength?: 'short' | 'long' },
     ): string[][] {
+        const length = options.preferredLength ?? this.getTextLengthForRoom(room);
+        if (length === 'short' && options.immovable) return [];
+
         return room
             .getItems()
             .filter((item) => item.immovable === options.immovable)
             .map((item) => item.getDescription('room'));
+    }
+
+    private getTextLengthForRoom(room: Room): 'short' | 'long' {
+        return room.getNumberOfVisits() > 1 ? 'short' : 'long';
     }
 
     /**

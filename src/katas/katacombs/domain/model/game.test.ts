@@ -51,10 +51,17 @@ describe('Game', () => {
     });
 
     describe('describeRoom', () => {
-        const room = createRoom();
-        const roomRepository = new RoomRepository([room]);
-        const textRepository = createTextRepository();
-        const game = new Game(roomRepository, new ItemRepository(), textRepository);
+        let room: Room;
+        let roomRepository: RoomRepository;
+        let textRepository: TextRepository;
+        let game: Game;
+
+        beforeEach(() => {
+            room = createRoom();
+            roomRepository = new RoomRepository([room]);
+            textRepository = createTextRepository();
+            game = new Game(roomRepository, new ItemRepository(), textRepository);
+        });
 
         it('should Concatenate the full room description as expected', () => {
             const result = game.describeRoom();
@@ -68,6 +75,19 @@ describe('Game', () => {
             expect(result.audioFiles).toStrictEqual([
                 'room-building',
                 'item-desk-room',
+                'item-key-room',
+                'item-lantern-room',
+                'item-lantern-room-unlit',
+            ]);
+        });
+
+        it('should only return the audio keys for movable items, when the room has been visited before', () => {
+            room.addVisit();
+            room.addVisit();
+
+            const result = game.describeRoom();
+            expect(result.audioFiles).toStrictEqual([
+                'room-building-short',
                 'item-key-room',
                 'item-lantern-room',
                 'item-lantern-room-unlit',
