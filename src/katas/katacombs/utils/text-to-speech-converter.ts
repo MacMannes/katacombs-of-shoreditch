@@ -1,8 +1,8 @@
-import { TextToSpeachService } from '@katas/katacombs/utils/text-to-speech-service';
+import { TextToSpeechService } from '@katas/katacombs/utils';
 import { existsSync } from 'node:fs';
 
 export class TextToSpeechConverter {
-    constructor(private readonly service: TextToSpeachService) {}
+    constructor(private readonly service: TextToSpeechService) {}
 
     public async convert(texts: Record<string, string>): Promise<void> {
         for (const [fileName, text] of Object.entries(texts)) {
