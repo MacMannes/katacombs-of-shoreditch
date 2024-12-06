@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { TextToSpeechConverter } from '@katas/katacombs/utils/text-to-speech-converter';
+import { TextToSpeechConverter } from '@katas/katacombs/utils';
 import { createMockedObject } from '@utils/test';
 import { existsSync } from 'node:fs';
-import { TextToSpeechService } from '@katas/katacombs/utils/text-to-speech-service';
+import { TextToSpeechService } from '@katas/katacombs/utils';
 
 vi.mock('fs', () => ({
     existsSync: vi.fn(),
