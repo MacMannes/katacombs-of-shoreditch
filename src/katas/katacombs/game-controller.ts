@@ -216,7 +216,7 @@ export class GameController {
         const textKeys = items.map((item) => item.getDescription('inventory'));
         textKeys.unshift(['msg-carrying-the-following', 'msg-nothing']); // Add these to the beginning of the array
         const text = this.game.getConcatenatedTextForItemKeys(textKeys, '\n- ');
-        await this.ui.displayMessage(new TextWithAudioFiles(text));
+        await this.ui.displayMessage(new TextWithAudioFiles(text, textKeys.flat()));
         return true;
     }
 

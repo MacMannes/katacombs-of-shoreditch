@@ -59,8 +59,6 @@ describe('Text to Speech Converter', () => {
 
     it('should not convert strings that are empty', async () => {
         existsSyncMock.mockReturnValue(false);
-        const pathPrefix = getAbsolutePath(path.join(RESOURCES_PATH, 'audio'));
-
         const texts: Record<string, string | undefined> = {
             'msg-welcome': 'Welcome to Katacombs of Shoreditch',
             'msg-hello-world': 'Hello World!',

@@ -622,10 +622,22 @@ describe('GameController', async () => {
                 }),
             );
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Brass lantern') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('Brass lantern'),
+                }),
             );
             expect(ui.displayMessage).toBeCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('note') }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    audioFiles: [
+                        'msg-carrying-the-following',
+                        'msg-nothing',
+                        'item-note-inventory',
+                        'item-lantern-inventory',
+                    ],
+                }),
             );
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
