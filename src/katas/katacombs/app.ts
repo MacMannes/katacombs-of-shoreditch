@@ -1,22 +1,12 @@
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs/game-controller';
 import { GameFactory, YamlDataLoader } from '@katas/katacombs/domain';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'path';
 import path from 'node:path';
-
-const GAME_DATA_PATH = './resources/test-game-data.yaml';
-
-function getAbsolutePath(relativePath: string) {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-
-    return path.resolve(__dirname, relativePath);
-}
+import { getAbsolutePath, RESOURCES_PATH, TEST_GAME_DATA } from '@katas/katacombs/paths';
 
 async function createGameController() {
     const gameFactory = new GameFactory(new YamlDataLoader());
-    const game = await gameFactory.createGame(getAbsolutePath(GAME_DATA_PATH));
+    const game = await gameFactory.createGame(getAbsolutePath(path.join(RESOURCES_PATH, TEST_GAME_DATA)));
 
     return new GameController(game, new DefaultUserInterface(new DefaultAudioPlayer()));
 }
