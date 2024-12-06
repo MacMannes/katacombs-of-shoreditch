@@ -570,14 +570,6 @@ describe('GameController', async () => {
     });
 
     describe('Revealing an item after triggering an action', async () => {
-        beforeEach(() => {
-            createGameController();
-        });
-
-        afterEach(() => {
-            vi.resetAllMocks();
-        });
-
         it('should reveal the coin when looking at the casks', async () => {
             await controller.processCommand('go', 'north');
             const coins = controller.getCurrentRoom().findItem('coin', true);
@@ -589,15 +581,21 @@ describe('GameController', async () => {
         });
     });
 
+    describe('Triggering speak actions', () => {
+        it('should play an mp3 file when a speak action was triggered', async () => {
+            await controller.processCommand('go', 'north');
+            await controller.processCommand('take', 'lamp');
+            await controller.processCommand('rub', 'lamp');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({
+                    audioFiles: ['rub-lantern'],
+                }),
+            );
+        });
+    });
+
     describe('Showing the inventory', async () => {
-        beforeEach(() => {
-            createGameController();
-        });
-
-        afterEach(() => {
-            vi.resetAllMocks();
-        });
-
         it('should say something like "You are not carrying anything." when the user does not possess any items', async () => {
             await controller.displayInventory();
 

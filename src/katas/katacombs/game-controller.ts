@@ -231,7 +231,7 @@ export class GameController {
     }
 
     private async speak(value: string): Promise<boolean> {
-        await this.ui.displayMessage(new TextWithAudioFiles(value));
+        await this.ui.displayMessage(this.game.getTextWithAudioFiles(value));
         return true;
     }
 }
