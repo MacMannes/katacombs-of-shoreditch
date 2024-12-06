@@ -84,17 +84,17 @@ describe('GameController', async () => {
 
         it('should say "What?" when the command could not be interpreted', async () => {
             await controller.processCommand('print', 'invoice');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should say "What?" when an invalid commands with only a verb was given', async () => {
             await controller.processCommand('relax');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should not say "What?" when command "look" was given without a target', async () => {
             await controller.processCommand('look');
-            expect(ui.displayMessage).not.toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).not.toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should display the current room when command "look" was given without a target', async () => {
@@ -112,7 +112,7 @@ describe('GameController', async () => {
 
         it('should say "What?" when the go command was given without a direction', async () => {
             await controller.processCommand('go');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should process the go command when a direction was given', async () => {
@@ -129,7 +129,7 @@ describe('GameController', async () => {
 
         it('should say "What?" when the take command was given without a target', async () => {
             await controller.processCommand('take');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should process the drop command', async () => {
@@ -141,7 +141,7 @@ describe('GameController', async () => {
 
         it('should say "What?" when the drop command was given without a target', async () => {
             await controller.processCommand('drop');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
 
         it('should process the inventory command', async () => {
@@ -154,7 +154,7 @@ describe('GameController', async () => {
         it('should say "What?" when the speak command is used by the user', async () => {
             await controller.processCommand('speak', 'Hello World!');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });

@@ -50,7 +50,7 @@ export class GameController {
 
         const handler = this.getCommandHandler(verb, target);
         if (!handler || handler.isInternal) {
-            await this.ui.displayMessage(new TextWithAudioFiles('What?'));
+            await this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
             return;
         }
 
