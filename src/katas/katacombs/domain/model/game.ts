@@ -124,16 +124,10 @@ export class Game {
         const roomDescriptionTextKey = room.getDescription(preferredLength);
         const roomDescriptionText = this.textRepository.getText(roomDescriptionTextKey);
 
-        const immovableItemTextKeys = room
-            .getItems()
-            .filter((item) => item.immovable)
-            .map((item) => item.getDescription('room'));
-        const immovableItemsText = this.getConcatenatedTextForItemKeys(immovableItemTextKeys, ' ');
+        const immovableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: true, preferredLength });
+        const immovableItemsText = this.getConcatenatedTextForItemKeys(immovableItemsTextKeys, ' ');
 
-        const movableItemsTextKeys = room
-            .getItems()
-            .filter((item) => !item.immovable)
-            .map((item) => item.getDescription('room'));
+        const movableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: false, preferredLength });
         const movableItemsText = this.getConcatenatedTextForItemKeys(movableItemsTextKeys, '\n\n');
 
         const optionalNewLines = movableItemsTextKeys.length > 0 ? '\n\n' : '';
@@ -141,9 +135,19 @@ export class Game {
 
         return new TextWithAudioFiles(text, [
             roomDescriptionTextKey,
-            ...immovableItemTextKeys.flat(),
+            ...immovableItemsTextKeys.flat(),
             ...movableItemsTextKeys.flat(),
         ]);
+    }
+
+    private getTextKeysForRoomItems(
+        room: Room,
+        options: { immovable: boolean; preferredLength?: 'short' | 'long' },
+    ): string[][] {
+        return room
+            .getItems()
+            .filter((item) => item.immovable === options.immovable)
+            .map((item) => item.getDescription('room'));
     }
 
     /**
