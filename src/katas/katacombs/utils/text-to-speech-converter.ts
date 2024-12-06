@@ -13,7 +13,6 @@ export class TextToSpeechConverter {
             const absolutePath = getAbsolutePath(path.join(RESOURCES_PATH, 'audio', `${fileName}.mp3`));
             if (!existsSync(absolutePath)) {
                 await this.service.convert(text, absolutePath);
-                break;
             }
         }
     }
