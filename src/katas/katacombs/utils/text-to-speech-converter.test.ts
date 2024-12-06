@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TextToSpeechConverter } from '@katas/katacombs/utils/text-to-speech-converter';
 import { createMockedObject } from '@utils/test';
-import { TextToSpeachService } from '@katas/katacombs/utils/text-to-speach-service';
 import { existsSync } from 'node:fs';
+import { TextToSpeechService } from '@katas/katacombs/utils/text-to-speech-service';
 
 vi.mock('fs', () => ({
     existsSync: vi.fn(),
@@ -10,7 +10,7 @@ vi.mock('fs', () => ({
 const existsSyncMock = vi.mocked(existsSync);
 
 describe('Text to Speech Converter', () => {
-    const service = createMockedObject(TextToSpeachService);
+    const service = createMockedObject(TextToSpeechService);
     const converter = new TextToSpeechConverter(service);
 
     afterEach(() => {

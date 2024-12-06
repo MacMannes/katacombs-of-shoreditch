@@ -1,4 +1,4 @@
-import { TextToSpeachService } from '@katas/katacombs/utils/text-to-speach-service';
+import { TextToSpeachService } from '@katas/katacombs/utils/text-to-speech-service';
 import { existsSync } from 'node:fs';
 
 export class TextToSpeechConverter {
