@@ -10,7 +10,7 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
+import { DropCommand, GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private isPlaying = true;
@@ -154,12 +154,7 @@ export class GameController {
     }
 
     private async drop(itemName: string, caller?: CallerId): Promise<boolean> {
-        const dropped = this.game.drop(itemName);
-        if (caller === 'triggerAction') return dropped;
-
-        const textKey = dropped ? 'msg-ok' : 'msg-not-carrying-it';
-        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
-        return dropped;
+        return new DropCommand(this.game, this.ui).execute({ params: [itemName] });
     }
 
     private async changeState(target: string, value?: string): Promise<boolean> {
