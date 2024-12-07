@@ -1,4 +1,4 @@
-export type FunctionResult<Error, Value> =
+export type FunctionResult<Value, Error> =
     | {
           success: false;
           error: Error;

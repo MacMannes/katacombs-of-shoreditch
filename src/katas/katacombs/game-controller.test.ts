@@ -565,7 +565,7 @@ describe('GameController', async () => {
             vi.resetAllMocks();
             await controller.processCommand('changeState', 'lamp');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?'));
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
         });
     });
 

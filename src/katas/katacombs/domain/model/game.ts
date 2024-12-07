@@ -166,4 +166,4 @@ export class Game {
     }
 }
 
-export type TakeItemResult = FunctionResult<NotFoundError | ItemImmovableError, Item>;
+export type TakeItemResult = FunctionResult<Item, NotFoundError | ItemImmovableError>;
