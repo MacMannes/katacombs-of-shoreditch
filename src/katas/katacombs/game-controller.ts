@@ -10,7 +10,7 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { GoCommand } from '@katas/katacombs/commands';
+import { GoCommand, LookCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private isPlaying = true;
@@ -145,14 +145,8 @@ export class GameController {
     }
 
     private async look(at?: string): Promise<boolean> {
-        if (!at) {
-            await this.displayCurrentRoom('long');
-            return false;
-        }
-
-        const message = this.game.look(at);
-        await this.ui.displayMessage(message);
-        return true;
+        const params = at ? { params: [at] } : undefined;
+        return new LookCommand(this.game, this.ui).execute(params);
     }
 
     private async take(itemName: string): Promise<boolean> {

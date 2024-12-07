@@ -63,7 +63,7 @@ describe('GameController', async () => {
             ui.getUserInput.mockResolvedValueOnce('take lamp');
 
             await controller.startGame();
-            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(3);
+            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(2);
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'OK.' }));
             expect(ui.displayMessage).toHaveBeenCalledWith(new TextWithAudioFiles('Bye!', ['bye']));
         });
@@ -99,8 +99,11 @@ describe('GameController', async () => {
 
         it('should display the current room when command "look" was given without a target', async () => {
             await controller.processCommand('look');
-            expect(ui.displayRoomTitle).toHaveBeenCalledTimes(1);
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('You are standing at the end of a brick lane'),
+                }),
+            );
         });
 
         it('should process look commands with a target', async () => {
@@ -193,7 +196,9 @@ describe('GameController', async () => {
         it('should show the long description of the room when looking in no specific direction', async () => {
             await controller.processCommand('look');
 
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'start' }));
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('forest of') }),
+            );
         });
 
         it('should show the description when looking in a specific direction with a connection', async () => {
