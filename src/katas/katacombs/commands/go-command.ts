@@ -11,6 +11,20 @@ export class GoCommand extends Command {
     }
 
     async execute(options?: CommandExecuteOptions): Promise<boolean> {
-        return false;
+        const to = options?.params?.at(0);
+        if (!to) return false;
+
+        const newRoom = this.game.go(to);
+        if (!newRoom) {
+            await this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-no-way'));
+            return false;
+        }
+
+        const roomDescription = this.game.describeRoom();
+
+        await this.ui.displayRoomTitle(this.game.getCurrentRoom());
+        await this.ui.displayMessage(roomDescription);
+
+        return true;
     }
 }

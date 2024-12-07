@@ -10,6 +10,7 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
+import { GoCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private isPlaying = true;
@@ -140,13 +141,7 @@ export class GameController {
     };
 
     private async go(to: string): Promise<boolean> {
-        const newRoom = this.game.go(to);
-        if (!newRoom) {
-            await this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-no-way'));
-            return false;
-        }
-        await this.displayCurrentRoom();
-        return true;
+        return new GoCommand(this.game, this.ui).execute({ params: [to] });
     }
 
     private async look(at?: string): Promise<boolean> {
