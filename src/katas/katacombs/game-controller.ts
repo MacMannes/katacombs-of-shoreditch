@@ -10,7 +10,7 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { GoCommand, LookCommand } from '@katas/katacombs/commands';
+import { GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private isPlaying = true;
@@ -150,10 +150,7 @@ export class GameController {
     }
 
     private async take(itemName: string): Promise<boolean> {
-        const result = this.game.take(itemName);
-        const textKey = result.success ? 'msg-ok' : result.error.message;
-        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
-        return result.success;
+        return new TakeCommand(this.game, this.ui).execute({ params: [itemName] });
     }
 
     private async drop(itemName: string, caller?: CallerId): Promise<boolean> {

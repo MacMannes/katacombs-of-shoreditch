@@ -11,6 +11,12 @@ export class TakeCommand extends Command {
     }
 
     async execute(options?: CommandExecuteOptions): Promise<boolean> {
-        return false;
+        const itemName = options?.params?.at(0);
+        if (!itemName) return false;
+
+        const result = this.game.take(itemName);
+        const textKey = result.success ? 'msg-ok' : result.error.message;
+        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
+        return result.success;
     }
 }
