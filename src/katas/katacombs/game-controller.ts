@@ -11,6 +11,7 @@ import {
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { ChangeStateCommand, DropCommand, GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
+import { isDefined } from '@utils/array';
 
 export class GameController {
     private isPlaying = true;
@@ -158,9 +159,7 @@ export class GameController {
     }
 
     private changeState(target: string, value?: string): boolean {
-        if (!value) return false;
-
-        return new ChangeStateCommand(this.game).execute({ params: [target, value] });
+        return new ChangeStateCommand(this.game).execute({ params: [target, value]?.filter(isDefined) });
     }
 
     private reveal(target: string): boolean {
