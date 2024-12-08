@@ -14,6 +14,7 @@ import {
     ChangeStateCommand,
     DropCommand,
     GoCommand,
+    HideCommand,
     LookCommand,
     RevealCommand,
     TakeCommand,
@@ -174,11 +175,7 @@ export class GameController {
     }
 
     private hide(target: string): boolean {
-        const item = this.getCurrentRoom().findItem(target, true);
-        if (!item || !item.isVisible()) return false;
-
-        item.hide();
-        return true;
+        return new HideCommand(this.game, this.ui).execute([target]);
     }
 
     public findItem(itemName: string): Item | undefined {
