@@ -154,7 +154,7 @@ export class GameController {
     }
 
     private async drop(itemName: string, caller?: CallerId): Promise<boolean> {
-        return new DropCommand(this.game, this.ui).execute({ params: [itemName] });
+        return new DropCommand(this.game, this.ui).execute({ params: [itemName], caller });
     }
 
     private async changeState(target: string, value?: string): Promise<boolean> {

@@ -10,7 +10,7 @@ export class QuitCommand extends Command {
         super({ requiresTarget: false });
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         return false;
     }
 }

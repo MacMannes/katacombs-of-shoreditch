@@ -10,7 +10,7 @@ export class DropCommand extends Command {
         super();
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         const itemName = options?.params?.at(0);
         if (!itemName) return false;
 
@@ -18,7 +18,7 @@ export class DropCommand extends Command {
         if (options?.caller === 'triggerAction') return dropped;
 
         const textKey = dropped ? 'msg-ok' : 'msg-not-carrying-it';
-        await this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
+        this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
         return dropped;
     }
 }

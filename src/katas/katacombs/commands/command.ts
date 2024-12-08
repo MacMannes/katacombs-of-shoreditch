@@ -9,7 +9,7 @@ export abstract class Command {
         this.requiresTarget = options?.isInternal ?? false;
     }
 
-    abstract execute(options?: CommandExecuteOptions): Promise<boolean>;
+    abstract execute(options?: CommandExecuteOptions): boolean;
 }
 
 export type CommandOptions = {

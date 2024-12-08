@@ -10,7 +10,7 @@ export class RevealCommand extends Command {
         super({ isInternal: false });
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         return false;
     }
 }

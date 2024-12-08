@@ -10,11 +10,11 @@ export class LookCommand extends Command {
         super({ requiresTarget: false });
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         const at = options?.params?.at(0);
 
         const message = at ? this.game.look(at) : this.game.describeRoom('long');
-        await this.ui.displayMessage(message);
+        this.ui.displayMessage(message);
 
         return true;
     }

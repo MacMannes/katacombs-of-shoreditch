@@ -6,7 +6,7 @@ export class SpeakCommand extends Command {
         super({ isInternal: true });
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         return false;
     }
 }

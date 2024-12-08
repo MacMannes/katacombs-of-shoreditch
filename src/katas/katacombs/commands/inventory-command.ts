@@ -10,7 +10,7 @@ export class InventoryCommand extends Command {
         super();
     }
 
-    async execute(options?: CommandExecuteOptions): Promise<boolean> {
+    execute(options?: CommandExecuteOptions): boolean {
         return false;
     }
 }
