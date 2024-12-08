@@ -63,10 +63,10 @@ describe('GameController', () => {
     });
 
     describe('Quitting the game', async () => {
-        it('should say "Bye!" and pass the audioKey "bye"', async () => {
+        it('should show the GoodbyeMessage"', async () => {
             controller.processCommand('quit');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('Bye!', ['bye']));
+            expect(ui.displayGoodByeMessage).toBeCalled();
         });
     });
 
