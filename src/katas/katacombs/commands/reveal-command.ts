@@ -11,6 +11,11 @@ export class RevealCommand extends Command {
     }
 
     execute(params: string[]): boolean {
-        return false;
+        const target = params[0];
+        const item = this.game.getCurrentRoom().findItem(target, true);
+        if (!item || item.isVisible()) return false;
+
+        item.reveal();
+        return true;
     }
 }

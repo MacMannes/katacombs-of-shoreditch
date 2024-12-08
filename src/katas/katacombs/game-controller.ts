@@ -10,7 +10,14 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { ChangeStateCommand, DropCommand, GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
+import {
+    ChangeStateCommand,
+    DropCommand,
+    GoCommand,
+    LookCommand,
+    RevealCommand,
+    TakeCommand,
+} from '@katas/katacombs/commands';
 import { isDefined } from '@utils/array';
 
 export class GameController {
@@ -163,11 +170,7 @@ export class GameController {
     }
 
     private reveal(target: string): boolean {
-        const item = this.getCurrentRoom().findItem(target, true);
-        if (!item || item.isVisible()) return false;
-
-        item.reveal();
-        return true;
+        return new RevealCommand(this.game, this.ui).execute([target]);
     }
 
     private hide(target: string): boolean {
