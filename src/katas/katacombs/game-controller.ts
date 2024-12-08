@@ -22,17 +22,17 @@ export class GameController {
 
     public async startGame() {
         await this.ui.displayWelcomeMessage();
-        await this.displayCurrentRoom();
+        this.displayCurrentRoom();
 
         while (this.isPlaying) {
             const userInput = (await this.ui.getUserInput()) ?? '';
             const [verb, target] = userInput.split(' ');
-            await this.processCommand(verb, target);
+            this.processCommand(verb, target);
         }
     }
 
-    public async quitGame(): Promise<boolean> {
-        await this.ui.displayMessage(new TextWithAudioFiles('Bye!', ['bye']));
+    public quitGame(): boolean {
+        this.ui.displayMessage(new TextWithAudioFiles('Bye!', ['bye']));
         this.isPlaying = false;
         return true;
     }
@@ -45,17 +45,17 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public async processCommand(verb: string, target?: string) {
+    public processCommand(verb: string, target?: string) {
         const executedItemTriggers = this.executeItemTriggers(target, verb);
         if (executedItemTriggers) return;
 
         const handler = this.getCommandHandler(verb, target);
         if (!handler || handler.isInternal) {
-            await this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
+            this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
             return;
         }
 
-        await handler.handle(target ?? '', 'commandProcessor');
+        handler.handle(target ?? '', 'commandProcessor');
     }
 
     private executeItemTriggers(target: string | undefined, verb: string): boolean {
@@ -98,21 +98,21 @@ export class GameController {
         return false;
     }
 
-    private async executeTriggerAction(action: CommandAction) {
+    private executeTriggerAction(action: CommandAction) {
         const handler = this.getCommandHandler(action.command, action.argument);
         if (!handler) {
             return false;
         }
 
-        const result = await handler.handle(action.argument, action.parameter, 'triggerAction');
-        await this.displayActionResultMessage(action, result);
+        const result = handler.handle(action.argument, action.parameter, 'triggerAction');
+        this.displayActionResultMessage(action, result);
     }
 
-    private async displayActionResultMessage(action: CommandAction, result: boolean) {
+    private displayActionResultMessage(action: CommandAction, result: boolean) {
         const message = result ? action.responses?.success : action.responses?.failure;
         if (!message) return;
 
-        await this.ui.displayMessage(this.game.getTextWithAudioFiles(message));
+        this.ui.displayMessage(this.game.getTextWithAudioFiles(message));
     }
 
     private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
@@ -140,24 +140,24 @@ export class GameController {
         changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
     };
 
-    private async go(to: string): Promise<boolean> {
+    private go(to: string): boolean {
         return new GoCommand(this.game, this.ui).execute({ params: [to] });
     }
 
-    private async look(at?: string): Promise<boolean> {
+    private look(at?: string): boolean {
         const params = at ? { params: [at] } : undefined;
         return new LookCommand(this.game, this.ui).execute(params);
     }
 
-    private async take(itemName: string): Promise<boolean> {
+    private take(itemName: string): boolean {
         return new TakeCommand(this.game, this.ui).execute({ params: [itemName] });
     }
 
-    private async drop(itemName: string, caller?: CallerId): Promise<boolean> {
+    private drop(itemName: string, caller?: CallerId): boolean {
         return new DropCommand(this.game, this.ui).execute({ params: [itemName], caller });
     }
 
-    private async changeState(target: string, value?: string): Promise<boolean> {
+    private changeState(target: string, value?: string): boolean {
         if (!value) return false;
 
         const item = this.findItem(target);
@@ -167,7 +167,7 @@ export class GameController {
         return true;
     }
 
-    private async reveal(target: string): Promise<boolean> {
+    private reveal(target: string): boolean {
         const item = this.getCurrentRoom().findItem(target, true);
         if (!item || item.isVisible()) return false;
 
@@ -175,7 +175,7 @@ export class GameController {
         return true;
     }
 
-    private async hide(target: string): Promise<boolean> {
+    private hide(target: string): boolean {
         const item = this.getCurrentRoom().findItem(target, true);
         if (!item || !item.isVisible()) return false;
 
@@ -187,32 +187,32 @@ export class GameController {
         return this.game.findItem(itemName);
     }
 
-    public async displayInventory(): Promise<boolean> {
+    public displayInventory(): boolean {
         const items = this.game.getItems();
         if (items.length == 0) {
-            await this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
+            this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
             return true;
         }
 
         const textKeys = items.map((item) => item.getDescription('inventory'));
         textKeys.unshift(['msg-carrying-the-following', 'msg-nothing']); // Add these to the beginning of the array
         const text = this.game.getConcatenatedTextForItemKeys(textKeys, '\n- ');
-        await this.ui.displayMessage(new TextWithAudioFiles(text, textKeys.flat()));
+        this.ui.displayMessage(new TextWithAudioFiles(text, textKeys.flat()));
         return true;
     }
 
-    private async displayCurrentRoom(preferredLength?: 'short' | 'long') {
-        await this.ui.displayRoomTitle(this.getCurrentRoom());
-        await this.displayRoom(preferredLength);
+    private displayCurrentRoom(preferredLength?: 'short' | 'long') {
+        this.ui.displayRoomTitle(this.getCurrentRoom());
+        this.displayRoom(preferredLength);
     }
 
-    private async displayRoom(preferredLength?: 'short' | 'long') {
+    private displayRoom(preferredLength?: 'short' | 'long') {
         const roomDescription = this.game.describeRoom(preferredLength);
-        await this.ui.displayMessage(roomDescription);
+        this.ui.displayMessage(roomDescription);
     }
 
-    private async speak(value: string): Promise<boolean> {
-        await this.ui.displayMessage(this.game.getTextWithAudioFiles(value));
+    private speak(value: string): boolean {
+        this.ui.displayMessage(this.game.getTextWithAudioFiles(value));
         return true;
     }
 }
