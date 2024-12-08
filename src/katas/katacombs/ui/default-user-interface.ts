@@ -1,15 +1,11 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { Room, TextWithAudioFiles } from '../domain';
 import { AudioPlayer, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
-import { isDefined } from '@utils/array';
 
 export class DefaultUserInterface implements UserInterface {
-    private hasInterruptedNarrator: boolean = false;
-
     private rl = createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -39,11 +35,11 @@ export class DefaultUserInterface implements UserInterface {
         await this.audioPlayer.playAsync('welcome');
     }
 
-    public async displayRoomTitle(room: Room): Promise<void> {
+    public displayRoomTitle(room: Room): void {
         this.setWindowTitle(room.title);
     }
 
-    public async displayMessage(message: TextWithAudioFiles): Promise<void> {
+    public displayMessage(message: TextWithAudioFiles): void {
         console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
 
         if (!message.audioFiles) return;
@@ -62,15 +58,5 @@ export class DefaultUserInterface implements UserInterface {
         } else {
             process.stdout.write('\x1b]2;' + title + '\x1b\x5c');
         }
-    }
-
-    private interruptNarrator(): string | undefined {
-        const randomNumber = Math.floor(Math.random() * 20) + 1;
-        if (!this.hasInterruptedNarrator || randomNumber === 1) {
-            this.hasInterruptedNarrator = true;
-            return 'msg-narrator-interrupt-1';
-        }
-
-        return undefined;
     }
 }
