@@ -1,4 +1,4 @@
-import { Command, CommandExecuteOptions } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/commands';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class SpeakCommand extends Command {
@@ -6,7 +6,7 @@ export class SpeakCommand extends Command {
         super({ isInternal: true });
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
+    execute(params: string[]): boolean {
         return false;
     }
 }

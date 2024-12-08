@@ -1,4 +1,4 @@
-import { CommandExecuteOptions, Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/commands';
 import { Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
@@ -10,9 +10,8 @@ export class TakeCommand extends Command {
         super();
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
-        const itemName = options?.params?.at(0);
-        if (!itemName) return false;
+    execute(params: string[]): boolean {
+        const itemName = params[0];
 
         const result = this.game.take(itemName);
         const textKey = result.success ? 'msg-ok' : result.error.message;

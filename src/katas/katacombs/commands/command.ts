@@ -9,7 +9,7 @@ export abstract class Command {
         this.requiresTarget = options?.isInternal ?? false;
     }
 
-    abstract execute(options?: CommandExecuteOptions): boolean;
+    abstract execute(params: string[], options?: CommandExecuteOptions): boolean;
 }
 
 export type CommandOptions = {
@@ -18,6 +18,5 @@ export type CommandOptions = {
 };
 
 export type CommandExecuteOptions = {
-    params: string[];
     caller?: CallerId;
 };

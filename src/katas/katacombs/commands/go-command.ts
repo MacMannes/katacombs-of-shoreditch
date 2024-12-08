@@ -1,4 +1,4 @@
-import { CommandExecuteOptions, Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/commands';
 import { Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
@@ -10,9 +10,8 @@ export class GoCommand extends Command {
         super();
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
-        const to = options?.params?.at(0);
-        if (!to) return false;
+    execute(params: string[]): boolean {
+        const to = params[0];
 
         const newRoom = this.game.go(to);
         if (!newRoom) {

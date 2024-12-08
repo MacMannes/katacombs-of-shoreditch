@@ -1,4 +1,4 @@
-import { CommandExecuteOptions, Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/commands';
 import { Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
@@ -10,7 +10,7 @@ export class RevealCommand extends Command {
         super({ isInternal: false });
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
+    execute(params: string[]): boolean {
         return false;
     }
 }

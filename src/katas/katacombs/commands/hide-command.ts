@@ -10,7 +10,7 @@ export class HideCommand extends Command {
         super({ isInternal: true });
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
+    execute(params: string[]): boolean {
         return false;
     }
 }

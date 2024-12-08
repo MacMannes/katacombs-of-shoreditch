@@ -142,24 +142,24 @@ export class GameController {
     };
 
     private go(to: string): boolean {
-        return new GoCommand(this.game, this.ui).execute({ params: [to] });
+        return new GoCommand(this.game, this.ui).execute([to]);
     }
 
     private look(at?: string): boolean {
-        const params = at ? { params: [at] } : undefined;
+        const params = at ? [at] : [];
         return new LookCommand(this.game, this.ui).execute(params);
     }
 
     private take(itemName: string): boolean {
-        return new TakeCommand(this.game, this.ui).execute({ params: [itemName] });
+        return new TakeCommand(this.game, this.ui).execute([itemName]);
     }
 
     private drop(itemName: string, caller?: CallerId): boolean {
-        return new DropCommand(this.game, this.ui).execute({ params: [itemName], caller });
+        return new DropCommand(this.game, this.ui).execute([itemName], { caller });
     }
 
     private changeState(target: string, value?: string): boolean {
-        return new ChangeStateCommand(this.game).execute({ params: [target, value]?.filter(isDefined) });
+        return new ChangeStateCommand(this.game).execute([target, value]?.filter(isDefined));
     }
 
     private reveal(target: string): boolean {

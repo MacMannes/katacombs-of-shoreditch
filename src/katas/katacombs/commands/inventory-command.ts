@@ -10,7 +10,7 @@ export class InventoryCommand extends Command {
         super();
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
+    execute(params: string[]): boolean {
         return false;
     }
 }

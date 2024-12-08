@@ -1,4 +1,4 @@
-import { Command, CommandExecuteOptions } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/commands';
 import { Game } from '@katas/katacombs/domain';
 
 export class ChangeStateCommand extends Command {
@@ -6,10 +6,8 @@ export class ChangeStateCommand extends Command {
         super({ isInternal: true });
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
-        if (!options?.params) return false;
-
-        const [target, value] = options.params;
+    execute(params: string[]): boolean {
+        const [target, value] = params;
         if (!target || !value) return false;
 
         const item = this.game.findItem(target);

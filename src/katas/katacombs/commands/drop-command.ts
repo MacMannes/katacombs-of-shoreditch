@@ -10,8 +10,8 @@ export class DropCommand extends Command {
         super();
     }
 
-    execute(options?: CommandExecuteOptions): boolean {
-        const itemName = options?.params?.at(0);
+    execute(params: string[], options?: CommandExecuteOptions): boolean {
+        const itemName = params?.at(0);
         if (!itemName) return false;
 
         const dropped = this.game.drop(itemName);
