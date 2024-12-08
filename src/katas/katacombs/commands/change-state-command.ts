@@ -7,6 +7,15 @@ export class ChangeStateCommand extends Command {
     }
 
     execute(options?: CommandExecuteOptions): boolean {
-        return false;
+        if (!options?.params) return false;
+
+        const [target, value] = options.params;
+        if (!target || !value) return false;
+
+        const item = this.game.findItem(target);
+        if (!item || item.getCurrentState() === value) return false;
+
+        item.setState(value);
+        return true;
     }
 }

@@ -10,7 +10,7 @@ import {
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { DropCommand, GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
+import { ChangeStateCommand, DropCommand, GoCommand, LookCommand, TakeCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private isPlaying = true;
@@ -160,11 +160,7 @@ export class GameController {
     private changeState(target: string, value?: string): boolean {
         if (!value) return false;
 
-        const item = this.findItem(target);
-        if (!item || item.getCurrentState() === value) return false;
-
-        item.setState(value);
-        return true;
+        return new ChangeStateCommand(this.game).execute({ params: [target, value] });
     }
 
     private reveal(target: string): boolean {
