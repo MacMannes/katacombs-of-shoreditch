@@ -58,15 +58,7 @@ describe('GameController', () => {
             await controller.startGame();
             expect(ui.displayRoomTitle).toHaveBeenCalledTimes(2);
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'OK.' }));
-            expect(ui.displayMessage).toHaveBeenCalledWith(new TextWithAudioFiles('Bye!', ['bye']));
-        });
-    });
-
-    describe('Quitting the game', async () => {
-        it('should show the GoodbyeMessage"', async () => {
-            controller.processCommand('quit');
-
-            expect(ui.displayGoodByeMessage).toBeCalled();
+            expect(ui.displayMessageAsync).toHaveBeenCalledWith(new TextWithAudioFiles('Bye!', ['msg-bye']));
         });
     });
 

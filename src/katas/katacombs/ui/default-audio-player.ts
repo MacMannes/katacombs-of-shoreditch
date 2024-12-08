@@ -60,17 +60,20 @@ export class DefaultAudioPlayer implements AudioPlayer {
         const process: ChildProcess = player.play(filePath);
         this.currentProcess = process;
 
-        process.on('exit', (code) => {
+        process.on('exit', () => {
             this.currentProcess = null;
             this.playNext();
         });
 
-        process.on('error', (error) => {
+        process.on('error', () => {
             this.currentProcess = null;
         });
     }
 
     public async playAsync(fileName: string): Promise<void> {
+        this.queue.clear();
+        this.stop();
+
         const filePath = path.join(__dirname, `../resources/audio/${fileName}.mp3`);
         return new Promise((resolve, reject) => {
             const process: ChildProcess = player.play(filePath);

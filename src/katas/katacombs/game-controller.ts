@@ -17,6 +17,7 @@ import {
     HideCommand,
     InventoryCommand,
     LookCommand,
+    QuitCommand,
     RevealCommand,
     TakeCommand,
 } from '@katas/katacombs/commands';
@@ -39,12 +40,14 @@ export class GameController {
             const [verb, target] = userInput.split(' ');
             this.processCommand(verb, target);
         }
+
+        await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
     }
 
     public quitGame(): boolean {
-        this.ui.displayMessage(new TextWithAudioFiles('Bye!', ['bye']));
+        const shouldQuit = new QuitCommand(this.ui).execute([]);
         this.isPlaying = false;
-        return true;
+        return shouldQuit;
     }
 
     public getCurrentRoom(): Room {

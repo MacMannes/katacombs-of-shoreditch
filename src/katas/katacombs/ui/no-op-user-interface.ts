@@ -11,6 +11,10 @@ export class NoOpUserInterface implements UserInterface {
         // NO-OP
     }
 
+    public async displayMessageAsync(message: TextWithAudioFiles): Promise<void> {
+        // NO-OP
+    }
+
     public displayRoomTitle(room: Room): void {
         // NO-OP
     }

@@ -396,6 +396,7 @@ texts:
   # Various responses
 
   msg-ok: OK.
+  msg-bye: Bye!
   msg-what: What?
   msg-nothing-interesting: Nothing interesting to look at there.
   msg-carrying-the-following: "You are currently holding the following:"

@@ -46,6 +46,15 @@ export class DefaultUserInterface implements UserInterface {
         this.audioPlayer.play(...message.audioFiles);
     }
 
+    public async displayMessageAsync(message: TextWithAudioFiles): Promise<void> {
+        console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
+
+        const audioFile = message.audioFiles?.at(0);
+        if (!audioFile) return;
+
+        await this.audioPlayer.playAsync(audioFile);
+    }
+
     public async getUserInput(): Promise<string | undefined> {
         const userInput = await this.rl.question(chalk.greenBright.bold('❯ '));
         console.log('');
