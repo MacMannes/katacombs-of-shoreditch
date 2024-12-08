@@ -1,5 +1,5 @@
-import { CommandExecuteOptions, Command } from '@katas/katacombs/commands';
-import { Game } from '@katas/katacombs/domain';
+import { Command } from '@katas/katacombs/commands';
+import { Game, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class InventoryCommand extends Command {
@@ -10,7 +10,18 @@ export class InventoryCommand extends Command {
         super();
     }
 
-    execute(params: string[]): boolean {
-        return false;
+    execute(): boolean {
+        const items = this.game.getItems();
+        if (items.length == 0) {
+            this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
+            return true;
+        }
+
+        const textKeys = items.map((item) => item.getDescription('inventory'));
+        textKeys.unshift(['msg-carrying-the-following', 'msg-nothing']); // Add these to the beginning of the array
+        const text = this.game.getConcatenatedTextForItemKeys(textKeys, '\n- ');
+        this.ui.displayMessage(new TextWithAudioFiles(text, textKeys.flat()));
+
+        return true;
     }
 }

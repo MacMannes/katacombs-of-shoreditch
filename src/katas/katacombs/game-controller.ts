@@ -15,6 +15,7 @@ import {
     DropCommand,
     GoCommand,
     HideCommand,
+    InventoryCommand,
     LookCommand,
     RevealCommand,
     TakeCommand,
@@ -183,17 +184,7 @@ export class GameController {
     }
 
     public displayInventory(): boolean {
-        const items = this.game.getItems();
-        if (items.length == 0) {
-            this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
-            return true;
-        }
-
-        const textKeys = items.map((item) => item.getDescription('inventory'));
-        textKeys.unshift(['msg-carrying-the-following', 'msg-nothing']); // Add these to the beginning of the array
-        const text = this.game.getConcatenatedTextForItemKeys(textKeys, '\n- ');
-        this.ui.displayMessage(new TextWithAudioFiles(text, textKeys.flat()));
-        return true;
+        return new InventoryCommand(this.game, this.ui).execute([]);
     }
 
     private displayCurrentRoom(preferredLength?: 'short' | 'long') {
