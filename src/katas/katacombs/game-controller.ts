@@ -12,6 +12,7 @@ import {
 import { UserInterface } from '@katas/katacombs/ui';
 import {
     ChangeStateCommand,
+    CommandFactory,
     DropCommand,
     GoCommand,
     HideCommand,
@@ -25,11 +26,14 @@ import { isDefined } from '@utils/array';
 
 export class GameController {
     private isPlaying = true;
+    private readonly commandFactory: CommandFactory;
 
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
-    ) {}
+    ) {
+        this.commandFactory = new CommandFactory(this.game, this.ui);
+    }
 
     public async startGame() {
         await this.ui.displayWelcomeMessage();
@@ -44,12 +48,6 @@ export class GameController {
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
     }
 
-    public quitGame(): boolean {
-        const shouldQuit = new QuitCommand(this.ui).execute([]);
-        this.isPlaying = false;
-        return shouldQuit;
-    }
-
     public getCurrentRoom(): Room {
         return this.game.getCurrentRoom();
     }
@@ -62,13 +60,16 @@ export class GameController {
         const executedItemTriggers = this.executeItemTriggers(target, verb);
         if (executedItemTriggers) return;
 
-        const handler = this.getCommandHandler(verb, target);
-        if (!handler || handler.isInternal) {
+        const command = this.commandFactory.create(verb, target);
+        if (!command || command.isInternal) {
             this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
             return;
         }
 
-        handler.handle(target ?? '', 'commandProcessor');
+        const result = command.execute([target ?? ''], { caller: 'commandProcessor' });
+        if (command instanceof QuitCommand) {
+            this.isPlaying = !result;
+        }
     }
 
     private executeItemTriggers(target: string | undefined, verb: string): boolean {
@@ -112,12 +113,12 @@ export class GameController {
     }
 
     private executeTriggerAction(action: CommandAction) {
-        const handler = this.getCommandHandler(action.command, action.argument);
-        if (!handler) {
-            return false;
-        }
+        const command = this.commandFactory.create(action.command, action.argument);
+        if (!command) return false;
 
-        const result = handler.handle(action.argument, action.parameter, 'triggerAction');
+        const params = [action.argument, action.parameter].filter(isDefined);
+        const result = command.execute(params, { caller: 'triggerAction' });
+
         this.displayActionResultMessage(action, result);
     }
 
@@ -126,60 +127,6 @@ export class GameController {
         if (!message) return;
 
         this.ui.displayMessage(this.game.getTextWithAudioFiles(message));
-    }
-
-    private getCommandHandler(verb: string, target?: string): CommandHandler | undefined {
-        const handler = this.commandHandlers[verb];
-        if (!handler) return undefined;
-
-        const requiresTarget = handler.requiresTarget ?? true;
-        if (requiresTarget && !target) {
-            return undefined;
-        }
-
-        return handler;
-    }
-
-    private commandHandlers: Record<string, CommandHandler> = {
-        go: { handle: (target) => this.go(target) },
-        look: { requiresTarget: false, handle: (target) => this.look(target) },
-        take: { handle: (target) => this.take(target) },
-        drop: { handle: (target, _value, caller) => this.drop(target, caller) },
-        quit: { requiresTarget: false, handle: () => this.quitGame() },
-        inventory: { requiresTarget: false, handle: () => this.displayInventory() },
-        speak: { isInternal: true, handle: (value) => this.speak(value) },
-        reveal: { isInternal: true, handle: (target) => this.reveal(target) },
-        hide: { isInternal: true, handle: (target) => this.hide(target) },
-        changeState: { isInternal: true, handle: (target, value) => this.changeState(target, value) },
-    };
-
-    private go(to: string): boolean {
-        return new GoCommand(this.game, this.ui).execute([to]);
-    }
-
-    private look(at?: string): boolean {
-        const params = at ? [at] : [];
-        return new LookCommand(this.game, this.ui).execute(params);
-    }
-
-    private take(itemName: string): boolean {
-        return new TakeCommand(this.game, this.ui).execute([itemName]);
-    }
-
-    private drop(itemName: string, caller?: CallerId): boolean {
-        return new DropCommand(this.game, this.ui).execute([itemName], { caller });
-    }
-
-    private changeState(target: string, value?: string): boolean {
-        return new ChangeStateCommand(this.game).execute([target, value]?.filter(isDefined));
-    }
-
-    private reveal(target: string): boolean {
-        return new RevealCommand(this.game, this.ui).execute([target]);
-    }
-
-    private hide(target: string): boolean {
-        return new HideCommand(this.game, this.ui).execute([target]);
     }
 
     public findItem(itemName: string): Item | undefined {

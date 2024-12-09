@@ -7,7 +7,7 @@ export class InventoryCommand extends Command {
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
-        super();
+        super({ requiresTarget: false });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

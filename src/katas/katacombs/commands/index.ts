@@ -1,4 +1,5 @@
 export * from './command';
+export * from './command-factory';
 export * from './go-command';
 export * from './drop-command';
 export * from './hide-command';

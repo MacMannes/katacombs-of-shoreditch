@@ -5,8 +5,8 @@ export abstract class Command {
     public requiresTarget: boolean;
 
     protected constructor(options?: CommandOptions) {
-        this.isInternal = options?.isInternal ?? true;
-        this.requiresTarget = options?.isInternal ?? false;
+        this.isInternal = options?.isInternal ?? false;
+        this.requiresTarget = options?.requiresTarget ?? true;
     }
 
     abstract execute(params: string[], options?: CommandExecuteOptions): boolean;
