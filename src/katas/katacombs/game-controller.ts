@@ -146,9 +146,4 @@ export class GameController {
         const roomDescription = this.game.describeRoom(preferredLength);
         this.ui.displayMessage(roomDescription);
     }
-
-    private speak(value: string): boolean {
-        this.ui.displayMessage(this.game.getTextWithAudioFiles(value));
-        return true;
-    }
 }

@@ -3,10 +3,7 @@ import { Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class RevealCommand extends Command {
-    constructor(
-        private readonly game: Game,
-        private readonly ui: UserInterface,
-    ) {
+    constructor(private readonly game: Game) {
         super({ isInternal: false });
     }
 

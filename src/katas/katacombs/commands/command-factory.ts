@@ -10,6 +10,7 @@ import { HideCommand } from '@katas/katacombs/commands/hide-command';
 import { DropCommand } from '@katas/katacombs/commands/drop-command';
 import { InventoryCommand } from '@katas/katacombs/commands/inventory-command';
 import { TakeCommand } from '@katas/katacombs/commands/take-command';
+import { SpeakCommand } from '@katas/katacombs/commands/speak-command';
 
 export class CommandFactory {
     constructor(
@@ -40,9 +41,11 @@ export class CommandFactory {
             case 'hide':
                 return new HideCommand(this.game, this.ui);
             case 'reveal':
-                return new RevealCommand(this.game, this.ui);
+                return new RevealCommand(this.game);
             case 'changeState':
                 return new ChangeStateCommand(this.game);
+            case 'speak':
+                return new SpeakCommand(this.game, this.ui);
             case 'quit':
                 return new QuitCommand(this.ui);
             default:
