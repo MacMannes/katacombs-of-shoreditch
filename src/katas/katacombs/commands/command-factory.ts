@@ -41,7 +41,7 @@ export class CommandFactory {
                 return new HideCommand(this.game, this.ui);
             case 'reveal':
                 return new RevealCommand(this.game, this.ui);
-            case 'change':
+            case 'changeState':
                 return new ChangeStateCommand(this.game);
             case 'quit':
                 return new QuitCommand(this.ui);
