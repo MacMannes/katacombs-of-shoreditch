@@ -1,27 +1,6 @@
-import {
-    ActionTrigger,
-    CallerId,
-    CommandAction,
-    CommandHandler,
-    Condition,
-    Game,
-    Item,
-    Room,
-    TextWithAudioFiles,
-} from '@katas/katacombs/domain';
+import { ActionTrigger, CommandAction, Condition, Game, Item, Room, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import {
-    ChangeStateCommand,
-    CommandFactory,
-    DropCommand,
-    GoCommand,
-    HideCommand,
-    InventoryCommand,
-    LookCommand,
-    QuitCommand,
-    RevealCommand,
-    TakeCommand,
-} from '@katas/katacombs/commands';
+import { CommandFactory, InventoryCommand, QuitCommand } from '@katas/katacombs/commands';
 import { isDefined } from '@utils/array';
 
 export class GameController {
