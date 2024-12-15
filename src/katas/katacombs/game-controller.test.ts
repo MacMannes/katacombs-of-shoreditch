@@ -60,6 +60,13 @@ describe('GameController', () => {
             expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: 'OK.' }));
             expect(ui.displayMessageAsync).toHaveBeenCalledWith(new TextWithAudioFiles('Bye!', ['msg-bye']));
         });
+
+        it('should process the go command when a just a shortened direction was given', async () => {
+            ui.getUserInput.mockResolvedValueOnce('n');
+            await controller.startGame();
+
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+        });
     });
 
     describe('Processing commands', () => {

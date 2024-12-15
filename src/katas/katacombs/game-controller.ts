@@ -1,4 +1,11 @@
-import { ActionTriggerExecutor, Game, Item, Room, TextWithAudioFiles } from '@katas/katacombs/domain';
+import {
+    ActionTriggerExecutor,
+    CommandPreprocessor,
+    Game,
+    Item,
+    Room,
+    TextWithAudioFiles,
+} from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { CommandFactory, InventoryCommand, QuitCommand } from '@katas/katacombs/commands';
 
@@ -6,6 +13,7 @@ export class GameController {
     private isPlaying = true;
     private readonly commandFactory: CommandFactory;
     private readonly actionTriggerExecutor: ActionTriggerExecutor;
+    private readonly preprocessor = new CommandPreprocessor();
 
     constructor(
         private readonly game: Game,
@@ -21,7 +29,8 @@ export class GameController {
 
         while (this.isPlaying) {
             const userInput = (await this.ui.getUserInput()) ?? '';
-            const [verb, target] = userInput.split(' ');
+            const processedInput = this.preprocessor.process(userInput);
+            const [verb, target] = processedInput.split(' ');
             this.processCommand(verb, target);
         }
 
