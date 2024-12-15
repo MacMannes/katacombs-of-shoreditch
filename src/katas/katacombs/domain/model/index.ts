@@ -3,6 +3,7 @@ export * from './action-trigger-executor';
 export * from './caller-id';
 export * from './command-action';
 export * from './command-handler';
+export * from './command-preprocessor';
 export * from './connection';
 export * from './text-with-audio-files';
 export * from './test-rooms';
