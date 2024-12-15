@@ -20,6 +20,8 @@ describe('CommandPreprocessor', () => {
         ['Take Lamp', 'take lamp'],
         ['   Go  N  ', 'go north'],
         ['   Say  Hello  ', 'say hello'],
+        ['bag', 'inventory'],
+        ['i', 'inventory'],
     ])(`Processing input "%s" should return "%s"`, (input: string, expected: string) => {
         const result = preprocessor.process(input);
 

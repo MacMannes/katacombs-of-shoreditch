@@ -20,6 +20,9 @@ export class CommandPreprocessor {
             case 'u':
             case 'go u':
                 return 'go up';
+            case 'bag':
+            case 'i':
+                return 'inventory';
             default:
                 return sanitizedInput;
         }
