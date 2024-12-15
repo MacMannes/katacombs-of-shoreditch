@@ -1,6 +1,7 @@
 export class CommandPreprocessor {
     public process(input: string): string {
-        switch (input) {
+        const sanitizedInput = this.sanitize(input);
+        switch (sanitizedInput) {
             case 'e':
             case 'go e':
                 return 'go east';
@@ -20,7 +21,11 @@ export class CommandPreprocessor {
             case 'go u':
                 return 'go up';
             default:
-                return input;
+                return sanitizedInput;
         }
+    }
+
+    private sanitize(input: string): string {
+        return input.toLowerCase();
     }
 }
