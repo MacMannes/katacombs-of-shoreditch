@@ -9,6 +9,10 @@ export class CommandPreprocessor {
                 return 'go north';
             case 's':
                 return 'go south';
+            case 'd':
+                return 'go down';
+            case 'u':
+                return 'go up';
             default:
                 return input;
         }
