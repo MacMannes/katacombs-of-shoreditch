@@ -26,6 +26,11 @@ export class CommandPreprocessor {
     }
 
     private sanitize(input: string): string {
-        return input.toLowerCase();
+        return input
+            .toLowerCase()
+            .split(' ')
+            .filter((it) => it.length > 0)
+            .map((it) => it.trim())
+            .join(' ');
     }
 }
