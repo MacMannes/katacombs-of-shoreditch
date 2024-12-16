@@ -258,14 +258,14 @@ texts:
 
   room-closet: >- 
     The cramped closet smells faintly of mildew and dust.
-    Cobwebs dangle from the corners, their occupants skittering away when disturbed. 
+    Cobwebs dangle from the corners, their occupants skittering away when disturbed.
   room-closet-short: You’re inside a closet
 
   # Item and action descriptions
 
   ## Cheese
   item-cheese-inventory: A wedge of fine cheddar
-  item-cheese-room: A wedge of cheese lies on the floor, its golden hue and rich aroma filling the air with savory promise.
+  item-cheese-room: You see a wedge of cheese with a golden hue and a rich aroma, filling the air with savory promise.
   item-cheese-look: It's a piece of cheddar. It has a crumbly texture with glinting crystals, exuding a mature, sharp scent that teases your senses."
 
   eat-cheese: >-
