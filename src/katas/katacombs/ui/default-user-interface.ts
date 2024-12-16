@@ -40,19 +40,23 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayMessage(message: TextWithAudioFiles): void {
-        console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
+        this.displayText(message.text);
 
         if (!message.audioFiles) return;
         this.audioPlayer.play(...message.audioFiles);
     }
 
     public async displayMessageAsync(message: TextWithAudioFiles): Promise<void> {
-        console.log(chalk.white(wrap(message.text, { width: 80, indent: '' }) + '\n'));
+        this.displayText(message.text);
 
         const audioFile = message.audioFiles?.at(0);
         if (!audioFile) return;
 
         await this.audioPlayer.playAsync(audioFile);
+    }
+
+    private displayText(text: string) {
+        console.log(chalk.whiteBright(wrap(text, { width: 80, indent: '' }) + '\n'));
     }
 
     public async getUserInput(): Promise<string | undefined> {
