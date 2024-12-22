@@ -18,6 +18,7 @@ rooms:
         words: [ building, inside ]
     items:
       - name: cheese
+      - name: gully
 
   - name: building
     title: Inside the Truman Brewery
@@ -94,6 +95,18 @@ items:
           - command: changeState
             argument: hole
             parameter: unguarded
+
+  - name: gully
+    immovable: true
+    triggers:
+      - verb: look
+        actions:
+          - command: reveal
+            argument: coin
+            responses:
+              success: look-gully-success
+              failure: look-gully-failure
+
   - name: casks
     description:
       room: item-casks-room
@@ -296,9 +309,15 @@ texts:
     As you reach into your inventory to drop the cheese, your hand comes up empty. 
     It seems the cheese has taken its own path to freedom.
 
-  item-casks-room: There is a strong smell of hops and a dozen empty casks.
+  ## Gully
+  look-gully-success: >- 
+    You peer into the gully. Amid the shimmering stream of crafted beer, two coins glint invitingly. 
+    Seems like someone’s loss might be your gain.
+  look-gully-failure: >-
+    You look into the gully again. It’s just beer and pebbles now — no more free treasure for you.
 
   ## Casks
+  item-casks-room: There is a strong smell of hops and a dozen empty casks.
   look-casks-success: >-
     You peer closely at the casks. Amidst the dust and cobwebs, 
     a glint catches your eye — a single coin nestled against the wood. 

@@ -54,10 +54,10 @@ function toStates(states?: Record<string, ItemDescriptionData>) {
     return convertedStates;
 }
 
-function toItemDescription(description: ItemDescriptionData) {
+function toItemDescription(description?: ItemDescriptionData): ItemDescription {
     return {
-        room: description.room ?? '',
-        look: description.look ?? '',
-        inventory: description.inventory ?? '',
+        room: description?.room ?? '',
+        look: description?.look ?? '',
+        inventory: description?.inventory ?? '',
     };
 }
