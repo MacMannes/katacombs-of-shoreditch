@@ -19,6 +19,8 @@ rooms:
     items:
       - name: cheese
       - name: gully
+      - name: coin
+        count: 2
 
   - name: building
     title: Inside the Truman Brewery
