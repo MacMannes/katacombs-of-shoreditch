@@ -18,32 +18,6 @@ rooms:
         words: [ building, inside ]
     items:
       - name: cheese
-        words: [ cheddar ]
-        description:
-          inventory: item-cheese-inventory
-          room: item-cheese-room
-          look: item-cheese-look
-        triggers:
-          - verb: eat
-            actions:
-              - command: speak
-                argument: eat-cheese
-          - verb: drop
-            conditions:
-              - currentLocation: closet
-            actions:
-              - command: drop
-                argument: cheese
-                responses:
-                  success: drop-cheese-success
-                  failure: drop-cheese-failure
-              - command: hide
-                argument: rat
-              - command: hide
-                argument: cheese
-              - command: changeState
-                argument: hole
-                parameter: unguarded
 
   - name: building
     title: Inside the Truman Brewery
@@ -61,92 +35,8 @@ rooms:
         words: [ office ]
     items:
       - name: casks
-        description:
-          room: item-casks-room
-        immovable: true
-        triggers:
-          - verb: look
-            actions:
-              - command: reveal
-                argument: coin
-                responses:
-                  success: look-casks-success
-                  failure: look-casks-failure
-
       - name: coin
-        description:
-          inventory: item-coin-inventory
-          room: item-coin-room
-          look: item-coin-look
-        visible: false
-
       - name: lantern
-        words: [ light, lamp ]
-        description:
-          inventory: item-lantern-inventory
-          room: item-lantern-room
-          look: item-lantern-look
-        states:
-          lit:
-            room: item-lantern-lit-room
-            inventory: item-lantern-lit-inventory
-            look: item-lantern-lit-look
-          unlit:
-            room: item-lantern-unlit-room
-            look: item-lantern-unlit-look
-        initialState: unlit
-        triggers:
-          - verb: light
-            actions:
-              - command: changeState
-                argument: lantern
-                parameter: lit
-                responses:
-                  success: light-lantern-success
-                  failure: light-lantern-failure
-          - verb: extinguish
-            actions:
-              - command: changeState
-                argument: lantern
-                parameter: unlit
-                responses:
-                  success: extinguish-lantern-success
-                  failure: extinguish-lantern-failure
-          - verb: drop
-            actions:
-              - command: drop
-                argument: lantern
-                responses:
-                  success: drop-lantern-success
-                  failure: drop-lantern-failure
-          - verb: rub
-            actions:
-              - command: speak
-                argument: rub-lantern
-          - verb: kick
-            actions:
-              - command: speak
-                argument: kick-lantern
-          - verb: talk
-            actions:
-              - command: speak
-                argument: talk-lantern
-          - verb: eat
-            actions:
-              - command: speak
-                argument: eat-lantern
-          - verb: push
-            actions:
-              - command: speak
-                argument: push-lantern
-          - verb: touch
-            actions:
-              - command: speak
-                argument: touch-lantern
-          - verb: kiss
-            actions:
-              - command: speak
-                argument: kiss-lantern\
 
   - name: office
     title: Truman Brewery - Office
@@ -157,10 +47,6 @@ rooms:
         to: building
     items:
       - name: desk
-        description:
-          room: item-desk-room
-          look: item-desk-look
-        immovable: true
 
   - name: closet
     title: Truman Brewery - Closet
@@ -172,55 +58,186 @@ rooms:
         words: [ room, door, back ]
     items:
       - name: hole
-        description:
-          look: ''
-        states:
-          guarded:
-            look: item-hole-guarded-look
-          unguarded:
-            room: item-hole-unguarded-room
-          examined:
-            room: item-hole-examined-room
-            look: item-hole-examined-look
-        initialState: guarded
-        immovable: true
-        triggers:
-          - verb: look
-            conditions:
-              - hasState: [ hole, unguarded ]
-            actions:
-              - command: changeState
-                argument: hole
-                parameter: examined
-              - command: reveal
-                argument: key
-                responses:
-                  success: look-hole-success
-
       - name: rat
-        immovable: true
-        description:
-          room: item-rat-room
-          look: item-rat-look
-
       - name: key
-        visible: false
-        description:
-          inventory: item-key-inventory
-          room: item-key-room
-          look: item-key-look
-
       - name: note
-        description:
-          inventory: item-note-inventory
-          room: item-note-room
-          look: item-note-look
-        words: [ memo, paper, reminder ]
-        triggers:
-          - verb: read
-            actions:
-              - command: look
-                argument: note
+
+#---------------------
+# Items
+#---------------------
+
+items:
+  - name: cheese
+    words: [ cheddar ]
+    description:
+      inventory: item-cheese-inventory
+      room: item-cheese-room
+      look: item-cheese-look
+    triggers:
+      - verb: eat
+        actions:
+          - command: speak
+            argument: eat-cheese
+      - verb: drop
+        conditions:
+          - currentLocation: closet
+        actions:
+          - command: drop
+            argument: cheese
+            responses:
+              success: drop-cheese-success
+              failure: drop-cheese-failure
+          - command: hide
+            argument: rat
+          - command: hide
+            argument: cheese
+          - command: changeState
+            argument: hole
+            parameter: unguarded
+  - name: casks
+    description:
+      room: item-casks-room
+    immovable: true
+    triggers:
+      - verb: look
+        actions:
+          - command: reveal
+            argument: coin
+            responses:
+              success: look-casks-success
+              failure: look-casks-failure
+
+  - name: coin
+    description:
+      inventory: item-coin-inventory
+      room: item-coin-room
+      look: item-coin-look
+    visible: false
+
+  - name: lantern
+    words: [ light, lamp ]
+    description:
+      inventory: item-lantern-inventory
+      room: item-lantern-room
+      look: item-lantern-look
+    states:
+      lit:
+        room: item-lantern-lit-room
+        inventory: item-lantern-lit-inventory
+        look: item-lantern-lit-look
+      unlit:
+        room: item-lantern-unlit-room
+        look: item-lantern-unlit-look
+    initialState: unlit
+    triggers:
+      - verb: light
+        actions:
+          - command: changeState
+            argument: lantern
+            parameter: lit
+            responses:
+              success: light-lantern-success
+              failure: light-lantern-failure
+      - verb: extinguish
+        actions:
+          - command: changeState
+            argument: lantern
+            parameter: unlit
+            responses:
+              success: extinguish-lantern-success
+              failure: extinguish-lantern-failure
+      - verb: drop
+        actions:
+          - command: drop
+            argument: lantern
+            responses:
+              success: drop-lantern-success
+              failure: drop-lantern-failure
+      - verb: rub
+        actions:
+          - command: speak
+            argument: rub-lantern
+      - verb: kick
+        actions:
+          - command: speak
+            argument: kick-lantern
+      - verb: talk
+        actions:
+          - command: speak
+            argument: talk-lantern
+      - verb: eat
+        actions:
+          - command: speak
+            argument: eat-lantern
+      - verb: push
+        actions:
+          - command: speak
+            argument: push-lantern
+      - verb: touch
+        actions:
+          - command: speak
+            argument: touch-lantern
+      - verb: kiss
+        actions:
+          - command: speak
+            argument: kiss-lantern
+
+  - name: desk
+    description:
+      room: item-desk-room
+      look: item-desk-look
+    immovable: true
+
+  - name: hole
+    description:
+      look: ''
+    states:
+      guarded:
+        look: item-hole-guarded-look
+      unguarded:
+        room: item-hole-unguarded-room
+      examined:
+        room: item-hole-examined-room
+        look: item-hole-examined-look
+    initialState: guarded
+    immovable: true
+    triggers:
+      - verb: look
+        conditions:
+          - hasState: [ hole, unguarded ]
+        actions:
+          - command: changeState
+            argument: hole
+            parameter: examined
+          - command: reveal
+            argument: key
+            responses:
+              success: look-hole-success
+
+  - name: rat
+    immovable: true
+    description:
+      room: item-rat-room
+      look: item-rat-look
+
+  - name: key
+    visible: false
+    description:
+      inventory: item-key-inventory
+      room: item-key-room
+      look: item-key-look
+
+  - name: note
+    description:
+      inventory: item-note-inventory
+      room: item-note-room
+      look: item-note-look
+    words: [ memo, paper, reminder ]
+    triggers:
+      - verb: read
+        actions:
+          - command: look
+            argument: note
 
 #---------------------
 # Texts

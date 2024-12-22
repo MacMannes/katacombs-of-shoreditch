@@ -1,5 +1,6 @@
 import { ActionTriggerData, toTriggers } from '@katas/katacombs/domain/data-loader/model';
 import { Item, ItemDescription } from '@katas/katacombs/domain';
+import { isDefined } from '@utils/array';
 
 export type ItemData = {
     name: string;
@@ -18,10 +19,17 @@ export type ItemDescriptionData = {
     inventory?: string;
 };
 
-export function toItems(items?: ItemData[]): Item[] {
-    if (!items) return [];
+export function toItems(globalItems: ItemData[], itemsToCreate?: ItemData[]): Item[] {
+    if (!itemsToCreate) return [];
 
-    return items.map((item) => toItem(item));
+    return itemsToCreate
+        .map((itemData) => {
+            const globalItem = globalItems.find((it) => it.name === itemData.name);
+            if (!globalItem) return undefined;
+
+            return toItem(globalItem);
+        })
+        .filter(isDefined);
 }
 
 function toItem(item: ItemData): Item {

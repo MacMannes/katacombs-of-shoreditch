@@ -7,7 +7,7 @@ export class YamlDataLoader implements DataLoader {
         const data = await readFile(filePath, 'utf-8');
         const gameData: GameData = load(data) as GameData;
 
-        const rooms = gameData.rooms.map((roomData) => toRoom(roomData));
+        const rooms = gameData.rooms.map((roomData) => toRoom(roomData, gameData.items));
         const texts = gameData.texts;
         return { rooms, texts };
     }
