@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { GameFactory, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';
@@ -6,6 +6,7 @@ import { GameController } from '@katas/katacombs';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
 import path from 'node:path';
+import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -397,6 +398,8 @@ describe('GameController', () => {
                 .map((item) => item.name)
                 .filter((name) => name === 'coin');
             expect(coins).toHaveLength(1);
+            expect(coins[0].constructor.prototype instanceof CountableItem).toBeTruthy();
+            expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
         });
     });
 
