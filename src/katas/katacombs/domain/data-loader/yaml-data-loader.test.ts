@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { GameRealm, YamlDataLoader } from '@katas/katacombs/domain';
 import path from 'node:path';
+import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
@@ -70,6 +71,17 @@ describe('YamlDataLoader', () => {
         const coin = building?.findItem('coin', true);
         expect(coin).toBeDefined();
         expect(coin?.immovable).toBeFalsy();
+    });
+
+    it('should add Countable items to the rooms', async () => {
+        const rooms = realm.rooms;
+        const building = rooms.find((room) => room.name === 'start');
+        expect(building).toBeDefined();
+
+        const coins = building?.findItem('coin', true);
+        expect(coins).toBeDefined();
+        expect(coins?.constructor.prototype instanceof CountableItem).toBeTruthy();
+        expect((coins as unknown as CountableItem).getCount()).toBe(2);
     });
 
     it('should add triggers to the items', async () => {
