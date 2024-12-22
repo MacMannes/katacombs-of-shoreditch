@@ -4,6 +4,8 @@ import { isDefined } from '@utils/array';
 
 export type ItemData = {
     name: string;
+    type?: string;
+    count?: number;
     description: ItemDescriptionData;
     words?: string[];
     visible?: boolean;
@@ -12,6 +14,8 @@ export type ItemData = {
     states?: Record<string, ItemDescriptionData>;
     initialState?: string;
 };
+
+export type ItemTypeData = 'countable';
 
 export type ItemDescriptionData = {
     room?: string;

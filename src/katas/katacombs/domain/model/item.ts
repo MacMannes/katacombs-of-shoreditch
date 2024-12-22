@@ -1,4 +1,4 @@
-import { ActionTrigger, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { ActionTrigger } from '@katas/katacombs/domain';
 import { isDefined } from '@utils/array';
 
 export class Item {
@@ -67,7 +67,7 @@ export type ItemDescription = {
     look: string;
 };
 
-type ItemOptions = {
+export type ItemOptions = {
     description: ItemDescription;
     words?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
