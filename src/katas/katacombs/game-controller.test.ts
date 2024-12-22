@@ -384,6 +384,20 @@ describe('GameController', () => {
                 new TextWithAudioFiles("You can't be serious!", ['msg-cant-be-serious']),
             );
         });
+
+        it('should merge countable items to one item when picked up', () => {
+            controller.processCommand('look', 'gully');
+            controller.processCommand('take', 'coin');
+            controller.processCommand('go', 'north');
+            controller.processCommand('look', 'casks');
+            controller.processCommand('take', 'coin');
+
+            const coins = controller
+                .getInventory()
+                .map((item) => item.name)
+                .filter((name) => name === 'coin');
+            expect(coins).toHaveLength(1);
+        });
     });
 
     describe('Dropping items', () => {
