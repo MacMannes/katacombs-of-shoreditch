@@ -75,12 +75,12 @@ describe('YamlDataLoader', () => {
 
     it('should add Countable items to the rooms', async () => {
         const rooms = realm.rooms;
-        const building = rooms.find((room) => room.name === 'start');
-        expect(building).toBeDefined();
+        const startRoom = rooms.find((room) => room.name === 'start');
+        expect(startRoom).toBeDefined();
 
-        const coins = building?.findItem('coin', true);
+        const coins = startRoom?.findItem('coin', true);
         expect(coins).toBeDefined();
-        expect(coins?.constructor.prototype instanceof CountableItem).toBeTruthy();
+        expect(coins instanceof CountableItem).toBeTruthy();
         expect((coins as unknown as CountableItem).getCount()).toBe(2);
     });
 

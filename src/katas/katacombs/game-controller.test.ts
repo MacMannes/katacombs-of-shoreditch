@@ -398,7 +398,7 @@ describe('GameController', () => {
                 .map((item) => item.name)
                 .filter((name) => name === 'coin');
             expect(coins).toHaveLength(1);
-            expect(coins[0].constructor.prototype instanceof CountableItem).toBeTruthy();
+            expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
             expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
         });
     });

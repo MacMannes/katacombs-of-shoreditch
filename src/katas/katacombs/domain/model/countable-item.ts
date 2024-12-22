@@ -1,4 +1,4 @@
-import { Item, ItemOptions } from '@katas/katacombs/domain';
+import { Item, ItemOptions } from './item';
 
 export class CountableItem extends Item {
     private count: number;

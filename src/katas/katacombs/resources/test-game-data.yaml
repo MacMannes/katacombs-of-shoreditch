@@ -154,7 +154,7 @@ items:
             argument: note
 
   - name: coin
-    type: countable
+    type: countable-item
     description:
       inventory: item-coin-inventory
       room: item-coin-room

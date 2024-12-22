@@ -123,6 +123,7 @@ items:
               failure: look-casks-failure
 
   - name: coin
+    type: countable-item
     description:
       inventory: item-coin-inventory
       room: item-coin-room
