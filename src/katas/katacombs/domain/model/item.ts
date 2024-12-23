@@ -7,7 +7,7 @@ export class Item {
     public readonly states?: Record<string, ItemDescription>;
     public readonly triggers?: ActionTrigger[];
 
-    private currentState?: string;
+    protected currentState?: string;
     private visible: boolean;
 
     private readonly words: string[] = [];

@@ -82,6 +82,7 @@ describe('YamlDataLoader', () => {
         expect(coins).toBeDefined();
         expect(coins instanceof CountableItem).toBeTruthy();
         expect((coins as unknown as CountableItem).getCount()).toBe(2);
+        expect(coins?.getDescription('room')).toContain('item-coin-room-few');
     });
 
     it('should add triggers to the items', async () => {

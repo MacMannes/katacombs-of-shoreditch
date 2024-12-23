@@ -1,5 +1,5 @@
 import { ActionTriggerData, toTriggers } from '@katas/katacombs/domain/data-loader/model';
-import { Item, ItemDescription, ItemOptions } from '@katas/katacombs/domain';
+import { CountableItemDescription, Item, ItemDescription, ItemOptions } from '@katas/katacombs/domain';
 import { isDefined } from '@utils/array';
 import { CountableItem } from '@katas/katacombs/domain/model';
 
@@ -7,7 +7,7 @@ export type ItemData = {
     name: string;
     type?: ItemTypeData;
     count?: number;
-    description: ItemDescriptionData;
+    description: ItemDescriptionData | CountableItemDescriptionData[];
     words?: string[];
     visible?: boolean;
     immovable?: boolean;
@@ -22,6 +22,10 @@ export type ItemDescriptionData = {
     room?: string;
     look?: string;
     inventory?: string;
+};
+
+export type CountableItemDescriptionData = ItemDescriptionData & {
+    count: number;
 };
 
 export function toItems(globalItems: ItemData[], itemsToCreate?: ItemData[]): Item[] {
@@ -52,6 +56,7 @@ function toItem(item: ItemData, override: ItemData): Item {
         return new CountableItem(item.name, {
             ...options,
             count: override.count,
+            countableDescriptions: toCountableItemDescriptions(item.description),
         });
     }
 
@@ -68,10 +73,54 @@ function toStates(states?: Record<string, ItemDescriptionData>) {
     return convertedStates;
 }
 
-function toItemDescription(description?: ItemDescriptionData): ItemDescription {
+function toItemDescription(description?: ItemDescriptionData | CountableItemDescriptionData[]): ItemDescription {
+    if (!isItemDescriptionData(description)) {
+        return {
+            room: '',
+            look: '',
+            inventory: '',
+        };
+    }
+
     return {
         room: description?.room ?? '',
         look: description?.look ?? '',
         inventory: description?.inventory ?? '',
     };
+}
+
+function toCountableItemDescriptions(descriptions?: unknown): CountableItemDescription[] | undefined {
+    if (!isArrayOfCountableItemDescriptionData(descriptions)) return undefined;
+
+    return descriptions.map((description) => {
+        return {
+            count: description.count,
+            ...toItemDescription(description),
+        };
+    });
+}
+
+function isItemDescriptionData(obj: any): obj is ItemDescriptionData {
+    return (
+        typeof obj === 'object' &&
+        obj !== null &&
+        (typeof obj.room === 'string' || obj.room === undefined) &&
+        (typeof obj.look === 'string' || obj.look === undefined) &&
+        (typeof obj.inventory === 'string' || obj.inventory === undefined)
+    );
+}
+
+function isArrayOfCountableItemDescriptionData(value: any): value is CountableItemDescriptionData[] {
+    return Array.isArray(value) && value.every(isCountableItemDescriptionData);
+}
+
+function isCountableItemDescriptionData(obj: any): obj is CountableItemDescriptionData {
+    return (
+        typeof obj === 'object' &&
+        obj !== null &&
+        typeof obj.count === 'number' && // Must have a count property of type number
+        (typeof obj.room === 'string' || obj.room === undefined) && // Optional room property
+        (typeof obj.look === 'string' || obj.look === undefined) && // Optional look property
+        (typeof obj.inventory === 'string' || obj.inventory === undefined) // Optional inventory property
+    );
 }
