@@ -156,9 +156,22 @@ items:
   - name: coin
     type: countable-item
     description:
-      inventory: item-coin-inventory
-      room: item-coin-room
-      look: item-coin-look
+      - count: 1
+        inventory: item-coin-inventory-single
+        room: item-coin-room-single
+        look: item-coin-look-single
+      - count: 2
+        inventory: item-coin-inventory-few
+        room: item-coin-room-few
+        look: item-coin-look-few
+      - count: 10
+        inventory: item-coin-inventory-handful
+        room: item-coin-room-handful
+        look: item-coin-look-handful
+      - count: 100
+        inventory: item-coin-inventory-bounty
+        room: item-coin-room-bounty
+        look: item-coin-look-bounty
     visible: false
 
   - name: lantern
@@ -336,11 +349,29 @@ texts:
     “Beware the rat. It’s a crafty one.”
 
   ## Coin
-  item-coin-inventory: A coin
-  item-coin-room: There’s a coin here.
-  item-coin-look: >-
+  item-coin-inventory-single: A coin
+  item-coin-room-single: There’s a coin here.
+  item-coin-look-single: >-
       It’s an old coin, worn and tarnished. You wonder if it’s worth anything 
       — or if it’s just another relic for your growing junk collection.
+
+  item-coin-inventory-few: A few coins
+  item-coin-room-few: A few coins catch your eye.
+  item-coin-look-few: >-
+    A small cluster of coins, their tarnished surfaces glinting faintly in the light. 
+    Just enough to spark a hint of curiosity.
+
+  item-coin-inventory-handful: A handful of coins
+  item-coin-room-handful: A handful of coins sparkles invitingly.
+  item-coin-look-handful: >-
+    A modest collection of coins, gathered as if waiting for a purpose. 
+    They seem to carry stories of forgotten trades and distant lands.
+
+  item-coin-inventory-bounty: A bounty of coins
+  item-coin-room-bounty: A bounty of coins shines brilliantly.
+  item-coin-look-bounty: >-
+    A shimmering bounty of coins, enough to fill a chest and the dreams of any pirate. 
+    Their sheer number hints at untold adventures and hidden riches.
 
   ## Lantern
   item-lantern-inventory: Brass lantern
