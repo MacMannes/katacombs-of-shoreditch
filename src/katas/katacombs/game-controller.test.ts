@@ -686,5 +686,23 @@ describe('GameController', () => {
             );
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
+
+        it('should print the count of countable items', () => {
+            controller.displayInventory();
+            controller.processCommand('look', 'gully');
+            controller.processCommand('take', 'coin');
+            controller.processCommand('go', 'north');
+            controller.processCommand('look', 'casks');
+            controller.processCommand('take', 'coin');
+            vi.resetAllMocks();
+
+            controller.displayInventory();
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('(3)'),
+                }),
+            );
+        });
     });
 });
