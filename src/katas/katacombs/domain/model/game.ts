@@ -128,10 +128,18 @@ export class Game {
 
     public getConcatenatedText(keys: string[], separator = ' '): string {
         return keys
-            .map((key) => this.textRepository.getText(key))
+            .map((key) => this.getText(key))
             .filter(isDefined)
             .join(separator)
             .trim();
+    }
+
+    private getText(key: string): string | undefined {
+        if (key.startsWith('count:')) {
+            const count = key.split(':')[1];
+            return `(${count})`;
+        }
+        return this.textRepository.getText(key);
     }
 
     public getConcatenatedTextForItemKeys(keys: string[][], separator: string): string {

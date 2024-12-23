@@ -1,4 +1,4 @@
-import { Item, ItemOptions } from './item';
+import { Item, ItemDescription, ItemOptions } from './item';
 
 export class CountableItem extends Item {
     private count: number;
@@ -6,6 +6,16 @@ export class CountableItem extends Item {
     constructor(name: string, options: CountableItemOptions) {
         super(name, options);
         this.count = options.count ?? 1; // Default count is 1
+    }
+
+    override getDescription(context: keyof ItemDescription): string[] {
+        const textKeys = super.getDescription(context);
+
+        if (this.count > 1) {
+            textKeys.push(`count:${this.count}`);
+        }
+
+        return textKeys;
     }
 
     public getCount(): number {
