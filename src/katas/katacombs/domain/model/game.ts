@@ -9,6 +9,7 @@ import {
     Room,
     RoomRepository,
     TextRepository,
+    CountableItem,
 } from '@katas/katacombs/domain';
 import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error';
 import { isDefined } from '@utils/array';
@@ -42,11 +43,22 @@ export class Game {
         const item = this.currentRoom.findItem(itemName);
         if (!item) return { success: false, error: new NotFoundError('msg-cant-find-that') };
         if (item.immovable) return { success: false, error: new ItemImmovableError('msg-cant-be-serious') };
+        if (item instanceof CountableItem) {
+            this.mergeWithItemFromInventory(item);
+        }
 
         this.currentRoom.removeItem(item);
         this.itemRepository.addItem(item);
 
         return { success: true, value: item };
+    }
+
+    private mergeWithItemFromInventory(item: CountableItem) {
+        const otherItem = this.itemRepository.findItem(item.name);
+        if (otherItem && otherItem instanceof CountableItem) {
+            item.mergeWith(otherItem);
+            this.itemRepository.removeItem(otherItem);
+        }
     }
 
     public drop(itemName: string): boolean {

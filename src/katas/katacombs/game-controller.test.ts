@@ -393,10 +393,7 @@ describe('GameController', () => {
             controller.processCommand('look', 'casks');
             controller.processCommand('take', 'coin');
 
-            const coins = controller
-                .getInventory()
-                .map((item) => item.name)
-                .filter((name) => name === 'coin');
+            const coins = controller.getInventory().filter((item) => item.name === 'coin');
             expect(coins).toHaveLength(1);
             expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
             expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
