@@ -19,7 +19,7 @@ export class CountableItem extends Item {
 
         const textKeys = [baseDescription, stateDescription].filter(isDefined);
 
-        if (this.count > 1) {
+        if (context === 'inventory' && this.count > 1) {
             textKeys.push(`count:${this.count}`);
         }
 

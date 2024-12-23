@@ -242,6 +242,17 @@ describe('GameController', () => {
             );
         });
 
+        it('should not print the count of a CountableItem when looking', () => {
+            controller.processCommand('look', 'gully');
+            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
+
+            controller.processCommand('look');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('(2)') }),
+            );
+        });
+
         it('should show the description of the item in the room when when looking at it using a synonym', () => {
             controller.processCommand('go', 'north');
             vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
