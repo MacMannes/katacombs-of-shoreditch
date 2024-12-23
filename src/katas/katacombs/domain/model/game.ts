@@ -54,20 +54,31 @@ export class Game {
     }
 
     private mergeWithItemFromInventory(item: CountableItem) {
-        const otherItem = this.itemRepository.findItem(item.name);
-        if (otherItem && otherItem instanceof CountableItem) {
-            item.mergeWith(otherItem);
-            this.itemRepository.removeItem(otherItem);
+        const itemInInventory = this.itemRepository.findItem(item.name);
+        if (itemInInventory && itemInInventory instanceof CountableItem) {
+            item.mergeWith(itemInInventory);
+            this.itemRepository.removeItem(itemInInventory);
         }
     }
 
     public drop(itemName: string): boolean {
         const item = this.itemRepository.findItem(itemName);
         if (!item) return false;
+        if (item instanceof CountableItem) {
+            this.mergeWithItemFromRoom(item);
+        }
 
         this.itemRepository.removeItem(item);
         this.currentRoom.addItem(item);
         return true;
+    }
+
+    private mergeWithItemFromRoom(item: CountableItem) {
+        const itemInRoom = this.currentRoom.findItem(item.name);
+        if (itemInRoom && itemInRoom instanceof CountableItem) {
+            item.mergeWith(itemInRoom);
+            this.currentRoom.removeItem(itemInRoom);
+        }
     }
 
     public getItems(): Item[] {

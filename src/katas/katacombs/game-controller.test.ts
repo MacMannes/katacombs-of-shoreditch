@@ -450,6 +450,22 @@ describe('GameController', () => {
 
             expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
         });
+
+        it('should merge countable items to one item when dropped', () => {
+            controller.processCommand('look', 'gully');
+            controller.processCommand('take', 'coin');
+            controller.processCommand('go', 'north');
+            controller.processCommand('look', 'casks');
+            controller.processCommand('drop', 'coin');
+
+            const coins = controller
+                .getCurrentRoom()
+                .getItems()
+                .filter((item) => item.name === 'coin');
+            expect(coins).toHaveLength(1);
+            expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
+            expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
+        });
     });
 
     describe('Dropping items with trigger conditions', () => {
