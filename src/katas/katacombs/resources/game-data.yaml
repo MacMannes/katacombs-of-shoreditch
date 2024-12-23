@@ -99,6 +99,7 @@ items:
             parameter: unguarded
 
   - name: gully
+    words: [ beer ]
     immovable: true
     triggers:
       - verb: look
@@ -123,6 +124,7 @@ items:
               failure: look-casks-failure
 
   - name: coin
+    words: [ coins ]
     type: countable-item
     description:
       - count: 1
