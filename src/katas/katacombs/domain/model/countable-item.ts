@@ -12,7 +12,9 @@ export class CountableItem extends Item {
     }
 
     override getDescription(context: keyof ItemDescription): string[] {
-        const description = this.countableDescriptions.find((it) => it.count >= this.count);
+        const description = this.countableDescriptions
+            .sort((a, b) => b.count - a.count)
+            .find((it) => it.count <= this.count);
 
         const baseDescription = description?.[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
@@ -34,17 +36,16 @@ export class CountableItem extends Item {
         this.count += amount;
     }
 
+    public setCount(amount: number) {
+        this.count = amount;
+    }
+
     public mergeWith(other: CountableItem) {
         if (this.name !== other.name) {
             throw new Error('Cannot merge items with different names.');
         }
         this.addCount(other.getCount());
         other.setCount(0);
-    }
-
-    // Setter for count (used internally to reset count)
-    private setCount(amount: number) {
-        this.count = amount;
     }
 }
 
