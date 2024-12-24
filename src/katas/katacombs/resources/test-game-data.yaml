@@ -246,17 +246,17 @@ items:
 # NPCs
 #---------------------
 
-npc:
+npcs:
   shopkeeper:
     voice: Denzel
     response: npc-shopkeeper-welcome
-    nodes:
+    dialog:
       initial:
         - id: why-only-two-items
           text: Why only two items?
           response: npc-shopkeeper-only-two-items
           actions:
-            - command: remove-dialog-node
+            - command: remove-dialog
               argument: why-only-two-items
 
         - id: ask-about-lighter
@@ -267,7 +267,7 @@ npc:
           text: What’s so special about the shovel?
           response: npc-shopkeeper-shovel-description
           actions:
-            - command: add-dialog-node
+            - command: add-dialog
               argument: are-you-serious
 
         - id: buy-something
@@ -285,7 +285,7 @@ npc:
           text: A hundred coins for a shovel? Are you serious?
           response: npc-shopkeeper-serious
           actions:
-            - command: remove-dialog-node
+            - command: remove-dialog
               argument: are-you-serious
 
         - id: what-will-it-be
@@ -319,9 +319,9 @@ npc:
         - id: buy-lighter-success
           response: npc-shopkeeper-sells-lighter
           actions:
-            - command: disable-dialog-node
+            - command: disable-dialog
               argument: ask-about-lighter
-            - command: disable-dialog-node
+            - command: disable-dialog
               argument: choose-lighter
         - id: buy-lighter-failure
           response: npc-shopkeeper-short-on-coins-10
@@ -341,9 +341,9 @@ npc:
         - id: buy-shovel-success
           response: npc-shopkeeper-sells-shovel
           actions:
-            - command: disable-dialog-node
+            - command: disable-dialog
               argument: ask-about-shovel
-            - command: disable-dialog-node
+            - command: disable-dialog
               argument: choose-shovel
         - id: buy-shovel-failure
           response: npc-shopkeeper-short-on-coins-100

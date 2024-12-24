@@ -5,3 +5,5 @@ export * from './text-data';
 export * from './condition-data';
 export * from './connection-data';
 export * from './action-trigger-data';
+export * from './npc-data';
+export * from './dialog-data';

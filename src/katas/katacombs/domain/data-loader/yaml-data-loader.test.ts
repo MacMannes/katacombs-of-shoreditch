@@ -177,4 +177,10 @@ describe('YamlDataLoader', () => {
         lamp?.setState('lit');
         expect(lamp?.getCurrentState()).toBe('lit');
     });
+
+    it('should load the npcs', async () => {
+        const npcs = realm.npcs;
+        expect(Object.keys(npcs)).toHaveLength(1);
+        expect(npcs['shopkeeper']).toBeDefined();
+    });
 });
