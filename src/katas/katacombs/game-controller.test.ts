@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GameFactory, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';

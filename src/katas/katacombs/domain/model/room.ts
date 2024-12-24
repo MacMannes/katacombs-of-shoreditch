@@ -1,4 +1,4 @@
-import { Connection, ConnectionOptions, Direction, Item, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { Connection, ConnectionOptions, Direction, Item } from '@katas/katacombs/domain';
 
 export class Room {
     private readonly connections: Connection[] = [];

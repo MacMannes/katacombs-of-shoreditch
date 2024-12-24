@@ -1,8 +1,6 @@
 import { ElevenLabsClient } from 'elevenlabs';
 import { createWriteStream } from 'node:fs';
 import dotenv from 'dotenv';
-import { pipeline } from 'stream/promises';
-import { Readable } from 'node:stream';
 
 dotenv.config();
 

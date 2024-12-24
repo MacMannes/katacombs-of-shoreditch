@@ -1,4 +1,4 @@
-import { GameRealm, Room, YamlDataLoader } from '@katas/katacombs/domain';
+import { Room, YamlDataLoader } from '@katas/katacombs/domain';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
