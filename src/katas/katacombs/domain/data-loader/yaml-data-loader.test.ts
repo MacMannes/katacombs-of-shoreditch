@@ -181,6 +181,8 @@ describe('YamlDataLoader', () => {
     it('should load the npcs', async () => {
         const npcs = realm.npcs;
         expect(Object.keys(npcs)).toHaveLength(1);
-        expect(npcs['shopkeeper']).toBeDefined();
+        const shopkeeper = npcs[0];
+        expect(shopkeeper.name).toBe('shopkeeper');
+        expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
     });
 });

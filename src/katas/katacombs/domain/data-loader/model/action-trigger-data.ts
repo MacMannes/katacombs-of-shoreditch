@@ -1,9 +1,9 @@
-import { ActionTrigger, ConditionData, toConditions } from '@katas/katacombs/domain';
+import { ActionTrigger, Condition, toConditions } from '@katas/katacombs/domain';
 
 export type ActionTriggerData = {
     verb: string;
     actions: CommandActionData[];
-    conditions?: ConditionData[];
+    conditions?: Condition[];
 };
 
 export type CommandActionData = {

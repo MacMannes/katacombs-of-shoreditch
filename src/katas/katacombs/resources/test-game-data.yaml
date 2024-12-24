@@ -249,7 +249,7 @@ items:
 npcs:
   shopkeeper:
     voice: Denzel
-    response: npc-shopkeeper-welcome
+    greeting: npc-shopkeeper-welcome
     dialog:
       initial:
         - id: why-only-two-items
