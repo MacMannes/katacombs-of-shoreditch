@@ -250,7 +250,7 @@ npcs:
   shopkeeper:
     voice: Denzel
     greeting: npc-shopkeeper-welcome
-    dialog:
+    dialogs:
       initial:
         - id: why-only-two-items
           text: Why only two items?
