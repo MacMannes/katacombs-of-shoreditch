@@ -1,4 +1,4 @@
-import { DataLoader, GameData, GameRealm, toNPC, toRoom } from '@katas/katacombs/domain';
+import { DataLoader, GameData, GameRealm, NPC, toNPC, toRoom } from '@katas/katacombs/domain';
 import { readFile } from 'node:fs/promises';
 import { load } from 'js-yaml';
 
@@ -9,7 +9,10 @@ export class YamlDataLoader implements DataLoader {
 
         const rooms = gameData.rooms.map((roomData) => toRoom(roomData, gameData.items));
         const texts = gameData.texts;
-        const npcs = Object.entries(gameData.npcs).map(([name, data]) => toNPC(name, data));
+        let npcs: NPC[] = [];
+        if (gameData.npcs) {
+            npcs = Object.entries(gameData.npcs).map(([name, data]) => toNPC(name, data));
+        }
         return { rooms, texts, npcs };
     }
 }
