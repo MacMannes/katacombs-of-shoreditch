@@ -1,9 +1,9 @@
-import { ActionTrigger, Condition, toConditions } from '@katas/katacombs/domain';
+import { ActionTrigger, CommandAction, ConditionData, toConditions } from '@katas/katacombs/domain';
 
 export type ActionTriggerData = {
     verb: string;
     actions: CommandActionData[];
-    conditions?: Condition[];
+    conditions?: ConditionData[];
 };
 
 export type CommandActionData = {
@@ -18,17 +18,21 @@ export type ResponsesData = {
     failure?: string;
 };
 
+export function toCommandAction(action: CommandActionData): CommandAction {
+    return {
+        command: action.command,
+        argument: action.argument,
+        parameter: action.parameter,
+        responses: action.responses,
+    };
+}
+
 export function toTriggers(triggers: ActionTriggerData[] | undefined): ActionTrigger[] | undefined {
     if (!triggers) return undefined;
 
     return triggers.map((trigger) => ({
         verb: trigger.verb,
-        actions: trigger.actions.map((action) => ({
-            command: action.command,
-            argument: action.argument,
-            parameter: action.parameter,
-            responses: action.responses,
-        })),
+        actions: trigger.actions.map((action) => toCommandAction(action)),
         conditions: toConditions(trigger.conditions),
     }));
 }

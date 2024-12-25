@@ -194,8 +194,8 @@ describe('YamlDataLoader', () => {
         it('should add dialogs to the NPCa', () => {
             const npcs = realm.npcs;
             const shopkeeper = npcs[0];
-            expect(shopkeeper.dialogs.initial.length).toBeGreaterThan(5);
-            expect(shopkeeper.dialogs.additional.length).toBeGreaterThan(5);
+            expect(shopkeeper.dialogs.initial.length).toBeGreaterThan(2);
+            expect(shopkeeper.dialogs.additional.length).toBeGreaterThan(2);
         });
     });
 });

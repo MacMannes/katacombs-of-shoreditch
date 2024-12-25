@@ -1,4 +1,4 @@
-import { CommandActionData, ConditionData } from '@katas/katacombs/domain';
+import { CommandActionData, ConditionData, Dialog, toCommandAction } from '@katas/katacombs/domain';
 
 export type DialogData = {
     id: string;
@@ -12,3 +12,13 @@ export type DialogData = {
     success?: string;
     failure?: string;
 };
+
+export function toDialog(dialog: DialogData): Dialog {
+    return {
+        id: dialog.id,
+        text: dialog.text,
+        response: dialog.response,
+        next: dialog.next,
+        // actions: dialog.actions?.map((action) => toCommandAction(action)),
+    };
+}

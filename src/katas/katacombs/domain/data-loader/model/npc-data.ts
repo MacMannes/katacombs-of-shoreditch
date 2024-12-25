@@ -1,4 +1,4 @@
-import { DialogData, NPC } from '@katas/katacombs/domain';
+import { DialogData, NPC, toDialog } from '@katas/katacombs/domain';
 
 export type NpcData = {
     voice?: string;
@@ -11,7 +11,7 @@ export type NpcData = {
 
 export function toNPC(name: string, data: NpcData): NPC {
     return new NPC(name, data.greeting, {
-        initial: [],
-        additional: [],
+        initial: data.dialogs.initial.map((dialog) => toDialog(dialog)),
+        additional: data.dialogs.additional.map((dialog) => toDialog(dialog)),
     });
 }
