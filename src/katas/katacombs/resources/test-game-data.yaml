@@ -57,7 +57,7 @@ items:
             argument: eat-cheese
       - verb: drop
         conditions:
-          - currentLocation: building
+          - current-location: building
         actions:
           - command: drop
             argument: cheese
@@ -118,7 +118,7 @@ items:
     triggers:
       - verb: look
         conditions:
-          - hasState: [ hole, unguarded ]
+          - has-state: [ hole, unguarded ]
         actions:
           - command: changeState
             argument: hole
@@ -320,7 +320,7 @@ npcs:
       - id: pay-for-lighter
         text: Pay 10 coins
         post-conditions:
-          - hasItem: coin
+          - has-item: coin
             count: 10
         success: buy-lighter-success
         failure: buy-lighter-failure
@@ -342,7 +342,7 @@ npcs:
       - id: pay-for-shovel
         text: Pay 100 coins
         post-conditions:
-          - hasItem: coin
+          - has-item: coin
             count: 100
         success: buy-shovel-success
         failure: buy-shovel-failure

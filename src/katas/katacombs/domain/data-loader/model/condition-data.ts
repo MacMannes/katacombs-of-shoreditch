@@ -2,24 +2,24 @@ import { isDefined } from '@utils/array';
 import { Condition } from '@katas/katacombs/domain';
 
 export type ConditionData = {
-    currentLocation?: string;
-    inInventory?: string;
-    hasState?: [string, string]; // E.g. { "lamp": "lit" }
+    'current-location'?: string;
+    'has-item'?: string | [string, string]; // e.g. book or [ coin, 10 ]
+    'has-state'?: [string, string]; // E.g. [ lamp, lit ]
 };
 
 export function toConditions(conditions: ConditionData[] | undefined) {
     if (!conditions) return undefined;
 
     function toCondition(condition: ConditionData): Condition | undefined {
-        if (condition.currentLocation) {
+        if (condition['current-location']) {
             return {
                 type: 'location',
                 key: 'currentLocation',
-                value: condition.currentLocation,
+                value: condition['current-location'],
             };
         }
-        if (condition.hasState) {
-            const [item, state] = condition.hasState;
+        if (condition['has-state']) {
+            const [item, state] = condition['has-state'];
             if (item && state) {
                 return {
                     type: 'hasState',

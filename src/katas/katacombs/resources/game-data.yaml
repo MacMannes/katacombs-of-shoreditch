@@ -83,7 +83,7 @@ items:
             argument: eat-cheese
       - verb: drop
         conditions:
-          - currentLocation: closet
+          - current-location: closet
         actions:
           - command: drop
             argument: cheese
@@ -235,7 +235,7 @@ items:
     triggers:
       - verb: look
         conditions:
-          - hasState: [ hole, unguarded ]
+          - has-state: [ hole, unguarded ]
         actions:
           - command: changeState
             argument: hole
