@@ -21,7 +21,8 @@ export type ChoiceDialog = BaseDialog & {
 
 // Dialogs with conditions
 export type ConditionDialog = BaseDialog & {
-    conditions: Condition[];
+    preConditions?: Condition[];
+    postConditions?: Condition[];
     success: string; // ID of the success dialog
     failure: string; // ID of the failure dialog
 };
@@ -38,10 +39,11 @@ export function isChoiceDialog(dialog: Dialog): dialog is ChoiceDialog {
 }
 
 export function isConditionDialog(dialog: Dialog): dialog is ConditionDialog {
+    const conditionDialog = dialog as ConditionDialog;
     return (
-        Array.isArray((dialog as ConditionDialog).conditions) &&
-        (dialog as ConditionDialog).success !== undefined &&
-        (dialog as ConditionDialog).failure !== undefined
+        Array.isArray(conditionDialog.preConditions || conditionDialog.postConditions) &&
+        conditionDialog.success !== undefined &&
+        conditionDialog.failure !== undefined
     );
 }
 

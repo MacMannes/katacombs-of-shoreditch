@@ -8,7 +8,8 @@ export type DialogData = {
     exit?: boolean;
     actions?: CommandActionData[];
     choices?: string[];
-    conditions?: ConditionData[];
+    'pre-conditions'?: ConditionData[];
+    'post-conditions'?: ConditionData[];
     success?: string;
     failure?: string;
 };

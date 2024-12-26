@@ -258,7 +258,7 @@ npcs:
           - ask-about-shovel
           - are-you-serious
           - buy-something
-          - buy
+          - bye
 
       - id: why-only-two-items
         text: Why only two items?
@@ -319,7 +319,7 @@ npcs:
           - never-mind
       - id: pay-for-lighter
         text: Pay 10 coins
-        conditions:
+        post-conditions:
           - hasItem: coin
             count: 10
         success: buy-lighter-success
@@ -341,7 +341,7 @@ npcs:
           - never-mind
       - id: pay-for-shovel
         text: Pay 100 coins
-        conditions:
+        post-conditions:
           - hasItem: coin
             count: 100
         success: buy-shovel-success
