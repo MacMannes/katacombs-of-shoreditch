@@ -231,5 +231,11 @@ describe('YamlDataLoader', () => {
                 fail('Expected startDialog to be a BaseDialog');
             }
         });
+
+        //TODO: Test `enabled`
+        //TODO: Test `actions`
+        //TODO: Test `post-conditions`: success / faiure
+        //TODO: Test `post-conditions`: has-item + count
+        //TODO: Test `pre-conditions`
     });
 });
