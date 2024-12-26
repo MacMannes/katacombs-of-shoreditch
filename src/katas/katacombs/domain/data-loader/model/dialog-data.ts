@@ -21,6 +21,7 @@ export function toDialog(dialog: DialogData): Dialog {
         response: dialog.response,
         next: dialog.next,
         choices: dialog.choices,
+        exit: dialog.exit ?? false,
         // actions: dialog.actions?.map((action) => toCommandAction(action)),
     };
 }

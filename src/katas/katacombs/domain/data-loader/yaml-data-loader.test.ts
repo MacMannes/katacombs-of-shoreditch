@@ -206,6 +206,7 @@ describe('YamlDataLoader', () => {
             const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'start');
             if (isChoiceDialog(startDialog)) {
                 expect(startDialog.choices.length).toBeGreaterThanOrEqual(6);
+                expect(startDialog.exit).toBeFalsy();
             } else {
                 fail('Expected startDialog to be a ChoiceDialog');
             }
@@ -217,6 +218,15 @@ describe('YamlDataLoader', () => {
                 expect(startDialog.text).toBe('I’ll take something.');
                 expect(startDialog.response).toBe('npc-shopkeeper-what-will-it-be');
                 expect(startDialog.next).toBe('what-will-it-be');
+            } else {
+                fail('Expected startDialog to be a BaseDialog');
+            }
+        });
+
+        it('should set exit to true on the "bye" dialog', () => {
+            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'bye');
+            if (isBaseDialog(startDialog)) {
+                expect(startDialog.exit).toBeTruthy();
             } else {
                 fail('Expected startDialog to be a BaseDialog');
             }
