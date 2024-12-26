@@ -1,8 +1,7 @@
 import { assert, beforeEach, describe, expect, it } from 'vitest';
-import { ChoiceDialog, GameRealm, isChoiceDialog, YamlDataLoader } from '@katas/katacombs/domain';
+import { ChoiceDialog, GameRealm, isBaseDialog, isChoiceDialog, NPC, YamlDataLoader } from '@katas/katacombs/domain';
 import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
-import { expectToBeDefined } from '@utils/test';
 import { fail } from 'node:assert';
 
 describe('YamlDataLoader', () => {
@@ -185,29 +184,41 @@ describe('YamlDataLoader', () => {
     });
 
     describe('NPCs', () => {
-        it('should load the npcs', async () => {
+        let shopkeeper: NPC;
+
+        beforeEach(() => {
             const npcs = realm.npcs;
             expect(Object.keys(npcs)).toHaveLength(1);
-            const shopkeeper = npcs[0];
+            shopkeeper = npcs[0];
+        });
+
+        it('should load the npcs', async () => {
             expect(shopkeeper.name).toBe('shopkeeper');
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
         });
 
         it('should add dialogs to the NPC', () => {
-            const npcs = realm.npcs;
-            const shopkeeper = npcs[0];
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
             expect(shopkeeper.dialogs.length).toBeGreaterThan(10);
         });
 
         it('should add choices to the start dialog', () => {
-            const npcs = realm.npcs;
-            const shopkeeper = npcs[0];
             const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'start');
             if (isChoiceDialog(startDialog)) {
-                expect((startDialog as ChoiceDialog).choices.length).toBeGreaterThanOrEqual(6);
+                expect(startDialog.choices.length).toBeGreaterThanOrEqual(6);
             } else {
                 fail('Expected startDialog to be a ChoiceDialog');
+            }
+        });
+
+        it('should add text, response and next properties to the dialogs', () => {
+            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'buy-something');
+            if (isBaseDialog(startDialog)) {
+                expect(startDialog.text).toBe('I’ll take something.');
+                expect(startDialog.response).toBe('npc-shopkeeper-what-will-it-be');
+                expect(startDialog.next).toBe('what-will-it-be');
+            } else {
+                fail('Expected startDialog to be a BaseDialog');
             }
         });
     });
