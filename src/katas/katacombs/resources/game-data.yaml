@@ -94,7 +94,7 @@ items:
             argument: rat
           - command: hide
             argument: cheese
-          - command: changeState
+          - command: change-state
             argument: hole
             parameter: unguarded
 
@@ -163,7 +163,7 @@ items:
     triggers:
       - verb: light
         actions:
-          - command: changeState
+          - command: change-state
             argument: lantern
             parameter: lit
             responses:
@@ -171,7 +171,7 @@ items:
               failure: light-lantern-failure
       - verb: extinguish
         actions:
-          - command: changeState
+          - command: change-state
             argument: lantern
             parameter: unlit
             responses:
@@ -237,7 +237,7 @@ items:
         conditions:
           - has-state: [ hole, unguarded ]
         actions:
-          - command: changeState
+          - command: change-state
             argument: hole
             parameter: examined
           - command: reveal

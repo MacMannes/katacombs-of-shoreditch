@@ -20,12 +20,16 @@ export type ResponsesData = {
 
 export function toCommandAction(action: CommandActionData): CommandAction {
     return {
-        command: action.command,
+        command: commandReplacements[action.command] ?? action.command,
         argument: action.argument,
         parameter: action.parameter,
         responses: action.responses,
     };
 }
+
+const commandReplacements: Record<string, string> = {
+    'change-state': 'changeState',
+};
 
 export function toTriggers(triggers: ActionTriggerData[] | undefined): ActionTrigger[] | undefined {
     if (!triggers) return undefined;
