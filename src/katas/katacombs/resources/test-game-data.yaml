@@ -10,7 +10,7 @@ rooms:
   - name: start
     title: Lost in Shoreditch
     description: room-start
-    shortDescription: room-start-short
+    short-description: room-start-short
     connections:
       - direction: north
         to: building

@@ -10,7 +10,7 @@ rooms:
   - name: start
     title: Lost in Shoreditch
     description: room-start
-    shortDescription: room-start-short
+    short-description: room-start-short
     connections:
       - direction: north
         to: building
@@ -25,7 +25,7 @@ rooms:
   - name: building
     title: Inside the Truman Brewery
     description: room-building
-    shortDescription: room-building-short
+    short-description: room-building-short
     connections:
       - direction: south
         to: start
@@ -44,7 +44,7 @@ rooms:
   - name: office
     title: Truman Brewery - Office
     description: room-office
-    shortDescription: room-office-short
+    short-description: room-office-short
     connections:
       - direction: east
         to: building
@@ -54,7 +54,7 @@ rooms:
   - name: closet
     title: Truman Brewery - Closet
     description: room-closet
-    shortDescription: room-closet-short
+    short-description: room-closet-short
     connections:
       - direction: south
         to: building
