@@ -4,9 +4,6 @@ export class NPC {
     constructor(
         public readonly name: string,
         public readonly greeting: string,
-        public readonly dialogs: {
-            initial: Dialog[];
-            additional: Dialog[];
-        },
+        public readonly dialogs: Dialog[],
     ) {}
 }

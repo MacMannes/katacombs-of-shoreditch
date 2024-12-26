@@ -251,102 +251,110 @@ npcs:
     voice: Denzel
     greeting: npc-shopkeeper-welcome
     dialogs:
-      initial:
-        - id: why-only-two-items
-          text: Why only two items?
-          response: npc-shopkeeper-only-two-items
-          actions:
-            - command: remove-dialog
-              argument: why-only-two-items
+      - id: start
+        choices:
+          - why-only-two-items
+          - ask-about-lighter
+          - ask-about-shovel
+          - are-you-serious
+          - buy-something
+          - buy
 
-        - id: ask-about-lighter
-          text: Tell me about the lighter.
-          response: npc-shopkeeper-lighter-description
+      - id: why-only-two-items
+        text: Why only two items?
+        response: npc-shopkeeper-only-two-items
+        actions:
+          - command: remove-dialog
+            argument: why-only-two-items
 
-        - id: ask-about-shovel
-          text: What’s so special about the shovel?
-          response: npc-shopkeeper-shovel-description
-          actions:
-            - command: add-dialog
-              argument: are-you-serious
+      - id: ask-about-lighter
+        text: Tell me about the lighter.
+        response: npc-shopkeeper-lighter-description
 
-        - id: buy-something
-          text: I’ll take something.
-          response: npc-shopkeeper-what-will-it-be
-          next: what-will-it-be
+      - id: ask-about-shovel
+        text: What’s so special about the shovel?
+        response: npc-shopkeeper-shovel-description
+        actions:
+          - command: enable-dialog
+            argument: are-you-serious
 
-        - id: bye
-          text: Never mind, I’ll be on my way.
-          response: npc-shopkeeper-bye
-          exit: true
+      - id: buy-something
+        text: I’ll take something.
+        response: npc-shopkeeper-what-will-it-be
+        next: what-will-it-be
 
-      additional:
-        - id: are-you-serious
-          text: A hundred coins for a shovel? Are you serious?
-          response: npc-shopkeeper-serious
-          actions:
-            - command: remove-dialog
-              argument: are-you-serious
+      - id: bye
+        text: Never mind, I’ll be on my way.
+        response: npc-shopkeeper-bye
+        exit: true
 
-        - id: what-will-it-be
-          choices:
-            - choose-lighter
-            - choose-shovel
-            - choose-nothing
-        - id: choose-lighter
-          text: I’ll take the lighter.
-          next: buy-lighter
-        - id: choose-shovel
-          text: I’ll take the shovel.
-          next: buy-shovel
+      - id: are-you-serious
+        text: A hundred coins for a shovel? Are you serious?
+        response: npc-shopkeeper-serious
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: are-you-serious
 
-        - id: never-mind
-          text: Never mind.
-          response: npc-shopkeeper-suit-yourself
+      - id: what-will-it-be
+        choices:
+          - choose-lighter
+          - choose-shovel
+          - choose-nothing
+      - id: choose-lighter
+        text: I’ll take the lighter.
+        next: buy-lighter
+      - id: choose-shovel
+        text: I’ll take the shovel.
+        next: buy-shovel
 
-        - id: buy-lighter
-          response: npc-shopkeeper-10-coins
-          choices:
-            - pay-for-lighter
-            - never-mind
-        - id: pay-for-lighter
-          text: Pay 10 coins
-          conditions:
-            - hasItem: coin
-              count: 10
-          success: buy-lighter-success
-          failure: buy-lighter-failure
-        - id: buy-lighter-success
-          response: npc-shopkeeper-sells-lighter
-          actions:
-            - command: disable-dialog
-              argument: ask-about-lighter
-            - command: disable-dialog
-              argument: choose-lighter
-        - id: buy-lighter-failure
-          response: npc-shopkeeper-short-on-coins-10
+      - id: never-mind
+        text: Never mind.
+        response: npc-shopkeeper-suit-yourself
 
-        - id: buy-shovel
-          response: npc-shopkeeper-100-coins
-          choices:
-            - pay-for-shovel
-            - never-mind
-        - id: pay-for-shovel
-          text: Pay 100 coins
-          conditions:
-            - hasItem: coin
-              count: 100
-          success: buy-shovel-success
-          failure: buy-shovel-failure
-        - id: buy-shovel-success
-          response: npc-shopkeeper-sells-shovel
-          actions:
-            - command: disable-dialog
-              argument: ask-about-shovel
-            - command: disable-dialog
-              argument: choose-shovel
-        - id: buy-shovel-failure
-          response: npc-shopkeeper-short-on-coins-100
+      - id: buy-lighter
+        response: npc-shopkeeper-10-coins
+        choices:
+          - pay-for-lighter
+          - never-mind
+      - id: pay-for-lighter
+        text: Pay 10 coins
+        conditions:
+          - hasItem: coin
+            count: 10
+        success: buy-lighter-success
+        failure: buy-lighter-failure
+      - id: buy-lighter-success
+        response: npc-shopkeeper-sells-lighter
+        actions:
+          - command: disable-dialog
+            argument: ask-about-lighter
+          - command: disable-dialog
+            argument: choose-lighter
+      - id: buy-lighter-failure
+        response: npc-shopkeeper-short-on-coins-10
+
+      - id: buy-shovel
+        response: npc-shopkeeper-100-coins
+        choices:
+          - pay-for-shovel
+          - never-mind
+      - id: pay-for-shovel
+        text: Pay 100 coins
+        conditions:
+          - hasItem: coin
+            count: 100
+        success: buy-shovel-success
+        failure: buy-shovel-failure
+      - id: buy-shovel-success
+        response: npc-shopkeeper-sells-shovel
+        actions:
+          - command: disable-dialog
+            argument: ask-about-shovel
+          - command: disable-dialog
+            argument: choose-shovel
+      - id: buy-shovel-failure
+        response: npc-shopkeeper-short-on-coins-100
 
 #---------------------
 # Texts
