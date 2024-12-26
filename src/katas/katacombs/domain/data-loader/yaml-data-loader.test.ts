@@ -204,7 +204,6 @@ describe('YamlDataLoader', () => {
             const npcs = realm.npcs;
             const shopkeeper = npcs[0];
             const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'start');
-            expectToBeDefined(startDialog);
             if (isChoiceDialog(startDialog)) {
                 expect((startDialog as ChoiceDialog).choices.length).toBeGreaterThanOrEqual(6);
             } else {

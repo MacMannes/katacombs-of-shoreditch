@@ -30,23 +30,24 @@ export type ConditionDialog = BaseDialog & {
 // General dialog type (union of all sub-types)
 export type Dialog = BaseDialog | ActionDialogData | ChoiceDialog | ConditionDialog;
 
-export function isActionDialog(dialog: Dialog): dialog is ActionDialogData {
-    return Array.isArray((dialog as ActionDialogData).actions);
+export function isActionDialog(dialog?: Dialog): dialog is ActionDialogData {
+    return Array.isArray((dialog as ActionDialogData)?.actions);
 }
 
-export function isChoiceDialog(dialog: Dialog): dialog is ChoiceDialog {
-    return Array.isArray((dialog as ChoiceDialog).choices);
+export function isChoiceDialog(dialog?: Dialog): dialog is ChoiceDialog {
+    return Array.isArray((dialog as ChoiceDialog)?.choices);
 }
 
-export function isConditionDialog(dialog: Dialog): dialog is ConditionDialog {
+export function isConditionDialog(dialog?: Dialog): dialog is ConditionDialog {
     const conditionDialog = dialog as ConditionDialog;
     return (
-        Array.isArray(conditionDialog.preConditions || conditionDialog.postConditions) &&
+        Array.isArray(conditionDialog?.preConditions || conditionDialog?.postConditions) &&
         conditionDialog.success !== undefined &&
         conditionDialog.failure !== undefined
     );
 }
 
-export function isBaseDialog(dialog: Dialog): dialog is BaseDialog {
+export function isBaseDialog(dialog?: Dialog): dialog is BaseDialog {
+    if (!dialog) return false;
     return !isActionDialog(dialog) && !isChoiceDialog(dialog) && !isConditionDialog(dialog);
 }
