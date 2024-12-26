@@ -1,4 +1,4 @@
-import { CommandActionData, ConditionData, Dialog, toCommandAction } from '@katas/katacombs/domain';
+import { CommandActionData, ConditionData, Dialog } from '@katas/katacombs/domain';
 
 export type DialogData = {
     id: string;
