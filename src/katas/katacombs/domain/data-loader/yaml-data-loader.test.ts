@@ -1,7 +1,9 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { GameRealm, YamlDataLoader } from '@katas/katacombs/domain';
+import { assert, beforeEach, describe, expect, it } from 'vitest';
+import { ChoiceDialog, GameRealm, isChoiceDialog, YamlDataLoader } from '@katas/katacombs/domain';
 import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
+import { expectToBeDefined } from '@utils/test';
+import { fail } from 'node:assert';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
@@ -191,11 +193,23 @@ describe('YamlDataLoader', () => {
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
         });
 
-        it('should add dialogs to the NPCa', () => {
+        it('should add dialogs to the NPC', () => {
             const npcs = realm.npcs;
             const shopkeeper = npcs[0];
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
             expect(shopkeeper.dialogs.length).toBeGreaterThan(10);
+        });
+
+        it('should add choices to the start dialog', () => {
+            const npcs = realm.npcs;
+            const shopkeeper = npcs[0];
+            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'start');
+            expectToBeDefined(startDialog);
+            if (isChoiceDialog(startDialog)) {
+                expect((startDialog as ChoiceDialog).choices.length).toBeGreaterThanOrEqual(6);
+            } else {
+                fail('Expected startDialog to be a ChoiceDialog');
+            }
         });
     });
 });

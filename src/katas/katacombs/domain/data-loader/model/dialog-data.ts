@@ -20,6 +20,7 @@ export function toDialog(dialog: DialogData): Dialog {
         text: dialog.text,
         response: dialog.response,
         next: dialog.next,
+        choices: dialog.choices,
         // actions: dialog.actions?.map((action) => toCommandAction(action)),
     };
 }
