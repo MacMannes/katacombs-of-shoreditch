@@ -11,7 +11,7 @@ export type BaseDialog = {
 };
 
 // Dialogs with actions
-export type ActionDialogData = BaseDialog & {
+export type ActionDialog = BaseDialog & {
     actions: CommandAction[];
 };
 
@@ -29,10 +29,10 @@ export type ConditionDialog = BaseDialog & {
 };
 
 // General dialog type (union of all sub-types)
-export type Dialog = BaseDialog | ActionDialogData | ChoiceDialog | ConditionDialog;
+export type Dialog = BaseDialog | ActionDialog | ChoiceDialog | ConditionDialog;
 
-export function isActionDialog(dialog?: Dialog): dialog is ActionDialogData {
-    return Array.isArray((dialog as ActionDialogData)?.actions);
+export function isActionDialog(dialog?: Dialog): dialog is ActionDialog {
+    return Array.isArray((dialog as ActionDialog)?.actions);
 }
 
 export function isChoiceDialog(dialog?: Dialog): dialog is ChoiceDialog {

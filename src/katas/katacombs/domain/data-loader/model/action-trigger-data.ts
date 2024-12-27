@@ -29,6 +29,8 @@ export function toCommandAction(action: CommandActionData): CommandAction {
 
 const commandReplacements: Record<string, string> = {
     'change-state': 'changeState',
+    'enable-dialog': 'enableDialog',
+    'disable-dialog': 'disableDialog',
 };
 
 export function toTriggers(triggers: ActionTriggerData[] | undefined): ActionTrigger[] | undefined {

@@ -264,7 +264,7 @@ npcs:
         text: Why only two items?
         response: npc-shopkeeper-only-two-items
         actions:
-          - command: remove-dialog
+          - command: disable-dialog
             argument: why-only-two-items
 
       - id: ask-about-lighter

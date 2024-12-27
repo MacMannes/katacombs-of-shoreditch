@@ -1,5 +1,13 @@
 import { assert, beforeEach, describe, expect, it } from 'vitest';
-import { ChoiceDialog, GameRealm, isBaseDialog, isChoiceDialog, NPC, YamlDataLoader } from '@katas/katacombs/domain';
+import {
+    ChoiceDialog,
+    GameRealm,
+    isActionDialog,
+    isBaseDialog,
+    isChoiceDialog,
+    NPC,
+    YamlDataLoader,
+} from '@katas/katacombs/domain';
 import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 import { fail } from 'node:assert';
@@ -247,25 +255,35 @@ describe('YamlDataLoader', () => {
 
         it('should set enabled and exit to false on the "are-you-serious" dialog', () => {
             const areYouSeriousDialog = getDialog('are-you-serious');
-            if (isBaseDialog(areYouSeriousDialog)) {
+            if (isActionDialog(areYouSeriousDialog)) {
                 expect(areYouSeriousDialog.exit).toBeFalsy();
                 expect(areYouSeriousDialog.enabled).toBeFalsy();
             } else {
-                fail('Expected startDialog to be a BaseDialog');
+                fail('Expected startDialog to be a ActionDialog');
             }
         });
 
         it('should add actions to the "buy-lighter-success" dialog', () => {
-            const areYouSeriousDialog = getDialog('buy-lighter-success');
-            if (isBaseDialog(areYouSeriousDialog)) {
-                expect(areYouSeriousDialog.exit).toBeFalsy();
-                expect(areYouSeriousDialog.enabled).toBeFalsy();
+            const buyLighterSuccess = getDialog('buy-lighter-success');
+            if (isActionDialog(buyLighterSuccess)) {
+                expect(buyLighterSuccess.actions).toHaveLength(2);
+                expect(buyLighterSuccess.actions[0]).toStrictEqual({
+                    command: 'disableDialog',
+                    argument: 'shopkeeper',
+                    parameter: 'ask-about-lighter',
+                    responses: undefined,
+                });
+                expect(buyLighterSuccess.actions[1]).toStrictEqual({
+                    command: 'disableDialog',
+                    argument: 'shopkeeper',
+                    parameter: 'choose-lighter',
+                    responses: undefined,
+                });
             } else {
-                fail('Expected startDialog to be a BaseDialog');
+                fail('Expected startDialog to be a ActionDialog');
             }
         });
 
-        //TODO: Test `actions`
         //TODO: Test `post-conditions`: success / faiure
         //TODO: Test `post-conditions`: has-item + count
         //TODO: Test `pre-conditions`

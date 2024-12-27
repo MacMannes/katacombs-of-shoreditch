@@ -1,4 +1,11 @@
-import { ChoiceDialog, CommandActionData, ConditionData, Dialog } from '@katas/katacombs/domain';
+import {
+    ActionDialog,
+    ChoiceDialog,
+    CommandActionData,
+    ConditionData,
+    Dialog,
+    toCommandAction,
+} from '@katas/katacombs/domain';
 
 export type DialogData = {
     id: string;
@@ -15,7 +22,7 @@ export type DialogData = {
     failure?: string;
 };
 
-export function toDialog(dialog: DialogData): Dialog {
+export function toDialog(dialog: DialogData, npcName?: string): Dialog {
     const result = {
         id: dialog.id,
         text: dialog.text,
@@ -23,11 +30,22 @@ export function toDialog(dialog: DialogData): Dialog {
         next: dialog.next,
         exit: dialog.exit ?? false,
         enabled: dialog.enabled ?? true,
-        // actions: dialog.actions?.map((action) => toCommandAction(action)),
     };
     if (dialog.choices) {
         (result as ChoiceDialog).choices = dialog.choices;
     }
+    if (dialog.actions) {
+        (result as ActionDialog).actions = dialog.actions?.map((action) => mapAction(action, npcName));
+    }
 
     return result;
+}
+
+function mapAction(action: CommandActionData, npcName?: string) {
+    if (npcName && ['enable-dialog', 'disable-dialog'].includes(action.command)) {
+        action.parameter = action.argument;
+        action.argument = npcName;
+    }
+
+    return toCommandAction(action);
 }
