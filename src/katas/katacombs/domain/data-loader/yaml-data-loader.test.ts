@@ -232,7 +232,25 @@ describe('YamlDataLoader', () => {
             }
         });
 
-        //TODO: Test `enabled`
+        it('should set enabled to true on the "bye" dialog', () => {
+            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'bye');
+            if (isBaseDialog(startDialog)) {
+                expect(startDialog.enabled).toBeTruthy();
+            } else {
+                fail('Expected startDialog to be a BaseDialog');
+            }
+        });
+
+        it('should set enabled and exit to false on the "are-you-serious" dialog', () => {
+            const areYouSeriousDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'are-you-serious');
+            if (isBaseDialog(areYouSeriousDialog)) {
+                expect(areYouSeriousDialog.exit).toBeFalsy();
+                expect(areYouSeriousDialog.enabled).toBeFalsy();
+            } else {
+                fail('Expected startDialog to be a BaseDialog');
+            }
+        });
+
         //TODO: Test `actions`
         //TODO: Test `post-conditions`: success / faiure
         //TODO: Test `post-conditions`: has-item + count

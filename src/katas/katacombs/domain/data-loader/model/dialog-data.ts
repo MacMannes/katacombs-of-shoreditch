@@ -1,4 +1,4 @@
-import { CommandActionData, ConditionData, Dialog } from '@katas/katacombs/domain';
+import { ChoiceDialog, CommandActionData, ConditionData, Dialog } from '@katas/katacombs/domain';
 
 export type DialogData = {
     id: string;
@@ -6,6 +6,7 @@ export type DialogData = {
     response?: string;
     next?: string;
     exit?: boolean;
+    enabled?: boolean;
     actions?: CommandActionData[];
     choices?: string[];
     'pre-conditions'?: ConditionData[];
@@ -15,13 +16,18 @@ export type DialogData = {
 };
 
 export function toDialog(dialog: DialogData): Dialog {
-    return {
+    const result = {
         id: dialog.id,
         text: dialog.text,
         response: dialog.response,
         next: dialog.next,
-        choices: dialog.choices,
         exit: dialog.exit ?? false,
+        enabled: dialog.enabled ?? true,
         // actions: dialog.actions?.map((action) => toCommandAction(action)),
     };
+    if (dialog.choices) {
+        (result as ChoiceDialog).choices = dialog.choices;
+    }
+
+    return result;
 }

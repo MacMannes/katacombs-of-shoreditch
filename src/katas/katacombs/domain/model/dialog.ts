@@ -7,6 +7,7 @@ export type BaseDialog = {
     response?: string; // NPC's response key
     next?: string; // ID of the next dialog
     exit: boolean; // Whether the dialog ends the conversation
+    enabled: boolean;
 };
 
 // Dialogs with actions
