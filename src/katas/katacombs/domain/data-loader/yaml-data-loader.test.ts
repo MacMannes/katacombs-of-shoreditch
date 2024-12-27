@@ -192,6 +192,10 @@ describe('YamlDataLoader', () => {
             shopkeeper = npcs[0];
         });
 
+        function getDialog(id: string) {
+            return shopkeeper.dialogs.find((dialog) => dialog.id === id);
+        }
+
         it('should load the npcs', async () => {
             expect(shopkeeper.name).toBe('shopkeeper');
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
@@ -203,7 +207,7 @@ describe('YamlDataLoader', () => {
         });
 
         it('should add choices to the start dialog', () => {
-            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'start');
+            const startDialog = getDialog('start');
             if (isChoiceDialog(startDialog)) {
                 expect(startDialog.choices.length).toBeGreaterThanOrEqual(6);
                 expect(startDialog.exit).toBeFalsy();
@@ -213,7 +217,7 @@ describe('YamlDataLoader', () => {
         });
 
         it('should add text, response and next properties to the dialogs', () => {
-            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'buy-something');
+            const startDialog = getDialog('buy-something');
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.text).toBe('I’ll take something.');
                 expect(startDialog.response).toBe('npc-shopkeeper-what-will-it-be');
@@ -224,7 +228,7 @@ describe('YamlDataLoader', () => {
         });
 
         it('should set exit to true on the "bye" dialog', () => {
-            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'bye');
+            const startDialog = getDialog('bye');
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.exit).toBeTruthy();
             } else {
@@ -233,7 +237,7 @@ describe('YamlDataLoader', () => {
         });
 
         it('should set enabled to true on the "bye" dialog', () => {
-            const startDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'bye');
+            const startDialog = getDialog('bye');
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.enabled).toBeTruthy();
             } else {
@@ -242,7 +246,17 @@ describe('YamlDataLoader', () => {
         });
 
         it('should set enabled and exit to false on the "are-you-serious" dialog', () => {
-            const areYouSeriousDialog = shopkeeper.dialogs.find((dialog) => dialog.id === 'are-you-serious');
+            const areYouSeriousDialog = getDialog('are-you-serious');
+            if (isBaseDialog(areYouSeriousDialog)) {
+                expect(areYouSeriousDialog.exit).toBeFalsy();
+                expect(areYouSeriousDialog.enabled).toBeFalsy();
+            } else {
+                fail('Expected startDialog to be a BaseDialog');
+            }
+        });
+
+        it('should add actions to the "buy-lighter-success" dialog', () => {
+            const areYouSeriousDialog = getDialog('buy-lighter-success');
             if (isBaseDialog(areYouSeriousDialog)) {
                 expect(areYouSeriousDialog.exit).toBeFalsy();
                 expect(areYouSeriousDialog.enabled).toBeFalsy();
