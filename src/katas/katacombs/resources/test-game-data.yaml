@@ -271,7 +271,7 @@ items:
 #---------------------
 
 npcs:
-  shopkeeper:
+  - name: shopkeeper
     voice: Denzel
     greeting: npc-shopkeeper-welcome
     description:

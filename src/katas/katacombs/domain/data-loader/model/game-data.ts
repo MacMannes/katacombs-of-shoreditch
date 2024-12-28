@@ -4,5 +4,5 @@ export type GameData = {
     rooms: RoomData[];
     items: ItemData[];
     texts: TextData;
-    npcs: Record<string, NpcData>;
+    npcs: NpcData[];
 };

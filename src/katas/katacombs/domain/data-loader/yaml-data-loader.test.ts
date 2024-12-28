@@ -11,6 +11,7 @@ import {
 import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 import { fail } from 'node:assert';
+import { expectToBeDefined } from '@utils/test';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
@@ -195,8 +196,12 @@ describe('YamlDataLoader', () => {
         let shopkeeper: NPC;
 
         beforeEach(() => {
-            const npcs = realm.npcs;
-            expect(Object.keys(npcs)).toHaveLength(1);
+            const rooms = realm.rooms;
+            const shop = rooms.find((room) => room.name === 'shop');
+            expectToBeDefined(shop);
+
+            const npcs = shop.getNpcs();
+            expect(npcs).toHaveLength(1);
             shopkeeper = npcs[0];
         });
 

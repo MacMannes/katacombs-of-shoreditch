@@ -1,8 +1,9 @@
-import { Connection, ConnectionOptions, Direction, Item } from '@katas/katacombs/domain';
+import { Connection, ConnectionOptions, Direction, Item, NPC } from '@katas/katacombs/domain';
 
 export class Room {
     private readonly connections: Connection[] = [];
     private items: Item[] = [];
+    private npcs: NPC[] = [];
     private numberOfVisits = 0;
 
     constructor(
@@ -61,6 +62,14 @@ export class Room {
 
     public addItem(item: Item) {
         this.items.push(item);
+    }
+
+    public addNpcs(npcs: NPC[]) {
+        this.npcs.push(...npcs);
+    }
+
+    public getNpcs(): NPC[] {
+        return this.npcs;
     }
 
     public findItem(name: string, allowInvisibleItem = false): Item | undefined {
