@@ -304,8 +304,8 @@ npcs:
     voice: Denzel
     greeting: npc-shopkeeper-welcome
     description:
-      room: npc-shopkeeper-description-room
-      look: npc-shopkeeper-description-look
+      room: shopkeeper-description-room
+      look: shopkeeper-description-look
     dialogs:
       - id: start
         choices:

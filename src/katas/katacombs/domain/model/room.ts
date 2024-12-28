@@ -72,6 +72,10 @@ export class Room {
         return this.npcs;
     }
 
+    public findNpc(name: string): NPC | undefined {
+        return this.npcs.find((npc) => npc.name === name);
+    }
+
     public findItem(name: string, allowInvisibleItem = false): Item | undefined {
         return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.isVisible()));
     }

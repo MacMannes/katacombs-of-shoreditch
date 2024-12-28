@@ -216,8 +216,8 @@ describe('YamlDataLoader', () => {
 
         it('should add descriptions to the NPC', () => {
             expect(shopkeeper.description).toStrictEqual({
-                room: 'npc-shopkeeper-description-room',
-                look: 'npc-shopkeeper-description-look',
+                room: 'shopkeeper-description-room',
+                look: 'shopkeeper-description-look',
             });
         });
 

@@ -13,6 +13,10 @@ export class NPC {
         this.dialogs = options.dialogs;
         this.description = options.description;
     }
+
+    public getDescription(context: keyof NpcDescription): string | undefined {
+        return this.description?.[context];
+    }
 }
 
 export type NpcOptions = {

@@ -8,7 +8,7 @@
 - [x] Add descriptions to Shopkeeper 
 - [x] Add Shopkeeper NPC to Shop
 - [ ] Implement describing NPCs in room
-- [ ] Implement looking at NPC
+- [x] Implement looking at NPC
 - [ ] Add texts for shopkeeper
 - [ ] Implement NPC Dialog logic
 - [ ] Implement NPC Dialogs in UserInterface

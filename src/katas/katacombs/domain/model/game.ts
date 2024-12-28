@@ -99,7 +99,11 @@ export class Game {
             return this.getMessageForLookingAtConnection(connection);
         }
 
-        return this.getMessageForLookingAtItem(at) ?? this.getTextWithAudioFiles('msg-cant-see-that');
+        return (
+            this.getMessageForLookingAtItem(at) ??
+            this.getMessageForLookingAtNpc(at) ??
+            this.getTextWithAudioFiles('msg-cant-see-that')
+        );
     }
 
     private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
@@ -120,6 +124,14 @@ export class Game {
         const textKeys = item.getDescription('look');
         const text = this.getConcatenatedText(textKeys);
         return new TextWithAudioFiles(text, textKeys);
+    }
+
+    private getMessageForLookingAtNpc(npcName: string): TextWithAudioFiles | undefined {
+        const npc = this.currentRoom.findNpc(npcName);
+        const textKey = npc?.getDescription('look');
+        if (!textKey) return undefined;
+
+        return this.getTextWithAudioFiles(textKey);
     }
 
     public getTextWithAudioFiles(key: string): TextWithAudioFiles {

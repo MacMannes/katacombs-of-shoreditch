@@ -296,6 +296,18 @@ describe('GameController', () => {
         });
     });
 
+    describe('Looking at NPCs', () => {
+        it('should show the description of the NPC', () => {
+            controller.processCommand('go', 'south');
+            controller.processCommand('go', 'east');
+            controller.processCommand('look', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper’s sun-kissed skin') }),
+            );
+        });
+    });
+
     describe('Looking at items with trigger conditions', () => {
         it('should tell the rat is guarding the hole when looking at the hole and the rat is still there', () => {
             controller.processCommand('go', 'north');
