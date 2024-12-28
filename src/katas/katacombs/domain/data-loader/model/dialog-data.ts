@@ -45,6 +45,12 @@ export function toDialog(dialog: DialogData, npcName?: string): Dialog {
         conditionDialog.success = dialog.success;
         conditionDialog.failure = dialog.failure;
     }
+    if (dialog['pre-conditions']) {
+        const conditionDialog = result as ConditionDialog;
+        conditionDialog.preConditions = toConditions(dialog['pre-conditions']);
+        conditionDialog.success = dialog.success;
+        conditionDialog.failure = dialog.failure;
+    }
 
     return result;
 }

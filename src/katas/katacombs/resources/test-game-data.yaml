@@ -257,6 +257,7 @@ npcs:
           - ask-about-lighter
           - ask-about-shovel
           - are-you-serious
+          - ask-about-yoho
           - buy-something
           - bye
 
@@ -277,6 +278,39 @@ npcs:
         actions:
           - command: enable-dialog
             argument: are-you-serious
+
+      - id: ask-about-treasure-island
+        text: Do you know anything about Treasure Island?
+        response: npc-shopkeeper-rumor-treasure-island
+        pre-conditions:
+          - has-item: book
+        actions:
+          - command: enable-dialog
+            argument: did-you-try-to-find-treasure-island
+
+      - id: did-you-try-to-find-treasure-island
+        text: Did you ever tried to find Treasure Island yourself?
+        response: npc-shopkeeper-no-adventurer
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: ask-about-treasure-island
+          - command: enabled-dialog
+            argument: what-happened-to-sailor
+
+      - id: what-happened-to-sailor
+        text: What happened to the sailor?
+        response: npc-shopkeeper-sailor
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: what-happened-to-sailor
+
+      - id: ask-about-yoho
+        text: Do you know what YOHO means?
+        response: npc-shopkeeper-yoho
+        pre-conditions:
+          - has-state: [ 'book', 'read' ]
 
       - id: buy-something
         text: I’ll take something.

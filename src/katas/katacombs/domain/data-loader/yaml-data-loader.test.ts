@@ -301,6 +301,20 @@ describe('YamlDataLoader', () => {
             }
         });
 
-        //TODO: Test `pre-conditions`
+        it('should pre-condition to the "ask-about-treasure-island" dialog', () => {
+            const askAboutTreasureIslandDialog = getDialog('ask-about-treasure-island');
+            if (isConditionDialog(askAboutTreasureIslandDialog)) {
+                expect(askAboutTreasureIslandDialog.preConditions).toHaveLength(1);
+                expect(askAboutTreasureIslandDialog.preConditions?.at(0)).toStrictEqual({
+                    type: 'hasItem',
+                    key: 'book',
+                    value: undefined,
+                });
+                expect(askAboutTreasureIslandDialog.success).toBeUndefined();
+                expect(askAboutTreasureIslandDialog.failure).toBeUndefined();
+            } else {
+                fail('Expected dialog to be a ConditionDialog');
+            }
+        });
     });
 });

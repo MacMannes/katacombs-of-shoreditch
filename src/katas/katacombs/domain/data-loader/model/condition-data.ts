@@ -29,7 +29,8 @@ export function toConditions(conditions: ConditionData[] | undefined) {
             }
         }
         if (condition['has-item']) {
-            const [item, count] = condition['has-item'];
+            const hasItem = condition['has-item'];
+            const [item, count] = typeof hasItem === 'string' ? [hasItem] : hasItem;
             if (item) {
                 return {
                     type: 'hasItem',
