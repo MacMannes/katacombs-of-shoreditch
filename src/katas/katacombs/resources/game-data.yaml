@@ -453,7 +453,7 @@ texts:
 
   ## Nowhere
   room-nowhere: >-
-    You’re on the road to Nowhere
+    You’re on the road to Nowhere.
 
   ## Start
   room-start: >-
@@ -476,19 +476,19 @@ texts:
   room-office: >-
     You stand in a small, cluttered office. The dim light from a single overhead bulb
     casts long shadows over the chaotic workspace.
-  room-office-short: You’re in the office
+  room-office-short: You’re in the office.
 
   room-closet: >- 
     The cramped closet smells faintly of mildew and dust.
     Cobwebs dangle from the corners, their occupants skittering away when disturbed.
-  room-closet-short: You’re inside a closet
+  room-closet-short: You’re inside a closet.
 
   ## Square
   room-square: >-
     The square buzzes with life, its cobblestones echoing footsteps and laughter. 
     To the west, a lively bar beckons; to the east, a quaint shop glows under hanging lanterns. 
     To the south, an alley disappears into shadow, while the Old Truman Brewery stands tall to the north.
-  room-square-short: You're at the Cobblestone Square
+  room-square-short: You're at the Cobblestone Square.
 
   connection-square-east: >-
     The shop is a snug little building with a painted sign above the door that reads Dig & Flame Emporium. 

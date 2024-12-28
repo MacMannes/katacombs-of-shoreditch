@@ -30,6 +30,16 @@ describe('Room', () => {
                 },
             }),
         );
+        room.addNpcs([
+            new NPC('shopkeeper', {
+                description: {
+                    room: 'The shopkeeper stands behind the counter.',
+                    look: 'shopkeeper-look',
+                },
+                dialogs: [],
+                greeting: '',
+            }),
+        ]);
     });
 
     describe('Getting the room description', () => {

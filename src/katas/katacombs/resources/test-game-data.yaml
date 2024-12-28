@@ -446,7 +446,7 @@ texts:
     The square buzzes with life, its cobblestones echoing footsteps and laughter. 
     To the west, a lively bar beckons; to the east, a quaint shop glows under hanging lanterns. 
     To the south, an alley disappears into shadow, while the Old Truman Brewery stands tall to the north.
-  room-square-short: You're at the Cobblestone Square
+  room-square-short: You're at the Cobblestone Square.
 
   connection-square-east: >-
     The shop is a snug little building with a painted sign above the door that reads Dig & Flame Emporium. 
@@ -456,7 +456,7 @@ texts:
   room-shop: >-
     You are in a shop, a snug little space with barely more than a counter and a few items on 
     display. A lighter and a sturdy shovel sit prominently, their utility clear.
-  room-shop-short: You're inside the shop
+  room-shop-short: You're inside the shop.
 
   # NPC texts
 

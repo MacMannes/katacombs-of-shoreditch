@@ -167,10 +167,7 @@ export class Game {
         const roomDescriptionTextKey = room.getDescription(preferredLength);
         const roomDescriptionText = this.textRepository.getText(roomDescriptionTextKey);
 
-        const npcTextKeys = this.currentRoom
-            .getNpcs()
-            .map((npc) => npc.getDescription('room'))
-            .filter(isDefined);
+        const npcTextKeys = this.getTextKeysForNpcs(preferredLength);
         const npcText = this.getConcatenatedText(npcTextKeys, ' ');
 
         const immovableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: true, preferredLength });
@@ -189,6 +186,16 @@ export class Game {
             ...immovableItemsTextKeys.flat(),
             ...movableItemsTextKeys.flat(),
         ]);
+    }
+
+    private getTextKeysForNpcs(preferredLength?: 'short' | 'long'): string[] {
+        const length = preferredLength ?? this.getTextLengthForRoom(this.currentRoom);
+        if (length === 'short') return [];
+
+        return this.currentRoom
+            .getNpcs()
+            .map((npc) => npc.getDescription('room'))
+            .filter(isDefined);
     }
 
     private getTextKeysForRoomItems(

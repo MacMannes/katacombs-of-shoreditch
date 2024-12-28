@@ -239,6 +239,19 @@ describe('GameController', () => {
                 expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
             );
         });
+
+        it('should not print the description of the NPC when going into the room a second time', () => {
+            controller.processCommand('go', 'south');
+            controller.processCommand('go', 'east');
+            controller.processCommand('go', 'west');
+            vi.resetAllMocks();
+
+            controller.processCommand('go', 'east');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+            );
+        });
     });
 
     describe('Looking at items', () => {
