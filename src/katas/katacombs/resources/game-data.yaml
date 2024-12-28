@@ -16,6 +16,8 @@ rooms:
         to: building
         description: connection-start-north
         words: [ building, inside ]
+      - direction: south
+        to: square
     items:
       - name: cheese
       - name: gully
@@ -64,6 +66,29 @@ rooms:
       - name: rat
       - name: key
       - name: note
+
+
+  - name: square
+    title: The Cobblestone Square
+    description: room-square
+    short-description: room-square-short
+    connections:
+      - direction: east
+        to: shop
+        description: connection-square-east
+      - direction: north
+        to: start
+
+  - name: shop
+    title: Inside the Dig & Flame Emporium
+    description: room-shop
+    short-description: room-shop
+    connections:
+      - direction: west
+        to: square
+        words: [ outside ]
+    npcs:
+      - shopkeeper
 
 #---------------------
 # Items
@@ -271,6 +296,152 @@ items:
             argument: note
 
 #---------------------
+# NPCs
+#---------------------
+
+npcs:
+  shopkeeper:
+    voice: Denzel
+    greeting: npc-shopkeeper-welcome
+    dialogs:
+      - id: start
+        choices:
+          - why-only-two-items
+          - ask-about-lighter
+          - ask-about-shovel
+          - are-you-serious
+          - ask-about-yoho
+          - buy-something
+          - bye
+
+      - id: why-only-two-items
+        text: Why only two items?
+        response: npc-shopkeeper-only-two-items
+        actions:
+          - command: disable-dialog
+            argument: why-only-two-items
+
+      - id: ask-about-lighter
+        text: Tell me about the lighter.
+        response: npc-shopkeeper-lighter-description
+
+      - id: ask-about-shovel
+        text: What’s so special about the shovel?
+        response: npc-shopkeeper-shovel-description
+        actions:
+          - command: enable-dialog
+            argument: are-you-serious
+
+      - id: ask-about-treasure-island
+        text: Do you know anything about Treasure Island?
+        response: npc-shopkeeper-rumor-treasure-island
+        pre-conditions:
+          - has-item: book
+        actions:
+          - command: enable-dialog
+            argument: did-you-try-to-find-treasure-island
+
+      - id: did-you-try-to-find-treasure-island
+        text: Did you ever tried to find Treasure Island yourself?
+        response: npc-shopkeeper-no-adventurer
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: ask-about-treasure-island
+          - command: enabled-dialog
+            argument: what-happened-to-sailor
+
+      - id: what-happened-to-sailor
+        text: What happened to the sailor?
+        response: npc-shopkeeper-sailor
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: what-happened-to-sailor
+
+      - id: ask-about-yoho
+        text: Do you know what YOHO means?
+        response: npc-shopkeeper-yoho
+        pre-conditions:
+          - has-state: [ 'book', 'read' ]
+
+      - id: buy-something
+        text: I’ll take something.
+        response: npc-shopkeeper-what-will-it-be
+        next: what-will-it-be
+
+      - id: bye
+        text: Never mind, I’ll be on my way.
+        response: npc-shopkeeper-bye
+        exit: true
+
+      - id: are-you-serious
+        text: A hundred coins for a shovel? Are you serious?
+        response: npc-shopkeeper-serious
+        enabled: false
+        actions:
+          - command: disable-dialog
+            argument: are-you-serious
+
+      - id: what-will-it-be
+        choices:
+          - choose-lighter
+          - choose-shovel
+          - choose-nothing
+      - id: choose-lighter
+        text: I’ll take the lighter.
+        next: buy-lighter
+      - id: choose-shovel
+        text: I’ll take the shovel.
+        next: buy-shovel
+
+      - id: never-mind
+        text: Never mind.
+        response: npc-shopkeeper-suit-yourself
+
+      - id: buy-lighter
+        response: npc-shopkeeper-10-coins
+        choices:
+          - pay-for-lighter
+          - never-mind
+      - id: pay-for-lighter
+        text: Pay 10 coins
+        post-conditions:
+          - has-item: [ 'coin', '10' ]
+        success: buy-lighter-success
+        failure: buy-lighter-failure
+      - id: buy-lighter-success
+        response: npc-shopkeeper-sells-lighter
+        actions:
+          - command: disable-dialog
+            argument: ask-about-lighter
+          - command: disable-dialog
+            argument: choose-lighter
+      - id: buy-lighter-failure
+        response: npc-shopkeeper-short-on-coins-10
+
+      - id: buy-shovel
+        response: npc-shopkeeper-100-coins
+        choices:
+          - pay-for-shovel
+          - never-mind
+      - id: pay-for-shovel
+        text: Pay 100 coins
+        post-conditions:
+          - has-item: [ 'coin', '100' ]
+        success: buy-shovel-success
+        failure: buy-shovel-failure
+      - id: buy-shovel-success
+        response: npc-shopkeeper-sells-shovel
+        actions:
+          - command: disable-dialog
+            argument: ask-about-shovel
+          - command: disable-dialog
+            argument: choose-shovel
+      - id: buy-shovel-failure
+        response: npc-shopkeeper-short-on-coins-100
+
+#---------------------
 # Texts
 #---------------------
 
@@ -308,6 +479,23 @@ texts:
     The cramped closet smells faintly of mildew and dust.
     Cobwebs dangle from the corners, their occupants skittering away when disturbed.
   room-closet-short: You’re inside a closet
+
+  ## Square
+  room-square: >-
+    The square buzzes with life, its cobblestones echoing footsteps and laughter. 
+    To the west, a lively bar beckons; to the east, a quaint shop glows under hanging lanterns. 
+    To the south, an alley disappears into shadow, while the Old Truman Brewery stands tall to the north.
+  room-square-short: You're at the Cobblestone Square
+
+  connection-square-east: >-
+    The shop is a snug little building with a painted sign above the door that reads Dig & Flame Emporium. 
+    Its simple façade is offset by the warm glow of lanterns hanging on either side. 
+
+  ## Shop
+  room-shop: >-
+    You are in a shop, a snug little space with barely more than a counter and a few items on 
+    display. A lighter and a sturdy shovel sit prominently, their utility clear.
+  room-shop-short: You're inside the shop
 
   # Item and action descriptions
 
