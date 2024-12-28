@@ -228,6 +228,17 @@ describe('GameController', () => {
                 expect.objectContaining({ text: expect.stringContaining('Nothing interesting') }),
             );
         });
+
+        it('should show the description of the NPC when looking at the room', () => {
+            controller.processCommand('go', 'south');
+            controller.processCommand('go', 'east');
+
+            controller.processCommand('look');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+            );
+        });
     });
 
     describe('Looking at items', () => {

@@ -167,17 +167,25 @@ export class Game {
         const roomDescriptionTextKey = room.getDescription(preferredLength);
         const roomDescriptionText = this.textRepository.getText(roomDescriptionTextKey);
 
+        const npcTextKeys = this.currentRoom
+            .getNpcs()
+            .map((npc) => npc.getDescription('room'))
+            .filter(isDefined);
+        const npcText = this.getConcatenatedText(npcTextKeys, ' ');
+
         const immovableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: true, preferredLength });
         const immovableItemsText = this.getConcatenatedTextForItemKeys(immovableItemsTextKeys, ' ');
 
         const movableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: false, preferredLength });
         const movableItemsText = this.getConcatenatedTextForItemKeys(movableItemsTextKeys, '\n\n');
 
-        const optionalNewLines = movableItemsTextKeys.length > 0 ? '\n\n' : '';
-        const text = `${roomDescriptionText} ${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+        const shouldAddNewLines = movableItemsTextKeys.length > 0 || npcTextKeys > 0;
+        const optionalNewLines = shouldAddNewLines ? '\n\n' : '';
+        const text = `${roomDescriptionText} ${npcText}${immovableItemsText}${optionalNewLines}${movableItemsText}`;
 
         return new TextWithAudioFiles(text, [
             roomDescriptionTextKey,
+            ...npcTextKeys,
             ...immovableItemsTextKeys.flat(),
             ...movableItemsTextKeys.flat(),
         ]);

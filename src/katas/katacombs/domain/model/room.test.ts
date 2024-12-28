@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Item, Room } from '@katas/katacombs/domain';
+import { Item, NPC, Room } from '@katas/katacombs/domain';
 
 describe('Room', () => {
     let room: Room;
