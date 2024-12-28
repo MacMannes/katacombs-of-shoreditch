@@ -5,7 +5,7 @@
 - [x] Implement parsing NPCs from yaml
 - [x] Add Room:Square
 - [x] Add Room:Shop 
-- [ ] Add descriptions to Shopkeeper 
+- [x] Add descriptions to Shopkeeper 
 - [ ] Add Shopkeeper NPC to Shop
 - [ ] Implement describing NPCs in room
 - [ ] Implement looking at NPC

@@ -303,6 +303,9 @@ npcs:
   shopkeeper:
     voice: Denzel
     greeting: npc-shopkeeper-welcome
+    description:
+      room: npc-shopkeeper-description-room
+      look: npc-shopkeeper-description-look
     dialogs:
       - id: start
         choices:
@@ -496,6 +499,16 @@ texts:
     You are in a shop, a snug little space with barely more than a counter and a few items on 
     display. A lighter and a sturdy shovel sit prominently, their utility clear.
   room-shop-short: You're inside the shop
+
+  # NPC texts
+
+  # Shopkeeper
+  shopkeeper-description-room: >-
+    The shopkeeper stands behind the counter, humming a tune with a rich Caribbean lilt. 
+    His bright shirt and straw hat match his warm, inviting smile.
+  shopkeeper-description-look: >-
+    The shopkeeper’s sun-kissed skin and twinkling eyes exude charm. 
+    His voice flows like a tropical breeze, and his calloused hands hint at a life of labor. 
 
   # Item and action descriptions
 
