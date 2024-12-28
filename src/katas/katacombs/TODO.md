@@ -7,7 +7,6 @@
 - [x] Add Room:Shop 
 - [x] Add descriptions to Shopkeeper 
 - [x] Add Shopkeeper NPC to Shop
-- [ ] Refactoring: Just use strings for ShopData.items
 - [ ] Implement describing NPCs in room
 - [ ] Implement looking at NPC
 - [ ] Add texts for shopkeeper
