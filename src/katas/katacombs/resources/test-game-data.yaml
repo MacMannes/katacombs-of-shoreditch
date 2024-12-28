@@ -55,7 +55,7 @@ rooms:
   - name: shop
     title: Inside the Dig & Flame Emporium
     description: room-shop
-    short-description: room-shop
+    short-description: room-shop-short
     connections:
       - direction: west
         to: square

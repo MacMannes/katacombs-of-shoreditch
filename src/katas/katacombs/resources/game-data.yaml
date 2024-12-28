@@ -82,7 +82,7 @@ rooms:
   - name: shop
     title: Inside the Dig & Flame Emporium
     description: room-shop
-    short-description: room-shop
+    short-description: room-shop-short
     connections:
       - direction: west
         to: square
@@ -461,7 +461,7 @@ texts:
     "The Old Truman Brewery". 
     Around you is a forest of restaurants and bars. A small stream of crafted beer flows out of
     the building and down a gully.
-  room-start-short: You're in front of the brewery
+  room-start-short: You're in front of the brewery.
 
   connection-start-north: >-
     I see a brick building with a sign saying “Truman Brewery“.    
@@ -471,7 +471,7 @@ texts:
     You are inside the main room of the Truman Brewery.
     To the north, a sturdy wooden door leads to what looks like a closet, 
     its handle slightly tarnished from years of use.
-  room-building-short: You’re inside the brewery
+  room-building-short: You’re inside the brewery.
 
   room-office: >-
     You stand in a small, cluttered office. The dim light from a single overhead bulb
@@ -498,7 +498,7 @@ texts:
   room-shop: >-
     You are in a shop, a snug little space with barely more than a counter and a few items on 
     display. A lighter and a sturdy shovel sit prominently, their utility clear.
-  room-shop-short: You're inside the shop
+  room-shop-short: You're inside the Dig & Flame Emporium.
 
   # NPC texts
 
