@@ -5,6 +5,7 @@ import {
     isActionDialog,
     isBaseDialog,
     isChoiceDialog,
+    isConditionDialog,
     NPC,
     YamlDataLoader,
 } from '@katas/katacombs/domain';
@@ -220,7 +221,7 @@ describe('YamlDataLoader', () => {
                 expect(startDialog.choices.length).toBeGreaterThanOrEqual(6);
                 expect(startDialog.exit).toBeFalsy();
             } else {
-                fail('Expected startDialog to be a ChoiceDialog');
+                fail('Expected dialog to be a ChoiceDialog');
             }
         });
 
@@ -231,7 +232,7 @@ describe('YamlDataLoader', () => {
                 expect(startDialog.response).toBe('npc-shopkeeper-what-will-it-be');
                 expect(startDialog.next).toBe('what-will-it-be');
             } else {
-                fail('Expected startDialog to be a BaseDialog');
+                fail('Expected dialog to be a BaseDialog');
             }
         });
 
@@ -240,7 +241,7 @@ describe('YamlDataLoader', () => {
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.exit).toBeTruthy();
             } else {
-                fail('Expected startDialog to be a BaseDialog');
+                fail('Expected dialog to be a BaseDialog');
             }
         });
 
@@ -249,7 +250,7 @@ describe('YamlDataLoader', () => {
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.enabled).toBeTruthy();
             } else {
-                fail('Expected startDialog to be a BaseDialog');
+                fail('Expected dialog to be a BaseDialog');
             }
         });
 
@@ -259,7 +260,7 @@ describe('YamlDataLoader', () => {
                 expect(areYouSeriousDialog.exit).toBeFalsy();
                 expect(areYouSeriousDialog.enabled).toBeFalsy();
             } else {
-                fail('Expected startDialog to be a ActionDialog');
+                fail('Expected dialog to be a ActionDialog');
             }
         });
 
@@ -280,7 +281,21 @@ describe('YamlDataLoader', () => {
                     responses: undefined,
                 });
             } else {
-                fail('Expected startDialog to be a ActionDialog');
+                fail('Expected dialog to be a ActionDialog');
+            }
+        });
+
+        it('should post-condition to the "pay-for-lighter" dialog', () => {
+            const payForLighterDialog = getDialog('pay-for-lighter');
+            if (isConditionDialog(payForLighterDialog)) {
+                expect(payForLighterDialog.postConditions).toHaveLength(1);
+                expect(payForLighterDialog.postConditions?.at(0)).toStrictEqual({
+                    type: 'hasItem',
+                    key: 'coin',
+                    value: '10',
+                });
+            } else {
+                fail('Expected dialog to be a ConditionDialog');
             }
         });
 

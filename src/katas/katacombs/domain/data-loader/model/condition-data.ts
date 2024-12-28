@@ -28,6 +28,16 @@ export function toConditions(conditions: ConditionData[] | undefined) {
                 };
             }
         }
+        if (condition['has-item']) {
+            const [item, count] = condition['has-item'];
+            if (item) {
+                return {
+                    type: 'hasItem',
+                    key: item,
+                    value: count,
+                };
+            }
+        }
 
         return undefined;
     }

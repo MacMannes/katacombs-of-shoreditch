@@ -3,8 +3,10 @@ import {
     ChoiceDialog,
     CommandActionData,
     ConditionData,
+    ConditionDialog,
     Dialog,
     toCommandAction,
+    toConditions,
 } from '@katas/katacombs/domain';
 
 export type DialogData = {
@@ -36,6 +38,9 @@ export function toDialog(dialog: DialogData, npcName?: string): Dialog {
     }
     if (dialog.actions) {
         (result as ActionDialog).actions = dialog.actions?.map((action) => mapAction(action, npcName));
+    }
+    if (dialog['post-conditions']) {
+        (result as ConditionDialog).postConditions = toConditions(dialog['post-conditions']);
     }
 
     return result;

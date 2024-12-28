@@ -320,8 +320,7 @@ npcs:
       - id: pay-for-lighter
         text: Pay 10 coins
         post-conditions:
-          - has-item: coin
-            count: 10
+          - has-item: [ 'coin', '10' ]
         success: buy-lighter-success
         failure: buy-lighter-failure
       - id: buy-lighter-success
@@ -342,8 +341,7 @@ npcs:
       - id: pay-for-shovel
         text: Pay 100 coins
         post-conditions:
-          - has-item: coin
-            count: 100
+          - has-item: [ 'coin', '100' ]
         success: buy-shovel-success
         failure: buy-shovel-failure
       - id: buy-shovel-success

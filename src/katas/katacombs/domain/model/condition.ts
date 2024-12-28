@@ -4,4 +4,4 @@ export type Condition = {
     value: string;
 };
 
-export type ConditionType = 'location' | 'inventory' | 'hasState';
+export type ConditionType = 'location' | 'hasItem' | 'hasState';
