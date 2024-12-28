@@ -294,13 +294,13 @@ describe('YamlDataLoader', () => {
                     key: 'coin',
                     value: '10',
                 });
+                expect(payForLighterDialog.success).toBe('buy-lighter-success');
+                expect(payForLighterDialog.failure).toBe('buy-lighter-failure');
             } else {
                 fail('Expected dialog to be a ConditionDialog');
             }
         });
 
-        //TODO: Test `post-conditions`: success / faiure
-        //TODO: Test `post-conditions`: has-item + count
         //TODO: Test `pre-conditions`
     });
 });

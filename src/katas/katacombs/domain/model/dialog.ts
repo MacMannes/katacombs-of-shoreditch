@@ -24,8 +24,8 @@ export type ChoiceDialog = BaseDialog & {
 export type ConditionDialog = BaseDialog & {
     preConditions?: Condition[];
     postConditions?: Condition[];
-    success: string; // ID of the success dialog
-    failure: string; // ID of the failure dialog
+    success?: string; // ID of the success dialog
+    failure?: string; // ID of the failure dialog
 };
 
 // General dialog type (union of all sub-types)

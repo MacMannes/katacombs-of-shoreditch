@@ -40,7 +40,10 @@ export function toDialog(dialog: DialogData, npcName?: string): Dialog {
         (result as ActionDialog).actions = dialog.actions?.map((action) => mapAction(action, npcName));
     }
     if (dialog['post-conditions']) {
-        (result as ConditionDialog).postConditions = toConditions(dialog['post-conditions']);
+        const conditionDialog = result as ConditionDialog;
+        conditionDialog.postConditions = toConditions(dialog['post-conditions']);
+        conditionDialog.success = dialog.success;
+        conditionDialog.failure = dialog.failure;
     }
 
     return result;
