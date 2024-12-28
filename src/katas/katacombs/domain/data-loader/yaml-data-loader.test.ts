@@ -209,6 +209,13 @@ describe('YamlDataLoader', () => {
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
         });
 
+        it('should add descriptions to the NPC', () => {
+            expect(shopkeeper.description).toStrictEqual({
+                room: 'npc-shopkeeper-description-room',
+                look: 'npc-shopkeeper-description-look',
+            });
+        });
+
         it('should add dialogs to the NPC', () => {
             expect(shopkeeper.greeting).toBe('npc-shopkeeper-welcome');
             expect(shopkeeper.dialogs.length).toBeGreaterThan(10);

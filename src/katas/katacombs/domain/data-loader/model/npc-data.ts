@@ -15,5 +15,6 @@ export function toNPC(name: string, data: NpcData): NPC {
     return new NPC(name, {
         greeting: data.greeting,
         dialogs: data.dialogs.map((dialog) => toDialog(dialog, name)),
+        description: data.description,
     });
 }
