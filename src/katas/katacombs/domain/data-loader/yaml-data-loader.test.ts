@@ -308,7 +308,7 @@ describe('YamlDataLoader', () => {
                 expect(askAboutTreasureIslandDialog.preConditions?.at(0)).toStrictEqual({
                     type: 'hasItem',
                     key: 'book',
-                    value: undefined,
+                    value: '',
                 });
                 expect(askAboutTreasureIslandDialog.success).toBeUndefined();
                 expect(askAboutTreasureIslandDialog.failure).toBeUndefined();

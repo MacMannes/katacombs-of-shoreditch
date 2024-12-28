@@ -35,7 +35,7 @@ export function toConditions(conditions: ConditionData[] | undefined) {
                 return {
                     type: 'hasItem',
                     key: item,
-                    value: count,
+                    value: count ?? '',
                 };
             }
         }
