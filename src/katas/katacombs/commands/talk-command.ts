@@ -17,7 +17,7 @@ export class TalkCommand extends Command {
 
         const welcomeText = this.game.getTextWithAudioFiles(npc.greeting);
 
-        this.ui.displayMessage(welcomeText);
+        await this.ui.displayMessageAsync(welcomeText);
 
         return true;
     }
