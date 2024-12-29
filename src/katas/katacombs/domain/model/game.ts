@@ -176,7 +176,7 @@ export class Game {
         const movableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: false, preferredLength });
         const movableItemsText = this.getConcatenatedTextForItemKeys(movableItemsTextKeys, '\n\n');
 
-        const shouldAddNewLines = movableItemsTextKeys.length > 0 || npcTextKeys > 0;
+        const shouldAddNewLines = movableItemsTextKeys.length > 0 || npcTextKeys.length > 0;
         const optionalNewLines = shouldAddNewLines ? '\n\n' : '';
         const text = `${roomDescriptionText} ${npcText}${immovableItemsText}${optionalNewLines}${movableItemsText}`;
 
