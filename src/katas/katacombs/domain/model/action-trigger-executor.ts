@@ -1,16 +1,18 @@
-import { ActionTrigger, CommandAction, Condition, Game } from '@katas/katacombs/domain';
+import { ActionTrigger, CommandAction, Condition, ConditionVerifier, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { CommandFactory } from '@katas/katacombs/commands';
 import { isDefined } from '@utils/array';
 
 export class ActionTriggerExecutor {
     private readonly commandFactory: CommandFactory;
+    private readonly conditionVerifier: ConditionVerifier;
 
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
         this.commandFactory = new CommandFactory(this.game, this.ui);
+        this.conditionVerifier = new ConditionVerifier(this.game);
     }
 
     public async execute(target: string | undefined, verb: string): Promise<boolean> {
@@ -32,26 +34,10 @@ export class ActionTriggerExecutor {
         if (trigger.verb !== verb) return false;
 
         if (trigger.conditions) {
-            return this.verifyConditions(trigger.conditions);
+            return this.conditionVerifier.verifyConditions(trigger.conditions);
         }
 
         return true;
-    }
-
-    private verifyConditions(conditions: Condition[]): boolean {
-        const checkConditions = conditions.map((condition) => this.verifyCondition(condition));
-        return checkConditions.every((value) => value);
-    }
-
-    private verifyCondition(condition: Condition): boolean {
-        if (condition.type === 'location' && condition.key === 'currentLocation') {
-            return this.game.getCurrentRoom().name === condition.value;
-        }
-        if (condition.type === 'hasState') {
-            return this.game.getCurrentRoom().findItem(condition.key)?.getCurrentState() === condition.value;
-        }
-
-        return false;
     }
 
     private async executeTriggerAction(action: CommandAction) {

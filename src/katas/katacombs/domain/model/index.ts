@@ -19,3 +19,4 @@ export * from './npc';
 export * from './room';
 export * from '../repository/text-repository';
 export * from './condition';
+export * from './condition-verifier';

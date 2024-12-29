@@ -15,6 +15,7 @@
   - [x] Refactoring: Make `Command.execute()` async
   - [x] Call `UserInterface.displayMessageAsync()` for welcome message
   - [x] Display first questions
+  - [ ] Refactoring: extract methods to verify conditions from ActionTriggerExecutor
   - [ ] Don't display message which preConditions are not met
   - [ ] Keep on asking questions until user selects a Dialog with `exit == true`  
 - [ ] Implement NPC Dialogs in UserInterface
