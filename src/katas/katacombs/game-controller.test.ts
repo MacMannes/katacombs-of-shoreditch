@@ -763,5 +763,22 @@ describe('GameController', () => {
                 expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
             );
         });
+
+        it('should only ask enabled questions', async () => {
+            await controller.processCommand('go', 'south');
+            await controller.processCommand('go', 'east');
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({
+                    text:
+                        '\n- Why only two items?\n' +
+                        '- Tell me about the lighter.\n' +
+                        '- What’s so special about the shovel?\n' +
+                        '- I’ll take something.\n' +
+                        '- Never mind, I’ll be on my way.',
+                }),
+            );
+        });
     });
 });

@@ -14,7 +14,8 @@
   - [x] Play welcome message
   - [x] Refactoring: Make `Command.execute()` async
   - [x] Call `UserInterface.displayMessageAsync()` for welcome message
-  - [ ] Display first questions
+  - [x] Display first questions
+  - [ ] Don't display message which preConditions are not met
   - [ ] Keep on asking questions until user selects a Dialog with `exit == true`  
 - [ ] Implement NPC Dialogs in UserInterface
 - [ ] Add Item:Lighter to Shop
