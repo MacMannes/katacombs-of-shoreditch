@@ -31,7 +31,7 @@ export class GameController {
             const userInput = (await this.ui.getUserInput()) ?? '';
             const processedInput = this.preprocessor.process(userInput);
             const [verb, target] = processedInput.split(' ');
-            this.processCommand(verb, target);
+            await this.processCommand(verb, target);
         }
 
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
@@ -45,8 +45,8 @@ export class GameController {
         return this.game.getItems();
     }
 
-    public processCommand(verb: string, target?: string) {
-        const didExecuteTrigger = this.actionTriggerExecutor.execute(target, verb);
+    public async processCommand(verb: string, target?: string) {
+        const didExecuteTrigger = await this.actionTriggerExecutor.execute(target, verb);
         if (didExecuteTrigger) return;
 
         const command = this.commandFactory.create(verb, target);
@@ -55,7 +55,7 @@ export class GameController {
             return;
         }
 
-        const result = command.execute([target ?? ''], { caller: 'commandProcessor' });
+        const result = await command.execute([target ?? ''], { caller: 'commandProcessor' });
         if (command instanceof QuitCommand) {
             this.isPlaying = !result;
         }
@@ -65,8 +65,8 @@ export class GameController {
         return this.game.findItem(itemName);
     }
 
-    public displayInventory(): boolean {
-        return new InventoryCommand(this.game, this.ui).execute([]);
+    public async displayInventory(): Promise<boolean> {
+        return await new InventoryCommand(this.game, this.ui).execute([]);
     }
 
     private displayCurrentRoom(preferredLength?: 'short' | 'long') {

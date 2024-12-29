@@ -6,7 +6,7 @@ export class RevealCommand extends Command {
         super({ isInternal: false });
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const target = params[0];
 
         const item = this.game.getCurrentRoom().findItem(target, true);

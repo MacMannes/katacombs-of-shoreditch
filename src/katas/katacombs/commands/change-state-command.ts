@@ -6,7 +6,7 @@ export class ChangeStateCommand extends Command {
         super({ isInternal: true });
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const [target, value] = params;
         if (!target || !value) return false;
 

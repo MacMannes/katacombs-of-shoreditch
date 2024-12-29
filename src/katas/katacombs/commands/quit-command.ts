@@ -7,7 +7,7 @@ export class QuitCommand extends Command {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         //TODO: Ask if user really wants to quit
         return true;
     }

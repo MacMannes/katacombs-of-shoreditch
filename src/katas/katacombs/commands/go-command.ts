@@ -10,7 +10,7 @@ export class GoCommand extends Command {
         super();
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const to = params[0];
 
         const newRoom = this.game.go(to);

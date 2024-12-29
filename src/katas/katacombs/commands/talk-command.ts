@@ -10,7 +10,7 @@ export class TalkCommand extends Command {
         super();
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const npcName = params[0];
         const npc = this.game.getCurrentRoom().findNpc(npcName);
         if (!npc) return false;

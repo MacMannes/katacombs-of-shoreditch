@@ -10,7 +10,7 @@ export class TakeCommand extends Command {
         super();
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const itemName = params[0];
 
         const result = this.game.take(itemName);

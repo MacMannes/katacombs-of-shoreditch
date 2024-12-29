@@ -10,7 +10,7 @@ export class SpeakCommand extends Command {
         super({ isInternal: true });
     }
 
-    execute(params: string[]): boolean {
+    async execute(params: string[]): Promise<boolean> {
         const textKey = params[0];
 
         this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));

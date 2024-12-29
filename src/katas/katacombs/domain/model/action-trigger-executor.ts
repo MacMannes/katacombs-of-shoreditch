@@ -13,16 +13,17 @@ export class ActionTriggerExecutor {
         this.commandFactory = new CommandFactory(this.game, this.ui);
     }
 
-    public execute(target: string | undefined, verb: string): boolean {
-        let executedTrigger = false;
-
+    public async execute(target: string | undefined, verb: string): Promise<boolean> {
         const targetItem = target ? this.game.findItem(target) : undefined;
-        targetItem?.triggers
-            ?.filter((trigger) => this.shouldExecuteTrigger(trigger, verb))
-            ?.forEach((trigger) => {
-                trigger.actions.forEach((action) => this.executeTriggerAction(action));
-                executedTrigger = true;
-            });
+        const triggers = targetItem?.triggers?.filter((trigger) => this.shouldExecuteTrigger(trigger, verb));
+        if (!triggers) return false;
+
+        const actions = triggers.flatMap((trigger) => trigger.actions);
+        let executedTrigger = false;
+        for await (const action of actions) {
+            await this.executeTriggerAction(action);
+            executedTrigger = true;
+        }
 
         return executedTrigger;
     }
@@ -53,12 +54,12 @@ export class ActionTriggerExecutor {
         return false;
     }
 
-    private executeTriggerAction(action: CommandAction) {
+    private async executeTriggerAction(action: CommandAction) {
         const command = this.commandFactory.create(action.command, action.argument);
         if (!command) return false;
 
         const params = [action.argument, action.parameter].filter(isDefined);
-        const result = command.execute(params, { caller: 'triggerAction' });
+        const result = await command.execute(params, { caller: 'triggerAction' });
 
         this.displayActionResultMessage(action, result);
     }

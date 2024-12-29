@@ -12,7 +12,7 @@
 - [ ] Add texts for shopkeeper
 - [ ] Implement NPC Dialog logic
   - [x] Play welcome message
-  - [ ] Refactoring: Make `Command.execute()` async
+  - [x] Refactoring: Make `Command.execute()` async
   - [ ] Call `UserInterface.displayMessageAsync()` for welcome message
   - [ ] Display first questions
   - [ ] Keep on asking questions until user selects a Dialog with `exit == true`  

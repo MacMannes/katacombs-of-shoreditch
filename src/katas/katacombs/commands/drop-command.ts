@@ -10,7 +10,7 @@ export class DropCommand extends Command {
         super();
     }
 
-    execute(params: string[], options?: CommandExecuteOptions): boolean {
+    async execute(params: string[], options?: CommandExecuteOptions): Promise<boolean> {
         const itemName = params?.at(0);
         if (!itemName) return false;
 
