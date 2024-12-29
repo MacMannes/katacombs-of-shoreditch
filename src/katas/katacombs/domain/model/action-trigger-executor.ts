@@ -1,4 +1,4 @@
-import { ActionTrigger, CommandAction, Condition, ConditionVerifier, Game } from '@katas/katacombs/domain';
+import { ActionTrigger, CommandAction, ConditionVerifier, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { CommandFactory } from '@katas/katacombs/commands';
 import { isDefined } from '@utils/array';

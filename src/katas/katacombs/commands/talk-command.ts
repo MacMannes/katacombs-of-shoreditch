@@ -1,14 +1,24 @@
 import { Command } from '@katas/katacombs/commands';
-import { Game, isChoiceDialog, TextWithAudioFiles } from '@katas/katacombs/domain';
+import {
+    ConditionVerifier,
+    Dialog,
+    Game,
+    isChoiceDialog,
+    isConditionDialog,
+    TextWithAudioFiles,
+} from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
 
 export class TalkCommand extends Command {
+    private readonly conditionVerifier: ConditionVerifier;
+
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
         super();
+        this.conditionVerifier = new ConditionVerifier(this.game);
     }
 
     async execute(params: string[]): Promise<boolean> {
@@ -31,13 +41,23 @@ export class TalkCommand extends Command {
             const dialogsFromChoice = dialog.choices
                 .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
                 .filter(isDefined)
-                .filter((dialog) => dialog.enabled);
+                .filter((dialog) => this.canShowDialog(dialog));
             const questionsFromChoice = dialogsFromChoice.map((dialog) => dialog.text).filter(isDefined);
             questions.push(...questionsFromChoice);
         }
         const text = '\n- ' + questions.join('\n- ');
 
         this.ui.displayMessage(new TextWithAudioFiles(text, []));
+
+        return true;
+    }
+
+    private canShowDialog(dialog: Dialog) {
+        if (!dialog.enabled) return false;
+
+        if (isConditionDialog(dialog) && dialog.preConditions) {
+            return this.conditionVerifier.verifyConditions(dialog.preConditions);
+        }
 
         return true;
     }
