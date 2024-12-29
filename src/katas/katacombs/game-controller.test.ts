@@ -752,4 +752,16 @@ describe('GameController', () => {
             );
         });
     });
+
+    describe('Talking to NPCs', () => {
+        it('should say the greeting of the NPC when the user talks to it', () => {
+            controller.processCommand('go', 'south');
+            controller.processCommand('go', 'east');
+            controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
+            );
+        });
+    });
 });

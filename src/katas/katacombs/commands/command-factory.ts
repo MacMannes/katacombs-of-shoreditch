@@ -11,6 +11,7 @@ import { DropCommand } from '@katas/katacombs/commands/drop-command';
 import { InventoryCommand } from '@katas/katacombs/commands/inventory-command';
 import { TakeCommand } from '@katas/katacombs/commands/take-command';
 import { SpeakCommand } from '@katas/katacombs/commands/speak-command';
+import { TalkCommand } from '@katas/katacombs/commands/talk-command';
 
 export class CommandFactory {
     constructor(
@@ -46,6 +47,8 @@ export class CommandFactory {
                 return new ChangeStateCommand(this.game);
             case 'speak':
                 return new SpeakCommand(this.game, this.ui);
+            case 'talk':
+                return new TalkCommand(this.game, this.ui);
             case 'quit':
                 return new QuitCommand(this.ui);
             default:

@@ -6,6 +6,7 @@ export * from './hide-command';
 export * from './look-command';
 export * from './quit-command';
 export * from './take-command';
+export * from './talk-command';
 export * from './speak-command';
 export * from './reveal-command';
 export * from './inventory-command';
