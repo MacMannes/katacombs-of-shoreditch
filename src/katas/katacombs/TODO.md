@@ -7,7 +7,7 @@
 - [x] Add Room:Shop 
 - [x] Add descriptions to Shopkeeper 
 - [x] Add Shopkeeper NPC to Shop
-- [ ] Implement describing NPCs in room
+- [x] Implement describing NPCs in room
 - [x] Implement looking at NPC
 - [ ] Add texts for shopkeeper
 - [ ] Implement NPC Dialog logic
