@@ -7,7 +7,7 @@ import {
     isConditionDialog,
     TextWithAudioFiles,
 } from '@katas/katacombs/domain';
-import { UserInterface } from '@katas/katacombs/ui';
+import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
 
 export class TalkCommand extends Command {
@@ -38,18 +38,16 @@ export class TalkCommand extends Command {
             questions.push(dialog.text);
         }
         if (isChoiceDialog(dialog)) {
-            const dialogsFromChoice = dialog.choices
+            const choices = dialog.choices
                 .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
                 .filter(isDefined)
-                .filter((dialog) => this.canShowDialog(dialog));
-            const questionsFromChoice = dialogsFromChoice.map((dialog) => dialog.text).filter(isDefined);
-            questions.push(...questionsFromChoice);
+                .filter((dialog) => this.canShowDialog(dialog))
+                .map((dialog) => this.toChoice(dialog));
+
+            await this.ui.getUserChoice(choices);
         }
-        const text = '\n- ' + questions.join('\n- ');
 
-        this.ui.displayMessage(new TextWithAudioFiles(text, []));
-
-        return true;
+        return false;
     }
 
     private canShowDialog(dialog: Dialog) {
@@ -60,5 +58,9 @@ export class TalkCommand extends Command {
         }
 
         return true;
+    }
+
+    private toChoice(dialog: Dialog): Choice {
+        return { value: dialog.id, text: dialog.text ?? dialog.id };
     }
 }

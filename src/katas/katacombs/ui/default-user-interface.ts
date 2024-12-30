@@ -1,5 +1,5 @@
 import { Room, TextWithAudioFiles } from '../domain';
-import { AudioPlayer, UserInterface } from '@katas/katacombs/ui';
+import { AudioPlayer, Choice, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
@@ -63,6 +63,13 @@ export class DefaultUserInterface implements UserInterface {
         const userInput = await this.rl.question(chalk.greenBright.bold('❯ '));
         console.log('');
         return userInput;
+    }
+
+    public async getUserChoice(options: Choice[]): Promise<string | undefined> {
+        const text = '\n- ' + options.map((it) => it.text).join('\n- ');
+
+        this.displayText(text);
+        return '';
     }
 
     private setWindowTitle(title: string) {

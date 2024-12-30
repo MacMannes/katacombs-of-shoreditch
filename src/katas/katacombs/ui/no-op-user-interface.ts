@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { UserInterface } from '@katas/katacombs/ui';
+import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { Room, TextWithAudioFiles } from '@katas/katacombs/domain';
 
 export class NoOpUserInterface implements UserInterface {
@@ -20,6 +20,10 @@ export class NoOpUserInterface implements UserInterface {
     }
 
     public async getUserInput(): Promise<string | undefined> {
+        return '';
+    }
+
+    public async getUserChoice(options: Choice[]): Promise<string | undefined> {
         return '';
     }
 }

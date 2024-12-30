@@ -769,16 +769,28 @@ describe('GameController', () => {
             await controller.processCommand('go', 'east');
             await controller.processCommand('talk', 'shopkeeper');
 
-            expect(ui.displayMessage).toHaveBeenLastCalledWith(
-                expect.objectContaining({
-                    text:
-                        '\n- Why only two items?\n' +
-                        '- Tell me about the lighter.\n' +
-                        '- What’s so special about the shovel?\n' +
-                        '- I’ll take something.\n' +
-                        '- Never mind, I’ll be on my way.',
-                }),
-            );
+            expect(ui.getUserChoice).toHaveBeenLastCalledWith([
+                {
+                    text: 'Why only two items?',
+                    value: 'why-only-two-items',
+                },
+                {
+                    text: 'Tell me about the lighter.',
+                    value: 'ask-about-lighter',
+                },
+                {
+                    text: 'What’s so special about the shovel?',
+                    value: 'ask-about-shovel',
+                },
+                {
+                    text: 'I’ll take something.',
+                    value: 'buy-something',
+                },
+                {
+                    text: 'Never mind, I’ll be on my way.',
+                    value: 'bye',
+                },
+            ]);
         });
     });
 });
