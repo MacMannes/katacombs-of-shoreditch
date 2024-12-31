@@ -26,9 +26,8 @@ export class TalkCommand extends Command {
         const npc = this.game.getCurrentRoom().findNpc(npcName);
         if (!npc) return false;
 
-        const welcomeText = this.game.getTextWithAudioFiles(npc.greeting);
-
-        await this.ui.displayMessage(welcomeText);
+        const greeting = this.game.getTextWithAudioFiles(npc.greeting);
+        this.ui.displayMessage(greeting);
 
         const dialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
         if (!dialog) return false;
