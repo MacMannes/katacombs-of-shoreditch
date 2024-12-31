@@ -18,13 +18,15 @@
   - [x] Refactoring: extract methods to verify conditions from ActionTriggerExecutor
   - [x] Don't display message which preConditions are not met
   - [x] Keep on asking questions until user selects a Dialog with `exit == true`
-  - [ ] Implement handling actions
+  - [x] Implement handling enabled/disabled actions
   - [ ] Implement handling next dialog
+  - [ ] Implement handling post-conditions
+  - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface
   - [ ] Refactor `getUserChoice()` to use arrow keys
-- [ ] Add Item:Lighter to Shop
-- [ ] Add Item:Shovel to Shop
-- [ ] Implement Selling Lighter and Shovel (Actions: Take / Add to inventory)
+  - [ ] Add Item:Lighter to Shop
+  - [ ] Add Item:Shovel to Shop
+  - [ ] Implement Selling Lighter and Shovel (Actions: Take / Add to inventory)
 
 ## Things to improve
 

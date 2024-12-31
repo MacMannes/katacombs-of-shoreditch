@@ -23,7 +23,7 @@ export class ActionTriggerExecutor {
         const actions = triggers.flatMap((trigger) => trigger.actions);
         let executedTrigger = false;
         for await (const action of actions) {
-            await this.executeTriggerAction(action);
+            await this.executeCommandAction(action);
             executedTrigger = true;
         }
 
@@ -40,7 +40,7 @@ export class ActionTriggerExecutor {
         return true;
     }
 
-    private async executeTriggerAction(action: CommandAction) {
+    public async executeCommandAction(action: CommandAction) {
         const command = this.commandFactory.create(action.command, action.argument);
         if (!command) return false;
 

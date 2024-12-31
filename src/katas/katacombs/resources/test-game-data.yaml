@@ -322,7 +322,7 @@ npcs:
         actions:
           - command: disable-dialog
             argument: ask-about-treasure-island
-          - command: enabled-dialog
+          - command: enable-dialog
             argument: what-happened-to-sailor
 
       - id: what-happened-to-sailor

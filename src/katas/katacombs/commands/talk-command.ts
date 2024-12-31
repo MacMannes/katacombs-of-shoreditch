@@ -1,11 +1,20 @@
 import { Command } from '@katas/katacombs/commands';
-import { ConditionVerifier, Dialog, Game, isChoiceDialog, isConditionDialog } from '@katas/katacombs/domain';
+import {
+    ActionTriggerExecutor,
+    ConditionVerifier,
+    Dialog,
+    Game,
+    isActionDialog,
+    isChoiceDialog,
+    isConditionDialog,
+} from '@katas/katacombs/domain';
 import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
 import chalk from 'chalk';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;
+    private readonly actionTriggerExecutor: ActionTriggerExecutor;
 
     constructor(
         private readonly game: Game,
@@ -13,6 +22,7 @@ export class TalkCommand extends Command {
     ) {
         super();
         this.conditionVerifier = new ConditionVerifier(this.game);
+        this.actionTriggerExecutor = new ActionTriggerExecutor(this.game, this.ui);
     }
 
     async execute(params: string[]): Promise<boolean> {
@@ -39,8 +49,25 @@ export class TalkCommand extends Command {
                 const answer = await this.ui.getUserChoice(choices);
                 const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
                 if (answerDialog) {
-                    console.log(chalk.greenBright.bold('❯ ') + answerDialog?.text + `\n`);
                     exitDialog = answerDialog.exit;
+
+                    // TODO: extract to UserInterface
+                    console.log(chalk.greenBright.bold('❯ ') + answerDialog?.text + `\n`);
+
+                    if (isActionDialog(answerDialog)) {
+                        for await (const action of answerDialog.actions) {
+                            if (
+                                (action.command === 'enableDialog' || action.command === 'disableDialog') &&
+                                action.argument === npc.name
+                            ) {
+                                const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+                                if (dialogToChange) {
+                                    dialogToChange.enabled = action.command === 'enableDialog';
+                                }
+                            }
+                            // await this.actionTriggerExecutor.executeCommandAction(action);
+                        }
+                    }
                 }
             }
         }

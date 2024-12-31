@@ -1,5 +1,7 @@
+// noinspection DuplicatedCode
+
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { GameFactory, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
+import { GameFactory, NPC, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs';
@@ -754,12 +756,16 @@ describe('GameController', () => {
     });
 
     describe('Talking to NPCs', () => {
-        it('should say the greeting of the NPC when the user talks to it', async () => {
-            ui.getUserChoice.mockResolvedValueOnce('bye');
+        let shopkeeper: NPC | undefined = undefined;
 
+        beforeEach(async () => {
             await controller.processCommand('go', 'south');
             await controller.processCommand('go', 'east');
-            await controller.processCommand('talk', 'shopkeeper');
+            shopkeeper = controller.getCurrentRoom().findNpc('shopkeeper');
+        });
+
+        it('should say the greeting of the NPC when the user talks to it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('bye');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
@@ -769,8 +775,6 @@ describe('GameController', () => {
         it('should only ask enabled questions', async () => {
             ui.getUserChoice.mockResolvedValueOnce('bye');
 
-            await controller.processCommand('go', 'south');
-            await controller.processCommand('go', 'east');
             await controller.processCommand('talk', 'shopkeeper');
 
             expect(ui.getUserChoice).toHaveBeenLastCalledWith([
@@ -795,6 +799,16 @@ describe('GameController', () => {
                     value: 'bye',
                 },
             ]);
+        });
+
+        it('should disable the dialog "why-only-two-items" after asking it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('why-only-two-items');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            const dialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'why-only-two-items');
+            expect(dialog?.enabled).toBeFalsy();
         });
     });
 });
