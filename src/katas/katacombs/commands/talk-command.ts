@@ -1,14 +1,8 @@
 import { Command } from '@katas/katacombs/commands';
-import {
-    ConditionVerifier,
-    Dialog,
-    Game,
-    isChoiceDialog,
-    isConditionDialog,
-    TextWithAudioFiles,
-} from '@katas/katacombs/domain';
+import { ConditionVerifier, Dialog, Game, isChoiceDialog, isConditionDialog } from '@katas/katacombs/domain';
 import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
+import chalk from 'chalk';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;
@@ -29,18 +23,26 @@ export class TalkCommand extends Command {
         const greeting = this.game.getTextWithAudioFiles(npc.greeting);
         this.ui.displayMessage(greeting);
 
-        const dialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
-        if (!dialog) return false;
+        const rootDialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
+        if (!rootDialog) return false;
 
-        if (isChoiceDialog(dialog)) {
-            const choices = dialog.choices
-                .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
-                .filter(isDefined)
-                .filter((dialog) => this.canShowDialog(dialog))
-                .map((dialog) => this.toChoice(dialog));
+        const currentDialog: Dialog = rootDialog;
+        let exitDialog = false;
+        while (!exitDialog) {
+            if (isChoiceDialog(currentDialog)) {
+                const choices = currentDialog.choices
+                    .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
+                    .filter(isDefined)
+                    .filter((dialog) => this.canShowDialog(dialog))
+                    .map((dialog) => this.toChoice(dialog));
 
-            const answer = await this.ui.getUserChoice(choices);
-            console.error(answer);
+                const answer = await this.ui.getUserChoice(choices);
+                const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
+                if (answerDialog) {
+                    console.log(chalk.greenBright.bold('❯ ') + answerDialog?.text + `\n`);
+                    exitDialog = answerDialog.exit;
+                }
+            }
         }
 
         return false;

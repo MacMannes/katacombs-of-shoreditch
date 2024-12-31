@@ -755,6 +755,8 @@ describe('GameController', () => {
 
     describe('Talking to NPCs', () => {
         it('should say the greeting of the NPC when the user talks to it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
             await controller.processCommand('go', 'south');
             await controller.processCommand('go', 'east');
             await controller.processCommand('talk', 'shopkeeper');
@@ -765,6 +767,8 @@ describe('GameController', () => {
         });
 
         it('should only ask enabled questions', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
             await controller.processCommand('go', 'south');
             await controller.processCommand('go', 'east');
             await controller.processCommand('talk', 'shopkeeper');
