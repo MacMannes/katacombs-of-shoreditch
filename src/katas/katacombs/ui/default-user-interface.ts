@@ -65,11 +65,20 @@ export class DefaultUserInterface implements UserInterface {
         return userInput;
     }
 
-    public async getUserChoice(options: Choice[]): Promise<string | undefined> {
-        const text = '\n- ' + options.map((it) => it.text).join('\n- ');
+    public async getUserChoice(options: Choice[]): Promise<string> {
+        let answer = '';
+        while (answer === '') {
+            const text = options.map((it, index) => `(${index + 1}) ${it.text}`).join('\n');
+            this.displayText(text);
 
-        this.displayText(text);
-        return '';
+            const input = (await this.getUserInput()) ?? '';
+            const index = parseInt(input) - 1;
+            if (index >= 0 && index < options.length) {
+                answer = options[index].value;
+            }
+        }
+
+        return answer;
     }
 
     private setWindowTitle(title: string) {

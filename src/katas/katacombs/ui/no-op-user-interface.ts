@@ -23,7 +23,7 @@ export class NoOpUserInterface implements UserInterface {
         return '';
     }
 
-    public async getUserChoice(options: Choice[]): Promise<string | undefined> {
+    public async getUserChoice(options: Choice[]): Promise<string> {
         return '';
     }
 }

@@ -759,7 +759,7 @@ describe('GameController', () => {
             await controller.processCommand('go', 'east');
             await controller.processCommand('talk', 'shopkeeper');
 
-            expect(ui.displayMessageAsync).toHaveBeenLastCalledWith(
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
             );
         });

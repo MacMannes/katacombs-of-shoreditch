@@ -28,15 +28,11 @@ export class TalkCommand extends Command {
 
         const welcomeText = this.game.getTextWithAudioFiles(npc.greeting);
 
-        await this.ui.displayMessageAsync(welcomeText);
+        await this.ui.displayMessage(welcomeText);
 
         const dialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
         if (!dialog) return false;
 
-        const questions: string[] = [];
-        if (dialog.text) {
-            questions.push(dialog.text);
-        }
         if (isChoiceDialog(dialog)) {
             const choices = dialog.choices
                 .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
@@ -44,7 +40,8 @@ export class TalkCommand extends Command {
                 .filter((dialog) => this.canShowDialog(dialog))
                 .map((dialog) => this.toChoice(dialog));
 
-            await this.ui.getUserChoice(choices);
+            const answer = await this.ui.getUserChoice(choices);
+            console.error(answer);
         }
 
         return false;
