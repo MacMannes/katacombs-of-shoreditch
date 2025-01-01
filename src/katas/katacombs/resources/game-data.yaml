@@ -516,6 +516,63 @@ texts:
   npc-shopkeeper-welcome: >-
     Welcome, traveler, to Dig & Flame Emporium! Don’t let the name fool you — I only sell two 
     items. But they’re the best two items you’ll ever find!
+  npc-shopkeeper-only-two-items: >-
+    Ah, a fine question! Well, it all started when the Great Item Shortage swept through this town. 
+    Bandits looted my stock, a cursed storm destroyed my warehouse, and my last supplier ran off 
+    to join a traveling circus. All I could salvage was this shovel and this lighter. And by the stars, I intend to make them famous!
+  npc-shopkeeper-lighter-description: >-
+    Ah, the lighter! Compact, reliable, and stylish. It’s the Torch of Eternity™. 
+    Legend has it, it can ignite any fire — even in the rain! Adventurers love it. Plus, it’s 
+    perfect for campfires, lanterns, or sending ominous smoke signals to your enemies. A bargain at just 10 coins!"
+  npc-shopkeeper-shovel-description: >-
+    Oh, this isn’t just any shovel. It’s the Gold-Digger Supreme™! Forged by master blacksmiths and enchanted by the 
+    Hermit of Hillside. It can dig through anything — stone, sand, even your regrets. Perfect for 
+    treasure hunters or anyone who needs to bury some… secrets. Yours for only 100 coins!
+  npc-shopkeeper-rumor-treasure-island: >-
+    Ah, Treasure Island… the stuff of legends! They say it’s a paradise of gold and gems beyond imagination. 
+    But finding it? That’s another story. Few ever do, and fewer still come back alive.
+  npc-shopkeeper-no-adventurer: >-
+    Me? Oh, I’m no adventurer! No, no. I prefer staying right here, where it’s safe. 
+    Though I did have a customer once — a scrappy young sailor. Swore up and down he had the key to Treasure Island. 
+    Poor lad disappeared soon after. Left behind a crumpled map and an empty bottle of grog.
+  npc-shopkeeper-sailor: >-
+    Vanished without a trace. Some say he found the island and chose to stay. Others say the island… took him. 
+    And then there’s the skeptics who think he drank one bottle too many and fell into the sea. 
+    Either way, his tale is all I’ve got left to tell. That, and this lighter. Speaking of which… still 10 coins!
+  npc-shopkeeper-yoho: >-
+    Ah, ‘yoho,’ you say? You’ll find that’s a word known by many a sailor… but few understand its power. 
+    It’s not just for singing sea shanties, I assure you. That word... it can take you places. 
+    But don’t just speak it anywhere. Wait for the right moment, and it’ll work wonders.
+  npc-shopkeeper-what-will-it-be: >-
+    Excellent choice! Now, will it be the Gold-Digger Supreme™ for 100 coins, or the Torch of Eternity™ for 10 coins? 
+    Don’t let indecision burn a hole in your pocket!
+  npc-shopkeeper-bye: >-
+    Well, it’s been a pleasure, truly. If you find yourself with more coins — or in need of wisdom beyond your means — 
+    you know where to find me.
+  npc-shopkeeper-serious: >-
+    Serious as a dragon’s roar, my friend! This isn’t some common gardener’s tool; it’s an investment! Besides, 
+    with treasure-hunting season in full swing, every digger in town wants one. You don’t want to be the only one 
+    without a shovel, do you?"
+  npc-shopkeeper-suit-yourself: >-
+    Suit yourself, wanderer, but remember this: opportunities, like lighters, are hard to come by. 
+    Don’t dig yourself into a hole without the right tools!
+  npc-shopkeeper-10-coins: >-
+    Splendid choice! That’ll be 10 coins.
+  npc-shopkeeper-100-coins: >-
+    Splendid choice! That’ll be 100 coins.
+  npc-shopkeeper-sells-lighter: >-
+    Ah, a sound investment, my friend! Here’s your Torch of Eternity™. 
+    Careful now—it’s not just a lighter; it’s a spark for adventure!
+  npc-shopkeeper-sells-shovel: >-
+    Pleasure doing business with you! Remember, if you dig up something valuable, don’t forget your old pal here 
+    at the shop, eh? Now off you go! — dig up a fortune or two!
+  npc-shopkeeper-short-on-coins-10: >-
+    Oh dear… looks like your purse is feeling a little light. No flame for you until you come back with 10 coins. 
+    Unless you’ve got something shiny to barter? No? Well, no hard feelings, traveler. 
+    Times are tough for all of us, eh?
+  npc-shopkeeper-short-on-coins-100: >-
+    A shovel, eh? Fine taste you’ve got there! But... let’s see... oh dear, seems you’re a bit short on coins. 
+    Only got enough for a handful of dirt at this rate! Come back when you’ve struck it rich, yeah?
 
   # Item and action descriptions
 

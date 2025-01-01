@@ -9,7 +9,7 @@
 - [x] Add Shopkeeper NPC to Shop
 - [x] Implement describing NPCs in room
 - [x] Implement looking at NPC
-- [ ] Add texts for shopkeeper
+- [x] Add texts for shopkeeper
 - [ ] Implement NPC Dialog logic
   - [x] Play welcome message
   - [x] Refactoring: Make `Command.execute()` async
