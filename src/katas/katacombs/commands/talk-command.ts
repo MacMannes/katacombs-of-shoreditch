@@ -90,6 +90,11 @@ export class TalkCommand extends Command {
                 } else {
                     currentDialog = rootDialog;
                 }
+            } else if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
+                const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
+                const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
+                const nextDialog = npc.dialogs.find((dialog) => dialog.id === nextDialogId);
+                currentDialog = nextDialog ?? rootDialog;
             } else {
                 currentDialog = rootDialog;
             }

@@ -873,7 +873,7 @@ describe('GameController', () => {
             );
         });
 
-        it.skip('should answer with the failure response dialog when the the user does not have enough money', async () => {
+        it('should answer with the failure response dialog when the the user does not have enough money', async () => {
             ui.getUserChoice.mockResolvedValueOnce('buy-something');
             ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
             ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
