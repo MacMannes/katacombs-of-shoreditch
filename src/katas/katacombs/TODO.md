@@ -21,7 +21,7 @@
   - [x] Implement handling enabled/disabled actions
   - [x] Implement handling next dialog
   - [x] Implement having the NPC respond to the chosen dialog
-  - [ ] When the ChoiceDialog has a response, make sure it is spoken
+  - [x] When the ChoiceDialog has a response, make sure it is spoken
   - [ ] Implement handling post-conditions
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface

@@ -859,5 +859,17 @@ describe('GameController', () => {
                 expect.objectContaining({ text: expect.stringContaining('Ah, a fine question! Well, it all started') }),
             );
         });
+
+        it('should answer with the response expected response when the Dialog is a ChoiceDialog', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('buy-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('That’ll be 100 coins.') }),
+            );
+        });
     });
 });

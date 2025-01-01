@@ -39,6 +39,11 @@ export class TalkCommand extends Command {
         let currentDialog: Dialog = rootDialog;
         let exitDialog = false;
         while (!exitDialog) {
+            if (currentDialog.response) {
+                const response = this.game.getTextWithAudioFiles(currentDialog.response);
+                this.ui.displayMessage(response);
+            }
+
             if (isChoiceDialog(currentDialog)) {
                 const choices = currentDialog.choices
                     .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
