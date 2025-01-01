@@ -10,6 +10,7 @@
 - [x] Implement describing NPCs in room
 - [x] Implement looking at NPC
 - [x] Add texts for shopkeeper
+- [ ] Implement overriding properties like `visible` for items
 - [ ] Implement NPC Dialog logic
   - [x] Play welcome message
   - [x] Refactoring: Make `Command.execute()` async
