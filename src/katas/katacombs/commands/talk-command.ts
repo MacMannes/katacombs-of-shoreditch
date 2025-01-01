@@ -64,32 +64,34 @@ export class TalkCommand extends Command {
                         this.ui.displayMessage(response);
                     }
 
-                    if (isActionDialog(answerDialog)) {
-                        for await (const action of answerDialog.actions) {
-                            if (
-                                (action.command === 'enableDialog' || action.command === 'disableDialog') &&
-                                action.argument === npc.name
-                            ) {
-                                const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
-                                if (dialogToChange) {
-                                    dialogToChange.enabled = action.command === 'enableDialog';
-                                }
-                            }
-                            // await this.actionTriggerExecutor.executeCommandAction(action);
-                        }
-                    }
-
-                    if (answerDialog.next) {
-                        const nextDialog = npc.dialogs.find((dialog) => dialog.id === answerDialog.next);
-                        if (nextDialog) {
-                            currentDialog = nextDialog;
-                        } else {
-                            currentDialog = rootDialog;
-                        }
-                    } else {
-                        currentDialog = rootDialog;
-                    }
+                    currentDialog = answerDialog;
                 }
+            }
+
+            if (isActionDialog(currentDialog)) {
+                for await (const action of currentDialog.actions) {
+                    if (
+                        (action.command === 'enableDialog' || action.command === 'disableDialog') &&
+                        action.argument === npc.name
+                    ) {
+                        const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+                        if (dialogToChange) {
+                            dialogToChange.enabled = action.command === 'enableDialog';
+                        }
+                    }
+                    // await this.actionTriggerExecutor.executeCommandAction(action);
+                }
+            }
+
+            if (currentDialog.next) {
+                const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
+                if (nextDialog) {
+                    currentDialog = nextDialog;
+                } else {
+                    currentDialog = rootDialog;
+                }
+            } else {
+                currentDialog = rootDialog;
             }
         }
 

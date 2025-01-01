@@ -23,6 +23,8 @@
   - [x] Implement having the NPC respond to the chosen dialog
   - [x] When the ChoiceDialog has a response, make sure it is spoken
   - [ ] Implement handling post-conditions
+    - [ ] Failure
+    - [ ] Success
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface
   - [ ] Refactor `getUserChoice()` to use arrow keys
