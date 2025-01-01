@@ -390,7 +390,7 @@ npcs:
         choices:
           - choose-lighter
           - choose-shovel
-          - choose-nothing
+          - never-mind
       - id: choose-lighter
         text: I’ll take the lighter.
         next: buy-lighter
@@ -508,7 +508,7 @@ texts:
     His bright shirt and straw hat match his warm, inviting smile.
   shopkeeper-description-look: >-
     The shopkeeper’s sun-kissed skin and twinkling eyes exude charm. 
-    His voice flows like a tropical breeze, and his calloused hands hint at a life of labor. 
+    His voice flows like a tropical breeze, and his calloused hands hint at a life of labor.
   npc-shopkeeper-welcome: >-
     Welcome, traveler, to Dig & Flame Emporium! Don’t let the name fool you — I only sell two 
     items. But they’re the best two items you’ll ever find!

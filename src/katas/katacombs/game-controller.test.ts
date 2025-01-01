@@ -767,6 +767,8 @@ describe('GameController', () => {
         it('should say the greeting of the NPC when the user talks to it', async () => {
             ui.getUserChoice.mockResolvedValueOnce('bye');
 
+            await controller.processCommand('talk', 'shopkeeper');
+
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
             );
@@ -809,6 +811,29 @@ describe('GameController', () => {
 
             const dialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'why-only-two-items');
             expect(dialog?.enabled).toBeFalsy();
+        });
+
+        it('should ask which item to buy when the user selects dialog "buy-something"', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('never-mind');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.getUserChoice).toHaveBeenNthCalledWith(2, [
+                {
+                    text: 'I’ll take the lighter.',
+                    value: 'choose-lighter',
+                },
+                {
+                    text: 'I’ll take the shovel.',
+                    value: 'choose-shovel',
+                },
+                {
+                    text: 'Never mind.',
+                    value: 'never-mind',
+                },
+            ]);
         });
     });
 });

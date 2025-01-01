@@ -19,7 +19,7 @@
   - [x] Don't display message which preConditions are not met
   - [x] Keep on asking questions until user selects a Dialog with `exit == true`
   - [x] Implement handling enabled/disabled actions
-  - [ ] Implement handling next dialog
+  - [x] Implement handling next dialog
   - [ ] Implement handling post-conditions
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface

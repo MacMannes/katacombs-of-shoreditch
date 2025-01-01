@@ -361,7 +361,7 @@ npcs:
         choices:
           - choose-lighter
           - choose-shovel
-          - choose-nothing
+          - never-mind
       - id: choose-lighter
         text: I’ll take the lighter.
         next: buy-lighter

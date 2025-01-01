@@ -36,7 +36,7 @@ export class TalkCommand extends Command {
         const rootDialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
         if (!rootDialog) return false;
 
-        const currentDialog: Dialog = rootDialog;
+        let currentDialog: Dialog = rootDialog;
         let exitDialog = false;
         while (!exitDialog) {
             if (isChoiceDialog(currentDialog)) {
@@ -67,6 +67,17 @@ export class TalkCommand extends Command {
                             }
                             // await this.actionTriggerExecutor.executeCommandAction(action);
                         }
+                    }
+
+                    if (answerDialog.next) {
+                        const nextDialog = npc.dialogs.find((dialog) => dialog.id === answerDialog.next);
+                        if (nextDialog) {
+                            currentDialog = nextDialog;
+                        } else {
+                            currentDialog = rootDialog;
+                        }
+                    } else {
+                        currentDialog = rootDialog;
                     }
                 }
             }
