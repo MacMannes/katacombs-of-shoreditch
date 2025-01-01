@@ -98,6 +98,16 @@ describe('YamlDataLoader', () => {
             expect(coins?.getDescription('room')).toContain('item-coin-room-few');
         });
 
+        it('should override the `visible` property for the coins in the shop ', async () => {
+            const rooms = realm.rooms;
+            const shop = rooms.find((room) => room.name === 'shop');
+            expect(shop).toBeDefined();
+
+            const coins = shop?.findItem('coin');
+            expect(coins).toBeDefined();
+            expect(coins?.isVisible()).toBeTruthy();
+        });
+
         it('should add states to the items', async () => {
             const rooms = realm.rooms;
             const building = rooms.find((room) => room.name === 'building');
