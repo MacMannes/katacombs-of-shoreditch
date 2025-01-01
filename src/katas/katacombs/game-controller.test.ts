@@ -813,6 +813,19 @@ describe('GameController', () => {
             expect(dialog?.enabled).toBeFalsy();
         });
 
+        it('should disable "ask-about-shovel" and enable "are-you-serious" after asking about the shovekl', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('ask-about-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            const askAboutShovelDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'ask-about-shovel');
+            expect(askAboutShovelDialog?.enabled).toBeFalsy();
+
+            const areYouSeriousDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'are-you-serious');
+            expect(areYouSeriousDialog?.enabled).toBeTruthy();
+        });
+
         it('should ask which item to buy when the user selects dialog "buy-something"', async () => {
             ui.getUserChoice.mockResolvedValueOnce('buy-something');
             ui.getUserChoice.mockResolvedValueOnce('never-mind');

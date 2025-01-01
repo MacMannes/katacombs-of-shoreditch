@@ -305,6 +305,8 @@ npcs:
         actions:
           - command: enable-dialog
             argument: are-you-serious
+          - command: disable-dialog
+            argument: ask-about-shovel
 
       - id: ask-about-treasure-island
         text: Do you know anything about Treasure Island?
@@ -356,6 +358,8 @@ npcs:
         actions:
           - command: disable-dialog
             argument: are-you-serious
+          - command: enable-dialog
+            argument: ask-about-shovel
 
       - id: what-will-it-be
         choices:
