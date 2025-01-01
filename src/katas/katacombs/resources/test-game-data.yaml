@@ -60,6 +60,9 @@ rooms:
       - direction: west
         to: square
         words: [ outside ]
+    items:
+      - name: coin
+        count: 125
     npcs:
       - shopkeeper
 
