@@ -848,5 +848,16 @@ describe('GameController', () => {
                 },
             ]);
         });
+
+        it('should answer with the response expected response', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('why-only-two-items');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Ah, a fine question! Well, it all started') }),
+            );
+        });
     });
 });

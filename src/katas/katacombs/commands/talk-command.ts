@@ -54,6 +54,11 @@ export class TalkCommand extends Command {
                     // TODO: extract to UserInterface
                     console.log(chalk.greenBright.bold('❯ ') + answerDialog?.text + `\n`);
 
+                    if (answerDialog.response) {
+                        const response = this.game.getTextWithAudioFiles(answerDialog.response);
+                        this.ui.displayMessage(response);
+                    }
+
                     if (isActionDialog(answerDialog)) {
                         for await (const action of answerDialog.actions) {
                             if (

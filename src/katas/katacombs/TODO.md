@@ -20,7 +20,8 @@
   - [x] Keep on asking questions until user selects a Dialog with `exit == true`
   - [x] Implement handling enabled/disabled actions
   - [x] Implement handling next dialog
-  - [ ] Implement having the NPC respond to the chosen dialog
+  - [x] Implement having the NPC respond to the chosen dialog
+  - [ ] When the ChoiceDialog has a response, make sure it is spoken
   - [ ] Implement handling post-conditions
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface
