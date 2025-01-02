@@ -76,7 +76,7 @@ export class TalkCommand extends Command {
                             dialogToChange.enabled = action.command === 'enableDialog';
                         }
                     }
-                    // await this.actionTriggerExecutor.executeCommandAction(action);
+                    await this.actionTriggerExecutor.executeCommandAction(action);
                 }
             }
 

@@ -436,6 +436,10 @@ npcs:
             argument: ask-about-shovel
           - command: disable-dialog
             argument: choose-shovel
+          - command: reveal
+            argument: shovel
+          - command: take
+            argument: shovel
       - id: buy-shovel-failure
         response: npc-shopkeeper-short-on-coins-100
 

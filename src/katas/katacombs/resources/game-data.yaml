@@ -443,6 +443,10 @@ npcs:
             argument: ask-about-lighter
           - command: disable-dialog
             argument: choose-lighter
+          - command: reveal
+            argument: lighter
+          - command: take
+            argument: lighter
       - id: buy-lighter-failure
         response: npc-shopkeeper-short-on-coins-10
 
@@ -464,6 +468,10 @@ npcs:
             argument: ask-about-shovel
           - command: disable-dialog
             argument: choose-shovel
+          - command: reveal
+            argument: shovel
+          - command: take
+            argument: shovel
       - id: buy-shovel-failure
         response: npc-shopkeeper-short-on-coins-100
 
@@ -697,7 +705,7 @@ texts:
     Their sheer number hints at untold adventures and hidden riches.
 
   ## Lighter
-  item-lighter-inventory:  The Torch of Eternity™—compact and trusty.
+  item-lighter-inventory:  The Torch of Eternity™ — compact and trusty.
   item-lighter-room: There's a lighter here
   item-lighter-look: >-
     The Torch of Eternity™ is a well-crafted flip lighter, bearing signs of use but oozing reliability. 

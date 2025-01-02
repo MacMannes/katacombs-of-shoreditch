@@ -905,5 +905,17 @@ describe('GameController', () => {
                 }),
             );
         });
+
+        it('should put the shovel in the inventory after buying it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('take', 'coins');
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(controller.getInventory().find((item) => item.name === 'shovel')).toBeDefined();
+        });
     });
 });
