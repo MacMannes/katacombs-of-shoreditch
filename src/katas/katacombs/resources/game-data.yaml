@@ -91,6 +91,8 @@ rooms:
       - name: coin
         count: 125
         visible: true
+      - name: lighter
+      - name: shovel
     npcs:
       - shopkeeper
 
@@ -298,6 +300,19 @@ items:
         actions:
           - command: look
             argument: note
+
+  - name: lighter
+    visible: false
+    description:
+      inventory: item-lighter-inventory
+      room: item-lighter-room
+      look: item-lighter-look
+  - name: shovel
+    visible: false
+    description:
+      inventory: item-shovel-inventory
+      room: item-shovel-room
+      look: item-shovel-look
 
 #---------------------
 # NPCs
@@ -680,6 +695,20 @@ texts:
   item-coin-look-bounty: >-
     A shimmering bounty of coins, enough to fill a chest and the dreams of any pirate. 
     Their sheer number hints at untold adventures and hidden riches.
+
+  ## Lighter
+  item-lighter-inventory:  The Torch of Eternity™—compact and trusty.
+  item-lighter-room: There's a lighter here
+  item-lighter-look: >-
+    The Torch of Eternity™ is a well-crafted flip lighter, bearing signs of use but oozing reliability. 
+    Its flame is said to defy the elements.
+
+  ## Shovel
+  item-shovel-inventory: The Gold-Digger Supreme™ — a treasure hunter’s tool
+  item-shovel-room: There's a shovel here
+  item-shovel-look: >-
+    The Gold-Digger Supreme™ is a robust shovel with a weathered blade and splintered handle. 
+    It carries an aura of legend, as though it has unearthed secrets untold.
 
   ## Lantern
   item-lantern-inventory: A brass lantern

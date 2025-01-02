@@ -29,8 +29,8 @@
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface
   - [ ] Refactor `getUserChoice()` to use arrow keys
-  - [ ] Add Item:Lighter to Shop
-  - [ ] Add Item:Shovel to Shop
+  - [x] Add Item:Lighter to Shop
+  - [x] Add Item:Shovel to Shop
   - [ ] Implement Selling Lighter and Shovel (Actions: Take / Add to inventory)
 
 ## Things to improve
