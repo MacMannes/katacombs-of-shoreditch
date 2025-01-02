@@ -75,6 +75,7 @@ export class DefaultUserInterface implements UserInterface {
             const index = parseInt(input) - 1;
             if (index >= 0 && index < options.length) {
                 answer = options[index].value;
+                console.log(chalk.greenBright.bold('❯ ') + options[index].text + `\n`);
             }
         }
 
