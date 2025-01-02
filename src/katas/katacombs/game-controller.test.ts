@@ -906,6 +906,24 @@ describe('GameController', () => {
             );
         });
 
+        it('should answer with the success response dialog when the the user does not have enough money', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('take', 'coins');
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'Ah, a sound investment, my friend! Here’s your Torch of Eternity™.',
+                    ),
+                }),
+            );
+        });
+
         it('should put the shovel in the inventory after buying it', async () => {
             ui.getUserChoice.mockResolvedValueOnce('buy-something');
             ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
@@ -916,6 +934,22 @@ describe('GameController', () => {
             await controller.processCommand('talk', 'shopkeeper');
 
             expect(controller.getInventory().find((item) => item.name === 'shovel')).toBeDefined();
+        });
+
+        it('should not say "OK" after taking the bought item', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('take', 'coins');
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('OK.'),
+                }),
+            );
         });
     });
 });
