@@ -288,7 +288,7 @@ describe('YamlDataLoader', () => {
         it('should add actions to the "buy-lighter-success" dialog', () => {
             const buyLighterSuccess = getDialog('buy-lighter-success');
             if (isActionDialog(buyLighterSuccess)) {
-                expect(buyLighterSuccess.actions).toHaveLength(2);
+                expect(buyLighterSuccess.actions).toHaveLength(4);
                 expect(buyLighterSuccess.actions[0]).toStrictEqual({
                     command: 'disableDialog',
                     argument: 'shopkeeper',
