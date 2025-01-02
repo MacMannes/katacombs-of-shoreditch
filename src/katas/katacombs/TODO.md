@@ -31,7 +31,9 @@
   - [ ] Refactor `getUserChoice()` to use arrow keys
   - [x] Add Item:Lighter to Shop
   - [x] Add Item:Shovel to Shop
-  - [ ] Implement Selling Lighter and Shovel (Actions: Take / Add to inventory)
+  - [ ] Implement Selling Lighter and Shovel 
+    - [x] Actions: Take / Add to inventory
+    - [ ] Reduce coins by price of item
 
 ## Things to improve
 
