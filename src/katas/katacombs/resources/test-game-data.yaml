@@ -415,6 +415,10 @@ npcs:
             argument: ask-about-lighter
           - command: disable-dialog
             argument: choose-lighter
+          - command: reveal
+            argument: lighter
+          - command: take
+            argument: lighter
       - id: buy-lighter-failure
         response: npc-shopkeeper-short-on-coins-10
 

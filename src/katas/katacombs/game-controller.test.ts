@@ -937,12 +937,14 @@ describe('GameController', () => {
         });
 
         it('should not say "OK" after taking the bought item', async () => {
+            await controller.processCommand('take', 'coins');
+            vi.resetAllMocks();
+
             ui.getUserChoice.mockResolvedValueOnce('buy-something');
             ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
             ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
             ui.getUserChoice.mockResolvedValueOnce('bye');
 
-            await controller.processCommand('take', 'coins');
             await controller.processCommand('talk', 'shopkeeper');
 
             expect(ui.displayMessage).not.toHaveBeenCalledWith(
