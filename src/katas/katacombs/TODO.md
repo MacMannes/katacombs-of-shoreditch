@@ -34,6 +34,7 @@
   - [ ] Implement Selling Lighter and Shovel 
     - [x] Actions: Take / Add to inventory
     - [ ] Reduce coins by price of item
+  - [ ] Refactor TalkCommand using clean code principles
 
 ## Things to improve
 
