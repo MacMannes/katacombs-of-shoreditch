@@ -183,6 +183,7 @@ items:
 
   - name: coin
     type: countable-item
+    words: [ coins ]
     description:
       - count: 1
         inventory: item-coin-inventory-single

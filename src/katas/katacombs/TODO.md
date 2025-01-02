@@ -23,8 +23,8 @@
   - [x] Implement handling next dialog
   - [x] Implement having the NPC respond to the chosen dialog
   - [x] When the ChoiceDialog has a response, make sure it is spoken
-  - [ ] Implement handling post-conditions
-    - [ ] Failure
+  - [x] Implement handling post-conditions
+    - [x] Failure
     - [x] Success
   - [ ] add ShowUserChoice to UserInterface
   - [x] Implement NPC Dialogs in UserInterface

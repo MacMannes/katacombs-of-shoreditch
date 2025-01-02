@@ -1,4 +1,4 @@
-import { Condition, Game } from '@katas/katacombs/domain';
+import { Condition, CountableItem, Game } from '@katas/katacombs/domain';
 
 export class ConditionVerifier {
     constructor(private readonly game: Game) {}
@@ -13,7 +13,18 @@ export class ConditionVerifier {
             return this.game.getCurrentRoom().name === condition.value;
         }
         if (condition.type === 'hasState') {
-            return this.game.getCurrentRoom().findItem(condition.key)?.getCurrentState() === condition.value;
+            return this.game.findItem(condition.key)?.getCurrentState() === condition.value;
+        }
+        if (condition.type === 'hasItem') {
+            const item = this.game.findItemInInventory(condition.key);
+            if (!item) return false;
+
+            if (item instanceof CountableItem && condition.value) {
+                const count = parseInt(condition.value);
+                if (item.getCount() < count) return false;
+            }
+
+            return true;
         }
 
         return false;

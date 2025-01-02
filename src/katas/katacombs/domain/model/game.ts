@@ -86,7 +86,11 @@ export class Game {
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.currentRoom.findItem(itemName) ?? this.itemRepository.findItem(itemName);
+        return this.currentRoom.findItem(itemName) ?? this.findItemInInventory(itemName);
+    }
+
+    public findItemInInventory(itemName: string): Item | undefined {
+        return this.itemRepository.findItem(itemName);
     }
 
     public look(at: string): TextWithAudioFiles {
