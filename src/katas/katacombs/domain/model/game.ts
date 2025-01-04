@@ -73,6 +73,14 @@ export class Game {
         return true;
     }
 
+    public removeItemFromInventory(itemName: string): boolean {
+        const item = this.itemRepository.findItem(itemName);
+        if (!item) return false;
+
+        this.itemRepository.removeItem(item);
+        return true;
+    }
+
     private mergeWithItemFromRoom(item: CountableItem) {
         const itemInRoom = this.currentRoom.findItem(item.name);
         if (itemInRoom && itemInRoom instanceof CountableItem) {

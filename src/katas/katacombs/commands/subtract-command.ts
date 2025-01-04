@@ -15,6 +15,13 @@ export class SubtractCommand extends Command {
         const item = this.game.findItem(target);
         if (!(item instanceof CountableItem)) return false;
 
-        return item.subtractCount(amount);
+        const result = item.subtractCount(amount);
+        if (!result) return result;
+
+        if (item.getCount() == 0) {
+            this.game.removeItemFromInventory(item.name);
+        }
+
+        return result;
     }
 }

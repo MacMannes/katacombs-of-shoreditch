@@ -971,5 +971,26 @@ describe('GameController', () => {
 
             expect((coins as CountableItem).getCount()).toBe(numberOfCoins - 100);
         });
+
+        it('should remove the coins from inventory when the user has paid everything they had', async () => {
+            await controller.processCommand('take', 'coins');
+            vi.resetAllMocks();
+
+            let coins = controller.getInventory().find((item) => item.name === 'coin');
+            expect(coins).toBeDefined();
+
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            coins = controller.getInventory().find((item) => item.name === 'coin');
+            expect(coins).toBeUndefined();
+        });
     });
 });

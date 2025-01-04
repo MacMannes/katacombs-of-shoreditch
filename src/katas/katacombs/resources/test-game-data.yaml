@@ -62,7 +62,7 @@ rooms:
         words: [ outside ]
     items:
       - name: coin
-        count: 125
+        count: 110
         visible: true
       - name: lighter
       - name: shovel
