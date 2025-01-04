@@ -447,6 +447,10 @@ npcs:
             argument: lighter
           - command: take
             argument: lighter
+          - command: subtract
+            argument: coins
+            parameter: '10'
+
       - id: buy-lighter-failure
         response: npc-shopkeeper-short-on-coins-10
 
@@ -472,6 +476,10 @@ npcs:
             argument: shovel
           - command: take
             argument: shovel
+          - command: subtract
+            argument: coins
+            parameter: '100'
+
       - id: buy-shovel-failure
         response: npc-shopkeeper-short-on-coins-100
 

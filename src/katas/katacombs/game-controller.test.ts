@@ -2,7 +2,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { GameFactory, NPC, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
-import { createMockedObject } from '@utils/test';
+import { createMockedObject, expectToBeDefined } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs';
 import { fileURLToPath } from 'node:url';
@@ -952,6 +952,24 @@ describe('GameController', () => {
                     text: expect.stringContaining('OK.'),
                 }),
             );
+        });
+
+        it("should reduce the user's coins by 100 after buying the shovel", async () => {
+            await controller.processCommand('take', 'coins');
+            vi.resetAllMocks();
+
+            const coins = controller.getInventory().find((item) => item.name === 'coin');
+            expectToBeDefined(coins);
+            const numberOfCoins = (coins as CountableItem).getCount();
+
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect((coins as CountableItem).getCount()).toBe(numberOfCoins - 100);
         });
     });
 });

@@ -8,6 +8,7 @@ export * from './quit-command';
 export * from './take-command';
 export * from './talk-command';
 export * from './speak-command';
+export * from './subtract-command';
 export * from './reveal-command';
 export * from './inventory-command';
 export * from './change-state-command';

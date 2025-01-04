@@ -36,6 +36,13 @@ export class CountableItem extends Item {
         this.count += amount;
     }
 
+    public subtractCount(amount: number): boolean {
+        if (this.count < amount) return false;
+
+        this.count -= amount;
+        return true;
+    }
+
     public setCount(amount: number) {
         this.count = amount;
     }
