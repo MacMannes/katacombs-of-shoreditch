@@ -26,7 +26,7 @@
   - [x] Implement handling post-conditions
     - [x] Failure
     - [x] Success
-  - [ ] add ShowUserChoice to UserInterface
+  - [x] Add showing UserChoice to DefaultUserInterface
   - [x] Implement NPC Dialogs in UserInterface
   - [ ] Refactor `getUserChoice()` to use arrow keys
   - [x] Add Item:Lighter to Shop
