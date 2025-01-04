@@ -31,11 +31,12 @@
   - [ ] Refactor `getUserChoice()` to use arrow keys
   - [x] Add Item:Lighter to Shop
   - [x] Add Item:Shovel to Shop
-  - [ ] Implement Selling Lighter and Shovel 
+  - [x] Implement Selling Lighter and Shovel 
     - [x] Actions: Take / Add to inventory
-    - [ ] Reduce coins by price of item
-  - [ ] Refactor TalkCommand using clean code principles
+    - [x] Reduce coins by price of item
+  - [ ] Say "You try to start a conversation, but it’s lonely out here." when talking to an NPC that isn't there 
 
 ## Things to improve
 
 - [x] Use Command Pattern in GameController
+- [ ] Refactor TalkCommand using clean code principles
