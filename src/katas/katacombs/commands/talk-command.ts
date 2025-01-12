@@ -50,10 +50,7 @@ export class TalkCommand extends Command {
         let currentDialog: Dialog = dialog;
         let exitDialog = false;
         while (!exitDialog) {
-            if (currentDialog.response) {
-                const response = this.game.getTextWithAudioFiles(currentDialog.response);
-                this.ui.displayMessage(response);
-            }
+            this.handleResponse(currentDialog);
 
             if (isChoiceDialog(currentDialog)) {
                 const choices = currentDialog.choices
@@ -79,6 +76,13 @@ export class TalkCommand extends Command {
             await this.handleDialogActions(currentDialog, npc);
 
             currentDialog = this.determineNextDialog(dialog, npc, currentDialog);
+        }
+    }
+
+    private handleResponse(currentDialog: Dialog) {
+        if (currentDialog.response) {
+            const response = this.game.getTextWithAudioFiles(currentDialog.response);
+            this.ui.displayMessage(response);
         }
     }
 
