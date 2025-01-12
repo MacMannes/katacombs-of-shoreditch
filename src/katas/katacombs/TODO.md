@@ -39,4 +39,4 @@
 ## Things to improve
 
 - [x] Use Command Pattern in GameController
-- [ ] Refactor TalkCommand using clean code principles
+- [x] Refactor TalkCommand using clean code principles
