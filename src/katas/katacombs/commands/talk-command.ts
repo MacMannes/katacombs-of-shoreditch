@@ -70,16 +70,12 @@ export class TalkCommand extends Command {
 
         const answer = await this.ui.getUserChoice(choices);
         const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
-        if (answerDialog) {
-            if (answerDialog.response) {
-                const response = this.game.getTextWithAudioFiles(answerDialog.response);
-                this.ui.displayMessage(response);
-            }
-
-            dialog = answerDialog;
+        if (answerDialog?.response) {
+            const response = this.game.getTextWithAudioFiles(answerDialog.response);
+            this.ui.displayMessage(response);
         }
 
-        return dialog;
+        return answerDialog ?? dialog;
     }
 
     private getChoices(dialog: ChoiceDialog, npc: NPC) {
