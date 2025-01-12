@@ -7,6 +7,7 @@ import {
     isActionDialog,
     isChoiceDialog,
     isConditionDialog,
+    NPC,
 } from '@katas/katacombs/domain';
 import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
@@ -39,7 +40,13 @@ export class TalkCommand extends Command {
         const rootDialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
         if (!rootDialog) return false;
 
-        let currentDialog: Dialog = rootDialog;
+        await this.handleDialog(rootDialog, npc);
+
+        return true;
+    }
+
+    private async handleDialog(dialog: Dialog, npc: NPC) {
+        let currentDialog: Dialog = dialog;
         let exitDialog = false;
         while (!exitDialog) {
             if (currentDialog.response) {
@@ -89,19 +96,17 @@ export class TalkCommand extends Command {
                 if (nextDialog) {
                     currentDialog = nextDialog;
                 } else {
-                    currentDialog = rootDialog;
+                    currentDialog = dialog;
                 }
             } else if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
                 const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
                 const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
                 const nextDialog = npc.dialogs.find((dialog) => dialog.id === nextDialogId);
-                currentDialog = nextDialog ?? rootDialog;
+                currentDialog = nextDialog ?? dialog;
             } else {
-                currentDialog = rootDialog;
+                currentDialog = dialog;
             }
         }
-
-        return false;
     }
 
     private canShowDialog(dialog: Dialog) {
