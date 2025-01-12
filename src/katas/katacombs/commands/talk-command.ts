@@ -121,12 +121,16 @@ export class TalkCommand extends Command {
 
     private async handleDialogAction(action: CommandAction, npc: NPC) {
         if ((action.command === 'enableDialog' || action.command === 'disableDialog') && action.argument === npc.name) {
-            const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
-            if (dialogToChange) {
-                dialogToChange.enabled = action.command === 'enableDialog';
-            }
+            this.enableOrDisableDialog(npc, action);
         } else {
             await this.actionTriggerExecutor.executeCommandAction(action);
+        }
+    }
+
+    private enableOrDisableDialog(npc: NPC, action: CommandAction) {
+        const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+        if (dialogToChange) {
+            dialogToChange.enabled = action.command === 'enableDialog';
         }
     }
 
