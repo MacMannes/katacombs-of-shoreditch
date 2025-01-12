@@ -50,30 +50,36 @@ export class TalkCommand extends Command {
     private async handleDialog(dialog: Dialog, npc: NPC) {
         let currentDialog: Dialog = dialog;
         let exitDialog = false;
+
         while (!exitDialog) {
             this.handleResponse(currentDialog);
 
-            if (isChoiceDialog(currentDialog)) {
-                const choices = this.getChoices(currentDialog, npc);
-
-                const answer = await this.ui.getUserChoice(choices);
-                const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
-                if (answerDialog) {
-                    exitDialog = answerDialog.exit;
-
-                    if (answerDialog.response) {
-                        const response = this.game.getTextWithAudioFiles(answerDialog.response);
-                        this.ui.displayMessage(response);
-                    }
-
-                    currentDialog = answerDialog;
-                }
-            }
+            currentDialog = await this.handleChoice(currentDialog, npc);
+            exitDialog = currentDialog.exit; // Should we exit the Dialog?
 
             await this.handleDialogActions(currentDialog, npc);
 
             currentDialog = this.determineNextDialog(dialog, npc, currentDialog);
         }
+    }
+
+    private async handleChoice(currentDialog: Dialog, npc: NPC): Promise<Dialog> {
+        if (isChoiceDialog(currentDialog)) {
+            const choices = this.getChoices(currentDialog, npc);
+
+            const answer = await this.ui.getUserChoice(choices);
+            const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
+            if (answerDialog) {
+                if (answerDialog.response) {
+                    const response = this.game.getTextWithAudioFiles(answerDialog.response);
+                    this.ui.displayMessage(response);
+                }
+
+                currentDialog = answerDialog;
+            }
+        }
+
+        return currentDialog;
     }
 
     private getChoices(dialog: ChoiceDialog, npc: NPC) {
