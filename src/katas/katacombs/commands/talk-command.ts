@@ -1,6 +1,7 @@
 import { Command } from '@katas/katacombs/commands';
 import {
     ActionTriggerExecutor,
+    ChoiceDialog,
     CommandAction,
     ConditionVerifier,
     Dialog,
@@ -53,11 +54,7 @@ export class TalkCommand extends Command {
             this.handleResponse(currentDialog);
 
             if (isChoiceDialog(currentDialog)) {
-                const choices = currentDialog.choices
-                    .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
-                    .filter(isDefined)
-                    .filter((dialog) => this.canShowDialog(dialog))
-                    .map((dialog) => this.toChoice(dialog));
+                const choices = this.getChoices(currentDialog, npc);
 
                 const answer = await this.ui.getUserChoice(choices);
                 const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
@@ -77,6 +74,14 @@ export class TalkCommand extends Command {
 
             currentDialog = this.determineNextDialog(dialog, npc, currentDialog);
         }
+    }
+
+    private getChoices(dialog: ChoiceDialog, npc: NPC) {
+        return dialog.choices
+            .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
+            .filter(isDefined)
+            .filter((dialog) => this.canShowDialog(dialog))
+            .map((dialog) => this.toChoice(dialog));
     }
 
     private handleResponse(currentDialog: Dialog) {
