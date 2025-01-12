@@ -75,21 +75,7 @@ export class TalkCommand extends Command {
                 }
             }
 
-            if (isActionDialog(currentDialog)) {
-                for await (const action of currentDialog.actions) {
-                    if (
-                        (action.command === 'enableDialog' || action.command === 'disableDialog') &&
-                        action.argument === npc.name
-                    ) {
-                        const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
-                        if (dialogToChange) {
-                            dialogToChange.enabled = action.command === 'enableDialog';
-                        }
-                    } else {
-                        await this.actionTriggerExecutor.executeCommandAction(action);
-                    }
-                }
-            }
+            await this.handleDialogActions(currentDialog, npc);
 
             if (currentDialog.next) {
                 const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
@@ -105,6 +91,24 @@ export class TalkCommand extends Command {
                 currentDialog = nextDialog ?? dialog;
             } else {
                 currentDialog = dialog;
+            }
+        }
+    }
+
+    private async handleDialogActions(dialog: Dialog, npc: NPC) {
+        if (isActionDialog(dialog)) {
+            for await (const action of dialog.actions) {
+                if (
+                    (action.command === 'enableDialog' || action.command === 'disableDialog') &&
+                    action.argument === npc.name
+                ) {
+                    const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+                    if (dialogToChange) {
+                        dialogToChange.enabled = action.command === 'enableDialog';
+                    }
+                } else {
+                    await this.actionTriggerExecutor.executeCommandAction(action);
+                }
             }
         }
     }
