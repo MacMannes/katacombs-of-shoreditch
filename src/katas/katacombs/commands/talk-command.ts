@@ -10,7 +10,6 @@ import {
 } from '@katas/katacombs/domain';
 import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { isDefined } from '@utils/array';
-import chalk from 'chalk';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;
@@ -28,7 +27,11 @@ export class TalkCommand extends Command {
     async execute(params: string[]): Promise<boolean> {
         const npcName = params[0];
         const npc = this.game.getCurrentRoom().findNpc(npcName);
-        if (!npc) return false;
+        if (!npc) {
+            const response = this.game.getTextWithAudioFiles('msg-lonely-out-here');
+            this.ui.displayMessage(response);
+            return false;
+        }
 
         const greeting = this.game.getTextWithAudioFiles(npc.greeting);
         this.ui.displayMessage(greeting);

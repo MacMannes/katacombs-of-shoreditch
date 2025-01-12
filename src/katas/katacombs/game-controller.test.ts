@@ -774,6 +774,15 @@ describe('GameController', () => {
             );
         });
 
+        it('should say "It’s lonely out here" when there is no NPC to talk to', async () => {
+            await controller.processCommand('go', 'west');
+            await controller.processCommand('talk', 'shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('it’s lonely out here') }),
+            );
+        });
+
         it('should only ask enabled questions', async () => {
             ui.getUserChoice.mockResolvedValueOnce('bye');
 

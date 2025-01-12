@@ -34,7 +34,7 @@
   - [x] Implement Selling Lighter and Shovel 
     - [x] Actions: Take / Add to inventory
     - [x] Reduce coins by price of item
-  - [ ] Say "You try to start a conversation, but it’s lonely out here." when talking to an NPC that isn't there 
+  - [x] Say "You try to start a conversation, but it’s lonely out here." when talking to an NPC that isn't there 
 
 ## Things to improve
 
