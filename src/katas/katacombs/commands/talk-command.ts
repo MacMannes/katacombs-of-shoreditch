@@ -78,21 +78,25 @@ export class TalkCommand extends Command {
 
             await this.handleDialogActions(currentDialog, npc);
 
-            if (currentDialog.next) {
-                const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
-                if (nextDialog) {
-                    currentDialog = nextDialog;
-                } else {
-                    currentDialog = dialog;
-                }
-            } else if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
-                const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
-                const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
-                const nextDialog = npc.dialogs.find((dialog) => dialog.id === nextDialogId);
-                currentDialog = nextDialog ?? dialog;
+            currentDialog = this.determineNextDialog(dialog, npc, currentDialog);
+        }
+    }
+
+    private determineNextDialog(rootDialog: Dialog, npc: NPC, currentDialog: Dialog) {
+        if (currentDialog.next) {
+            const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
+            if (nextDialog) {
+                return nextDialog;
             } else {
-                currentDialog = dialog;
+                return rootDialog;
             }
+        } else if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
+            const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
+            const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
+            const nextDialog = npc.dialogs.find((dialog) => dialog.id === nextDialogId);
+            return nextDialog ?? rootDialog;
+        } else {
+            return rootDialog;
         }
     }
 
