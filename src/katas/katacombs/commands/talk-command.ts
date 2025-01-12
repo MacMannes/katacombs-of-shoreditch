@@ -96,11 +96,7 @@ export class TalkCommand extends Command {
     private determineNextDialog(rootDialog: Dialog, npc: NPC, currentDialog: Dialog) {
         if (currentDialog.next) {
             const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
-            if (nextDialog) {
-                return nextDialog;
-            } else {
-                return rootDialog;
-            }
+            return nextDialog ?? rootDialog;
         } else if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
             const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
             const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
