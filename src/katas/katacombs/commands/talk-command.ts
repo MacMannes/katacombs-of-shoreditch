@@ -1,6 +1,7 @@
 import { Command } from '@katas/katacombs/commands';
 import {
     ActionTriggerExecutor,
+    CommandAction,
     ConditionVerifier,
     Dialog,
     Game,
@@ -98,18 +99,19 @@ export class TalkCommand extends Command {
     private async handleDialogActions(dialog: Dialog, npc: NPC) {
         if (isActionDialog(dialog)) {
             for await (const action of dialog.actions) {
-                if (
-                    (action.command === 'enableDialog' || action.command === 'disableDialog') &&
-                    action.argument === npc.name
-                ) {
-                    const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
-                    if (dialogToChange) {
-                        dialogToChange.enabled = action.command === 'enableDialog';
-                    }
-                } else {
-                    await this.actionTriggerExecutor.executeCommandAction(action);
-                }
+                await this.handleDialogAction(action, npc);
             }
+        }
+    }
+
+    private async handleDialogAction(action: CommandAction, npc: NPC) {
+        if ((action.command === 'enableDialog' || action.command === 'disableDialog') && action.argument === npc.name) {
+            const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+            if (dialogToChange) {
+                dialogToChange.enabled = action.command === 'enableDialog';
+            }
+        } else {
+            await this.actionTriggerExecutor.executeCommandAction(action);
         }
     }
 
