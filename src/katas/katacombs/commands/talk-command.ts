@@ -63,23 +63,23 @@ export class TalkCommand extends Command {
         }
     }
 
-    private async handleChoice(currentDialog: Dialog, npc: NPC): Promise<Dialog> {
-        if (isChoiceDialog(currentDialog)) {
-            const choices = this.getChoices(currentDialog, npc);
+    private async handleChoice(dialog: Dialog, npc: NPC): Promise<Dialog> {
+        if (!isChoiceDialog(dialog)) return dialog;
 
-            const answer = await this.ui.getUserChoice(choices);
-            const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
-            if (answerDialog) {
-                if (answerDialog.response) {
-                    const response = this.game.getTextWithAudioFiles(answerDialog.response);
-                    this.ui.displayMessage(response);
-                }
+        const choices = this.getChoices(dialog, npc);
 
-                currentDialog = answerDialog;
+        const answer = await this.ui.getUserChoice(choices);
+        const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
+        if (answerDialog) {
+            if (answerDialog.response) {
+                const response = this.game.getTextWithAudioFiles(answerDialog.response);
+                this.ui.displayMessage(response);
             }
+
+            dialog = answerDialog;
         }
 
-        return currentDialog;
+        return dialog;
     }
 
     private getChoices(dialog: ChoiceDialog, npc: NPC) {
