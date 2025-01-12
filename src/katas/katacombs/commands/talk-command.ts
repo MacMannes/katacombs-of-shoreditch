@@ -39,7 +39,7 @@ export class TalkCommand extends Command {
         const greeting = this.game.getTextWithAudioFiles(npc.greeting);
         this.ui.displayMessage(greeting);
 
-        const rootDialog = npc.dialogs.find((dialog) => (dialog.id = 'start'));
+        const rootDialog = this.findDialog(npc, 'start');
         if (!rootDialog) return false;
 
         await this.handleDialog(rootDialog, npc);
@@ -69,7 +69,7 @@ export class TalkCommand extends Command {
         const choices = this.getChoices(dialog, npc);
 
         const answer = await this.ui.getUserChoice(choices);
-        const answerDialog = npc.dialogs.find((dialog) => dialog.id === answer);
+        const answerDialog = this.findDialog(npc, answer);
         if (answerDialog?.response) {
             const response = this.game.getTextWithAudioFiles(answerDialog.response);
             this.ui.displayMessage(response);
@@ -80,7 +80,7 @@ export class TalkCommand extends Command {
 
     private getChoices(dialog: ChoiceDialog, npc: NPC) {
         return dialog.choices
-            .map((choice) => npc.dialogs.find((dialog) => dialog.id === choice))
+            .map((choice) => this.findDialog(npc, choice))
             .filter(isDefined)
             .filter((dialog) => this.canShowDialog(dialog))
             .map((dialog) => this.toChoice(dialog));
@@ -95,18 +95,22 @@ export class TalkCommand extends Command {
 
     private determineNextDialog(rootDialog: Dialog, npc: NPC, currentDialog: Dialog) {
         if (currentDialog.next) {
-            const nextDialog = npc.dialogs.find((dialog) => dialog.id === currentDialog.next);
+            const nextDialog = this.findDialog(npc, currentDialog.next);
             return nextDialog ?? rootDialog;
         }
 
         if (isConditionDialog(currentDialog) && currentDialog.postConditions) {
             const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
             const nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
-            const nextDialog = npc.dialogs.find((dialog) => dialog.id === nextDialogId);
+            const nextDialog = this.findDialog(npc, nextDialogId);
             return nextDialog ?? rootDialog;
         }
 
         return rootDialog;
+    }
+
+    private findDialog(npc: NPC, dialogId?: string) {
+        return npc.dialogs.find((dialog) => dialog.id === dialogId);
     }
 
     private async handleDialogActions(dialog: Dialog, npc: NPC) {
@@ -126,7 +130,7 @@ export class TalkCommand extends Command {
     }
 
     private enableOrDisableDialog(npc: NPC, action: CommandAction) {
-        const dialogToChange = npc.dialogs.find((dialog) => dialog.id === action.parameter);
+        const dialogToChange = this.findDialog(npc, action.parameter);
         if (dialogToChange) {
             dialogToChange.enabled = action.command === 'enableDialog';
         }
