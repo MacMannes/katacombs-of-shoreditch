@@ -30,7 +30,7 @@ export class CommandProcessor {
         const didExecuteTrigger = await this.actionTriggerExecutor.execute(target, verb);
         if (didExecuteTrigger) return { isPlaying: true };
 
-        const command = this.commandFactory.create(verb, target);
+        const command = this.commandFactory.create({ verb, target });
         if (!command || command.isInternal) {
             this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
             return { isPlaying: true };

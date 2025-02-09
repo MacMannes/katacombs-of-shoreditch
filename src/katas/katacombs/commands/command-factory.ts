@@ -20,9 +20,9 @@ export class CommandFactory {
         private readonly ui: UserInterface,
     ) {}
 
-    public create(verb: string, target?: string): Command | undefined {
-        const command = this.createCommand(verb);
-        if (!command || (command.requiresTarget && !target)) {
+    public create(options: { verb: string; target?: string }): Command | undefined {
+        const command = this.createCommand(options.verb);
+        if (!command || (command.requiresTarget && !options.target)) {
             return undefined;
         }
         return command;

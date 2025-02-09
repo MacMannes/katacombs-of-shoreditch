@@ -41,7 +41,7 @@ export class ActionTriggerExecutor {
     }
 
     public async executeCommandAction(action: CommandAction) {
-        const command = this.commandFactory.create(action.command, action.argument);
+        const command = this.commandFactory.create({ verb: action.command, target: action.argument });
         if (!command) return false;
 
         const params = [action.argument, action.parameter].filter(isDefined);
