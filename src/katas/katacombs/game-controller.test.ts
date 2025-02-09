@@ -1,27 +1,15 @@
-// noinspection DuplicatedCode
-
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { GameFactory, NPC, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
-import { createMockedObject, expectToBeDefined } from '@utils/test';
-import { NoOpUserInterface } from '@katas/katacombs/ui';
+import { NPC, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { expectToBeDefined } from '@utils/test';
 import { GameController } from '@katas/katacombs';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'path';
-import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { createTestGame, game, ui } from '@katas/katacombs/utils/test-game';
 
 describe('GameController', () => {
-    const gameDataPath = path.resolve(__dirname, './resources/test-game-data.yaml'); // Converts to absolute path
-    const gameFactory = new GameFactory(new YamlDataLoader());
-
-    const ui = createMockedObject(NoOpUserInterface);
     let controller: GameController;
 
     async function createGameController() {
-        const game = await gameFactory.createGame(gameDataPath);
+        await createTestGame();
         controller = new GameController(game, ui);
     }
 

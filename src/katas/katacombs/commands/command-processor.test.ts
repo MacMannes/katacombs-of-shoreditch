@@ -1,32 +1,10 @@
-// noinspection DuplicatedCode
-
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'path';
-import path from 'node:path';
-import { Game, GameFactory, TextWithAudioFiles, YamlDataLoader } from '@katas/katacombs/domain';
-import { createMockedObject } from '@utils/test';
-import { NoOpUserInterface } from '@katas/katacombs/ui';
-import { CommandProcessor } from '@katas/katacombs/commands/command-processor';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { TextWithAudioFiles } from '@katas/katacombs/domain';
+import { createTestGame, processor, ui } from '@katas/katacombs/utils/test-game';
 
 describe('CommandProcessor', () => {
-    const gameDataPath = path.resolve(__dirname, '../resources/test-game-data.yaml'); // Converts to absolute path
-    const gameFactory = new GameFactory(new YamlDataLoader());
-
-    const ui = createMockedObject(NoOpUserInterface);
-    let processor: CommandProcessor;
-    let game: Game;
-
-    async function createCommandProcessor() {
-        game = await gameFactory.createGame(gameDataPath);
-        processor = new CommandProcessor(game, ui);
-    }
-
     beforeEach(async () => {
-        await createCommandProcessor();
+        await createTestGame();
     });
 
     afterEach(() => {
