@@ -1,5 +1,7 @@
 export * from './command';
 export * from './command-factory';
+export * from './command-preprocessor';
+export * from './command-processor';
 export * from './go-command';
 export * from './drop-command';
 export * from './hide-command';

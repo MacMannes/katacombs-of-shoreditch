@@ -72,7 +72,7 @@ describe('GameController', () => {
         });
     });
 
-    describe('Processing commands', () => {
+    describe('Processing User input', () => {
         afterEach(() => {
             vi.resetAllMocks();
         });

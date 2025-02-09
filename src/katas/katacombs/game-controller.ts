@@ -1,40 +1,34 @@
-import {
-    ActionTriggerExecutor,
-    CommandPreprocessor,
-    Game,
-    Item,
-    Room,
-    TextWithAudioFiles,
-} from '@katas/katacombs/domain';
+import { Game, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { CommandFactory, InventoryCommand, QuitCommand } from '@katas/katacombs/commands';
+import { CommandProcessor, InventoryCommand } from '@katas/katacombs/commands';
 
 export class GameController {
-    private isPlaying = true;
-    private readonly commandFactory: CommandFactory;
-    private readonly actionTriggerExecutor: ActionTriggerExecutor;
-    private readonly preprocessor = new CommandPreprocessor();
+    private readonly commandProcessor: CommandProcessor;
 
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
-        this.commandFactory = new CommandFactory(this.game, this.ui);
-        this.actionTriggerExecutor = new ActionTriggerExecutor(this.game, this.ui);
+        this.commandProcessor = new CommandProcessor(game, ui);
     }
 
     public async startGame() {
         await this.ui.displayWelcomeMessage();
         this.displayCurrentRoom();
 
-        while (this.isPlaying) {
+        let isPlaying = true;
+
+        while (isPlaying) {
             const userInput = (await this.ui.getUserInput()) ?? '';
-            const processedInput = this.preprocessor.process(userInput);
-            const [verb, target] = processedInput.split(' ');
-            await this.processCommand(verb, target);
+            const result = await this.commandProcessor.processUserInput(userInput);
+            isPlaying = result.isPlaying;
         }
 
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
+    }
+
+    public async processCommand(verb: string, target?: string) {
+        return this.commandProcessor.processUserInput(`${verb} ${target ?? ''}`);
     }
 
     public getCurrentRoom(): Room {
@@ -43,22 +37,6 @@ export class GameController {
 
     public getInventory(): Item[] {
         return this.game.getItems();
-    }
-
-    public async processCommand(verb: string, target?: string) {
-        const didExecuteTrigger = await this.actionTriggerExecutor.execute(target, verb);
-        if (didExecuteTrigger) return;
-
-        const command = this.commandFactory.create(verb, target);
-        if (!command || command.isInternal) {
-            this.ui.displayMessage(new TextWithAudioFiles('What?', ['msg-what']));
-            return;
-        }
-
-        const result = await command.execute([target ?? ''], { caller: 'commandProcessor' });
-        if (command instanceof QuitCommand) {
-            this.isPlaying = !result;
-        }
     }
 
     public findItem(itemName: string): Item | undefined {
