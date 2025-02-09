@@ -13,10 +13,10 @@ const gameDataPath = path.resolve(__dirname, '../resources/test-game-data.yaml')
 const gameFactory = new GameFactory(new YamlDataLoader());
 
 export const ui = createMockedObject(NoOpUserInterface);
-export let processor: CommandProcessor;
+export let commandProcessor: CommandProcessor;
 export let game: Game;
 
 export async function createTestGame() {
     game = await gameFactory.createGame(gameDataPath);
-    processor = new CommandProcessor(game, ui);
+    commandProcessor = new CommandProcessor(game, ui);
 }
