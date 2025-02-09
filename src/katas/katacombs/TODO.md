@@ -44,6 +44,7 @@
 - [x] Remove ui instance variable from CommandProcessor
 - [ ] Move tests from game-controller.test to command.processor.test
 - [ ] Remove method GameController.processCommand()
+- [ ] Make GameLoop.commandProcessor private
 - [ ] Try to remove public methods from GameController
   - [ ] getCurrentRoom()
   - [ ] getInventory()

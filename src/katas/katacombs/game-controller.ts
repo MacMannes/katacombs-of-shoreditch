@@ -1,34 +1,28 @@
-import { Game, Item, Room } from '@katas/katacombs/domain';
+import { Game, GameLoop, Item, Room } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { CommandProcessor, InventoryCommand } from '@katas/katacombs/commands';
+import { InventoryCommand } from '@katas/katacombs/commands';
 
 export class GameController {
-    private readonly commandProcessor: CommandProcessor;
+    private readonly gameLoop: GameLoop;
 
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
-        this.commandProcessor = new CommandProcessor(game, ui);
+        this.gameLoop = new GameLoop(game, ui);
     }
 
     public async startGame() {
         await this.ui.displayWelcomeMessage();
         this.displayCurrentRoom();
 
-        let isPlaying = true;
-
-        while (isPlaying) {
-            const userInput = (await this.ui.getUserInput()) ?? '';
-            const result = await this.commandProcessor.processUserInput(userInput);
-            isPlaying = result.isPlaying;
-        }
+        await this.gameLoop.play();
 
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
     }
 
     public async processCommand(verb: string, target?: string) {
-        return this.commandProcessor.processUserInput(`${verb} ${target ?? ''}`);
+        return this.gameLoop.commandProcessor.processUserInput(`${verb} ${target ?? ''}`);
     }
 
     public getCurrentRoom(): Room {
