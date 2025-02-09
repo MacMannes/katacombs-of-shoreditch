@@ -1,4 +1,4 @@
-import { ActionTriggerExecutor, CommandPreprocessor, Game, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { ActionTriggerExecutor, CommandPreprocessor, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 import { CommandFactory } from '@katas/katacombs/commands/command-factory';
 import { QuitCommand } from '@katas/katacombs/commands/quit-command';
