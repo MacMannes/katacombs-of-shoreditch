@@ -20,11 +20,12 @@ export class CommandFactory {
         private readonly ui: UserInterface,
     ) {}
 
-    public create(options: { verb: string; target?: string }): Command | undefined {
+    public create(options: { verb: string; target?: string; allowInternalCommands?: boolean }): Command | undefined {
         const command = this.createCommand(options.verb);
-        if (!command || (command.requiresTarget && !options.target)) {
-            return undefined;
-        }
+        if (!command) return undefined;
+        if (command.requiresTarget && !options.target) return undefined;
+        if (command.isInternal && !options.allowInternalCommands) return undefined;
+
         return command;
     }
 
