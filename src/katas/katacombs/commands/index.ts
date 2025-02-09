@@ -5,6 +5,7 @@ export * from './command-processor';
 export * from './go-command';
 export * from './drop-command';
 export * from './hide-command';
+export * from './invalid-command';
 export * from './look-command';
 export * from './quit-command';
 export * from './take-command';

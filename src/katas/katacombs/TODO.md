@@ -40,8 +40,8 @@
 
 - [x] Use Command Pattern in GameController
 - [x] Refactor TalkCommand using clean code principles
-- [ ] Move `What?` response from CommandProcessor to GameController
-- [ ] Remove ui instance variable from CommandProcessor
+- [x] Move `What?` response from CommandProcessor to GameController
+- [x] Remove ui instance variable from CommandProcessor
 - [ ] Move tests from game-controller.test to command.processor.test
 - [ ] Remove method GameController.processCommand()
 - [ ] Try to remove public methods from GameController

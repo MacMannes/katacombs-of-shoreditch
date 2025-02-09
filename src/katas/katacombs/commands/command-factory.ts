@@ -13,6 +13,7 @@ import { TakeCommand } from '@katas/katacombs/commands/take-command';
 import { SpeakCommand } from '@katas/katacombs/commands/speak-command';
 import { TalkCommand } from '@katas/katacombs/commands/talk-command';
 import { SubtractCommand } from '@katas/katacombs/commands/subtract-command';
+import { InvalidCommand } from '@katas/katacombs/commands/invalid-command';
 
 export class CommandFactory {
     constructor(
@@ -20,13 +21,17 @@ export class CommandFactory {
         private readonly ui: UserInterface,
     ) {}
 
-    public create(options: { verb: string; target?: string; allowInternalCommands?: boolean }): Command | undefined {
+    public create(options: { verb: string; target?: string; allowInternalCommands?: boolean }): Command {
         const command = this.createCommand(options.verb);
-        if (!command) return undefined;
-        if (command.requiresTarget && !options.target) return undefined;
-        if (command.isInternal && !options.allowInternalCommands) return undefined;
+        if (!command) return this.invalidCommand();
+        if (command.requiresTarget && !options.target) return this.invalidCommand();
+        if (command.isInternal && !options.allowInternalCommands) return this.invalidCommand();
 
         return command;
+    }
+
+    private invalidCommand(): Command {
+        return new InvalidCommand(this.game, this.ui);
     }
 
     private createCommand(verb: string): Command | undefined {
