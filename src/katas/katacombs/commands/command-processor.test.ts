@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TextWithAudioFiles } from '@katas/katacombs/domain';
-import { createTestGame, commandProcessor, ui } from '@katas/katacombs/utils/test-game';
+import { createTestGame, commandProcessor, game, ui } from '@katas/katacombs/utils/test-game';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {
@@ -123,6 +123,188 @@ describe('CommandProcessor', () => {
                     expect.objectContaining({ text: expect.stringContaining('no way') }),
                 );
             });
+        });
+    });
+
+    describe('Looking around', () => {
+        it('should show the long description of the room when looking in no specific direction', async () => {
+            await commandProcessor.processUserInput('look');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('forest of') }),
+            );
+        });
+
+        it('should show the description when looking in a specific direction with a connection', async () => {
+            await commandProcessor.processUserInput('look  north');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('I see a brick building with a sign saying') }),
+            );
+        });
+
+        it('should show the description when looking at one of the synonyms of a connection', async () => {
+            await commandProcessor.processUserInput('look  building');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('I see a brick building with a sign saying') }),
+            );
+        });
+
+        it('should show something like "Nothing interesting" when looking in a specific direction with NO connection', async () => {
+            await commandProcessor.processUserInput('look  west');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Nothing interesting') }),
+            );
+        });
+
+        it('should show something like "Nothing interesting" when looking at a connection with no description', async () => {
+            await commandProcessor.processUserInput('go  north');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('look  outside');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Nothing interesting') }),
+            );
+        });
+
+        it('should show the description of the NPC when looking at the room', async () => {
+            await commandProcessor.processUserInput('go  south');
+            await commandProcessor.processUserInput('go  east');
+
+            await commandProcessor.processUserInput('look');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+            );
+        });
+
+        it('should not print the description of the NPC when going into the room a second time', async () => {
+            await commandProcessor.processUserInput('go  south');
+            await commandProcessor.processUserInput('go  east');
+            await commandProcessor.processUserInput('go  west');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('go  east');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+            );
+        });
+    });
+
+    describe('Looking at items', () => {
+        it('should show the description of the item when found', async () => {
+            await commandProcessor.processUserInput('go north');
+            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
+
+            await commandProcessor.processUserInput('look note');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The note is crumpled') }),
+            );
+        });
+
+        it('should not print the count of a CountableItem when looking', async () => {
+            await commandProcessor.processUserInput('look gully');
+            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
+
+            await commandProcessor.processUserInput('look');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('(2)') }),
+            );
+        });
+
+        it('should show the description of the item in the room when when looking at it using a synonym', async () => {
+            await commandProcessor.processUserInput('go north');
+            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
+
+            await commandProcessor.processUserInput('look lamp');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('It’s so polished you can see your' + ' reflection'),
+                }),
+            );
+        });
+
+        it('should show the description of the item in the inventory when when looking at it using a synonym', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take lantern');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('look lamp');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('It’s so polished you can see your reflection'),
+                }),
+            );
+        });
+
+        it('should show "I see no ... here" when looking at something that is not here', async () => {
+            await commandProcessor.processUserInput('look note');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
+        });
+
+        it('should show "I see no ... here" when looking at something that is not visible', async () => {
+            await commandProcessor.processUserInput('go north');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('look key');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
+        });
+    });
+
+    describe('Looking at NPCs', () => {
+        it('should show the description of the NPC', async () => {
+            await commandProcessor.processUserInput('go south');
+            await commandProcessor.processUserInput('go east');
+            await commandProcessor.processUserInput('look shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The shopkeeper’s sun-kissed skin') }),
+            );
+        });
+    });
+
+    describe('Looking at items with trigger conditions', () => {
+        it('should tell the rat is guarding the hole when looking at the hole and the rat is still there', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('look hole');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('The rat blocks the hole') }),
+            );
+            expect(ui.displayMessage).not.toHaveBeenLastCalledWith(expect.stringContaining(' The rat blocks the hole'));
+        });
+
+        it('should tell a key is found when looking at the hole and the rat is gone', async () => {
+            await commandProcessor.processUserInput('take cheese');
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('drop cheese');
+            await commandProcessor.processUserInput('look hole');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('tiny key') }),
+            );
+        });
+
+        it('should set the hole state to "examined" after looking at it and the state was "unguarded"', async () => {
+            await commandProcessor.processUserInput('take cheese');
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('drop cheese');
+
+            const hole = game.getCurrentRoom().findItem('hole');
+            expect(hole?.getCurrentState()).toBe('unguarded');
+
+            await commandProcessor.processUserInput('look hole');
+            expect(hole?.getCurrentState()).toBe('examined');
         });
     });
 });
