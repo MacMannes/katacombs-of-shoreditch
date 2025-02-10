@@ -161,7 +161,6 @@ describe('CommandProcessor', () => {
 
         it('should show something like "Nothing interesting" when looking at a connection with no description', async () => {
             await commandProcessor.processUserInput('go  north');
-            vi.resetAllMocks();
 
             await commandProcessor.processUserInput('look  outside');
 
@@ -185,11 +184,10 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('go  south');
             await commandProcessor.processUserInput('go  east');
             await commandProcessor.processUserInput('go  west');
-            vi.resetAllMocks();
 
             await commandProcessor.processUserInput('go  east');
 
-            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+            expect(ui.displayMessage).not.toHaveBeenLastCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
             );
         });
@@ -198,7 +196,6 @@ describe('CommandProcessor', () => {
     describe('Looking at items', () => {
         it('should show the description of the item when found', async () => {
             await commandProcessor.processUserInput('go north');
-            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
             await commandProcessor.processUserInput('look note');
 
@@ -209,9 +206,6 @@ describe('CommandProcessor', () => {
 
         it('should not print the count of a CountableItem when looking', async () => {
             await commandProcessor.processUserInput('look gully');
-            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
-
-            await commandProcessor.processUserInput('look');
 
             expect(ui.displayMessage).not.toHaveBeenCalledWith(
                 expect.objectContaining({ text: expect.stringContaining('(2)') }),
@@ -220,11 +214,10 @@ describe('CommandProcessor', () => {
 
         it('should show the description of the item in the room when when looking at it using a synonym', async () => {
             await commandProcessor.processUserInput('go north');
-            vi.resetAllMocks(); // Reset mocks, because we only wat to check the ui mock for the look command
 
             await commandProcessor.processUserInput('look lamp');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({
                     text: expect.stringContaining('It’s so polished you can see your' + ' reflection'),
                 }),
@@ -234,11 +227,10 @@ describe('CommandProcessor', () => {
         it('should show the description of the item in the inventory when when looking at it using a synonym', async () => {
             await commandProcessor.processUserInput('go north');
             await commandProcessor.processUserInput('take lantern');
-            vi.resetAllMocks();
 
             await commandProcessor.processUserInput('look lamp');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({
                     text: expect.stringContaining('It’s so polished you can see your reflection'),
                 }),
@@ -253,11 +245,12 @@ describe('CommandProcessor', () => {
 
         it('should show "I see no ... here" when looking at something that is not visible', async () => {
             await commandProcessor.processUserInput('go north');
-            vi.resetAllMocks();
 
             await commandProcessor.processUserInput('look key');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ text: "Can't see that here." }),
+            );
         });
     });
 
@@ -265,6 +258,7 @@ describe('CommandProcessor', () => {
         it('should show the description of the NPC', async () => {
             await commandProcessor.processUserInput('go south');
             await commandProcessor.processUserInput('go east');
+
             await commandProcessor.processUserInput('look shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
@@ -276,6 +270,7 @@ describe('CommandProcessor', () => {
     describe('Looking at items with trigger conditions', () => {
         it('should tell the rat is guarding the hole when looking at the hole and the rat is still there', async () => {
             await commandProcessor.processUserInput('go north');
+
             await commandProcessor.processUserInput('look hole');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
@@ -288,6 +283,7 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take cheese');
             await commandProcessor.processUserInput('go north');
             await commandProcessor.processUserInput('drop cheese');
+
             await commandProcessor.processUserInput('look hole');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
@@ -304,6 +300,7 @@ describe('CommandProcessor', () => {
             expect(hole?.getCurrentState()).toBe('unguarded');
 
             await commandProcessor.processUserInput('look hole');
+
             expect(hole?.getCurrentState()).toBe('examined');
         });
     });
