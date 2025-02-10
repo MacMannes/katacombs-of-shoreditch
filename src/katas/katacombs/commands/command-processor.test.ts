@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CountableItem, TextWithAudioFiles } from '@katas/katacombs/domain';
+import { CountableItem, NPC, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { createTestGame, commandProcessor, game, ui } from '@katas/katacombs/utils/test-game';
+import { expectToBeDefined } from '@utils/test';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {
@@ -574,6 +575,356 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look casks');
 
             expect(coins?.isVisible()).toBeTruthy();
+        });
+    });
+
+    describe('Triggering speak actions', () => {
+        it('should play an mp3 file when a speak action was triggered', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take lamp');
+            await commandProcessor.processUserInput('rub lamp');
+
+            expect(ui.displayMessage).toHaveBeenLastCalledWith(
+                expect.objectContaining({
+                    audioFiles: ['rub-lantern'],
+                }),
+            );
+        });
+    });
+
+    describe('Showing the inventory', () => {
+        it('should say something like "You are not carrying anything." when the user does not possess any items', async () => {
+            await commandProcessor.processUserInput('inventory');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You're not carrying anything.", ['msg-not-carrying-anything']),
+            );
+            expect(ui.displayMessage).toHaveBeenCalledTimes(1);
+        });
+
+        it('should print all the visible items the user has in their possession', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+            await commandProcessor.processUserInput('take lantern');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('inventory');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('You are currently holding the following:\n- '),
+                }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('Brass lantern'),
+                }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('note') }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    audioFiles: [
+                        'msg-carrying-the-following',
+                        'msg-nothing',
+                        'item-note-inventory',
+                        'item-lantern-inventory',
+                    ],
+                }),
+            );
+            expect(ui.displayMessage).toBeCalledTimes(1);
+        });
+
+        it('should print the item state.', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+            await commandProcessor.processUserInput('take lantern');
+            await commandProcessor.processUserInput('light lantern');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('inventory');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('You are currently holding the following:\n- '),
+                }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Brass lantern') }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('flame') }),
+            );
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('note') }),
+            );
+            expect(ui.displayMessage).toBeCalledTimes(1);
+        });
+
+        it('should print the count of countable items', async () => {
+            await commandProcessor.processUserInput('look gully');
+            await commandProcessor.processUserInput('take coin');
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('look casks');
+            await commandProcessor.processUserInput('take coin');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('inventory');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('(3)'),
+                }),
+            );
+        });
+    });
+
+    describe('Talking to NPCs', () => {
+        let shopkeeper: NPC | undefined = undefined;
+
+        beforeEach(async () => {
+            await commandProcessor.processUserInput('go south');
+            await commandProcessor.processUserInput('go east');
+            shopkeeper = game.getCurrentRoom().findNpc('shopkeeper');
+        });
+
+        it('should say the greeting of the NPC when the user talks to it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
+            );
+        });
+
+        it('should say "It’s lonely out here" when there is no NPC to talk to', async () => {
+            await commandProcessor.processUserInput('go west');
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('it’s lonely out here') }),
+            );
+        });
+
+        it('should only ask enabled questions', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.getUserChoice).toHaveBeenLastCalledWith([
+                {
+                    text: 'Why only two items?',
+                    value: 'why-only-two-items',
+                },
+                {
+                    text: 'Tell me about the lighter.',
+                    value: 'ask-about-lighter',
+                },
+                {
+                    text: 'What’s so special about the shovel?',
+                    value: 'ask-about-shovel',
+                },
+                {
+                    text: 'I’ll take something.',
+                    value: 'buy-something',
+                },
+                {
+                    text: 'Never mind, I’ll be on my way.',
+                    value: 'bye',
+                },
+            ]);
+        });
+
+        it('should disable the dialog "why-only-two-items" after asking it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('why-only-two-items');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            const dialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'why-only-two-items');
+            expect(dialog?.enabled).toBeFalsy();
+        });
+
+        it('should disable "ask-about-shovel" and enable "are-you-serious" after asking about the shovekl', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('ask-about-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            const askAboutShovelDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'ask-about-shovel');
+            expect(askAboutShovelDialog?.enabled).toBeFalsy();
+
+            const areYouSeriousDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'are-you-serious');
+            expect(areYouSeriousDialog?.enabled).toBeTruthy();
+        });
+
+        it('should ask which item to buy when the user selects dialog "buy-something"', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('never-mind');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.getUserChoice).toHaveBeenNthCalledWith(2, [
+                {
+                    text: 'I’ll take the lighter.',
+                    value: 'choose-lighter',
+                },
+                {
+                    text: 'I’ll take the shovel.',
+                    value: 'choose-shovel',
+                },
+                {
+                    text: 'Never mind.',
+                    value: 'never-mind',
+                },
+            ]);
+        });
+
+        it('should answer with the response expected response', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('why-only-two-items');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('Ah, a fine question! Well, it all started') }),
+            );
+        });
+
+        it('should answer with the response expected response when the Dialog is a ChoiceDialog', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('never-mind');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('That’ll be 100 coins.') }),
+            );
+        });
+
+        it('should answer with the failure response dialog when the the user does not have enough money', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('Oh dear… looks like your purse is feeling a little light'),
+                }),
+            );
+        });
+
+        it('should answer with the success response dialog when the the user does not have enough money', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('take coins');
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'Ah, a sound investment, my friend! Here’s your Torch of Eternity™.',
+                    ),
+                }),
+            );
+        });
+
+        it('should answer with the success response dialog when the the user does not have enough money', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('take coins');
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'Ah, a sound investment, my friend! Here’s your Torch of Eternity™.',
+                    ),
+                }),
+            );
+        });
+
+        it('should put the shovel in the inventory after buying it', async () => {
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('take coins');
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(game.getInventory().find((item) => item.name === 'shovel')).toBeDefined();
+        });
+
+        it('should not say "OK" after taking the bought item', async () => {
+            await commandProcessor.processUserInput('take coins');
+            vi.resetAllMocks();
+
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect(ui.displayMessage).not.toHaveBeenCalledWith(
+                expect.objectContaining({
+                    text: expect.stringContaining('OK.'),
+                }),
+            );
+        });
+
+        it("should reduce the user's coins by 100 after buying the shovel", async () => {
+            await commandProcessor.processUserInput('take coins');
+            vi.resetAllMocks();
+
+            const coins = game.getInventory().find((item) => item.name === 'coin');
+            expectToBeDefined(coins);
+            const numberOfCoins = (coins as CountableItem).getCount();
+
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            expect((coins as CountableItem).getCount()).toBe(numberOfCoins - 100);
+        });
+
+        it('should remove the coins from inventory when the user has paid everything they had', async () => {
+            await commandProcessor.processUserInput('take coins');
+            vi.resetAllMocks();
+
+            let coins = game.getInventory().find((item) => item.name === 'coin');
+            expect(coins).toBeDefined();
+
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-lighter');
+            ui.getUserChoice.mockResolvedValueOnce('buy-something');
+            ui.getUserChoice.mockResolvedValueOnce('choose-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('pay-for-shovel');
+            ui.getUserChoice.mockResolvedValueOnce('bye');
+
+            await commandProcessor.processUserInput('talk shopkeeper');
+
+            coins = game.getInventory().find((item) => item.name === 'coin');
+            expect(coins).toBeUndefined();
         });
     });
 });
