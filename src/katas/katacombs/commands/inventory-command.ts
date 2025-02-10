@@ -12,7 +12,7 @@ export class InventoryCommand extends Command {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async execute(params: []): Promise<boolean> {
-        const items = this.game.getItems();
+        const items = this.game.getInventory();
         if (items.length == 0) {
             this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
             return true;

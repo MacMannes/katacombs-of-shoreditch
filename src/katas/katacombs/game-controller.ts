@@ -30,7 +30,7 @@ export class GameController {
     }
 
     public getInventory(): Item[] {
-        return this.game.getItems();
+        return this.game.getInventory();
     }
 
     public findItem(itemName: string): Item | undefined {

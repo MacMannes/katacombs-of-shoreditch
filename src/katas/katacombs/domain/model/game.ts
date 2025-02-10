@@ -89,7 +89,7 @@ export class Game {
         }
     }
 
-    public getItems(): Item[] {
+    public getInventory(): Item[] {
         return this.itemRepository.getItems();
     }
 

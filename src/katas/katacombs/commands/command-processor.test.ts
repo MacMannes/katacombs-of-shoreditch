@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { TextWithAudioFiles } from '@katas/katacombs/domain';
+import { CountableItem, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { createTestGame, commandProcessor, game, ui } from '@katas/katacombs/utils/test-game';
 
 describe('CommandProcessor', () => {
@@ -302,6 +302,180 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look hole');
 
             expect(hole?.getCurrentState()).toBe('examined');
+        });
+    });
+
+    describe('Taking items', () => {
+        it('should say "OK." when the item exists in the room', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+        });
+
+        it('should say something like can not find ..." when the item can not be found in the room', async () => {
+            await commandProcessor.processUserInput('take note');
+
+            expect(ui.displayMessage).toBeCalledWith(expect.objectContaining({ text: "Can't find that here." }));
+        });
+
+        it('should say something like can not find ..." when the item in the room is invisible', async () => {
+            await commandProcessor.processUserInput('go north');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('take coin');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("Can't find that here.", ['msg-cant-find-that']),
+            );
+        });
+
+        it('should move the item from the room to the inventory when it exists in the room', async () => {
+            await commandProcessor.processUserInput('go north');
+            expect(game.getCurrentRoom().findItem('note')).toBeDefined();
+            await commandProcessor.processUserInput('take note');
+
+            expect(game.getCurrentRoom().findItem('note')).toBeUndefined();
+            expect(game.getInventory().find((item) => item.matches('note'))).toBeDefined();
+        });
+
+        it('should say "OK." when taking an item using a synonym', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take lamp');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+        });
+
+        it('should not allow immovable objects to be taken', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take desk');
+
+            const items = game.getInventory().map((item) => item.name);
+            expect(items).not.toContain('desk');
+        });
+
+        it('should say "You can`t be serious!" when trying to take an immovable object', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take desk');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You can't be serious!", ['msg-cant-be-serious']),
+            );
+        });
+
+        it('should merge countable items to one item when picked up', async () => {
+            await commandProcessor.processUserInput('look gully');
+            await commandProcessor.processUserInput('take coin');
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('look casks');
+            await commandProcessor.processUserInput('take coin');
+
+            const coins = game.getInventory().filter((item) => item.name === 'coin');
+            expect(coins).toHaveLength(1);
+            expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
+            expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
+        });
+    });
+
+    describe('Dropping items', () => {
+        it('should move the item from inventory to the room when the user possesses the item', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+            await commandProcessor.processUserInput('go south');
+            await commandProcessor.processUserInput('drop note');
+
+            expect(game.getCurrentRoom().findItem('note')).toBeDefined();
+            expect(game.getInventory().find((item) => item.matches('note'))).toBeUndefined();
+        });
+
+        it('should say "OK" when the item is dropped', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+            await commandProcessor.processUserInput('go south');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('drop note');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+        });
+
+        it('should NOT say "OK" when an item is dropped by a trigger action', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take lamp');
+            await commandProcessor.processUserInput('go south');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('drop lamp');
+
+            expect(ui.displayMessage).not.toBeCalledWith('OK.');
+        });
+
+        it('should say something like "You are not carrying it!" when the user does not possess the item', async () => {
+            await commandProcessor.processUserInput('drop note');
+
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles("You're not carrying it!", ['msg-not-carrying-it']),
+            );
+        });
+
+        it('should say "OK." when dropping an item using a synonym', async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take note');
+
+            vi.resetAllMocks();
+            await commandProcessor.processUserInput('drop memo');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+        });
+
+        it('should merge countable items to one item when dropped', async () => {
+            await commandProcessor.processUserInput('look gully');
+            await commandProcessor.processUserInput('take coin');
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('look casks');
+            await commandProcessor.processUserInput('drop coin');
+
+            const coins = game
+                .getCurrentRoom()
+                .getItems()
+                .filter((item) => item.name === 'coin');
+            expect(coins).toHaveLength(1);
+            expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
+            expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
+        });
+    });
+
+    describe('Dropping items with trigger conditions', () => {
+        it('should say "OK." when dropping cheese in start room, because trigger conditions are not met', async () => {
+            await commandProcessor.processUserInput('take cheese');
+
+            vi.resetAllMocks();
+            await commandProcessor.processUserInput('drop cheese');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+        });
+
+        it('should not say "OK." when dropping cheese in building, because trigger conditions are met', async () => {
+            await commandProcessor.processUserInput('take cheese');
+            await commandProcessor.processUserInput('go north');
+
+            vi.resetAllMocks();
+            await commandProcessor.processUserInput('drop cheese');
+
+            expect(ui.displayMessage).not.toBeCalledWith('OK.');
+        });
+
+        it('should hide the rat and the cheese when dropping cheese in building', async () => {
+            await commandProcessor.processUserInput('take cheese');
+            await commandProcessor.processUserInput('go north');
+
+            vi.resetAllMocks();
+            await commandProcessor.processUserInput('drop cheese');
+
+            const rat = game.getCurrentRoom().findItem('rat', true);
+            expect(rat?.isVisible()).toBeFalsy();
+            const cheese = game.getCurrentRoom().findItem('cheese', true);
+            expect(cheese?.isVisible()).toBeFalsy();
         });
     });
 });
