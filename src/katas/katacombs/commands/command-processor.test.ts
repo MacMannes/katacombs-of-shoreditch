@@ -95,4 +95,34 @@ describe('CommandProcessor', () => {
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });
+
+    describe('Traveling', () => {
+        describe('to an ordinal direction', () => {
+            it('should print the new room when the direction is valid', async () => {
+                await commandProcessor.processUserInput('go north');
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+            });
+
+            it('should print a message when direction is invalid', async () => {
+                await commandProcessor.processUserInput('go west');
+                expect(ui.displayMessage).toHaveBeenCalledWith(
+                    expect.objectContaining({ text: expect.stringContaining('no way') }),
+                );
+            });
+        });
+
+        describe('using synonyms of the connection', () => {
+            it('should print the new room when traveling to a synonym of the connection was successful', async () => {
+                await commandProcessor.processUserInput('go building');
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+            });
+
+            it('should print a message when synonym could not be found', async () => {
+                await commandProcessor.processUserInput('go left');
+                expect(ui.displayMessage).toHaveBeenCalledWith(
+                    expect.objectContaining({ text: expect.stringContaining('no way') }),
+                );
+            });
+        });
+    });
 });

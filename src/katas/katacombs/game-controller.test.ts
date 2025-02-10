@@ -60,36 +60,6 @@ describe('GameController', () => {
         });
     });
 
-    describe('Traveling', () => {
-        describe('to an ordinal direction', () => {
-            it('should print the new room when the direction is valid', async () => {
-                await controller.processCommand('go', 'north');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
-            });
-
-            it('should print a message when direction is invalid', async () => {
-                await controller.processCommand('go', 'west');
-                expect(ui.displayMessage).toHaveBeenCalledWith(
-                    expect.objectContaining({ text: expect.stringContaining('no way') }),
-                );
-            });
-        });
-
-        describe('using synonyms of the connection', () => {
-            it('should print the new room when traveling to a synonym of the connection was successful', async () => {
-                await controller.processCommand('go', 'building');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
-            });
-
-            it('should print a message when synonym could not be found', async () => {
-                await controller.processCommand('go', 'left');
-                expect(ui.displayMessage).toHaveBeenCalledWith(
-                    expect.objectContaining({ text: expect.stringContaining('no way') }),
-                );
-            });
-        });
-    });
-
     describe('Looking around', () => {
         it('should show the long description of the room when looking in no specific direction', async () => {
             await controller.processCommand('look');
