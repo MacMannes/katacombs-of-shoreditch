@@ -21,28 +21,8 @@ export class GameController {
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
     }
 
-    public async processCommand(verb: string, target?: string) {
-        return this.gameLoop.commandProcessor.processUserInput(`${verb} ${target ?? ''}`);
-    }
-
-    public getCurrentRoom(): Room {
-        return this.game.getCurrentRoom();
-    }
-
-    public getInventory(): Item[] {
-        return this.game.getInventory();
-    }
-
-    public findItem(itemName: string): Item | undefined {
-        return this.game.findItem(itemName);
-    }
-
-    public async displayInventory(): Promise<boolean> {
-        return await new InventoryCommand(this.game, this.ui).execute([]);
-    }
-
     private displayCurrentRoom(preferredLength?: 'short' | 'long') {
-        this.ui.displayRoomTitle(this.getCurrentRoom());
+        this.ui.displayRoomTitle(this.game.getCurrentRoom());
         this.displayRoom(preferredLength);
     }
 
