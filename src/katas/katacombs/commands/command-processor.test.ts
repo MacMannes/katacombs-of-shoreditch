@@ -478,4 +478,102 @@ describe('CommandProcessor', () => {
             expect(cheese?.isVisible()).toBeFalsy();
         });
     });
+
+    describe('Changing the state of items', () => {
+        beforeEach(async () => {
+            await commandProcessor.processUserInput('go north');
+            await commandProcessor.processUserInput('take lantern');
+        });
+
+        afterEach(() => {
+            vi.resetAllMocks();
+        });
+
+        it('should show the initial state of the lamp', () => {
+            const lamp = game.findItem('lamp');
+            expect(lamp?.getCurrentState()).toBe('unlit');
+        });
+
+        it('should set the lamp to lit with the command "light lamp"', async () => {
+            const lamp = game.findItem('lamp');
+            expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
+
+            await commandProcessor.processUserInput('light lamp');
+
+            expect(lamp?.getCurrentState()).toBe('lit');
+        });
+
+        it('should not say "What?" after giving the command "light lamp"', async () => {
+            await commandProcessor.processUserInput('light lamp');
+            expect(ui.displayMessage).not.toBeCalledWith('What?');
+        });
+
+        it('should say the success response after giving the command "light lamp"', async () => {
+            await commandProcessor.processUserInput('light lamp');
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('bursts into a steady flame') }),
+            );
+        });
+
+        it('should say the failure response after giving the command "light lamp" twice', async () => {
+            await commandProcessor.processUserInput('light lamp');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('light lamp');
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('overachieve') }),
+            );
+        });
+
+        it('should say the success response after giving the command "distinguish lamp"', async () => {
+            await commandProcessor.processUserInput('light lamp');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('extinguish lamp');
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('you extinguish the lantern') }),
+            );
+        });
+
+        it('should say the failure response after giving the command "distinguish lamp"', async () => {
+            await commandProcessor.processUserInput('extinguish lamp');
+            vi.resetAllMocks();
+
+            await commandProcessor.processUserInput('extinguish lamp');
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: expect.stringContaining('An epic battle') }),
+            );
+        });
+
+        it('should set the lamp to lit with the command "extinguish lamp"', async () => {
+            const lamp = game.findItem('lamp');
+            expect(lamp?.getCurrentState()).toBe('unlit'); // Verify initial state
+
+            await commandProcessor.processUserInput('light lamp');
+            expect(lamp?.getCurrentState()).toBe('lit');
+
+            await commandProcessor.processUserInput('extinguish lamp');
+
+            expect(lamp?.getCurrentState()).toBe('unlit');
+        });
+
+        it('The player should not be allowed to trigger internal commands like "changeState lamp"', async () => {
+            vi.resetAllMocks();
+            await commandProcessor.processUserInput('changeState lamp');
+
+            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+        });
+    });
+
+    describe('Revealing an item after triggering an action', () => {
+        it('should reveal the coin when looking at the casks', async () => {
+            await commandProcessor.processUserInput('go north');
+            const coins = game.getCurrentRoom().findItem('coin', true);
+            expect(coins?.isVisible()).toBeFalsy();
+
+            await commandProcessor.processUserInput('look casks');
+
+            expect(coins?.isVisible()).toBeTruthy();
+        });
+    });
 });
