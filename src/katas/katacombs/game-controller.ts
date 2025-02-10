@@ -1,6 +1,5 @@
-import { Game, GameLoop, Item, Room } from '@katas/katacombs/domain';
+import { Game, GameLoop } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { InventoryCommand } from '@katas/katacombs/commands';
 
 export class GameController {
     private readonly gameLoop: GameLoop;

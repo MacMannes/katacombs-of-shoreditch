@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { NPC, TextWithAudioFiles } from '@katas/katacombs/domain';
-import { expectToBeDefined } from '@utils/test';
+import { TextWithAudioFiles } from '@katas/katacombs/domain';
 import { GameController } from '@katas/katacombs';
-import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 import { createTestGame, game, ui } from '@katas/katacombs/utils/test-game';
 
 describe('GameController', () => {
