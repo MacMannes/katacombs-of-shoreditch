@@ -2,20 +2,16 @@ import { Game, GameLoop } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 
 export class GameController {
-    private readonly gameLoop: GameLoop;
-
     constructor(
         private readonly game: Game,
         private readonly ui: UserInterface,
-    ) {
-        this.gameLoop = new GameLoop(game, ui);
-    }
+    ) {}
 
     public async startGame() {
         await this.ui.displayWelcomeMessage();
         this.displayCurrentRoom();
 
-        await this.gameLoop.play();
+        await new GameLoop(this.game, this.ui).play();
 
         await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
     }
