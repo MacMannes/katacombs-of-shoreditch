@@ -34,26 +34,6 @@ export class Game {
         this.player.goToRoom(room);
     }
 
-    public drop(itemName: string): boolean {
-        const item = this.player.findItemInInventory(itemName);
-        if (!item) return false;
-        if (item instanceof CountableItem) {
-            this.mergeWithItemFromRoom(item);
-        }
-
-        this.player.removeItemFromInventory(item);
-        this.getCurrentRoom().addItem(item);
-        return true;
-    }
-
-    private mergeWithItemFromRoom(item: CountableItem) {
-        const itemInRoom = this.getCurrentRoom().findItem(item.name);
-        if (itemInRoom && itemInRoom instanceof CountableItem) {
-            item.mergeWith(itemInRoom);
-            this.getCurrentRoom().removeItem(itemInRoom);
-        }
-    }
-
     public getInventory(): Item[] {
         return this.player.getInventory();
     }
@@ -80,6 +60,10 @@ export class Game {
 
     public removeItemFromInventoryByName(itemName: string) {
         this.player.removeItemFromInventoryByName(itemName);
+    }
+
+    public addItemToRoom(item: Item) {
+        this.getCurrentRoom().addItem(item);
     }
 
     public removeItemFromRoom(item: Item) {
