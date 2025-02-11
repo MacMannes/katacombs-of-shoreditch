@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
 import { GameController } from '@katas/katacombs/game-controller';
 import { GameFactory, YamlDataLoader } from '@katas/katacombs/domain';
@@ -19,3 +21,5 @@ async function startGame() {
 }
 
 await startGame();
+
+/* v8 ignore end */

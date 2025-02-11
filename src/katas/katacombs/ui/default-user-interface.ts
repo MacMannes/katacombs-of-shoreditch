@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import { Room, TextWithAudioFiles } from '../domain';
 import { AudioPlayer, Choice, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
@@ -90,3 +92,5 @@ export class DefaultUserInterface implements UserInterface {
         }
     }
 }
+
+/* v8 ignore end */

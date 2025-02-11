@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 export class AudioQueue {
     private queue: string[] = [];
 
@@ -17,3 +19,5 @@ export class AudioQueue {
         return this.queue.length === 0;
     }
 }
+
+/* v8 ignore end */

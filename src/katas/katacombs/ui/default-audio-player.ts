@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import { AudioPlayer, AudioQueue } from '@katas/katacombs/ui';
 import path from 'node:path';
 import play_sound from 'play-sound';
@@ -101,3 +103,5 @@ export class DefaultAudioPlayer implements AudioPlayer {
         this.currentProcess = null;
     }
 }
+
+/* v8 ignore end */

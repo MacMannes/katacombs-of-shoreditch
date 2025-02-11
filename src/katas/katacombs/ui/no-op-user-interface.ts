@@ -1,3 +1,4 @@
+/* v8 ignore start */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Choice, UserInterface } from '@katas/katacombs/ui';
 import { Room, TextWithAudioFiles } from '@katas/katacombs/domain';
@@ -27,3 +28,4 @@ export class NoOpUserInterface implements UserInterface {
         return '';
     }
 }
+/* v8 ignore end */

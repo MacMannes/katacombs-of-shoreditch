@@ -42,11 +42,13 @@
 - [x] Refactor TalkCommand using clean code principles
 - [x] Move `What?` response from CommandProcessor to GameController
 - [x] Remove ui instance variable from CommandProcessor
-- [ ] Move tests from game-controller.test to command.processor.test
-- [ ] Remove method GameController.processCommand()
+- [x] Move tests from game-controller.test to command.processor.test
+- [x] Remove method GameController.processCommand()
 - [ ] Make GameLoop.commandProcessor private
-- [ ] Try to remove public methods from GameController
-  - [ ] getCurrentRoom()
-  - [ ] getInventory()
-  - [ ] findItem
-  - [ ] displayInventory
+- [x] Try to remove public methods from GameController
+  - [x] getCurrentRoom()
+  - [x] getInventory()
+  - [x] findItem
+  - [x] displayInventory
+- [ ] Delegate methods from Game to respective Commands
+- [ ] Fix tests for DefaultUserInterface

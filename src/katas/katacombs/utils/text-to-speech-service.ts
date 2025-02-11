@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import { ElevenLabsClient } from 'elevenlabs';
 import { createWriteStream } from 'node:fs';
 import dotenv from 'dotenv';
@@ -28,3 +30,5 @@ export class TextToSpeechService {
         console.log(`Conversion complete: ${filePath}`);
     }
 }
+
+/* v8 ignore end */

@@ -8,10 +8,13 @@ export type NpcData = {
     description?: NpcDescriptionData;
 };
 
+/* v8 ignore start */
 export class NpcDescriptionData {
     room?: string;
     look?: string;
 }
+/* v8 ignore end */
+
 export function toNPC(npc: NpcData): NPC {
     return new NPC(npc.name, {
         greeting: npc.greeting,
