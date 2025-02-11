@@ -1,4 +1,5 @@
 import { isDefined } from '@utils/array';
+import { Room, TextWithAudioFiles } from '@katas/katacombs/domain';
 
 export class TextRepository {
     constructor(private readonly texts: Record<string, string>) {}
@@ -26,5 +27,57 @@ export class TextRepository {
             .filter(isDefined)
             .join(separator)
             .trim();
+    }
+
+    public describeRoom(room: Room, preferredLength?: 'short' | 'long'): TextWithAudioFiles {
+        const roomDescriptionTextKey = room.getDescription(preferredLength);
+        const roomDescriptionText = this.getText(roomDescriptionTextKey);
+
+        const npcTextKeys = this.getTextKeysForNpcs(room, preferredLength);
+        const npcText = this.getConcatenatedText(npcTextKeys, ' ');
+
+        const immovableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: true, preferredLength });
+        const immovableItemsText = this.getConcatenatedTextForItemKeys(immovableItemsTextKeys, ' ');
+
+        const movableItemsTextKeys = this.getTextKeysForRoomItems(room, { immovable: false, preferredLength });
+        const movableItemsText = this.getConcatenatedTextForItemKeys(movableItemsTextKeys, '\n\n');
+
+        const shouldAddNewLines = movableItemsTextKeys.length > 0 || npcTextKeys.length > 0;
+        const optionalNewLines = shouldAddNewLines ? '\n\n' : '';
+        const text = `${roomDescriptionText} ${npcText}${immovableItemsText}${optionalNewLines}${movableItemsText}`;
+
+        return new TextWithAudioFiles(text, [
+            roomDescriptionTextKey,
+            ...npcTextKeys,
+            ...immovableItemsTextKeys.flat(),
+            ...movableItemsTextKeys.flat(),
+        ]);
+    }
+
+    private getTextKeysForNpcs(room: Room, preferredLength?: 'short' | 'long'): string[] {
+        const length = preferredLength ?? this.getTextLengthForRoom(room);
+        if (length === 'short') return [];
+
+        return room
+            .getNpcs()
+            .map((npc) => npc.getDescription('room'))
+            .filter(isDefined);
+    }
+
+    private getTextKeysForRoomItems(
+        room: Room,
+        options: { immovable: boolean; preferredLength?: 'short' | 'long' },
+    ): string[][] {
+        const length = options.preferredLength ?? this.getTextLengthForRoom(room);
+        if (length === 'short' && options.immovable) return [];
+
+        return room
+            .getItems()
+            .filter((item) => item.immovable === options.immovable)
+            .map((item) => item.getDescription('room'));
+    }
+
+    private getTextLengthForRoom(room: Room): 'short' | 'long' {
+        return room.getNumberOfVisits() > 1 ? 'short' : 'long';
     }
 }
