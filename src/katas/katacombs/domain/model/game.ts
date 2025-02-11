@@ -1,11 +1,9 @@
 import {
     Connection,
-    CountableItem,
-    Direction,
     FunctionResult,
-    isDirection,
     Item,
     ItemRepository,
+    NPC,
     Room,
     RoomRepository,
     TextRepository,
@@ -70,56 +68,11 @@ export class Game {
         this.getCurrentRoom().removeItem(item);
     }
 
-    public look(at: string): TextWithAudioFiles {
-        if (isDirection(at)) {
-            return this.getMessageForLookingInDirection(at);
-        }
-
-        const connection = this.getCurrentRoom().findConnection(at);
-        if (connection) {
-            return this.getMessageForLookingAtConnection(connection);
-        }
-
-        return (
-            this.getMessageForLookingAtItem(at) ??
-            this.getMessageForLookingAtNpc(at) ??
-            this.getTextWithAudioFiles('msg-cant-see-that')
-        );
-    }
-
-    private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
-        const textKey = connection?.description ?? 'msg-nothing-interesting';
-        return this.getTextWithAudioFiles(textKey);
-    }
-
-    private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
-        const connection = this.getCurrentRoom().findConnection(direction);
-        const textKey = connection?.description ?? 'msg-nothing-interesting';
-        return this.getTextWithAudioFiles(textKey);
-    }
-
-    private getMessageForLookingAtItem(itemName: string): TextWithAudioFiles | undefined {
-        const item = this.findItem(itemName);
-        if (!item) return undefined;
-
-        const textKeys = item.getDescription('look');
-        const text = this.getConcatenatedText(textKeys);
-        return new TextWithAudioFiles(text, textKeys);
-    }
-
-    private getMessageForLookingAtNpc(npcName: string): TextWithAudioFiles | undefined {
-        const npc = this.getCurrentRoom().findNpc(npcName);
-        const textKey = npc?.getDescription('look');
-        if (!textKey) return undefined;
-
-        return this.getTextWithAudioFiles(textKey);
-    }
-
     public getTextWithAudioFiles(key: string): TextWithAudioFiles {
         return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [key]);
     }
 
-    private getConcatenatedText(keys: string[], separator = ' '): string {
+    public getConcatenatedText(keys: string[], separator = ' '): string {
         return this.textRepository.getConcatenatedText(keys, separator);
     }
 
@@ -131,12 +84,17 @@ export class Game {
         return this.textRepository.getRoomDescription(this.getCurrentRoom(), preferredLength);
     }
 
-    /**
-     * Find a room in a given direction from the current room
-     */
     public findRoom(direction: string): Room | undefined {
-        const roomName = this.getCurrentRoom().findConnection(direction)?.roomName;
+        const roomName = this.findConnection(direction)?.roomName;
         return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
+    }
+
+    public findConnection(direction: string): Connection | undefined {
+        return this.getCurrentRoom().findConnection(direction);
+    }
+
+    public findNpc(name: string): NPC | undefined {
+        return this.getCurrentRoom().findNpc(name);
     }
 }
 
