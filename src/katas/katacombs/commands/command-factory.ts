@@ -21,6 +21,21 @@ export class CommandFactory {
         private readonly ui: UserInterface,
     ) {}
 
+    private readonly commandMap = new Map<string, () => Command | undefined>([
+        ['go', () => new GoCommand(this.game, this.ui)],
+        ['look', () => new LookCommand(this.game, this.ui)],
+        ['take', () => new TakeCommand(this.game, this.ui)],
+        ['drop', () => new DropCommand(this.game, this.ui)],
+        ['inventory', () => new InventoryCommand(this.game, this.ui)],
+        ['hide', () => new HideCommand(this.game, this.ui)],
+        ['reveal', () => new RevealCommand(this.game)],
+        ['changeState', () => new ChangeStateCommand(this.game)],
+        ['subtract', () => new SubtractCommand(this.game)],
+        ['speak', () => new SpeakCommand(this.game, this.ui)],
+        ['talk', () => new TalkCommand(this.game, this.ui)],
+        ['quit', () => new QuitCommand(this.ui)],
+    ]);
+
     public create(options: { verb: string; target?: string; allowInternalCommands?: boolean }): Command {
         const command = this.createCommand(options.verb);
         if (!command) return this.invalidCommand();
@@ -35,33 +50,7 @@ export class CommandFactory {
     }
 
     private createCommand(verb: string): Command | undefined {
-        switch (verb) {
-            case 'go':
-                return new GoCommand(this.game, this.ui);
-            case 'look':
-                return new LookCommand(this.game, this.ui);
-            case 'take':
-                return new TakeCommand(this.game, this.ui);
-            case 'drop':
-                return new DropCommand(this.game, this.ui);
-            case 'inventory':
-                return new InventoryCommand(this.game, this.ui);
-            case 'hide':
-                return new HideCommand(this.game, this.ui);
-            case 'reveal':
-                return new RevealCommand(this.game);
-            case 'changeState':
-                return new ChangeStateCommand(this.game);
-            case 'subtract':
-                return new SubtractCommand(this.game);
-            case 'speak':
-                return new SpeakCommand(this.game, this.ui);
-            case 'talk':
-                return new TalkCommand(this.game, this.ui);
-            case 'quit':
-                return new QuitCommand(this.ui);
-            default:
-                return undefined;
-        }
+        const commandCreator = this.commandMap.get(verb);
+        return commandCreator ? commandCreator() : undefined;
     }
 }
