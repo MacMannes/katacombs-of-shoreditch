@@ -30,12 +30,8 @@ export class Game {
         return this.player.getCurrentRoom();
     }
 
-    public go(to: string): Room | undefined {
-        const newRoom = this.findRoom(to);
-        if (newRoom) {
-            this.player.goToRoom(newRoom);
-        }
-        return newRoom;
+    public goToRoom(room: Room) {
+        this.player.goToRoom(room);
     }
 
     public take(itemName: string): TakeItemResult {
@@ -164,7 +160,7 @@ export class Game {
     /**
      * Find a room in a given direction from the current room
      */
-    private findRoom(direction: string): Room | undefined {
+    public findRoom(direction: string): Room | undefined {
         const roomName = this.getCurrentRoom().findConnection(direction)?.roomName;
         return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
     }
