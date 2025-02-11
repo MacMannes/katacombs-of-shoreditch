@@ -34,28 +34,6 @@ export class Game {
         this.player.goToRoom(room);
     }
 
-    public take(itemName: string): TakeItemResult {
-        const item = this.getCurrentRoom().findItem(itemName);
-        if (!item) return { success: false, error: new NotFoundError('msg-cant-find-that') };
-        if (item.immovable) return { success: false, error: new ItemImmovableError('msg-cant-be-serious') };
-        if (item instanceof CountableItem) {
-            this.mergeWithItemFromInventory(item);
-        }
-
-        this.getCurrentRoom().removeItem(item);
-        this.player.addItemToInventory(item);
-
-        return { success: true, value: item };
-    }
-
-    private mergeWithItemFromInventory(item: CountableItem) {
-        const itemInInventory = this.player.findItemInInventory(item.name);
-        if (itemInInventory && itemInInventory instanceof CountableItem) {
-            item.mergeWith(itemInInventory);
-            this.player.removeItemFromInventory(itemInInventory);
-        }
-    }
-
     public drop(itemName: string): boolean {
         const item = this.player.findItemInInventory(itemName);
         if (!item) return false;
@@ -65,14 +43,6 @@ export class Game {
 
         this.player.removeItemFromInventory(item);
         this.getCurrentRoom().addItem(item);
-        return true;
-    }
-
-    public removeItemFromInventory(itemName: string): boolean {
-        const item = this.player.findItemInInventory(itemName);
-        if (!item) return false;
-
-        this.player.removeItemFromInventory(item);
         return true;
     }
 
@@ -89,11 +59,31 @@ export class Game {
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.getCurrentRoom().findItem(itemName) ?? this.findItemInInventory(itemName);
+        return this.findItemInRoom(itemName) ?? this.findItemInInventory(itemName);
+    }
+
+    public findItemInRoom(itemName: string): Item | undefined {
+        return this.getCurrentRoom().findItem(itemName);
     }
 
     public findItemInInventory(itemName: string): Item | undefined {
         return this.player.findItemInInventory(itemName);
+    }
+
+    public addItemToInventory(item: Item) {
+        this.player.addItemToInventory(item);
+    }
+
+    public removeItemFromInventory(item: Item) {
+        this.player.removeItemFromInventory(item);
+    }
+
+    public removeItemFromInventoryByName(itemName: string) {
+        this.player.removeItemFromInventoryByName(itemName);
+    }
+
+    public removeItemFromRoom(item: Item) {
+        this.getCurrentRoom().removeItem(item);
     }
 
     public look(at: string): TextWithAudioFiles {

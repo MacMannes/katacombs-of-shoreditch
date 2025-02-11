@@ -27,6 +27,14 @@ export class Player {
         this.inventory.addItem(item);
     }
 
+    public removeItemFromInventoryByName(itemName: string): boolean {
+        const item = this.inventory.findItem(itemName);
+        if (!item) return false;
+
+        this.removeItemFromInventory(item);
+        return true;
+    }
+
     public removeItemFromInventory(item: Item) {
         this.inventory.removeItem(item);
     }
