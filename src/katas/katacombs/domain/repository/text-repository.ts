@@ -29,7 +29,7 @@ export class TextRepository {
             .trim();
     }
 
-    public describeRoom(room: Room, preferredLength?: 'short' | 'long'): TextWithAudioFiles {
+    public getRoomDescription(room: Room, preferredLength?: 'short' | 'long'): TextWithAudioFiles {
         const roomDescriptionTextKey = room.getDescription(preferredLength);
         const roomDescriptionText = this.getText(roomDescriptionTextKey);
 

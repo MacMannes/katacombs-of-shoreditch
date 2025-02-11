@@ -158,7 +158,7 @@ export class Game {
     }
 
     public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
-        return this.textRepository.describeRoom(this.getCurrentRoom(), preferredLength);
+        return this.textRepository.getRoomDescription(this.getCurrentRoom(), preferredLength);
     }
 
     /**
