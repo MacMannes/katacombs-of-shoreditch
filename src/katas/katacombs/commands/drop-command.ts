@@ -7,12 +7,11 @@ export class DropCommand extends Command {
         private readonly game: Game,
         private readonly ui: UserInterface,
     ) {
-        super();
+        super({ requiresTarget: true });
     }
 
     async execute(params: string[], options?: CommandExecuteOptions): Promise<boolean> {
-        const itemName = params?.at(0);
-        if (!itemName) return false;
+        const itemName = params[0];
 
         const dropped = this.drop(itemName);
         if (options?.caller === 'triggerAction') return dropped;
