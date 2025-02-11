@@ -150,28 +150,12 @@ export class Game {
         return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [key]);
     }
 
-    public getConcatenatedText(keys: string[], separator = ' '): string {
-        return keys
-            .map((key) => this.getText(key))
-            .filter(isDefined)
-            .join(separator)
-            .trim();
-    }
-
-    private getText(key: string): string | undefined {
-        if (key.startsWith('count:')) {
-            const count = key.split(':')[1];
-            return `(${count})`;
-        }
-        return this.textRepository.getText(key);
+    private getConcatenatedText(keys: string[], separator = ' '): string {
+        return this.textRepository.getConcatenatedText(keys, separator);
     }
 
     public getConcatenatedTextForItemKeys(keys: string[][], separator: string): string {
-        return keys
-            .map((keys) => this.getConcatenatedText(keys, ' '))
-            .filter(isDefined)
-            .join(separator)
-            .trim();
+        return this.textRepository.getConcatenatedTextForItemKeys(keys, separator);
     }
 
     public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
