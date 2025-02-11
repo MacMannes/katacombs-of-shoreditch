@@ -13,92 +13,92 @@ import {
 } from '@katas/katacombs/domain';
 import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error';
 import { isDefined } from '@utils/array';
+import { Player } from '@katas/katacombs/domain/model/player';
 
 export class Game {
-    private currentRoom: Room;
+    private player: Player;
 
     constructor(
         private readonly roomRepository: RoomRepository,
-        private readonly itemRepository: ItemRepository,
+        itemRepository: ItemRepository,
         private readonly textRepository: TextRepository,
     ) {
-        this.currentRoom = roomRepository.getRoomByName('start');
-        this.currentRoom.addVisit();
+        const initialRoom = roomRepository.getRoomByName('start');
+        this.player = new Player(initialRoom, itemRepository);
     }
 
     public getCurrentRoom(): Room {
-        return this.currentRoom;
+        return this.player.getCurrentRoom();
     }
 
     public go(to: string): Room | undefined {
         const newRoom = this.findRoom(to);
         if (newRoom) {
-            newRoom.addVisit();
-            this.currentRoom = newRoom;
+            this.player.goToRoom(newRoom);
         }
         return newRoom;
     }
 
     public take(itemName: string): TakeItemResult {
-        const item = this.currentRoom.findItem(itemName);
+        const item = this.getCurrentRoom().findItem(itemName);
         if (!item) return { success: false, error: new NotFoundError('msg-cant-find-that') };
         if (item.immovable) return { success: false, error: new ItemImmovableError('msg-cant-be-serious') };
         if (item instanceof CountableItem) {
             this.mergeWithItemFromInventory(item);
         }
 
-        this.currentRoom.removeItem(item);
-        this.itemRepository.addItem(item);
+        this.getCurrentRoom().removeItem(item);
+        this.player.addItemToInventory(item);
 
         return { success: true, value: item };
     }
 
     private mergeWithItemFromInventory(item: CountableItem) {
-        const itemInInventory = this.itemRepository.findItem(item.name);
+        const itemInInventory = this.player.findItemInInventory(item.name);
         if (itemInInventory && itemInInventory instanceof CountableItem) {
             item.mergeWith(itemInInventory);
-            this.itemRepository.removeItem(itemInInventory);
+            this.player.removeItemFromInventory(itemInInventory);
         }
     }
 
     public drop(itemName: string): boolean {
-        const item = this.itemRepository.findItem(itemName);
+        const item = this.player.findItemInInventory(itemName);
         if (!item) return false;
         if (item instanceof CountableItem) {
             this.mergeWithItemFromRoom(item);
         }
 
-        this.itemRepository.removeItem(item);
-        this.currentRoom.addItem(item);
+        this.player.removeItemFromInventory(item);
+        this.getCurrentRoom().addItem(item);
         return true;
     }
 
     public removeItemFromInventory(itemName: string): boolean {
-        const item = this.itemRepository.findItem(itemName);
+        const item = this.player.findItemInInventory(itemName);
         if (!item) return false;
 
-        this.itemRepository.removeItem(item);
+        this.player.removeItemFromInventory(item);
         return true;
     }
 
     private mergeWithItemFromRoom(item: CountableItem) {
-        const itemInRoom = this.currentRoom.findItem(item.name);
+        const itemInRoom = this.getCurrentRoom().findItem(item.name);
         if (itemInRoom && itemInRoom instanceof CountableItem) {
             item.mergeWith(itemInRoom);
-            this.currentRoom.removeItem(itemInRoom);
+            this.getCurrentRoom().removeItem(itemInRoom);
         }
     }
 
     public getInventory(): Item[] {
-        return this.itemRepository.getItems();
+        return this.player.getInventory();
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.currentRoom.findItem(itemName) ?? this.findItemInInventory(itemName);
+        return this.getCurrentRoom().findItem(itemName) ?? this.findItemInInventory(itemName);
     }
 
     public findItemInInventory(itemName: string): Item | undefined {
-        return this.itemRepository.findItem(itemName);
+        return this.player.findItemInInventory(itemName);
     }
 
     public look(at: string): TextWithAudioFiles {
@@ -106,7 +106,7 @@ export class Game {
             return this.getMessageForLookingInDirection(at);
         }
 
-        const connection = this.currentRoom.findConnection(at);
+        const connection = this.getCurrentRoom().findConnection(at);
         if (connection) {
             return this.getMessageForLookingAtConnection(connection);
         }
@@ -124,7 +124,7 @@ export class Game {
     }
 
     private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
-        const connection = this.currentRoom.findConnection(direction);
+        const connection = this.getCurrentRoom().findConnection(direction);
         const textKey = connection?.description ?? 'msg-nothing-interesting';
         return this.getTextWithAudioFiles(textKey);
     }
@@ -139,7 +139,7 @@ export class Game {
     }
 
     private getMessageForLookingAtNpc(npcName: string): TextWithAudioFiles | undefined {
-        const npc = this.currentRoom.findNpc(npcName);
+        const npc = this.getCurrentRoom().findNpc(npcName);
         const textKey = npc?.getDescription('look');
         if (!textKey) return undefined;
 
@@ -175,7 +175,7 @@ export class Game {
     }
 
     public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
-        const room = this.currentRoom;
+        const room = this.getCurrentRoom();
         const roomDescriptionTextKey = room.getDescription(preferredLength);
         const roomDescriptionText = this.textRepository.getText(roomDescriptionTextKey);
 
@@ -201,10 +201,10 @@ export class Game {
     }
 
     private getTextKeysForNpcs(preferredLength?: 'short' | 'long'): string[] {
-        const length = preferredLength ?? this.getTextLengthForRoom(this.currentRoom);
+        const length = preferredLength ?? this.getTextLengthForRoom(this.getCurrentRoom());
         if (length === 'short') return [];
 
-        return this.currentRoom
+        return this.getCurrentRoom()
             .getNpcs()
             .map((npc) => npc.getDescription('room'))
             .filter(isDefined);
@@ -231,7 +231,7 @@ export class Game {
      * Find a room in a given direction from the current room
      */
     private findRoom(direction: string): Room | undefined {
-        const roomName = this.currentRoom.findConnection(direction)?.roomName;
+        const roomName = this.getCurrentRoom().findConnection(direction)?.roomName;
         return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
     }
 }
