@@ -7,8 +7,6 @@ export class Player {
     constructor(initialRoom: Room, inventory: ItemRepository) {
         this.currentRoom = initialRoom;
         this.inventory = inventory;
-
-        initialRoom.addVisit();
     }
 
     public getCurrentRoom(): Room {

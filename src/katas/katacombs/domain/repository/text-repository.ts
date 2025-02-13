@@ -78,6 +78,6 @@ export class TextRepository {
     }
 
     private getTextLengthForRoom(room: Room): 'short' | 'long' {
-        return room.getNumberOfVisits() > 1 ? 'short' : 'long';
+        return room.getPreferredTextLength();
     }
 }

@@ -7,11 +7,10 @@ export class RoomDescription {
         this.short = short;
     }
 
-    public getDescription(numberOfVisits: number, preferredLength?: 'short' | 'long'): string {
-        if (preferredLength === 'long') return this.getLongDescription();
+    public getDescription(preferredLength?: 'short' | 'long'): string {
         if (preferredLength === 'short') return this.getShortDescription();
 
-        return numberOfVisits > 1 ? this.getShortDescription() : this.getLongDescription();
+        return this.getLongDescription();
     }
 
     private getLongDescription(): string {

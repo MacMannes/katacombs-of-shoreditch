@@ -21,12 +21,8 @@ export class Room {
         return this.numberOfVisits++;
     }
 
-    public getNumberOfVisits(): number {
-        return this.numberOfVisits;
-    }
-
     public getDescription(preferredLength?: 'short' | 'long'): string {
-        return this.description.getDescription(this.numberOfVisits, preferredLength);
+        return this.description.getDescription(preferredLength ?? this.getPreferredTextLength());
     }
 
     public getConnections(): Connection[] {
@@ -75,5 +71,9 @@ export class Room {
 
     public removeItem(item: Item) {
         this.items = this.items.filter((it) => it.name !== item.name);
+    }
+
+    public getPreferredTextLength(): 'short' | 'long' {
+        return this.numberOfVisits > 1 ? 'short' : 'long';
     }
 }
