@@ -1,4 +1,4 @@
-import { Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/domain/commands';
 import { Connection, Direction, Game, isDirection, TextWithAudioFiles } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 

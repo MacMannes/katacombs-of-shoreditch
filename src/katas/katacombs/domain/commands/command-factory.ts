@@ -1,19 +1,21 @@
-import { UserInterface } from '@katas/katacombs/ui';
 import { Game } from '@katas/katacombs/domain';
-import { Command } from '@katas/katacombs/commands/command';
-import { GoCommand } from '@katas/katacombs/commands/go-command';
-import { LookCommand } from '@katas/katacombs/commands/look-command';
-import { QuitCommand } from '@katas/katacombs/commands/quit-command';
-import { ChangeStateCommand } from '@katas/katacombs/commands/change-state-command';
-import { RevealCommand } from '@katas/katacombs/commands/reveal-command';
-import { HideCommand } from '@katas/katacombs/commands/hide-command';
-import { DropCommand } from '@katas/katacombs/commands/drop-command';
-import { InventoryCommand } from '@katas/katacombs/commands/inventory-command';
-import { TakeCommand } from '@katas/katacombs/commands/take-command';
-import { SpeakCommand } from '@katas/katacombs/commands/speak-command';
-import { TalkCommand } from '@katas/katacombs/commands/talk-command';
-import { SubtractCommand } from '@katas/katacombs/commands/subtract-command';
-import { InvalidCommand } from '@katas/katacombs/commands/invalid-command';
+import { UserInterface } from '@katas/katacombs/ui';
+import {
+    ChangeStateCommand,
+    Command,
+    DropCommand,
+    GoCommand,
+    HideCommand,
+    InvalidCommand,
+    InventoryCommand,
+    LookCommand,
+    QuitCommand,
+    RevealCommand,
+    SpeakCommand,
+    SubtractCommand,
+    TakeCommand,
+    TalkCommand,
+} from '.';
 
 export class CommandFactory {
     constructor(

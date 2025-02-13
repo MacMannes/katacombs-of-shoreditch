@@ -1,4 +1,4 @@
-import { CommandExecuteOptions, Command } from '@katas/katacombs/commands';
+import { CommandExecuteOptions, Command } from '@katas/katacombs/domain/commands';
 import { CountableItem, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
 

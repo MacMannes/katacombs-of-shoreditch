@@ -1,7 +1,7 @@
 import { ActionTriggerExecutor, CommandPreprocessor, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { CommandFactory } from '@katas/katacombs/commands/command-factory';
-import { QuitCommand } from '@katas/katacombs/commands/quit-command';
+import { CommandFactory } from '@katas/katacombs/domain/commands/command-factory';
+import { QuitCommand } from '@katas/katacombs/domain/commands/quit-command';
 
 export type Result = {
     isPlaying: boolean;

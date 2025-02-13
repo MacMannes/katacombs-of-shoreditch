@@ -1,5 +1,5 @@
 import { UserInterface } from '@katas/katacombs/ui';
-import { CommandProcessor } from '@katas/katacombs/commands';
+import { CommandProcessor } from 'katas/katacombs/domain/commands';
 import { Game } from '@katas/katacombs/domain';
 
 export class GameLoop {

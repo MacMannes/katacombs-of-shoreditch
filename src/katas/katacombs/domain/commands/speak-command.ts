@@ -1,4 +1,4 @@
-import { Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/domain/commands';
 import { UserInterface } from '@katas/katacombs/ui';
 import { Game } from '@katas/katacombs/domain';
 

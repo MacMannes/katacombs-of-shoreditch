@@ -3,7 +3,7 @@ export * from './action-trigger-executor';
 export * from './caller-id';
 export * from './command-action';
 export * from './command-handler';
-export * from '../../commands/command-preprocessor';
+export * from '@katas/katacombs/domain/commands/command-preprocessor';
 export * from './connection';
 export * from './countable-item';
 export * from './dialog';

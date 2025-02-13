@@ -1,4 +1,4 @@
-import { Command } from '@katas/katacombs/commands';
+import { Command } from '@katas/katacombs/domain/commands';
 import { Game } from '@katas/katacombs/domain';
 
 export class RevealCommand extends Command {

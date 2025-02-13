@@ -4,7 +4,7 @@ import path from 'node:path';
 import { Game, GameFactory, YamlDataLoader } from '@katas/katacombs/domain';
 import { createMockedObject } from '@utils/test';
 import { NoOpUserInterface } from '@katas/katacombs/ui';
-import { CommandProcessor } from '@katas/katacombs/commands';
+import { CommandProcessor } from 'katas/katacombs/domain/commands';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
