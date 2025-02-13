@@ -19,6 +19,7 @@ export * from './item';
 export * from './npc';
 export * from './room';
 export * from './room-description';
+export * from './room-visits';
 export * from '../repository/text-repository';
 export * from './condition';
 export * from './condition-verifier';
