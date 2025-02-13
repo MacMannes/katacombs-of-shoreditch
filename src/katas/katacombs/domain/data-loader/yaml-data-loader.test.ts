@@ -33,8 +33,7 @@ describe('YamlDataLoader', () => {
 
         it('should load short descriptions of the rooms', async () => {
             const rooms = realm.rooms;
-            expect(rooms.find((room) => room.name === 'nowhere')?.shortDescription).toBeUndefined();
-            expect(rooms.find((room) => room.name === 'start')?.shortDescription).toBeDefined();
+            expect(rooms.find((room) => room.name === 'start')?.getDescription('short')).toBe('room-start-short');
         });
 
         it('should add connections to  the rooms', async () => {
