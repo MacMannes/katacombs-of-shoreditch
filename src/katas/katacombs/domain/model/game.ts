@@ -13,15 +13,15 @@ import { ItemImmovableError, NotFoundError } from '@katas/katacombs/domain/error
 import { Player } from '@katas/katacombs/domain/model/player';
 
 export class Game {
-    private player: Player;
+    private readonly player: Player;
+    private readonly roomRepository: RoomRepository;
+    private readonly textRepository: TextRepository;
 
-    constructor(
-        private readonly roomRepository: RoomRepository,
-        itemRepository: ItemRepository,
-        private readonly textRepository: TextRepository,
-    ) {
+    constructor(roomRepository: RoomRepository, itemRepository: ItemRepository, textRepository: TextRepository) {
         const initialRoom = roomRepository.getRoomByName('start');
         this.player = new Player(initialRoom, itemRepository);
+        this.roomRepository = roomRepository;
+        this.textRepository = textRepository;
     }
 
     public getCurrentRoom(): Room {
