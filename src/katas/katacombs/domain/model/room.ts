@@ -1,17 +1,21 @@
-import { Connection, ConnectionOptions, Direction, Item, NPC } from '@katas/katacombs/domain';
+import { Connection, ConnectionOptions, Direction, Item, NPC, RoomDescription } from '@katas/katacombs/domain';
 
 export class Room {
+    public readonly name: string;
+    public readonly title: string;
+
+    private numberOfVisits = 0;
+    private readonly description: RoomDescription;
+
     private readonly connections: Connection[] = [];
     private items: Item[] = [];
     private npcs: NPC[] = [];
-    private numberOfVisits = 0;
 
-    constructor(
-        public readonly name: string,
-        public readonly title: string,
-        public readonly description: string,
-        public readonly shortDescription?: string,
-    ) {}
+    constructor(name: string, title: string, description: string, shortDescription?: string) {
+        this.name = name;
+        this.title = title;
+        this.description = new RoomDescription(description, shortDescription);
+    }
 
     public addVisit(): number {
         return this.numberOfVisits++;
@@ -22,18 +26,7 @@ export class Room {
     }
 
     public getDescription(preferredLength?: 'short' | 'long'): string {
-        if (preferredLength === 'long') return this.getLongDescription();
-        if (preferredLength === 'short') return this.getShortDescription();
-
-        return this.numberOfVisits > 1 ? this.getShortDescription() : this.getLongDescription();
-    }
-
-    private getLongDescription(): string {
-        return this.description;
-    }
-
-    private getShortDescription(): string {
-        return this.shortDescription ?? this.getLongDescription();
+        return this.description.getDescription(this.numberOfVisits, preferredLength);
     }
 
     public getConnections(): Connection[] {

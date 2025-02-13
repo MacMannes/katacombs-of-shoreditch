@@ -18,6 +18,7 @@ export * from './game-realm';
 export * from './item';
 export * from './npc';
 export * from './room';
+export * from './room-description';
 export * from '../repository/text-repository';
 export * from './condition';
 export * from './condition-verifier';
