@@ -19,7 +19,7 @@ export class SubtractCommand extends Command {
         if (!result) return result;
 
         if (item.getCount() == 0) {
-            this.game.removeItemFromInventoryByName(item.getName());
+            this.game.removeItemFromInventoryByName(item.name);
         }
 
         return result;

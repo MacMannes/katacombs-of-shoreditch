@@ -3,7 +3,7 @@ import { isDefined } from '@utils/array';
 
 export class Item {
     public readonly description: ItemDescription;
-    public readonly immovable: boolean;
+    private readonly _immovable: boolean;
     public readonly states?: Record<string, ItemDescription>;
     public readonly triggers?: ActionTrigger[];
 
@@ -17,7 +17,7 @@ export class Item {
 
         this.description = options.description;
         this.visible = options.visible ?? true;
-        this.immovable = options.immovable ?? false;
+        this._immovable = options.immovable ?? false;
         if (options.states) {
             this.states = options.states;
             this.currentState = options.initialState ?? Object.keys(options.states).at(0);
@@ -25,7 +25,11 @@ export class Item {
         this.triggers = options.triggers;
     }
 
-    public getName(): string {
+    public get immovable(): boolean {
+        return this._immovable;
+    }
+
+    public get name(): string {
         return this.identifier.getName();
     }
 
@@ -63,7 +67,7 @@ export class Item {
     }
 
     public equals(other: Item): boolean {
-        return this.getName() === other.getName();
+        return this.name === other.name;
     }
 }
 

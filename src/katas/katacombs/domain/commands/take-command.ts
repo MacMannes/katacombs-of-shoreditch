@@ -37,7 +37,7 @@ export class TakeCommand extends Command {
     }
 
     private mergeWithItemFromInventory(item: CountableItem) {
-        const itemInInventory = this.game.findItemInInventory(item.getName());
+        const itemInInventory = this.game.findItemInInventory(item.name);
         if (itemInInventory && itemInInventory instanceof CountableItem) {
             item.mergeWith(itemInInventory);
             this.game.removeItemFromInventory(itemInInventory);

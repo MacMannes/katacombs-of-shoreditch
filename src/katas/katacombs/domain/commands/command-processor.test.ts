@@ -351,7 +351,7 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('go north');
             await commandProcessor.processUserInput('take desk');
 
-            const items = game.getInventory().map((item) => item.getName());
+            const items = game.getInventory().map((item) => item.name);
             expect(items).not.toContain('desk');
         });
 
@@ -371,7 +371,7 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look casks');
             await commandProcessor.processUserInput('take coin');
 
-            const coins = game.getInventory().filter((item) => item.getName() === 'coin');
+            const coins = game.getInventory().filter((item) => item.name === 'coin');
             expect(coins).toHaveLength(1);
             expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
             expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
@@ -439,7 +439,7 @@ describe('CommandProcessor', () => {
             const coins = game
                 .getCurrentRoom()
                 .getItems()
-                .filter((item) => item.getName() === 'coin');
+                .filter((item) => item.name === 'coin');
             expect(coins).toHaveLength(1);
             expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
             expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
@@ -867,7 +867,7 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take coins');
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            expect(game.getInventory().find((item) => item.getName() === 'shovel')).toBeDefined();
+            expect(game.getInventory().find((item) => item.name === 'shovel')).toBeDefined();
         });
 
         it('should not say "OK" after taking the bought item', async () => {
@@ -893,7 +893,7 @@ describe('CommandProcessor', () => {
             vi.resetAllMocks();
 
             //TODO: introduce Game.findItemInInventory
-            const coins = game.getInventory().find((item) => item.getName() === 'coin');
+            const coins = game.getInventory().find((item) => item.name === 'coin');
             expectToBeDefined(coins);
             const numberOfCoins = (coins as CountableItem).getCount();
 
@@ -911,7 +911,7 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take coins');
             vi.resetAllMocks();
 
-            let coins = game.getInventory().find((item) => item.getName() === 'coin');
+            let coins = game.getInventory().find((item) => item.name === 'coin');
             expect(coins).toBeDefined();
 
             ui.getUserChoice.mockResolvedValueOnce('buy-something');
@@ -924,7 +924,7 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            coins = game.getInventory().find((item) => item.getName() === 'coin');
+            coins = game.getInventory().find((item) => item.name === 'coin');
             expect(coins).toBeUndefined();
         });
     });

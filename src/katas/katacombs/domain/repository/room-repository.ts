@@ -49,7 +49,7 @@ export class RoomRepository {
     }
 
     private ensureUniqueItemNames(items: Item[]) {
-        const uniqueValues = new Set(items.map((item) => item.getName()));
+        const uniqueValues = new Set(items.map((item) => item.name));
         if (uniqueValues.size !== items.length) {
             throw new Error(`Items should have unique names`);
         }
