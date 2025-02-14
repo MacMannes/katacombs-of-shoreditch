@@ -26,30 +26,30 @@ describe('YamlDataLoader', () => {
         it('should load the rooms', async () => {
             const rooms = realm.rooms;
             expect(rooms.length).toBeGreaterThan(2);
-            expect(rooms.find((room) => room.name === 'nowhere')).toBeDefined();
-            expect(rooms.find((room) => room.name === 'start')).toBeDefined();
-            expect(rooms.find((room) => room.name === 'building')).toBeDefined();
+            expect(rooms.find((room) => room.getName() === 'nowhere')).toBeDefined();
+            expect(rooms.find((room) => room.getName() === 'start')).toBeDefined();
+            expect(rooms.find((room) => room.getName() === 'building')).toBeDefined();
         });
 
         it('should load short descriptions of the rooms', async () => {
             const rooms = realm.rooms;
-            expect(rooms.find((room) => room.name === 'start')?.getDescription('short')).toBe('room-start-short');
+            expect(rooms.find((room) => room.getName() === 'start')?.getDescription('short')).toBe('room-start-short');
         });
 
         it('should add connections to  the rooms', async () => {
             const rooms = realm.rooms;
-            const fromStartToBuilding = rooms.find((room) => room.name === 'start')?.findConnection('north');
+            const fromStartToBuilding = rooms.find((room) => room.getName() === 'start')?.findConnection('north');
             expect(fromStartToBuilding).toBeDefined();
             expect(fromStartToBuilding?.description).toBeDefined();
             expect(fromStartToBuilding?.matchesDirection('inside')).toBeTruthy();
 
-            const fromBuildingToStart = rooms.find((room) => room.name === 'building')?.findConnection('south');
+            const fromBuildingToStart = rooms.find((room) => room.getName() === 'building')?.findConnection('south');
             expect(fromBuildingToStart).toBeDefined();
         });
 
         it('should add items to the rooms', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lamp');
@@ -63,7 +63,7 @@ describe('YamlDataLoader', () => {
     describe('Items', () => {
         it('should handle invisible items as expected', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const coin = building?.findItem('coin', true);
@@ -73,7 +73,7 @@ describe('YamlDataLoader', () => {
 
         it('should handle immovable items as expected', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const desk = building?.findItem('desk', true);
@@ -87,7 +87,7 @@ describe('YamlDataLoader', () => {
 
         it('should handle Countable items as expected', async () => {
             const rooms = realm.rooms;
-            const startRoom = rooms.find((room) => room.name === 'start');
+            const startRoom = rooms.find((room) => room.getName() === 'start');
             expect(startRoom).toBeDefined();
 
             const coins = startRoom?.findItem('coin', true);
@@ -99,7 +99,7 @@ describe('YamlDataLoader', () => {
 
         it('should override the `visible` property for the coins in the shop ', async () => {
             const rooms = realm.rooms;
-            const shop = rooms.find((room) => room.name === 'shop');
+            const shop = rooms.find((room) => room.getName() === 'shop');
             expect(shop).toBeDefined();
 
             const coins = shop?.findItem('coin');
@@ -109,7 +109,7 @@ describe('YamlDataLoader', () => {
 
         it('should add states to the items', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lamp');
@@ -122,7 +122,7 @@ describe('YamlDataLoader', () => {
 
         it('should add triggers to the items', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const casks = building?.findItem('casks', true);
@@ -148,7 +148,7 @@ describe('YamlDataLoader', () => {
 
         it('should not add conditions to the triggers for "drop lamp"', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lantern', true);
@@ -162,7 +162,7 @@ describe('YamlDataLoader', () => {
 
         it('should add conditions to the triggers for "drop cheese"', async () => {
             const rooms = realm.rooms;
-            const start = rooms.find((room) => room.name === 'start');
+            const start = rooms.find((room) => room.getName() === 'start');
             expect(start).toBeDefined();
 
             const cheese = start?.findItem('cheese', true);
@@ -182,7 +182,7 @@ describe('YamlDataLoader', () => {
 
         it('should add conditions to the triggers for "look hole"', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.name === 'building');
+            const building = rooms.find((room) => room.getName() === 'building');
             expect(building).toBeDefined();
 
             const hole = building?.findItem('hole', true);
@@ -206,7 +206,7 @@ describe('YamlDataLoader', () => {
 
         beforeEach(() => {
             const rooms = realm.rooms;
-            const shop = rooms.find((room) => room.name === 'shop');
+            const shop = rooms.find((room) => room.getName() === 'shop');
             expectToBeDefined(shop);
 
             const npcs = shop.getNpcs();

@@ -4,29 +4,35 @@ import {
     Direction,
     Item,
     NPC,
+    RoomConnections,
     RoomDescription,
+    RoomIdentity,
+    RoomInventory,
     RoomVisits,
 } from '@katas/katacombs/domain';
 
 export class Room {
-    public readonly name: string;
-    public readonly title: string;
-
-    private numberOfVisits = new RoomVisits();
+    private readonly identity: RoomIdentity;
     private readonly description: RoomDescription;
-
-    private readonly connections: Connection[] = [];
-    private items: Item[] = [];
-    private npcs: NPC[] = [];
+    private readonly inventory = new RoomInventory();
+    private readonly visits = new RoomVisits();
+    private readonly connections = new RoomConnections();
 
     constructor(name: string, title: string, description: string, shortDescription?: string) {
-        this.name = name;
-        this.title = title;
+        this.identity = new RoomIdentity(name, title);
         this.description = new RoomDescription(description, shortDescription);
     }
 
+    public getName(): string {
+        return this.identity.getName();
+    }
+
+    public getTitle(): string {
+        return this.identity.getTitle();
+    }
+
     public addVisit(): number {
-        return this.numberOfVisits.addVisit();
+        return this.visits.addVisit();
     }
 
     public getDescription(preferredLength?: 'short' | 'long'): string {
@@ -34,54 +40,54 @@ export class Room {
     }
 
     public getConnections(): Connection[] {
-        return this.connections;
+        return this.connections.getAll();
     }
 
-    public addConnection(direction: Direction, to: string, options?: ConnectionOptions) {
-        this.connections.push(new Connection(direction, to, options));
+    public createConnectionInDirection(direction: Direction, to: string, options?: ConnectionOptions) {
+        this.connections.createConnectionInDirection(direction, to, options);
     }
 
     public addConnections(connections: Connection[]) {
-        this.connections.push(...connections);
+        this.connections.addMultiple(connections);
     }
 
     public findConnection(direction: string, fromRoomName?: string): Connection | undefined {
-        return this.connections.find((it) => it.matches(direction, fromRoomName));
+        return this.connections.find(direction, fromRoomName);
     }
 
     public getItems(allowInvisibleItems = false): Item[] {
-        return this.items.filter((item) => allowInvisibleItems || item.isVisible());
+        return this.inventory.getItems(allowInvisibleItems);
     }
 
     public addItems(item: Item[]) {
-        this.items.push(...item);
+        this.inventory.addItems(item);
     }
 
     public addItem(item: Item) {
-        this.items.push(item);
+        this.inventory.addItem(item);
     }
 
     public addNpcs(npcs: NPC[]) {
-        this.npcs.push(...npcs);
+        this.inventory.addNpcs(npcs);
     }
 
     public getNpcs(): NPC[] {
-        return this.npcs;
+        return this.inventory.getNpcs();
     }
 
     public findNpc(name: string): NPC | undefined {
-        return this.npcs.find((npc) => npc.name === name);
+        return this.inventory.findNpc(name);
     }
 
     public findItem(name: string, allowInvisibleItem = false): Item | undefined {
-        return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.isVisible()));
+        return this.inventory.findItem(name, allowInvisibleItem);
     }
 
     public removeItem(item: Item) {
-        this.items = this.items.filter((it) => it.name !== item.name);
+        this.inventory.removeItem(item);
     }
 
     public getPreferredTextLength(): 'short' | 'long' {
-        return this.numberOfVisits.getPreferredTextLength();
+        return this.visits.getPreferredTextLength();
     }
 }

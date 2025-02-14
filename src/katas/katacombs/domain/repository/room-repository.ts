@@ -24,8 +24,8 @@ export class RoomRepository {
 
     private validateRooms(rooms: Room[]) {
         this.ensureRoomExists(rooms, 'start');
-        this.ensureUniquePropertyInRooms(rooms, 'name');
-        this.ensureUniquePropertyInRooms(rooms, 'title');
+        this.ensureUniqueNameInRooms(rooms);
+        this.ensureUniqueTitleInRooms(rooms);
     }
 
     private validateItemsInRooms(rooms: Room[]) {
@@ -34,10 +34,17 @@ export class RoomRepository {
         this.ensureUniqueInventoryDescriptionsInItems(items);
     }
 
-    private ensureUniquePropertyInRooms(rooms: Room[], propertyName: keyof Room) {
-        const uniqueValues = new Set(rooms.map((room) => room[propertyName]));
+    private ensureUniqueNameInRooms(rooms: Room[]) {
+        const uniqueValues = new Set(rooms.map((room) => room.getName()));
         if (uniqueValues.size !== rooms.length) {
-            throw new Error(`Rooms should have unique ${propertyName}s`);
+            throw new Error(`Rooms should have unique names`);
+        }
+    }
+
+    private ensureUniqueTitleInRooms(rooms: Room[]) {
+        const uniqueValues = new Set(rooms.map((room) => room.getTitle()));
+        if (uniqueValues.size !== rooms.length) {
+            throw new Error(`Rooms should have unique titles`);
         }
     }
 
@@ -61,7 +68,7 @@ export class RoomRepository {
     private groupRooms(rooms: Room[]): Record<string, Room> {
         const result: Record<string, Room> = {};
 
-        const groupedRooms = groupBy(rooms, (room) => room.name);
+        const groupedRooms = groupBy(rooms, (room) => room.getName());
         for (const name in groupedRooms) {
             const roomToAdd = groupedRooms[name];
 
@@ -78,7 +85,7 @@ export class RoomRepository {
     }
 
     private validateConnectionsOfRoom(room: Room) {
-        const roomName = room.name;
+        const roomName = room.getName();
 
         room.getConnections().forEach((connection) => {
             this.validateConnection(connection, roomName);
@@ -101,7 +108,7 @@ export class RoomRepository {
     }
 
     private ensureRoomExists(rooms: Room[], roomName: string) {
-        const room = rooms.find((it) => it.name === roomName);
+        const room = rooms.find((it) => it.getName() === roomName);
         if (!room) throw new Error(`A room with the name "${roomName}" does not exist.`);
     }
 }

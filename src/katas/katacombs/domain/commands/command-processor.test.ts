@@ -55,7 +55,9 @@ describe('CommandProcessor', () => {
 
         it('should process the go command when a direction was given', async () => {
             await commandProcessor.processUserInput('go building');
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                expect.objectContaining({ identity: expect.objectContaining({ name: 'building' }) }),
+            );
         });
 
         it('should process the take command', async () => {
@@ -101,7 +103,9 @@ describe('CommandProcessor', () => {
         describe('to an ordinal direction', () => {
             it('should print the new room when the direction is valid', async () => {
                 await commandProcessor.processUserInput('go north');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                    expect.objectContaining({ identity: expect.objectContaining({ name: 'building' }) }),
+                );
             });
 
             it('should print a message when direction is invalid', async () => {
@@ -115,7 +119,9 @@ describe('CommandProcessor', () => {
         describe('using synonyms of the connection', () => {
             it('should print the new room when traveling to a synonym of the connection was successful', async () => {
                 await commandProcessor.processUserInput('go building');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith(expect.objectContaining({ name: 'building' }));
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                    expect.objectContaining({ identity: expect.objectContaining({ name: 'building' }) }),
+                );
             });
 
             it('should print a message when synonym could not be found', async () => {

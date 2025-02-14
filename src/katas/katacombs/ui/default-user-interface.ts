@@ -38,7 +38,7 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     public displayRoomTitle(room: Room): void {
-        this.setWindowTitle(room.title);
+        this.setWindowTitle(room.getTitle());
     }
 
     public displayMessage(message: TextWithAudioFiles): void {

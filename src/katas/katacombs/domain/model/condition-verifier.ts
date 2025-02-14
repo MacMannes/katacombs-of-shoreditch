@@ -10,7 +10,8 @@ export class ConditionVerifier {
 
     public verifyCondition(condition: Condition): boolean {
         if (condition.type === 'location' && condition.key === 'currentLocation') {
-            return this.game.getCurrentRoom().name === condition.value;
+            const currentRoom = this.game.getCurrentRoom();
+            return currentRoom.getName() === condition.value;
         }
         if (condition.type === 'hasState') {
             return this.game.findItem(condition.key)?.getCurrentState() === condition.value;
