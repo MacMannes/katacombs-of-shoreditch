@@ -17,7 +17,7 @@ export class RoomInventory {
     }
 
     public removeItem(item: Item): void {
-        this.items = this.items.filter((it) => it.name !== item.name);
+        this.items = this.items.filter((it) => !it.equals(item));
     }
 
     public getNpcs(): NPC[] {

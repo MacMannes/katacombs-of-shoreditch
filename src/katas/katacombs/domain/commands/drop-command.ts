@@ -34,7 +34,7 @@ export class DropCommand extends Command {
     }
 
     private mergeWithItemFromRoom(item: CountableItem) {
-        const itemInRoom = this.game.findItemInRoom(item.name);
+        const itemInRoom = this.game.findItemInRoom(item.getName());
         if (itemInRoom && itemInRoom instanceof CountableItem) {
             item.mergeWith(itemInRoom);
             this.game.removeItemFromRoom(itemInRoom);

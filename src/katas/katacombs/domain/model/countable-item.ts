@@ -48,7 +48,7 @@ export class CountableItem extends Item {
     }
 
     public mergeWith(other: CountableItem) {
-        if (this.name !== other.name) {
+        if (this.getName() !== other.getName()) {
             throw new Error('Cannot merge items with different names.');
         }
         this.addCount(other.getCount());

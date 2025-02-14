@@ -12,10 +12,7 @@ export class Item {
 
     private readonly identifier: ItemIdentifier;
 
-    constructor(
-        private readonly name: string,
-        options: ItemOptions,
-    ) {
+    constructor(name: string, options: ItemOptions) {
         this.identifier = new ItemIdentifier(name, options.synonyms);
 
         this.description = options.description;
@@ -26,6 +23,10 @@ export class Item {
             this.currentState = options.initialState ?? Object.keys(options.states).at(0);
         }
         this.triggers = options.triggers;
+    }
+
+    public getName(): string {
+        return this.identifier.getName();
     }
 
     public getDescription(context: keyof ItemDescription): string[] {
@@ -59,6 +60,10 @@ export class Item {
 
     public matches(word: string): boolean {
         return this.identifier.matches(word);
+    }
+
+    public equals(other: Item): boolean {
+        return this.getName() === other.getName();
     }
 }
 

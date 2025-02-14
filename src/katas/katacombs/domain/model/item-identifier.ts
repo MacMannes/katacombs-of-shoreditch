@@ -10,4 +10,8 @@ export class ItemIdentifier {
     public matches(word: string): boolean {
         return this.name === word || this.synonyms.has(word);
     }
+
+    public getName() {
+        return this.name;
+    }
 }

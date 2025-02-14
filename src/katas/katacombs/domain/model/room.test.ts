@@ -85,7 +85,7 @@ describe('Room', () => {
         it('should not return invisible items by default', () => {
             const items = room.getItems();
             expect(items).toHaveLength(1);
-            expect(items[0].name).toBe('lantern');
+            expect(items[0].getName()).toBe('lantern');
         });
 
         it('should also return invisible items when explicitly allowing invisible items', () => {
