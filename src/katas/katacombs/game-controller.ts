@@ -17,7 +17,8 @@ export class GameController {
     }
 
     private displayCurrentRoom(preferredLength?: 'short' | 'long') {
-        this.ui.displayRoomTitle(this.game.getCurrentRoom());
+        const currentRoom = this.game.getCurrentRoom();
+        this.ui.displayRoomTitle(currentRoom.getTitle());
         this.displayRoom(preferredLength);
     }
 

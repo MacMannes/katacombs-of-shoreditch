@@ -25,7 +25,7 @@ rooms:
         count: 2
 
   - name: building
-    title: Inside the buildings
+    title: Inside the building
     description: room-building
     connections:
       - direction: south

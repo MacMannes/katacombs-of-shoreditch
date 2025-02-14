@@ -36,9 +36,7 @@ describe('GameController', () => {
         it('should print the title and description of the starting room', async () => {
             await controller.startGame();
             expect(ui.displayRoomTitle).toHaveBeenCalledTimes(1);
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith(
-                expect.objectContaining({ identity: expect.objectContaining({ name: 'start' }) }),
-            );
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith('Lost in Shoreditch');
         });
 
         it('should continue to ask for user input until the user says "quit"', async () => {
@@ -56,9 +54,7 @@ describe('GameController', () => {
             ui.getUserInput.mockResolvedValueOnce('n');
             await controller.startGame();
 
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith(
-                expect.objectContaining({ identity: expect.objectContaining({ name: 'building' }) }),
-            );
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith('Lost in Shoreditch');
         });
     });
 });

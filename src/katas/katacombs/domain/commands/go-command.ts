@@ -21,7 +21,7 @@ export class GoCommand extends Command {
 
         const roomDescription = this.game.describeRoom();
 
-        this.ui.displayRoomTitle(this.game.getCurrentRoom());
+        this.ui.displayRoomTitle(newRoom.getTitle());
         this.ui.displayMessage(roomDescription);
 
         return true;

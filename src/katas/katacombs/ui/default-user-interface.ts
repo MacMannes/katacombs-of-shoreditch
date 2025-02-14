@@ -1,6 +1,6 @@
 /* v8 ignore start */
 
-import { Room, TextWithAudioFiles } from '../domain';
+import { TextWithAudioFiles } from '../domain';
 import { AudioPlayer, Choice, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
@@ -37,8 +37,8 @@ export class DefaultUserInterface implements UserInterface {
         await this.audioPlayer.playAsync('welcome');
     }
 
-    public displayRoomTitle(room: Room): void {
-        this.setWindowTitle(room.getTitle());
+    public displayRoomTitle(title: string): void {
+        this.setWindowTitle(title);
     }
 
     public displayMessage(message: TextWithAudioFiles): void {

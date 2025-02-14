@@ -16,7 +16,7 @@ export class NoOpUserInterface implements UserInterface {
         // NO-OP
     }
 
-    public displayRoomTitle(room: Room): void {
+    public displayRoomTitle(title: string): void {
         // NO-OP
     }
 
