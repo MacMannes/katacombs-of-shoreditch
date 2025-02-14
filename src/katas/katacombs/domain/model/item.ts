@@ -13,8 +13,8 @@ export class Item {
     private readonly words: string[] = [];
 
     constructor(
-        readonly name: string,
-        readonly options: ItemOptions,
+        private readonly name: string,
+        options: ItemOptions,
     ) {
         this.description = options.description;
         if (options.words) this.words.push(...options.words);
