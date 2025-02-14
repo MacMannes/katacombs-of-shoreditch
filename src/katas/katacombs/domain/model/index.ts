@@ -16,6 +16,7 @@ export * from './game-factory';
 export * from './game-loop';
 export * from './game-realm';
 export * from './item';
+export * from './item-identifier';
 export * from './npc';
 export * from './room';
 export * from './room-connections';

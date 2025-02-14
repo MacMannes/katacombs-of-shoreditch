@@ -1,4 +1,4 @@
-import { ActionTrigger } from '@katas/katacombs/domain';
+import { ActionTrigger, ItemIdentifier } from '@katas/katacombs/domain';
 import { isDefined } from '@utils/array';
 
 export class Item {
@@ -10,14 +10,15 @@ export class Item {
     protected currentState?: string;
     private visible: boolean;
 
-    private readonly words: string[] = [];
+    private readonly identifier: ItemIdentifier;
 
     constructor(
         private readonly name: string,
         options: ItemOptions,
     ) {
+        this.identifier = new ItemIdentifier(name, options.synonyms);
+
         this.description = options.description;
-        if (options.words) this.words.push(...options.words);
         this.visible = options.visible ?? true;
         this.immovable = options.immovable ?? false;
         if (options.states) {
@@ -57,7 +58,7 @@ export class Item {
     }
 
     public matches(word: string): boolean {
-        return this.name === word || this.words.includes(word);
+        return this.identifier.matches(word);
     }
 }
 
@@ -69,7 +70,7 @@ export type ItemDescription = {
 
 export type ItemOptions = {
     description: ItemDescription;
-    words?: string[];
+    synonyms?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
     states?: Record<string, ItemDescription>;

@@ -44,7 +44,7 @@ export function toItems(globalItems: ItemData[], itemsToCreate?: ItemData[]): It
 function toItem(item: ItemData, override: ItemData): Item {
     const options: ItemOptions = {
         description: toItemDescription(override.description ?? item.description),
-        words: override.words ?? item.words,
+        synonyms: override.words ?? item.words,
         visible: override.visible ?? item.visible,
         immovable: override.immovable ?? item.immovable,
         triggers: toTriggers(override.triggers ?? item.triggers),
