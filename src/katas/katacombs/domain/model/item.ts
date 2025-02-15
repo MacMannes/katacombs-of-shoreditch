@@ -2,9 +2,9 @@ import { ActionTrigger, ItemIdentifier } from '@katas/katacombs/domain';
 import { isDefined } from '@utils/array';
 
 export class Item {
-    public readonly description: ItemDescription;
     private readonly _immovable: boolean;
-    public readonly states?: Record<string, ItemDescription>;
+    private readonly states?: Record<string, ContextualItemDescription>;
+    private readonly description: ContextualItemDescription;
     public readonly triggers?: ActionTrigger[];
 
     protected currentState?: string;
@@ -33,7 +33,7 @@ export class Item {
         return this.identifier.getName();
     }
 
-    public getDescription(context: keyof ItemDescription): string[] {
+    public getDescription(context: keyof ContextualItemDescription): string[] {
         const baseDescription = this.description[context];
         const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
 
@@ -71,18 +71,18 @@ export class Item {
     }
 }
 
-export type ItemDescription = {
+export type ContextualItemDescription = {
     inventory: string;
     room: string;
     look: string;
 };
 
 export type ItemOptions = {
-    description: ItemDescription;
+    description: ContextualItemDescription;
     synonyms?: string[];
     visible?: boolean; // Visibility of the item. Default: true;
     immovable?: boolean; // Immovable objects can't be taken. Default: false;
-    states?: Record<string, ItemDescription>;
+    states?: Record<string, ContextualItemDescription>;
     initialState?: string;
     triggers?: ActionTrigger[];
 };

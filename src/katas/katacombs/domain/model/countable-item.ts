@@ -1,4 +1,4 @@
-import { Item, ItemDescription, ItemOptions } from './item';
+import { Item, ContextualItemDescription, ItemOptions } from './item';
 import { isDefined } from '@utils/array';
 
 export class CountableItem extends Item {
@@ -11,13 +11,13 @@ export class CountableItem extends Item {
         this.countableDescriptions = options?.countableDescriptions ?? [];
     }
 
-    override getDescription(context: keyof ItemDescription): string[] {
+    override getDescription(context: keyof ContextualItemDescription): string[] {
         const description = this.countableDescriptions
             .sort((a, b) => b.count - a.count)
             .find((it) => it.count <= this.count);
 
         const baseDescription = description?.[context];
-        const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
+        const stateDescription = super.getDescription(context).at(1);
 
         const textKeys = [baseDescription, stateDescription].filter(isDefined);
 
@@ -61,6 +61,6 @@ export type CountableItemOptions = ItemOptions & {
     countableDescriptions?: CountableItemDescription[];
 };
 
-export type CountableItemDescription = ItemDescription & {
+export type CountableItemDescription = ContextualItemDescription & {
     count: number;
 };

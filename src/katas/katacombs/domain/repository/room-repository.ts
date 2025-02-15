@@ -1,5 +1,5 @@
 import { Connection, Item, oppositeOf, Room } from '@katas/katacombs/domain';
-import { groupBy } from '@utils/array';
+import { groupBy, isDefined } from '@utils/array';
 
 export class RoomRepository {
     private readonly roomsByName: Record<string, Room>;
@@ -56,7 +56,11 @@ export class RoomRepository {
     }
 
     private ensureUniqueInventoryDescriptionsInItems(items: Item[]) {
-        const descriptions = items.filter((item) => !item.immovable).map((item) => item.description.inventory);
+        const descriptions = items
+            .filter((item) => !item.immovable)
+            .map((item) => item.getDescription('inventory').at(0))
+            .filter(isDefined);
+
         if (!this.hasUniqueStrings(descriptions)) {
             throw new Error(`Items should have unique inventory descriptions`);
         }

@@ -1,5 +1,5 @@
 import { ActionTriggerData, toTriggers } from '@katas/katacombs/domain/data-loader/model';
-import { CountableItemDescription, Item, ItemDescription, ItemOptions } from '@katas/katacombs/domain';
+import { CountableItemDescription, Item, ContextualItemDescription, ItemOptions } from '@katas/katacombs/domain';
 import { isDefined } from '@utils/array';
 import { CountableItem } from '@katas/katacombs/domain/model';
 
@@ -66,14 +66,16 @@ function toItem(item: ItemData, override: ItemData): Item {
 function toStates(states?: Record<string, ItemDescriptionData>) {
     if (!states) return undefined;
 
-    const convertedStates: Record<string, ItemDescription> = {};
+    const convertedStates: Record<string, ContextualItemDescription> = {};
     for (const [key, value] of Object.entries(states)) {
         convertedStates[key] = toItemDescription(value);
     }
     return convertedStates;
 }
 
-function toItemDescription(description?: ItemDescriptionData | CountableItemDescriptionData[]): ItemDescription {
+function toItemDescription(
+    description?: ItemDescriptionData | CountableItemDescriptionData[],
+): ContextualItemDescription {
     if (!isItemDescriptionData(description)) {
         return {
             room: '',
