@@ -1,27 +1,19 @@
-import { ActionTrigger, ItemIdentifier } from '@katas/katacombs/domain';
-import { isDefined } from '@utils/array';
+import { ActionTrigger, StatefulItemDescription, ItemIdentifier } from '@katas/katacombs/domain';
 
 export class Item {
     private readonly _immovable: boolean;
-    private readonly states?: Record<string, ContextualItemDescription>;
-    private readonly description: ContextualItemDescription;
     public readonly triggers?: ActionTrigger[];
-
-    protected currentState?: string;
     private visible: boolean;
 
     private readonly identifier: ItemIdentifier;
+    private readonly description: StatefulItemDescription;
 
     constructor(name: string, options: ItemOptions) {
         this.identifier = new ItemIdentifier(name, options.synonyms);
+        this.description = new StatefulItemDescription(options.description, options.states, options.initialState);
 
-        this.description = options.description;
         this.visible = options.visible ?? true;
         this._immovable = options.immovable ?? false;
-        if (options.states) {
-            this.states = options.states;
-            this.currentState = options.initialState ?? Object.keys(options.states).at(0);
-        }
         this.triggers = options.triggers;
     }
 
@@ -34,20 +26,15 @@ export class Item {
     }
 
     public getDescription(context: keyof ContextualItemDescription): string[] {
-        const baseDescription = this.description[context];
-        const stateDescription = this.currentState ? this.states?.[this.currentState]?.[context] : undefined;
-
-        return [baseDescription, stateDescription].filter(isDefined);
+        return this.description.getDescription(context);
     }
 
     public getCurrentState(): string | undefined {
-        return this.currentState;
+        return this.description.currentState;
     }
 
     public setState(newState: string) {
-        if (!this.states || !Object.keys(this.states).includes(newState)) return;
-
-        this.currentState = newState;
+        this.description.setState(newState);
     }
 
     public isVisible(): boolean {
