@@ -1,18 +1,19 @@
 import { ActionTrigger, StatefulItemDescription, ItemIdentifier } from '@katas/katacombs/domain';
+import { ItemVisibility } from '@katas/katacombs/domain/model/item-visibility';
 
 export class Item {
     private readonly _immovable: boolean;
     public readonly triggers?: ActionTrigger[];
-    private visible: boolean;
 
     private readonly identifier: ItemIdentifier;
     private readonly description: StatefulItemDescription;
+    private readonly visibility: ItemVisibility;
 
     constructor(name: string, options: ItemOptions) {
         this.identifier = new ItemIdentifier(name, options.synonyms);
         this.description = new StatefulItemDescription(options.description, options.states, options.initialState);
 
-        this.visible = options.visible ?? true;
+        this.visibility = new ItemVisibility(options.visible ?? true);
         this._immovable = options.immovable ?? false;
         this.triggers = options.triggers;
     }
@@ -38,15 +39,15 @@ export class Item {
     }
 
     public isVisible(): boolean {
-        return this.visible;
+        return this.visibility.isVisible();
     }
 
     public reveal() {
-        this.visible = true;
+        this.visibility.reveal();
     }
 
     public hide() {
-        this.visible = false;
+        this.visibility.hide();
     }
 
     public matches(word: string): boolean {
