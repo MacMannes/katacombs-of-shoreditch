@@ -1,4 +1,5 @@
 export * from './action-trigger';
+export * from './action-triggers';
 export * from './action-trigger-executor';
 export * from './caller-id';
 export * from './command-action';

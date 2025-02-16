@@ -17,8 +17,10 @@ export class ActionTriggerExecutor {
 
     public async execute(target: string | undefined, verb: string): Promise<boolean> {
         const targetItem = target ? this.game.findItem(target) : undefined;
-        const triggers = targetItem?.triggers?.filter((trigger) => this.shouldExecuteTrigger(trigger, verb));
-        if (!triggers) return false;
+        if (!targetItem) return false;
+
+        const triggers = targetItem.getTriggers(verb).filter((trigger) => this.shouldExecuteTrigger(trigger));
+        if (triggers.length == 0) return false;
 
         const actions = triggers.flatMap((trigger) => trigger.actions);
         let executedTrigger = false;
@@ -30,9 +32,7 @@ export class ActionTriggerExecutor {
         return executedTrigger;
     }
 
-    private shouldExecuteTrigger(trigger: ActionTrigger, verb: string): boolean {
-        if (trigger.verb !== verb) return false;
-
+    private shouldExecuteTrigger(trigger: ActionTrigger): boolean {
         if (trigger.conditions) {
             return this.conditionVerifier.verifyConditions(trigger.conditions);
         }

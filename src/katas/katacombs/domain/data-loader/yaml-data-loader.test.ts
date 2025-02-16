@@ -128,8 +128,8 @@ describe('YamlDataLoader', () => {
             const casks = building?.findItem('casks', true);
 
             expect(casks).toBeDefined();
-            expect(casks?.triggers).toHaveLength(1);
-            expect(casks?.triggers?.[0]).toStrictEqual({
+            expect(casks?.getTriggers()).toHaveLength(1);
+            expect(casks?.getTriggers()?.[0]).toStrictEqual({
                 verb: 'look',
                 conditions: undefined,
                 actions: [
@@ -153,7 +153,7 @@ describe('YamlDataLoader', () => {
 
             const lamp = building?.findItem('lantern', true);
             expect(lamp).toBeDefined();
-            const dropTrigger = lamp?.triggers?.find((trigger) => trigger.verb === 'drop');
+            const dropTrigger = lamp?.getTriggers('drop')?.at(0);
 
             expect(dropTrigger).toBeDefined();
             expect(dropTrigger?.verb).toBe('drop');
@@ -167,8 +167,8 @@ describe('YamlDataLoader', () => {
 
             const cheese = start?.findItem('cheese', true);
             expect(cheese).toBeDefined();
-            expect(cheese?.triggers).toHaveLength(2);
-            const dropTrigger = cheese?.triggers?.[1];
+            expect(cheese?.getTriggers()).toHaveLength(2);
+            const dropTrigger = cheese?.getTriggers()?.[1];
 
             expect(dropTrigger).toBeDefined();
             expect(dropTrigger?.verb).toBe('drop');
@@ -187,8 +187,8 @@ describe('YamlDataLoader', () => {
 
             const hole = building?.findItem('hole', true);
             expect(hole).toBeDefined();
-            expect(hole?.triggers).toHaveLength(1);
-            const lookTrigger = hole?.triggers?.[0];
+            expect(hole?.getTriggers()).toHaveLength(1);
+            const lookTrigger = hole?.getTriggers()?.[0];
 
             expect(lookTrigger).toBeDefined();
             expect(lookTrigger?.verb).toBe('look');
