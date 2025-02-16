@@ -1,25 +1,30 @@
-import { ActionTrigger, StatefulItemDescription, ItemIdentifier, ActionTriggers } from '@katas/katacombs/domain';
+import {
+    ActionTrigger,
+    StatefulItemDescription,
+    ItemIdentifier,
+    ActionTriggers,
+    ItemMovability,
+} from '@katas/katacombs/domain';
 import { ItemVisibility } from '@katas/katacombs/domain/model/item-visibility';
 
 export class Item {
-    private readonly _immovable: boolean;
-
     private readonly identifier: ItemIdentifier;
     private readonly description: StatefulItemDescription;
     private readonly visibility: ItemVisibility;
     private readonly triggers: ActionTriggers;
+    private readonly movability: ItemMovability;
 
     constructor(name: string, options: ItemOptions) {
         this.identifier = new ItemIdentifier(name, options.synonyms);
         this.description = new StatefulItemDescription(options.description, options.states, options.initialState);
 
         this.visibility = new ItemVisibility(options.visible ?? true);
-        this._immovable = options.immovable ?? false;
+        this.movability = new ItemMovability(options.immovable ? 'immovable' : 'movable');
         this.triggers = new ActionTriggers(options.triggers);
     }
 
     public get immovable(): boolean {
-        return this._immovable;
+        return !this.movability.isMovable();
     }
 
     public get name(): string {
