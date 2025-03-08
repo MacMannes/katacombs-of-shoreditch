@@ -1,4 +1,4 @@
-import { Item, ContextualItemDescription, ItemOptions } from 'src/domain/model/item';
+import { Item, ContextualItemDescription, ItemOptions } from 'src/domain/model/item/item';
 import { isDefined } from 'src/utils/array';
 
 export class CountableItem extends Item {

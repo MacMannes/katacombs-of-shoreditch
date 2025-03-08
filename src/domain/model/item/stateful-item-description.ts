@@ -1,4 +1,4 @@
-import { ContextualItemDescription } from 'src/domain/model/item';
+import { ContextualItemDescription } from 'src/domain/model/item/item';
 import { isDefined } from 'src/utils/array';
 
 export class StatefulItemDescription {
