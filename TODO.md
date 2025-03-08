@@ -50,6 +50,6 @@
   - [x] getInventory()
   - [x] findItem
   - [x] displayInventory
-- [ ] Delegate methods from Game to respective Commands
+- [x] Delegate methods from Game to respective Commands
 - [ ] Fix tests for DefaultUserInterface
 - [ ] Introduce Game.findItemInInventory(name)
