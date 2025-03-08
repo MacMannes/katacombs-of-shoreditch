@@ -1,11 +1,11 @@
 /* v8 ignore start */
 
-import { TextWithAudioFiles } from '../domain';
 import { AudioPlayer, Choice, UserInterface } from '@katas/katacombs/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
+import { TextWithAudioFiles } from '@katas/katacombs/domain';
 
 export class DefaultUserInterface implements UserInterface {
     private rl = createInterface({
