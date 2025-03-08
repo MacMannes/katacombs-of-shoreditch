@@ -1,5 +1,5 @@
-import { isDefined } from '@utils/array';
 import { Room, TextWithAudioFiles } from '../index';
+import { isDefined } from '../../utils/array';
 
 export class TextRepository {
     constructor(private readonly texts: Record<string, string>) {}

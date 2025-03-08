@@ -1,5 +1,5 @@
 import { toItems, ConnectionData, ItemData, Room, toConnections, NpcData, toNPC } from '../../index';
-import { isDefined } from '@utils/array';
+import { isDefined } from '../../../utils/array';
 
 export type RoomData = {
     name: string;

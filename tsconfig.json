@@ -8,10 +8,6 @@
     "strict": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
-    "paths": {
-      "@utils/*": ["./utils/*"],
-    }
   },
   "exclude": ["node_modules"]
 }

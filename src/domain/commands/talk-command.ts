@@ -12,7 +12,7 @@ import {
     NPC,
 } from '../index';
 import { Choice, UserInterface } from '../../ui';
-import { isDefined } from '@utils/array';
+import { isDefined } from '../../utils/array';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;

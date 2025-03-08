@@ -1,5 +1,5 @@
-import { ContextualItemDescription } from '../index';
-import { isDefined } from '@utils/array';
+import { ContextualItemDescription } from './item';
+import { isDefined } from '../../utils/array';
 
 export class StatefulItemDescription {
     private readonly description: ContextualItemDescription;

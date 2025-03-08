@@ -2,9 +2,9 @@ import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
 import path from 'node:path';
 import { Game, GameFactory, YamlDataLoader } from '../../domain';
-import { createMockedObject } from '@utils/test/index';
 import { NoOpUserInterface } from '../../ui';
 import { CommandProcessor } from '../../domain/commands';
+import { createMockedObject } from './create-mocked-object';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

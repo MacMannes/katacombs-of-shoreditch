@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DefaultAudioPlayer, DefaultUserInterface } from './index';
 import { TextWithAudioFiles } from '../domain';
-import { createMockedObject } from '@utils/test';
+import { createMockedObject } from '../utils/test';
 
 describe('Default UserInterface', async () => {
     const audioPlayer = createMockedObject(DefaultAudioPlayer);
@@ -90,7 +90,7 @@ describe('Default UserInterface', async () => {
         });
 
         it('should call the audio player when audioKeys were passed', async () => {
-            await ui.displayMessage(new TextWithAudioFiles('Hello World!', ['hello', 'world']));
+            ui.displayMessage(new TextWithAudioFiles('Hello World!', ['hello', 'world']));
             expect(audioPlayer.play).toHaveBeenCalledWith('hello', 'world');
         });
     });

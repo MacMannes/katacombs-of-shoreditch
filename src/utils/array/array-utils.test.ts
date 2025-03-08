@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isDefined } from '@utils/array/index';
+import { isDefined } from './array-utils';
 
 describe('isDefined', () => {
     it('should work as an array filter, returning only defined items', () => {

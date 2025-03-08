@@ -1,7 +1,7 @@
 import { ActionTrigger, CommandAction, ConditionVerifier, Game } from '../index';
 import { UserInterface } from '../../ui';
 import { CommandFactory } from '../commands';
-import { isDefined } from '@utils/array';
+import { isDefined } from '../../utils/array';
 
 export class ActionTriggerExecutor {
     private readonly commandFactory: CommandFactory;

@@ -9,9 +9,9 @@ import {
     YamlDataLoader,
 } from '../index';
 import path from 'node:path';
-import { CountableItem } from '../model/countable-item';
+import { CountableItem } from '../model';
 import { fail } from 'node:assert';
-import { expectToBeDefined } from '@utils/test';
+import { expectToBeDefined } from '../../utils/test';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path

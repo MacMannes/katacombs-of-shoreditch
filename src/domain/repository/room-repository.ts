@@ -1,5 +1,5 @@
 import { Connection, Item, oppositeOf, Room } from '../index';
-import { groupBy, isDefined } from '@utils/array';
+import { groupBy, isDefined } from '../../utils/array';
 
 export class RoomRepository {
     private readonly roomsByName: Record<string, Room>;

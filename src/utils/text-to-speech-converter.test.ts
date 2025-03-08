@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { TextToSpeechConverter, TextToSpeechService } from '@utils/index';
-import { createMockedObject } from '@utils/test';
 import { existsSync } from 'node:fs';
 import { getAbsolutePath, RESOURCES_PATH } from '../paths';
 import path from 'node:path';
+import { createMockedObject } from './test';
+import { TextToSpeechService } from './text-to-speech-service';
+import { TextToSpeechConverter } from './text-to-speech-converter';
 
 vi.mock('fs', () => ({
     existsSync: vi.fn(),

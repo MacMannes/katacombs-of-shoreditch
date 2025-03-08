@@ -1,5 +1,5 @@
-import { isDefined } from '@utils/array';
-import { Condition } from '../../index';
+import { Condition } from '../../model';
+import { isDefined } from '../../../utils/array';
 
 export type ConditionData = {
     'current-location'?: string;

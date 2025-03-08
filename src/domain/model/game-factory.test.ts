@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createMockedObject } from '@utils/test';
 import { GameFactory, GameRealm, Room, YamlDataLoader } from '../index';
+import { createMockedObject } from '../../utils/test';
 
 function createRooms(): Room[] {
     return [new Room('start', 'Beginning', 'You are at the beginning of the game.')];
