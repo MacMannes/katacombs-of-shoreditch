@@ -3,7 +3,7 @@ import { CommandProcessor } from 'src/domain/commands';
 import { Game } from 'src/domain';
 
 export class GameLoop {
-    public readonly commandProcessor: CommandProcessor;
+    private readonly commandProcessor: CommandProcessor;
     private readonly ui: UserInterface;
 
     constructor(game: Game, ui: UserInterface) {
