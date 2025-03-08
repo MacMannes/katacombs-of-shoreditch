@@ -35,6 +35,8 @@
     - [x] Actions: Take / Add to inventory
     - [x] Reduce coins by price of item
   - [x] Say "You try to start a conversation, but it’s lonely out here." when talking to an NPC that isn't there 
+- [ ] Make ContainerItem
+- [ ] Make LockableContainerItem
 
 ## Things to improve
 
@@ -44,7 +46,7 @@
 - [x] Remove ui instance variable from CommandProcessor
 - [x] Move tests from game-controller.test to command.processor.test
 - [x] Remove method GameController.processCommand()
-- [ ] Make GameLoop.commandProcessor private
+- [x] Make GameLoop.commandProcessor private
 - [x] Try to remove public methods from GameController
   - [x] getCurrentRoom()
   - [x] getInventory()
