@@ -14,8 +14,8 @@
     "test:report": "vitest run --outputFile test-results/junit.xml --reporter default --reporter junit",
     "lint": "eslint src/",
     "start": "tsx src/index.ts",
-    "katacombs": "tsx src/katas/katacombs/app.ts",
-    "convert-tts": "tsx src/katas/katacombs/convert-text-to-speech.ts"
+    "katacombs": "tsx src/app.ts",
+    "convert-tts": "tsx src/convert-text-to-speech.ts"
   },
   "dependencies": {
     "chalk": "^5.3.0",
