@@ -1,7 +1,7 @@
 import { ActionTrigger, CommandAction, ConditionVerifier, Game } from '@katas/katacombs/domain';
 import { UserInterface } from '@katas/katacombs/ui';
-import { CommandFactory } from 'katas/katacombs/domain/commands';
-import { isDefined } from '@utils/array';
+import { CommandFactory } from '@katas/katacombs/domain/commands';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export class ActionTriggerExecutor {
     private readonly commandFactory: CommandFactory;

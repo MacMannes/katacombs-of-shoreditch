@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array/index';
 
 describe('isDefined', () => {
     it('should work as an array filter, returning only defined items', () => {

@@ -1,5 +1,5 @@
 import { Connection, Item, oppositeOf, Room } from '@katas/katacombs/domain';
-import { groupBy, isDefined } from '@utils/array';
+import { groupBy, isDefined } from '@katas/katacombs/utils/array';
 
 export class RoomRepository {
     private readonly roomsByName: Record<string, Room>;

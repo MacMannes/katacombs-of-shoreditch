@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TextToSpeechConverter, TextToSpeechService } from '@katas/katacombs/utils';
-import { createMockedObject } from '@utils/test';
+import { createMockedObject } from '@katas/katacombs/utils/test';
 import { existsSync } from 'node:fs';
 import { getAbsolutePath, RESOURCES_PATH } from '@katas/katacombs/paths';
 import path from 'node:path';

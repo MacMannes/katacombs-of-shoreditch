@@ -1,5 +1,5 @@
 import { toItems, ConnectionData, ItemData, Room, toConnections, NpcData, toNPC } from '@katas/katacombs/domain';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export type RoomData = {
     name: string;

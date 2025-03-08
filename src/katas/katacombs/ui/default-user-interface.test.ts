@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DefaultAudioPlayer, DefaultUserInterface } from '@katas/katacombs/ui';
 import { TextWithAudioFiles } from '@katas/katacombs/domain';
-import { createMockedObject } from '@utils/test';
+import { createMockedObject } from '@katas/katacombs/utils/test';
 
 describe('Default UserInterface', async () => {
     const audioPlayer = createMockedObject(DefaultAudioPlayer);

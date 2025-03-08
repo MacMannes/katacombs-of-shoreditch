@@ -1,6 +1,6 @@
 import { ActionTriggerData, toTriggers } from '@katas/katacombs/domain/data-loader/model';
 import { CountableItemDescription, Item, ContextualItemDescription, ItemOptions } from '@katas/katacombs/domain';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 import { CountableItem } from '@katas/katacombs/domain/model';
 
 export type ItemData = {

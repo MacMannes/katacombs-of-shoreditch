@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createMockedObject } from '@utils/test';
+import { createMockedObject } from '@katas/katacombs/utils/test';
 import { GameFactory, GameRealm, Room, YamlDataLoader } from '@katas/katacombs/domain';
 
 function createRooms(): Room[] {

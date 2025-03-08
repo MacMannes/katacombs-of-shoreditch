@@ -11,7 +11,7 @@ import {
 import path from 'node:path';
 import { CountableItem } from '@katas/katacombs/domain/model/countable-item';
 import { fail } from 'node:assert';
-import { expectToBeDefined } from '@utils/test';
+import { expectToBeDefined } from '@katas/katacombs/utils/test';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path

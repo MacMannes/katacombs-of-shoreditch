@@ -1,4 +1,4 @@
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 import { Condition } from '@katas/katacombs/domain';
 
 export type ConditionData = {

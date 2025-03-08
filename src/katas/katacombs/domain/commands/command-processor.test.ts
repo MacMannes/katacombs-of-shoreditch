@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CountableItem, NPC, TextWithAudioFiles } from '@katas/katacombs/domain';
-import { createTestGame, commandProcessor, game, ui } from '@katas/katacombs/utils/test-game';
-import { expectToBeDefined } from '@utils/test';
+import { createTestGame, commandProcessor, game, ui } from '@katas/katacombs/utils/test/test-game';
+import { expectToBeDefined } from '@katas/katacombs/utils/test';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {

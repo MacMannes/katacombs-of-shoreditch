@@ -12,7 +12,7 @@ import {
     NPC,
 } from '@katas/katacombs/domain';
 import { Choice, UserInterface } from '@katas/katacombs/ui';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;

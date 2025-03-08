@@ -1,5 +1,5 @@
 import { ContextualItemDescription } from '@katas/katacombs/domain';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export class StatefulItemDescription {
     private readonly description: ContextualItemDescription;

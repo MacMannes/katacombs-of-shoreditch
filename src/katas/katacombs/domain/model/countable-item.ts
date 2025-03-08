@@ -1,5 +1,5 @@
 import { Item, ContextualItemDescription, ItemOptions } from './item';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export class CountableItem extends Item {
     private count: number;

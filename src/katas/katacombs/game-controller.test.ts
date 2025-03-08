@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TextWithAudioFiles } from '@katas/katacombs/domain';
 import { GameController } from '@katas/katacombs';
-import { createTestGame, game, ui } from '@katas/katacombs/utils/test-game';
+import { createTestGame, game, ui } from './utils/test';
 
 describe('GameController', () => {
     let controller: GameController;

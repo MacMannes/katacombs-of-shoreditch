@@ -1,5 +1,5 @@
 import { Connection, isDirection } from '@katas/katacombs/domain';
-import { isDefined } from '@utils/array';
+import { isDefined } from '@katas/katacombs/utils/array';
 
 export type ConnectionData = {
     direction: string;
