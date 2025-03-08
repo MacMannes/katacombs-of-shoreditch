@@ -9,7 +9,7 @@ import {
     RoomIdentity,
     RoomInventory,
     RoomVisits,
-} from '../index';
+} from 'src/domain';
 
 export class Room {
     private readonly identity: RoomIdentity;

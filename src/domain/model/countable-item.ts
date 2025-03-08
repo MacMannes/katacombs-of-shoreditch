@@ -1,5 +1,5 @@
-import { Item, ContextualItemDescription, ItemOptions } from './item';
-import { isDefined } from '../../utils/array';
+import { Item, ContextualItemDescription, ItemOptions } from 'src/domain/model/item';
+import { isDefined } from 'src/utils/array';
 
 export class CountableItem extends Item {
     private count: number;

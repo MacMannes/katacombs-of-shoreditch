@@ -1,6 +1,6 @@
-import { Command } from './index';
-import { UserInterface } from '../../ui';
-import { Game } from '../index';
+import { Command } from 'src/domain/commands';
+import { UserInterface } from 'src/ui';
+import { Game } from 'src/domain';
 
 export class InvalidCommand extends Command {
     constructor(

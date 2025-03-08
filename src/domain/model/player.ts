@@ -1,4 +1,4 @@
-import { Item, ItemRepository, Room } from '../index';
+import { Item, ItemRepository, Room } from 'src/domain';
 
 export class Player {
     private currentRoom: Room;

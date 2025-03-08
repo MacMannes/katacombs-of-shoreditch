@@ -1,4 +1,4 @@
-import { Item, NPC } from '../index';
+import { Item, NPC } from 'src/domain';
 
 export class RoomInventory {
     private items: Item[] = [];

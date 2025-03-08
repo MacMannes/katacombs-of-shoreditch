@@ -1,7 +1,7 @@
-import { ActionTriggerExecutor, CommandPreprocessor, Game } from '../index';
-import { UserInterface } from '../../ui';
-import { CommandFactory } from './command-factory';
-import { QuitCommand } from './quit-command';
+import { ActionTriggerExecutor, CommandPreprocessor, Game } from 'src/domain';
+import { UserInterface } from 'src/ui';
+import { CommandFactory } from 'src/domain/commands/command-factory';
+import { QuitCommand } from 'src/domain/commands/quit-command';
 
 export type Result = {
     isPlaying: boolean;

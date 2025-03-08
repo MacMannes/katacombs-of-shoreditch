@@ -1,6 +1,6 @@
-import { Command, CommandExecuteOptions } from './index';
-import { CountableItem, Game, ItemImmovableError, NotFoundError, TakeItemResult } from '../index';
-import { UserInterface } from '../../ui';
+import { Command, CommandExecuteOptions } from 'src/domain/commands';
+import { CountableItem, Game, ItemImmovableError, NotFoundError, TakeItemResult } from 'src/domain';
+import { UserInterface } from 'src/ui';
 
 export class TakeCommand extends Command {
     constructor(

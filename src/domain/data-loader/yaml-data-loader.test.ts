@@ -7,11 +7,11 @@ import {
     isConditionDialog,
     NPC,
     YamlDataLoader,
-} from '../index';
+} from 'src/domain';
 import path from 'node:path';
-import { CountableItem } from '../model';
+import { CountableItem } from 'src/domain/model';
 import { fail } from 'node:assert';
-import { expectToBeDefined } from '../../utils/test';
+import { expectToBeDefined } from 'src/utils/test';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path

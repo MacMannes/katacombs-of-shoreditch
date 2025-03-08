@@ -1,10 +1,10 @@
 /* v8 ignore start */
 
-import { DefaultAudioPlayer, DefaultUserInterface } from './ui';
-import { GameController } from './game-controller';
-import { GameFactory, YamlDataLoader } from './domain';
+import { DefaultAudioPlayer, DefaultUserInterface } from 'src/ui';
+import { GameController } from 'src/game-controller';
+import { GameFactory, YamlDataLoader } from 'src/domain';
 import path from 'node:path';
-import { getAbsolutePath, RESOURCES_PATH, GAME_DATA } from './paths';
+import { getAbsolutePath, RESOURCES_PATH, GAME_DATA } from 'src/paths';
 
 async function createGameController() {
     const gameFactory = new GameFactory(new YamlDataLoader());

@@ -1,4 +1,4 @@
-import { Room } from '../index';
+import { Room } from 'src/domain';
 
 export type GameRealm = {
     rooms: Room[];

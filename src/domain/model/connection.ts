@@ -1,4 +1,4 @@
-import { Direction, isDirection } from '../index';
+import { Direction, isDirection } from 'src/domain';
 
 export class Connection {
     public readonly description?: string;

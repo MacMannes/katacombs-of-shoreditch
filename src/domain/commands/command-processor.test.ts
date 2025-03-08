@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CountableItem, NPC, TextWithAudioFiles } from '../index';
-import { commandProcessor, createTestGame, expectToBeDefined, game, ui } from '../../utils/test';
+import { CountableItem, NPC, TextWithAudioFiles } from 'src/domain';
+import { commandProcessor, createTestGame, expectToBeDefined, game, ui } from 'src/utils/test';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {

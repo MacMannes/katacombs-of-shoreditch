@@ -1,4 +1,4 @@
-import { CallerId } from '../index';
+import { CallerId } from 'src/domain';
 
 export type CommandHandler = {
     requiresTarget?: boolean; // Optional, defaults to true if not specified

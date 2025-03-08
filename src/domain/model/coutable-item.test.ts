@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { CountableItem } from '../index';
+import { CountableItem } from 'src/domain';
 
 describe('CountableItem', () => {
     const item = new CountableItem('coin', {

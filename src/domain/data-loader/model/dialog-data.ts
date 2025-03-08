@@ -7,7 +7,7 @@ import {
     Dialog,
     toCommandAction,
     toConditions,
-} from '../../index';
+} from 'src/domain';
 
 export type DialogData = {
     id: string;

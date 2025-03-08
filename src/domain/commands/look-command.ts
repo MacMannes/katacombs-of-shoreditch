@@ -1,6 +1,6 @@
-import { Command } from './index';
-import { Connection, Direction, Game, isDirection, TextWithAudioFiles } from '../index';
-import { UserInterface } from '../../ui';
+import { Command } from 'src/domain/commands';
+import { Connection, Direction, Game, isDirection, TextWithAudioFiles } from 'src/domain';
+import { UserInterface } from 'src/ui';
 
 export class LookCommand extends Command {
     constructor(

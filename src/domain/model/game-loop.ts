@@ -1,6 +1,6 @@
-import { UserInterface } from '../../ui';
-import { CommandProcessor } from '../commands';
-import { Game } from '../index';
+import { UserInterface } from 'src/ui';
+import { CommandProcessor } from 'src/domain/commands';
+import { Game } from 'src/domain';
 
 export class GameLoop {
     public readonly commandProcessor: CommandProcessor;

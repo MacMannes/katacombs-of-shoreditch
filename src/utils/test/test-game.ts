@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
 import path from 'node:path';
-import { Game, GameFactory, YamlDataLoader } from '../../domain';
-import { NoOpUserInterface } from '../../ui';
-import { CommandProcessor } from '../../domain/commands';
-import { createMockedObject } from './create-mocked-object';
+import { Game, GameFactory, YamlDataLoader } from 'src/domain';
+import { NoOpUserInterface } from 'src/ui';
+import { CommandProcessor } from 'src/domain/commands';
+import { createMockedObject } from 'src/utils/test/create-mocked-object';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

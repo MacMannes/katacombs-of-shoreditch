@@ -1,5 +1,5 @@
-import { Command } from './index';
-import { UserInterface } from '../../ui';
+import { Command } from 'src/domain/commands';
+import { UserInterface } from 'src/ui';
 
 export class QuitCommand extends Command {
     constructor(private readonly ui: UserInterface) {

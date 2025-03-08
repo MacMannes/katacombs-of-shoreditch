@@ -1,4 +1,4 @@
-import { ActionTrigger } from '../index';
+import { ActionTrigger } from 'src/domain';
 
 export class ActionTriggers {
     private readonly triggers: ActionTrigger[];

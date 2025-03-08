@@ -1,11 +1,11 @@
 /* v8 ignore start */
 
-import { AudioPlayer, Choice, UserInterface } from './index';
+import { AudioPlayer, Choice, UserInterface } from 'src/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
-import { TextWithAudioFiles } from '../domain';
+import { TextWithAudioFiles } from 'src/domain';
 
 export class DefaultUserInterface implements UserInterface {
     private rl = createInterface({

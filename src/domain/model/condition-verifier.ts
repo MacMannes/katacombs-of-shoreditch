@@ -1,4 +1,4 @@
-import { Condition, CountableItem, Game } from '../index';
+import { Condition, CountableItem, Game } from 'src/domain';
 
 export class ConditionVerifier {
     constructor(private readonly game: Game) {}

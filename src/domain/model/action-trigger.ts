@@ -1,4 +1,4 @@
-import { CommandAction, Condition } from '../index';
+import { CommandAction, Condition } from 'src/domain';
 
 export type ActionTrigger = {
     verb: string;

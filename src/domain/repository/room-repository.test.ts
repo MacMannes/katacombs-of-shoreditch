@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Item, Room, RoomRepository } from '../index';
+import { Item, Room, RoomRepository } from 'src/domain';
 
 describe('RoomRepository', () => {
     describe('Create new Repository', () => {

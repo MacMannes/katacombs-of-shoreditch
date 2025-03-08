@@ -1,4 +1,4 @@
-import { Command } from './index';
+import { Command } from 'src/domain/commands';
 import {
     ActionTriggerExecutor,
     ChoiceDialog,
@@ -10,9 +10,9 @@ import {
     isChoiceDialog,
     isConditionDialog,
     NPC,
-} from '../index';
-import { Choice, UserInterface } from '../../ui';
-import { isDefined } from '../../utils/array';
+} from 'src/domain';
+import { Choice, UserInterface } from 'src/ui';
+import { isDefined } from 'src/utils/array';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;

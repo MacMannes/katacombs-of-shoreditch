@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Item } from '../index';
+import { Item } from 'src/domain';
 
 describe('Item', () => {
     const defaultItemOptions = {

@@ -1,7 +1,7 @@
-import { ActionTriggerData, toTriggers } from './index';
-import { CountableItemDescription, Item, ContextualItemDescription, ItemOptions } from '../../index';
-import { CountableItem } from '../../model';
-import { isDefined } from '../../../utils/array';
+import { ActionTriggerData, toTriggers } from 'src/domain/data-loader/model';
+import { CountableItemDescription, Item, ContextualItemDescription, ItemOptions } from 'src/domain';
+import { CountableItem } from 'src/domain/model';
+import { isDefined } from 'src/utils/array';
 
 export type ItemData = {
     name: string;

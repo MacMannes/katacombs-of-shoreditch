@@ -1,4 +1,4 @@
-import { DataLoader, Game, ItemRepository, RoomRepository, TextRepository } from '../index';
+import { DataLoader, Game, ItemRepository, RoomRepository, TextRepository } from 'src/domain';
 
 export class GameFactory {
     constructor(private readonly dataLoader: DataLoader) {}

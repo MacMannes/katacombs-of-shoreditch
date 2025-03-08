@@ -8,9 +8,9 @@ import {
     RoomRepository,
     TextRepository,
     TextWithAudioFiles,
-} from '../index';
-import { ItemImmovableError, NotFoundError } from '../error';
-import { Player } from './player';
+} from 'src/domain';
+import { ItemImmovableError, NotFoundError } from 'src/domain/error';
+import { Player } from 'src/domain/model/player';
 
 export class Game {
     private readonly player: Player;

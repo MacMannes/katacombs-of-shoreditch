@@ -1,5 +1,5 @@
-import { Command } from './index';
-import { Game } from '../index';
+import { Command } from 'src/domain/commands';
+import { Game } from 'src/domain';
 
 export class ChangeStateCommand extends Command {
     constructor(private readonly game: Game) {

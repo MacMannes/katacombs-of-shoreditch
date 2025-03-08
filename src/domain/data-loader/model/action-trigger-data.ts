@@ -1,4 +1,4 @@
-import { ActionTrigger, CommandAction, ConditionData, toConditions } from '../../index';
+import { ActionTrigger, CommandAction, ConditionData, toConditions } from 'src/domain';
 
 export type ActionTriggerData = {
     verb: string;

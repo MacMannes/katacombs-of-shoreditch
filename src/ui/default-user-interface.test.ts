@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { DefaultAudioPlayer, DefaultUserInterface } from './index';
-import { TextWithAudioFiles } from '../domain';
-import { createMockedObject } from '../utils/test';
+import { DefaultAudioPlayer, DefaultUserInterface } from 'src/ui';
+import { TextWithAudioFiles } from 'src/domain';
+import { createMockedObject } from 'src/utils/test';
 
 describe('Default UserInterface', async () => {
     const audioPlayer = createMockedObject(DefaultAudioPlayer);

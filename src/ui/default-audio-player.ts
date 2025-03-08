@@ -1,6 +1,6 @@
 /* v8 ignore start */
 
-import { AudioPlayer, AudioQueue } from './index';
+import { AudioPlayer, AudioQueue } from 'src/ui';
 import path from 'node:path';
 import play_sound from 'play-sound';
 import { fileURLToPath } from 'node:url';

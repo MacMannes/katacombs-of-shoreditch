@@ -1,4 +1,4 @@
-import { DialogData, NPC, toDialog } from '../../index';
+import { DialogData, NPC, toDialog } from 'src/domain';
 
 export type NpcData = {
     name: string;

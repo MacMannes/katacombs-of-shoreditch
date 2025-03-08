@@ -1,5 +1,5 @@
-import { Game, GameLoop } from './domain';
-import { UserInterface } from './ui';
+import { Game, GameLoop } from 'src/domain';
+import { UserInterface } from 'src/ui';
 
 export class GameController {
     constructor(

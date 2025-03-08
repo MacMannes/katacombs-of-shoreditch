@@ -1,5 +1,5 @@
-import { Game } from '../index';
-import { UserInterface } from '../../ui';
+import { Game } from 'src/domain';
+import { UserInterface } from 'src/ui';
 import {
     ChangeStateCommand,
     Command,
@@ -15,7 +15,7 @@ import {
     SubtractCommand,
     TakeCommand,
     TalkCommand,
-} from './index';
+} from 'src/domain/commands';
 
 export class CommandFactory {
     constructor(

@@ -1,4 +1,4 @@
-import { Room, YamlDataLoader } from '../index';
+import { Room, YamlDataLoader } from 'src/domain';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';

@@ -1,5 +1,5 @@
-import { Connection, isDirection } from '../../index';
-import { isDefined } from '../../../utils/array';
+import { Connection, isDirection } from 'src/domain';
+import { isDefined } from 'src/utils/array';
 
 export type ConnectionData = {
     direction: string;

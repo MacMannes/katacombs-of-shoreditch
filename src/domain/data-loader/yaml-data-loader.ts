@@ -1,4 +1,4 @@
-import { DataLoader, GameData, GameRealm, toRoom } from '../index';
+import { DataLoader, GameData, GameRealm, toRoom } from 'src/domain';
 import { readFile } from 'node:fs/promises';
 import { load } from 'js-yaml';
 

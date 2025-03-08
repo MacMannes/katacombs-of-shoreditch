@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Game, Item, ItemRepository, Room, RoomRepository, TextRepository } from '../index';
+import { Game, Item, ItemRepository, Room, RoomRepository, TextRepository } from 'src/domain';
 
 describe('Game', () => {
     describe('describeRoom', () => {

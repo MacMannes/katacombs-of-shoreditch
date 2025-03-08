@@ -1,6 +1,6 @@
-import { CommandExecuteOptions, Command } from './index';
-import { CountableItem, Game } from '../index';
-import { UserInterface } from '../../ui';
+import { CommandExecuteOptions, Command } from 'src/domain/commands';
+import { CountableItem, Game } from 'src/domain';
+import { UserInterface } from 'src/ui';
 
 export class DropCommand extends Command {
     constructor(

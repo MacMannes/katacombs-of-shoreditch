@@ -1,4 +1,4 @@
-import { TextWithAudioFiles } from '../domain/model';
+import { TextWithAudioFiles } from 'src/domain/model';
 
 export type UserInterface = {
     displayWelcomeMessage(): Promise<void>;

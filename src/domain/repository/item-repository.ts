@@ -1,4 +1,4 @@
-import { Item } from '../index';
+import { Item } from 'src/domain';
 
 export class ItemRepository {
     private items: Item[] = [];

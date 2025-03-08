@@ -1,4 +1,4 @@
-import { Dialog } from '../index';
+import { Dialog } from 'src/domain';
 
 export class NPC {
     public readonly greeting: string;

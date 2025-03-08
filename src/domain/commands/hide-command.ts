@@ -1,6 +1,6 @@
-import { Command } from './index';
-import { Game } from '../index';
-import { UserInterface } from '../../ui';
+import { Command } from 'src/domain/commands';
+import { Game } from 'src/domain';
+import { UserInterface } from 'src/ui';
 
 export class HideCommand extends Command {
     constructor(

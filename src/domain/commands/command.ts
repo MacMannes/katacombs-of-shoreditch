@@ -1,4 +1,4 @@
-import { CallerId } from '../index';
+import { CallerId } from 'src/domain';
 
 export abstract class Command {
     public isInternal: boolean;

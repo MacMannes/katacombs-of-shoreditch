@@ -1,11 +1,5 @@
-import {
-    ActionTrigger,
-    StatefulItemDescription,
-    ItemIdentifier,
-    ActionTriggers,
-    ItemMovability,
-} from '../index';
-import { ItemVisibility } from './item-visibility';
+import { ActionTrigger, StatefulItemDescription, ItemIdentifier, ActionTriggers, ItemMovability } from 'src/domain';
+import { ItemVisibility } from 'src/domain/model/item-visibility';
 
 export class Item {
     private readonly identifier: ItemIdentifier;

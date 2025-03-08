@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
-import { getAbsolutePath, RESOURCES_PATH } from '../paths';
+import { getAbsolutePath, RESOURCES_PATH } from 'src/paths';
 import path from 'node:path';
-import { TextToSpeechService } from './text-to-speech-service';
+import { TextToSpeechService } from 'src/utils/text-to-speech-service';
 
 export class TextToSpeechConverter {
     constructor(private readonly service: TextToSpeechService) {}

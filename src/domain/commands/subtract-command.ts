@@ -1,5 +1,5 @@
-import { Command } from './index';
-import { CountableItem, Game } from '../index';
+import { Command } from 'src/domain/commands';
+import { CountableItem, Game } from 'src/domain';
 
 export class SubtractCommand extends Command {
     constructor(private readonly game: Game) {

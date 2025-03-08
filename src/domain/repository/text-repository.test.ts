@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TextRepository } from '../index';
+import { TextRepository } from 'src/domain';
 
 describe('TextRepository', () => {
     describe('getText', () => {

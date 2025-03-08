@@ -1,4 +1,4 @@
-import { ItemData, NpcData, RoomData, TextData } from '../../index';
+import { ItemData, NpcData, RoomData, TextData } from 'src/domain';
 
 export type GameData = {
     rooms: RoomData[];
