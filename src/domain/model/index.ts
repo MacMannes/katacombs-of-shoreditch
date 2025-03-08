@@ -9,7 +9,7 @@ export * from './connection';
 export * from './countable-item';
 export * from './dialog';
 export * from './text-with-audio-files';
-export * from './test-rooms';
+export * from './room/test-rooms';
 export * from './direction';
 export * from './function-result';
 export * from './game';
