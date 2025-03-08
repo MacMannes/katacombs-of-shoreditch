@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Item, NPC, Room } from 'src/domain';
+import { Item, NPC, Room } from 'src/domain/index';
 
 describe('Room', () => {
     let room: Room;

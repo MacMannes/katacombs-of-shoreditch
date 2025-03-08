@@ -1,5 +1,5 @@
 import { Connection, ConnectionOptions } from 'src/domain/model/connection';
-import { Direction } from 'src/domain';
+import { Direction } from 'src/domain/index';
 
 export class RoomConnections {
     private readonly connections: Connection[] = [];
