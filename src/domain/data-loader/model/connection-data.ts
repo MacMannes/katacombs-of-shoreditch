@@ -8,10 +8,14 @@ export type ConnectionData = {
     words?: [];
 };
 
-export function toConnections(connections?: ConnectionData[] | undefined): Connection[] {
+export function toConnections(
+    connections?: ConnectionData[] | undefined,
+): Connection[] {
     if (!connections) return [];
 
-    return connections.map((connection) => toConnection(connection)).filter(isDefined);
+    return connections
+        .map((connection) => toConnection(connection))
+        .filter(isDefined);
 }
 
 function toConnection(connection: ConnectionData): Connection | undefined {

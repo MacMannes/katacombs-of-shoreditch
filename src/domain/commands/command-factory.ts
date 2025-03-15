@@ -38,11 +38,17 @@ export class CommandFactory {
         ['quit', () => new QuitCommand(this.ui)],
     ]);
 
-    public create(options: { verb: string; target?: string; allowInternalCommands?: boolean }): Command {
+    public create(options: {
+        verb: string;
+        target?: string;
+        allowInternalCommands?: boolean;
+    }): Command {
         const command = this.createCommand(options.verb);
         if (!command) return this.invalidCommand();
-        if (command.requiresTarget && !options.target) return this.invalidCommand();
-        if (command.isInternal && !options.allowInternalCommands) return this.invalidCommand();
+        if (command.requiresTarget && !options.target)
+            return this.invalidCommand();
+        if (command.isInternal && !options.allowInternalCommands)
+            return this.invalidCommand();
 
         return command;
     }

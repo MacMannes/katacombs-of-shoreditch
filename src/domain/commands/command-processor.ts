@@ -23,12 +23,20 @@ export class CommandProcessor {
         return this.processCommand(verb, target);
     }
 
-    public async processCommand(verb: string, target?: string): Promise<Result> {
-        const didExecuteTrigger = await this.actionTriggerExecutor.execute(target, verb);
+    public async processCommand(
+        verb: string,
+        target?: string,
+    ): Promise<Result> {
+        const didExecuteTrigger = await this.actionTriggerExecutor.execute(
+            target,
+            verb,
+        );
         if (didExecuteTrigger) return { isPlaying: true };
 
         const command = this.commandFactory.create({ verb, target });
-        const result = await command.execute([target ?? ''], { caller: 'commandProcessor' });
+        const result = await command.execute([target ?? ''], {
+            caller: 'commandProcessor',
+        });
         if (command instanceof QuitCommand) {
             return { isPlaying: !result };
         }

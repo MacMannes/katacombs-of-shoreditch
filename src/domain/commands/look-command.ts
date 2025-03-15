@@ -1,5 +1,11 @@
 import { Command } from 'src/domain/commands';
-import { Connection, Direction, Game, isDirection, TextWithAudioFiles } from 'src/domain';
+import {
+    Connection,
+    Direction,
+    Game,
+    isDirection,
+    TextWithAudioFiles,
+} from 'src/domain';
 import { UserInterface } from 'src/ui';
 
 export class LookCommand extends Command {
@@ -36,18 +42,24 @@ export class LookCommand extends Command {
         );
     }
 
-    private getMessageForLookingAtConnection(connection?: Connection): TextWithAudioFiles {
+    private getMessageForLookingAtConnection(
+        connection?: Connection,
+    ): TextWithAudioFiles {
         const textKey = connection?.description ?? 'msg-nothing-interesting';
         return this.game.getTextWithAudioFiles(textKey);
     }
 
-    private getMessageForLookingInDirection(direction: Direction): TextWithAudioFiles {
+    private getMessageForLookingInDirection(
+        direction: Direction,
+    ): TextWithAudioFiles {
         const connection = this.game.findConnection(direction);
         const textKey = connection?.description ?? 'msg-nothing-interesting';
         return this.game.getTextWithAudioFiles(textKey);
     }
 
-    private getMessageForLookingAtItem(itemName: string): TextWithAudioFiles | undefined {
+    private getMessageForLookingAtItem(
+        itemName: string,
+    ): TextWithAudioFiles | undefined {
         const item = this.game.findItem(itemName);
         if (!item) return undefined;
 
@@ -56,7 +68,9 @@ export class LookCommand extends Command {
         return new TextWithAudioFiles(text, textKeys);
     }
 
-    private getMessageForLookingAtNpc(npcName: string): TextWithAudioFiles | undefined {
+    private getMessageForLookingAtNpc(
+        npcName: string,
+    ): TextWithAudioFiles | undefined {
         const npc = this.game.findNpc(npcName);
         const textKey = npc?.getDescription('look');
         if (!textKey) return undefined;

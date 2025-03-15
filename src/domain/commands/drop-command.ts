@@ -10,7 +10,10 @@ export class DropCommand extends Command {
         super({ requiresTarget: true });
     }
 
-    async execute(params: string[], options?: CommandExecuteOptions): Promise<boolean> {
+    async execute(
+        params: string[],
+        options?: CommandExecuteOptions,
+    ): Promise<boolean> {
         const itemName = params[0];
 
         const dropped = this.drop(itemName);

@@ -8,9 +8,14 @@ import { getAbsolutePath, RESOURCES_PATH, GAME_DATA } from 'src/paths';
 
 async function createGameController() {
     const gameFactory = new GameFactory(new YamlDataLoader());
-    const game = await gameFactory.createGame(getAbsolutePath(path.join(RESOURCES_PATH, GAME_DATA)));
+    const game = await gameFactory.createGame(
+        getAbsolutePath(path.join(RESOURCES_PATH, GAME_DATA)),
+    );
 
-    return new GameController(game, new DefaultUserInterface(new DefaultAudioPlayer()));
+    return new GameController(
+        game,
+        new DefaultUserInterface(new DefaultAudioPlayer()),
+    );
 }
 
 async function startGame() {

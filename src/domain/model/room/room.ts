@@ -18,7 +18,12 @@ export class Room {
     private readonly visits = new RoomVisits();
     private readonly connections = new RoomConnections();
 
-    constructor(name: string, title: string, description: string, shortDescription?: string) {
+    constructor(
+        name: string,
+        title: string,
+        description: string,
+        shortDescription?: string,
+    ) {
         this.identity = new RoomIdentity(name, title);
         this.description = new RoomDescription(description, shortDescription);
     }
@@ -36,14 +41,20 @@ export class Room {
     }
 
     public getDescription(preferredLength?: 'short' | 'long'): string {
-        return this.description.getDescription(preferredLength ?? this.getPreferredTextLength());
+        return this.description.getDescription(
+            preferredLength ?? this.getPreferredTextLength(),
+        );
     }
 
     public getConnections(): Connection[] {
         return this.connections.getAll();
     }
 
-    public createConnectionInDirection(direction: Direction, to: string, options?: ConnectionOptions) {
+    public createConnectionInDirection(
+        direction: Direction,
+        to: string,
+        options?: ConnectionOptions,
+    ) {
         this.connections.createConnectionInDirection(direction, to, options);
     }
 
@@ -51,7 +62,10 @@ export class Room {
         this.connections.addMultiple(connections);
     }
 
-    public findConnection(direction: string, fromRoomName?: string): Connection | undefined {
+    public findConnection(
+        direction: string,
+        fromRoomName?: string,
+    ): Connection | undefined {
         return this.connections.find(direction, fromRoomName);
     }
 
@@ -79,7 +93,10 @@ export class Room {
         return this.inventory.findNpc(name);
     }
 
-    public findItem(name: string, allowInvisibleItem = false): Item | undefined {
+    public findItem(
+        name: string,
+        allowInvisibleItem = false,
+    ): Item | undefined {
         return this.inventory.findItem(name, allowInvisibleItem);
     }
 

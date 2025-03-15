@@ -8,7 +8,11 @@ export class RoomConnections {
         return this.connections;
     }
 
-    public createConnectionInDirection(direction: Direction, to: string, options?: ConnectionOptions): void {
+    public createConnectionInDirection(
+        direction: Direction,
+        to: string,
+        options?: ConnectionOptions,
+    ): void {
         this.connections.push(new Connection(direction, to, options));
     }
 
@@ -16,7 +20,12 @@ export class RoomConnections {
         this.connections.push(...connections);
     }
 
-    public find(direction: string, fromRoomName?: string): Connection | undefined {
-        return this.connections.find((it) => it.matches(direction, fromRoomName));
+    public find(
+        direction: string,
+        fromRoomName?: string,
+    ): Connection | undefined {
+        return this.connections.find((it) =>
+            it.matches(direction, fromRoomName),
+        );
     }
 }

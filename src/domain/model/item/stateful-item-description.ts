@@ -20,7 +20,9 @@ export class StatefulItemDescription {
 
     public getDescription(context: keyof ContextualItemDescription): string[] {
         const baseDescription = this.description[context];
-        const stateDescription = this._currentState ? this.states?.[this._currentState]?.[context] : undefined;
+        const stateDescription = this._currentState
+            ? this.states?.[this._currentState]?.[context]
+            : undefined;
 
         return [baseDescription, stateDescription].filter(isDefined);
     }
@@ -30,7 +32,8 @@ export class StatefulItemDescription {
     }
 
     public setState(newState: string) {
-        if (!this.states || !Object.keys(this.states).includes(newState)) return;
+        if (!this.states || !Object.keys(this.states).includes(newState))
+            return;
 
         this._currentState = newState;
     }

@@ -7,7 +7,12 @@ describe('CountableItem', () => {
         countableDescriptions: [
             { count: 1, room: 'one', inventory: 'one', look: 'one' },
             { count: 2, room: 'few', inventory: 'few', look: 'few' },
-            { count: 10, room: 'handful', inventory: 'handful', look: 'handful' },
+            {
+                count: 10,
+                room: 'handful',
+                inventory: 'handful',
+                look: 'handful',
+            },
             { count: 100, room: 'bounty', inventory: 'bounty', look: 'bounty' },
         ],
     });
@@ -21,10 +26,13 @@ describe('CountableItem', () => {
         [99, 'handful'],
         [100, 'bounty'],
         [1001, 'bounty'],
-    ])(`The description of an item with count "%i" should be "%s"`, (count: number, expected: string) => {
-        item.setCount(count);
-        const result = item.getDescription('room')[0];
+    ])(
+        `The description of an item with count "%i" should be "%s"`,
+        (count: number, expected: string) => {
+            item.setCount(count);
+            const result = item.getDescription('room')[0];
 
-        expect(result).toBe(expected);
-    });
+            expect(result).toBe(expected);
+        },
+    );
 });

@@ -5,7 +5,9 @@ export class RoomInventory {
     private npcs: NPC[] = [];
 
     public getItems(allowInvisibleItems: boolean): Item[] {
-        return this.items.filter((item) => allowInvisibleItems || item.isVisible());
+        return this.items.filter(
+            (item) => allowInvisibleItems || item.isVisible(),
+        );
     }
 
     public addItem(item: Item): void {
@@ -32,7 +34,13 @@ export class RoomInventory {
         return this.npcs.find((npc) => npc.name === name);
     }
 
-    public findItem(name: string, allowInvisibleItem: boolean): Item | undefined {
-        return this.items.find((item) => item.matches(name) && (allowInvisibleItem || item.isVisible()));
+    public findItem(
+        name: string,
+        allowInvisibleItem: boolean,
+    ): Item | undefined {
+        return this.items.find(
+            (item) =>
+                item.matches(name) && (allowInvisibleItem || item.isVisible()),
+        );
     }
 }

@@ -1,5 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Game, Item, ItemRepository, Room, RoomRepository, TextRepository } from 'src/domain';
+import {
+    Game,
+    Item,
+    ItemRepository,
+    Room,
+    RoomRepository,
+    TextRepository,
+} from 'src/domain';
 
 describe('Game', () => {
     describe('describeRoom', () => {
@@ -12,7 +19,11 @@ describe('Game', () => {
             room = createRoom();
             roomRepository = new RoomRepository([room]);
             textRepository = createTextRepository();
-            game = new Game(roomRepository, new ItemRepository(), textRepository);
+            game = new Game(
+                roomRepository,
+                new ItemRepository(),
+                textRepository,
+            );
         });
 
         it('should Concatenate the full room description as expected', () => {
@@ -49,7 +60,12 @@ describe('Game', () => {
 });
 
 function createRoom(): Room {
-    const room = new Room('start', 'Inside the building', 'room-building', 'room-building-short');
+    const room = new Room(
+        'start',
+        'Inside the building',
+        'room-building',
+        'room-building-short',
+    );
     room.addItem(
         new Item('key', {
             description: {

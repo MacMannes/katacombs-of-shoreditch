@@ -12,7 +12,9 @@ export class NoOpUserInterface implements UserInterface {
         // NO-OP
     }
 
-    public async displayMessageAsync(message: TextWithAudioFiles): Promise<void> {
+    public async displayMessageAsync(
+        message: TextWithAudioFiles,
+    ): Promise<void> {
         // NO-OP
     }
 

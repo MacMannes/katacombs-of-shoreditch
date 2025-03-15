@@ -24,14 +24,19 @@ export class TalkCommand extends Command {
     ) {
         super();
         this.conditionVerifier = new ConditionVerifier(this.game);
-        this.actionTriggerExecutor = new ActionTriggerExecutor(this.game, this.ui);
+        this.actionTriggerExecutor = new ActionTriggerExecutor(
+            this.game,
+            this.ui,
+        );
     }
 
     async execute(params: string[]): Promise<boolean> {
         const npcName = params[0];
         const npc = this.game.getCurrentRoom().findNpc(npcName);
         if (!npc) {
-            const response = this.game.getTextWithAudioFiles('msg-lonely-out-here');
+            const response = this.game.getTextWithAudioFiles(
+                'msg-lonely-out-here',
+            );
             this.ui.displayMessage(response);
             return false;
         }
@@ -59,7 +64,11 @@ export class TalkCommand extends Command {
 
             await this.handleDialogActions(currentDialog, npc);
 
-            currentDialog = this.determineNextDialog(dialog, npc, currentDialog);
+            currentDialog = this.determineNextDialog(
+                dialog,
+                npc,
+                currentDialog,
+            );
         }
     }
 
@@ -71,7 +80,9 @@ export class TalkCommand extends Command {
         const answer = await this.ui.getUserChoice(choices);
         const answerDialog = this.findDialog(npc, answer);
         if (answerDialog?.response) {
-            const response = this.game.getTextWithAudioFiles(answerDialog.response);
+            const response = this.game.getTextWithAudioFiles(
+                answerDialog.response,
+            );
             this.ui.displayMessage(response);
         }
 
@@ -88,17 +99,31 @@ export class TalkCommand extends Command {
 
     private handleResponse(currentDialog: Dialog) {
         if (currentDialog.response) {
-            const response = this.game.getTextWithAudioFiles(currentDialog.response);
+            const response = this.game.getTextWithAudioFiles(
+                currentDialog.response,
+            );
             this.ui.displayMessage(response);
         }
     }
 
-    private determineNextDialog(rootDialog: Dialog, npc: NPC, currentDialog: Dialog) {
+    private determineNextDialog(
+        rootDialog: Dialog,
+        npc: NPC,
+        currentDialog: Dialog,
+    ) {
         let nextDialogId: string | undefined = currentDialog.next;
 
-        if (!nextDialogId && isConditionDialog(currentDialog) && currentDialog.postConditions) {
-            const conditionsAreMet = this.conditionVerifier.verifyConditions(currentDialog.postConditions);
-            nextDialogId = conditionsAreMet ? currentDialog.success : currentDialog.failure;
+        if (
+            !nextDialogId &&
+            isConditionDialog(currentDialog) &&
+            currentDialog.postConditions
+        ) {
+            const conditionsAreMet = this.conditionVerifier.verifyConditions(
+                currentDialog.postConditions,
+            );
+            nextDialogId = conditionsAreMet
+                ? currentDialog.success
+                : currentDialog.failure;
         }
 
         return this.findDialog(npc, nextDialogId) ?? rootDialog;
@@ -117,7 +142,11 @@ export class TalkCommand extends Command {
     }
 
     private async handleDialogAction(action: CommandAction, npc: NPC) {
-        if ((action.command === 'enableDialog' || action.command === 'disableDialog') && action.argument === npc.name) {
+        if (
+            (action.command === 'enableDialog' ||
+                action.command === 'disableDialog') &&
+            action.argument === npc.name
+        ) {
             this.enableOrDisableDialog(npc, action);
         } else {
             await this.actionTriggerExecutor.executeCommandAction(action);
@@ -135,7 +164,9 @@ export class TalkCommand extends Command {
         if (!dialog.enabled) return false;
 
         if (isConditionDialog(dialog) && dialog.preConditions) {
-            return this.conditionVerifier.verifyConditions(dialog.preConditions);
+            return this.conditionVerifier.verifyConditions(
+                dialog.preConditions,
+            );
         }
 
         return true;

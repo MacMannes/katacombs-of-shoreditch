@@ -16,10 +16,16 @@ export class Item {
 
     constructor(name: string, options: ItemOptions) {
         this.identifier = new ItemIdentifier(name, options.synonyms);
-        this.description = new StatefulItemDescription(options.description, options.states, options.initialState);
+        this.description = new StatefulItemDescription(
+            options.description,
+            options.states,
+            options.initialState,
+        );
 
         this.visibility = new ItemVisibility(options.visible ?? true);
-        this.movability = new ItemMovability(options.immovable ? 'immovable' : 'movable');
+        this.movability = new ItemMovability(
+            options.immovable ? 'immovable' : 'movable',
+        );
         this.triggers = new ActionTriggers(options.triggers);
     }
 

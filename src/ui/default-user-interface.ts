@@ -48,7 +48,9 @@ export class DefaultUserInterface implements UserInterface {
         this.audioPlayer.play(...message.audioFiles);
     }
 
-    public async displayMessageAsync(message: TextWithAudioFiles): Promise<void> {
+    public async displayMessageAsync(
+        message: TextWithAudioFiles,
+    ): Promise<void> {
         this.displayText(message.text);
 
         const audioFile = message.audioFiles?.at(0);
@@ -58,7 +60,9 @@ export class DefaultUserInterface implements UserInterface {
     }
 
     private displayText(text: string) {
-        console.log(chalk.whiteBright(wrap(text, { width: 80, indent: '' }) + '\n'));
+        console.log(
+            chalk.whiteBright(wrap(text, { width: 80, indent: '' }) + '\n'),
+        );
     }
 
     public async getUserInput(): Promise<string | undefined> {
@@ -70,14 +74,18 @@ export class DefaultUserInterface implements UserInterface {
     public async getUserChoice(options: Choice[]): Promise<string> {
         let answer = '';
         while (answer === '') {
-            const text = options.map((it, index) => `(${index + 1}) ${it.text}`).join('\n');
+            const text = options
+                .map((it, index) => `(${index + 1}) ${it.text}`)
+                .join('\n');
             this.displayText(text);
 
             const input = (await this.getUserInput()) ?? '';
             const index = parseInt(input) - 1;
             if (index >= 0 && index < options.length) {
                 answer = options[index].value;
-                console.log(chalk.greenBright.bold('❯ ') + options[index].text + `\n`);
+                console.log(
+                    chalk.greenBright.bold('❯ ') + options[index].text + `\n`,
+                );
             }
         }
 

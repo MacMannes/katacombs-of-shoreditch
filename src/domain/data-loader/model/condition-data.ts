@@ -30,7 +30,8 @@ export function toConditions(conditions: ConditionData[] | undefined) {
         }
         if (condition['has-item']) {
             const hasItem = condition['has-item'];
-            const [item, count] = typeof hasItem === 'string' ? [hasItem] : hasItem;
+            const [item, count] =
+                typeof hasItem === 'string' ? [hasItem] : hasItem;
             if (item) {
                 return {
                     type: 'hasItem',
@@ -43,5 +44,7 @@ export function toConditions(conditions: ConditionData[] | undefined) {
         return undefined;
     }
 
-    return conditions.map((condition) => toCondition(condition)).filter(isDefined);
+    return conditions
+        .map((condition) => toCondition(condition))
+        .filter(isDefined);
 }

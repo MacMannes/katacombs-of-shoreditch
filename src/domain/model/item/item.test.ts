@@ -30,14 +30,20 @@ describe('Item', () => {
         });
 
         it('should set the current state given initial state', () => {
-            const item = new Item('lantern', { ...defaultItemOptions, initialState: 'lit' });
+            const item = new Item('lantern', {
+                ...defaultItemOptions,
+                initialState: 'lit',
+            });
 
             expect(item.getCurrentState()).toBe('lit');
         });
     });
 
     describe('Setting the state of an item', () => {
-        const item = new Item('lantern', { ...defaultItemOptions, initialState: 'unlit' });
+        const item = new Item('lantern', {
+            ...defaultItemOptions,
+            initialState: 'unlit',
+        });
 
         it('should set the state to lit', () => {
             const currentState = item.getCurrentState();
@@ -59,11 +65,16 @@ describe('Item', () => {
     });
 
     describe('Getting a contextual description', () => {
-        const item = new Item('lantern', { ...defaultItemOptions, states: undefined });
+        const item = new Item('lantern', {
+            ...defaultItemOptions,
+            states: undefined,
+        });
 
         it('should return the description for a room', () => {
             const description = item.getDescription('room');
-            expect(description).toContain('There is a shiny brass lantern nearby.');
+            expect(description).toContain(
+                'There is a shiny brass lantern nearby.',
+            );
         });
 
         it('should return the description for the inventory', () => {
@@ -73,7 +84,9 @@ describe('Item', () => {
 
         it('should return the description for looking', () => {
             const description = item.getDescription('look');
-            expect(description).toContain("It's a shiny brass lantern, which runs on oil.");
+            expect(description).toContain(
+                "It's a shiny brass lantern, which runs on oil.",
+            );
         });
     });
 
@@ -82,7 +95,10 @@ describe('Item', () => {
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('room');
-            expect(description).toStrictEqual(['There is a shiny brass lantern nearby.', 'It is dark and cold.']);
+            expect(description).toStrictEqual([
+                'There is a shiny brass lantern nearby.',
+                'It is dark and cold.',
+            ]);
         });
 
         it('should return the description and the current state for the inventory', () => {
@@ -100,7 +116,10 @@ describe('Item', () => {
     });
 
     describe('Getting a contextual description for the lamp with lit state', () => {
-        const item = new Item('lantern', { ...defaultItemOptions, initialState: 'lit' });
+        const item = new Item('lantern', {
+            ...defaultItemOptions,
+            initialState: 'lit',
+        });
 
         it('should return the description and the current state for a room', () => {
             const description = item.getDescription('room');

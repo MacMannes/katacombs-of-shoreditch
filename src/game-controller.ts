@@ -13,7 +13,9 @@ export class GameController {
 
         await new GameLoop(this.game, this.ui).play();
 
-        await this.ui.displayMessageAsync(this.game.getTextWithAudioFiles('msg-bye'));
+        await this.ui.displayMessageAsync(
+            this.game.getTextWithAudioFiles('msg-bye'),
+        );
     }
 
     private displayCurrentRoom(preferredLength?: 'short' | 'long') {

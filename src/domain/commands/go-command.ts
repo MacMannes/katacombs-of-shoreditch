@@ -15,7 +15,9 @@ export class GoCommand extends Command {
 
         const newRoom = this.go(to);
         if (!newRoom) {
-            this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-no-way'));
+            this.ui.displayMessage(
+                this.game.getTextWithAudioFiles('msg-no-way'),
+            );
             return false;
         }
 

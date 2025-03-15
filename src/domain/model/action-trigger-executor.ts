@@ -1,4 +1,9 @@
-import { ActionTrigger, CommandAction, ConditionVerifier, Game } from 'src/domain';
+import {
+    ActionTrigger,
+    CommandAction,
+    ConditionVerifier,
+    Game,
+} from 'src/domain';
 import { UserInterface } from 'src/ui';
 import { CommandFactory } from 'src/domain/commands';
 import { isDefined } from 'src/utils/array';
@@ -15,11 +20,16 @@ export class ActionTriggerExecutor {
         this.conditionVerifier = new ConditionVerifier(this.game);
     }
 
-    public async execute(target: string | undefined, verb: string): Promise<boolean> {
+    public async execute(
+        target: string | undefined,
+        verb: string,
+    ): Promise<boolean> {
         const targetItem = target ? this.game.findItem(target) : undefined;
         if (!targetItem) return false;
 
-        const triggers = targetItem.getTriggers(verb).filter((trigger) => this.shouldExecuteTrigger(trigger));
+        const triggers = targetItem
+            .getTriggers(verb)
+            .filter((trigger) => this.shouldExecuteTrigger(trigger));
         if (triggers.length == 0) return false;
 
         const actions = triggers.flatMap((trigger) => trigger.actions);
@@ -49,13 +59,17 @@ export class ActionTriggerExecutor {
         if (!command) return false;
 
         const params = [action.argument, action.parameter].filter(isDefined);
-        const result = await command.execute(params, { caller: 'triggerAction' });
+        const result = await command.execute(params, {
+            caller: 'triggerAction',
+        });
 
         this.displayActionResultMessage(action, result);
     }
 
     private displayActionResultMessage(action: CommandAction, result: boolean) {
-        const message = result ? action.responses?.success : action.responses?.failure;
+        const message = result
+            ? action.responses?.success
+            : action.responses?.failure;
         if (!message) return;
 
         this.ui.displayMessage(this.game.getTextWithAudioFiles(message));

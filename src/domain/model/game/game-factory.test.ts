@@ -3,7 +3,9 @@ import { GameFactory, GameRealm, Room, YamlDataLoader } from 'src/domain';
 import { createMockedObject } from 'src/utils/test';
 
 function createRooms(): Room[] {
-    return [new Room('start', 'Beginning', 'You are at the beginning of the game.')];
+    return [
+        new Room('start', 'Beginning', 'You are at the beginning of the game.'),
+    ];
 }
 
 describe('GameFactory', () => {

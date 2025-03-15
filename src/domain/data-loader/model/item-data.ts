@@ -1,5 +1,10 @@
 import { ActionTriggerData, toTriggers } from 'src/domain/data-loader/model';
-import { CountableItemDescription, Item, ContextualItemDescription, ItemOptions } from 'src/domain';
+import {
+    CountableItemDescription,
+    Item,
+    ContextualItemDescription,
+    ItemOptions,
+} from 'src/domain';
 import { CountableItem } from 'src/domain/model';
 import { isDefined } from 'src/utils/array';
 
@@ -28,12 +33,17 @@ export type CountableItemDescriptionData = ItemDescriptionData & {
     count: number;
 };
 
-export function toItems(globalItems: ItemData[], itemsToCreate?: ItemData[]): Item[] {
+export function toItems(
+    globalItems: ItemData[],
+    itemsToCreate?: ItemData[],
+): Item[] {
     if (!itemsToCreate) return [];
 
     return itemsToCreate
         .map((itemData) => {
-            const globalItem = globalItems.find((it) => it.name === itemData.name);
+            const globalItem = globalItems.find(
+                (it) => it.name === itemData.name,
+            );
             if (!globalItem) return undefined;
 
             return toItem(globalItem, itemData);
@@ -43,7 +53,9 @@ export function toItems(globalItems: ItemData[], itemsToCreate?: ItemData[]): It
 
 function toItem(item: ItemData, override: ItemData): Item {
     const options: ItemOptions = {
-        description: toItemDescription(override.description ?? item.description),
+        description: toItemDescription(
+            override.description ?? item.description,
+        ),
         synonyms: override.words ?? item.words,
         visible: override.visible ?? item.visible,
         immovable: override.immovable ?? item.immovable,
@@ -56,7 +68,9 @@ function toItem(item: ItemData, override: ItemData): Item {
         return new CountableItem(item.name, {
             ...options,
             count: override.count,
-            countableDescriptions: toCountableItemDescriptions(item.description),
+            countableDescriptions: toCountableItemDescriptions(
+                item.description,
+            ),
         });
     }
 
@@ -91,7 +105,9 @@ function toItemDescription(
     };
 }
 
-function toCountableItemDescriptions(descriptions?: unknown): CountableItemDescription[] | undefined {
+function toCountableItemDescriptions(
+    descriptions?: unknown,
+): CountableItemDescription[] | undefined {
     if (!isArrayOfCountableItemDescriptionData(descriptions)) return undefined;
 
     return descriptions.map((description) => {
@@ -112,11 +128,15 @@ function isItemDescriptionData(obj: any): obj is ItemDescriptionData {
     );
 }
 
-function isArrayOfCountableItemDescriptionData(value: any): value is CountableItemDescriptionData[] {
+function isArrayOfCountableItemDescriptionData(
+    value: any,
+): value is CountableItemDescriptionData[] {
     return Array.isArray(value) && value.every(isCountableItemDescriptionData);
 }
 
-function isCountableItemDescriptionData(obj: any): obj is CountableItemDescriptionData {
+function isCountableItemDescriptionData(
+    obj: any,
+): obj is CountableItemDescriptionData {
     return (
         typeof obj === 'object' &&
         obj !== null &&

@@ -102,10 +102,15 @@ export class RoomRepository {
 
         const connectedRoom = this.findRoomByName(connectedRoomName);
         if (!connectedRoom) {
-            throw new Error(`Invalid ${connectionDescription}. Room ${connectedRoomName} does not exist.`);
+            throw new Error(
+                `Invalid ${connectionDescription}. Room ${connectedRoomName} does not exist.`,
+            );
         }
 
-        const reversedConnection = connectedRoom.findConnection(oppositeOf(connection.direction), fromRoomName);
+        const reversedConnection = connectedRoom.findConnection(
+            oppositeOf(connection.direction),
+            fromRoomName,
+        );
         if (!reversedConnection) {
             throw new Error(`The ${connectionDescription} is not reversed.`);
         }
@@ -113,6 +118,9 @@ export class RoomRepository {
 
     private ensureRoomExists(rooms: Room[], roomName: string) {
         const room = rooms.find((it) => it.getName() === roomName);
-        if (!room) throw new Error(`A room with the name "${roomName}" does not exist.`);
+        if (!room)
+            throw new Error(
+                `A room with the name "${roomName}" does not exist.`,
+            );
     }
 }

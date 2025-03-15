@@ -41,7 +41,10 @@ describe('Text to Speech Converter', () => {
 
         await converter.convert(texts);
         expect(service.convert).toBeCalledTimes(2);
-        expect(service.convert).toBeCalledWith(expect.anything(), expect.stringContaining('.mp3'));
+        expect(service.convert).toBeCalledWith(
+            expect.anything(),
+            expect.stringContaining('.mp3'),
+        );
     });
 
     it('should use absolute paths', async () => {
@@ -55,7 +58,10 @@ describe('Text to Speech Converter', () => {
 
         await converter.convert(texts);
         expect(service.convert).toBeCalledTimes(2);
-        expect(service.convert).toBeCalledWith(expect.anything(), expect.stringContaining(pathPrefix));
+        expect(service.convert).toBeCalledWith(
+            expect.anything(),
+            expect.stringContaining(pathPrefix),
+        );
     });
 
     it('should not convert strings that are empty', async () => {
@@ -70,12 +76,23 @@ describe('Text to Speech Converter', () => {
 
         await converter.convert(texts);
         expect(service.convert).toBeCalledTimes(2);
-        expect(service.convert).not.toBeCalledWith(expect.anything(), expect.stringContaining('msg-nothing'));
-        expect(service.convert).not.toBeCalledWith(expect.anything(), expect.stringContaining('msg-empty'));
-        expect(service.convert).not.toBeCalledWith(expect.anything(), expect.stringContaining('msg-undefined'));
+        expect(service.convert).not.toBeCalledWith(
+            expect.anything(),
+            expect.stringContaining('msg-nothing'),
+        );
+        expect(service.convert).not.toBeCalledWith(
+            expect.anything(),
+            expect.stringContaining('msg-empty'),
+        );
+        expect(service.convert).not.toBeCalledWith(
+            expect.anything(),
+            expect.stringContaining('msg-undefined'),
+        );
     });
     it('should only call the TextToSpeechService for msg-welcome', async () => {
-        existsSyncMock.mockImplementation((path) => !path.toString().includes('msg-welcome'));
+        existsSyncMock.mockImplementation(
+            (path) => !path.toString().includes('msg-welcome'),
+        );
 
         const texts: Record<string, string> = {
             'msg-welcome': 'Welcome to Katacombs of Shoreditch',

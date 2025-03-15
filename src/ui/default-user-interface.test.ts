@@ -86,11 +86,15 @@ describe('Default UserInterface', async () => {
         it('should print provided message', () => {
             ui.displayMessage(new TextWithAudioFiles('Hello World!'));
 
-            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Hello World!'));
+            expect(consoleSpy).toHaveBeenCalledWith(
+                expect.stringContaining('Hello World!'),
+            );
         });
 
         it('should call the audio player when audioKeys were passed', async () => {
-            ui.displayMessage(new TextWithAudioFiles('Hello World!', ['hello', 'world']));
+            ui.displayMessage(
+                new TextWithAudioFiles('Hello World!', ['hello', 'world']),
+            );
             expect(audioPlayer.play).toHaveBeenCalledWith('hello', 'world');
         });
     });

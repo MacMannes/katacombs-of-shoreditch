@@ -12,7 +12,10 @@ interface AbstractClass<T> extends Function {
  * Utility that creates a type-safe mock based on its class,
  * by patching the prototype members that are methods with a Vitest-compatible spy function.
  */
-export function createMockedObject<T>(type: Class<T> | AbstractClass<T>, template?: Partial<T>): MockedObject<T> {
+export function createMockedObject<T>(
+    type: Class<T> | AbstractClass<T>,
+    template?: Partial<T>,
+): MockedObject<T> {
     const mock: Partial<T> = template ? { ...template } : {};
 
     return installProtoMethods(mock, type.prototype);
@@ -21,7 +24,10 @@ export function createMockedObject<T>(type: Class<T> | AbstractClass<T>, templat
 /**
  * Utility that replaces all methods of a class (prototype) with a mock function.
  */
-function installProtoMethods<T>(mock: Record<string, unknown>, proto: T): MockedObject<T> {
+function installProtoMethods<T>(
+    mock: Record<string, unknown>,
+    proto: T,
+): MockedObject<T> {
     if (proto === null || proto === Object.prototype) {
         return proto as MockedObject<T>;
     }
@@ -33,7 +39,11 @@ function installProtoMethods<T>(mock: Record<string, unknown>, proto: T): Mocked
             continue;
         }
 
-        if (typeof descriptor.value === 'function' && key !== 'constructor' && typeof mock[key] === 'undefined') {
+        if (
+            typeof descriptor.value === 'function' &&
+            key !== 'constructor' &&
+            typeof mock[key] === 'undefined'
+        ) {
             mock[key] = vi.fn();
         } else if (descriptor.get && !Object.hasOwn(mock, key)) {
             Object.defineProperty(mock, key, {

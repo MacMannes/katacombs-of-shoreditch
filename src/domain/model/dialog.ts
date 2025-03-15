@@ -41,10 +41,16 @@ export function isChoiceDialog(dialog?: Dialog): dialog is ChoiceDialog {
 
 export function isConditionDialog(dialog?: Dialog): dialog is ConditionDialog {
     const conditionDialog = dialog as ConditionDialog;
-    return Array.isArray(conditionDialog?.preConditions || conditionDialog?.postConditions);
+    return Array.isArray(
+        conditionDialog?.preConditions || conditionDialog?.postConditions,
+    );
 }
 
 export function isBaseDialog(dialog?: Dialog): dialog is BaseDialog {
     if (!dialog) return false;
-    return !isActionDialog(dialog) && !isChoiceDialog(dialog) && !isConditionDialog(dialog);
+    return (
+        !isActionDialog(dialog) &&
+        !isChoiceDialog(dialog) &&
+        !isConditionDialog(dialog)
+    );
 }

@@ -9,7 +9,10 @@ export abstract class Command {
         this.requiresTarget = options?.requiresTarget ?? true;
     }
 
-    abstract execute(params: string[], options?: CommandExecuteOptions): Promise<boolean>;
+    abstract execute(
+        params: string[],
+        options?: CommandExecuteOptions,
+    ): Promise<boolean>;
 }
 
 export type CommandOptions = {

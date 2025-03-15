@@ -1,5 +1,11 @@
 import { Command, CommandExecuteOptions } from 'src/domain/commands';
-import { CountableItem, Game, ItemImmovableError, NotFoundError, TakeItemResult } from 'src/domain';
+import {
+    CountableItem,
+    Game,
+    ItemImmovableError,
+    NotFoundError,
+    TakeItemResult,
+} from 'src/domain';
 import { UserInterface } from 'src/ui';
 
 export class TakeCommand extends Command {
@@ -10,7 +16,10 @@ export class TakeCommand extends Command {
         super();
     }
 
-    async execute(params: string[], options?: CommandExecuteOptions): Promise<boolean> {
+    async execute(
+        params: string[],
+        options?: CommandExecuteOptions,
+    ): Promise<boolean> {
         const itemName = params[0];
 
         const result = this.take(itemName);
@@ -24,8 +33,16 @@ export class TakeCommand extends Command {
 
     private take(itemName: string): TakeItemResult {
         const item = this.game.findItemInRoom(itemName);
-        if (!item) return { success: false, error: new NotFoundError('msg-cant-find-that') };
-        if (item.immovable) return { success: false, error: new ItemImmovableError('msg-cant-be-serious') };
+        if (!item)
+            return {
+                success: false,
+                error: new NotFoundError('msg-cant-find-that'),
+            };
+        if (item.immovable)
+            return {
+                success: false,
+                error: new ItemImmovableError('msg-cant-be-serious'),
+            };
         if (item instanceof CountableItem) {
             this.mergeWithItemFromInventory(item);
         }

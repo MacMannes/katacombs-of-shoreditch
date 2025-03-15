@@ -53,7 +53,10 @@ export class DefaultAudioPlayer implements AudioPlayer {
     }
 
     private playFile(fileName: string): void {
-        const filePath = path.join(__dirname, `../resources/audio/${fileName}.mp3`);
+        const filePath = path.join(
+            __dirname,
+            `../resources/audio/${fileName}.mp3`,
+        );
         if (!existsSync(filePath)) {
             this.playNext();
             return;
@@ -76,7 +79,10 @@ export class DefaultAudioPlayer implements AudioPlayer {
         this.queue.clear();
         this.stop();
 
-        const filePath = path.join(__dirname, `../resources/audio/${fileName}.mp3`);
+        const filePath = path.join(
+            __dirname,
+            `../resources/audio/${fileName}.mp3`,
+        );
         return new Promise((resolve, reject) => {
             const process: ChildProcess = player.play(filePath);
             this.currentProcess = process;
@@ -87,7 +93,11 @@ export class DefaultAudioPlayer implements AudioPlayer {
                     resolve();
                 } else {
                     this.currentProcess = null;
-                    reject(new Error(`Playback failed for ${fileName} with exit code ${code}`));
+                    reject(
+                        new Error(
+                            `Playback failed for ${fileName} with exit code ${code}`,
+                        ),
+                    );
                 }
             });
 

@@ -14,7 +14,10 @@ import { fail } from 'node:assert';
 import { expectToBeDefined } from 'src/utils/test';
 
 describe('YamlDataLoader', () => {
-    const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
+    const gameDataPath = path.resolve(
+        __dirname,
+        '../../resources/test-game-data.yaml',
+    ); // Converts to absolute path
     const loader = new YamlDataLoader();
     let realm: GameRealm;
 
@@ -26,36 +29,56 @@ describe('YamlDataLoader', () => {
         it('should load the rooms', async () => {
             const rooms = realm.rooms;
             expect(rooms.length).toBeGreaterThan(2);
-            expect(rooms.find((room) => room.getName() === 'nowhere')).toBeDefined();
-            expect(rooms.find((room) => room.getName() === 'start')).toBeDefined();
-            expect(rooms.find((room) => room.getName() === 'building')).toBeDefined();
+            expect(
+                rooms.find((room) => room.getName() === 'nowhere'),
+            ).toBeDefined();
+            expect(
+                rooms.find((room) => room.getName() === 'start'),
+            ).toBeDefined();
+            expect(
+                rooms.find((room) => room.getName() === 'building'),
+            ).toBeDefined();
         });
 
         it('should load short descriptions of the rooms', async () => {
             const rooms = realm.rooms;
-            expect(rooms.find((room) => room.getName() === 'start')?.getDescription('short')).toBe('room-start-short');
+            expect(
+                rooms
+                    .find((room) => room.getName() === 'start')
+                    ?.getDescription('short'),
+            ).toBe('room-start-short');
         });
 
         it('should add connections to  the rooms', async () => {
             const rooms = realm.rooms;
-            const fromStartToBuilding = rooms.find((room) => room.getName() === 'start')?.findConnection('north');
+            const fromStartToBuilding = rooms
+                .find((room) => room.getName() === 'start')
+                ?.findConnection('north');
             expect(fromStartToBuilding).toBeDefined();
             expect(fromStartToBuilding?.description).toBeDefined();
-            expect(fromStartToBuilding?.matchesDirection('inside')).toBeTruthy();
+            expect(
+                fromStartToBuilding?.matchesDirection('inside'),
+            ).toBeTruthy();
 
-            const fromBuildingToStart = rooms.find((room) => room.getName() === 'building')?.findConnection('south');
+            const fromBuildingToStart = rooms
+                .find((room) => room.getName() === 'building')
+                ?.findConnection('south');
             expect(fromBuildingToStart).toBeDefined();
         });
 
         it('should add items to the rooms', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lamp');
             expect(lamp).toBeDefined();
             expect(lamp?.getDescription('room')).toContain('item-lantern-room');
-            expect(lamp?.getDescription('inventory')).toContain('item-lantern-inventory');
+            expect(lamp?.getDescription('inventory')).toContain(
+                'item-lantern-inventory',
+            );
             expect(lamp?.getDescription('look')).toContain('item-lantern-look');
         });
     });
@@ -63,7 +86,9 @@ describe('YamlDataLoader', () => {
     describe('Items', () => {
         it('should handle invisible items as expected', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const coin = building?.findItem('coin', true);
@@ -73,7 +98,9 @@ describe('YamlDataLoader', () => {
 
         it('should handle immovable items as expected', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const desk = building?.findItem('desk', true);
@@ -94,7 +121,9 @@ describe('YamlDataLoader', () => {
             expect(coins).toBeDefined();
             expect(coins instanceof CountableItem).toBeTruthy();
             expect((coins as unknown as CountableItem).getCount()).toBe(2);
-            expect(coins?.getDescription('room')).toContain('item-coin-room-few');
+            expect(coins?.getDescription('room')).toContain(
+                'item-coin-room-few',
+            );
         });
 
         it('should override the `visible` property for the coins in the shop ', async () => {
@@ -109,7 +138,9 @@ describe('YamlDataLoader', () => {
 
         it('should add states to the items', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lamp');
@@ -122,7 +153,9 @@ describe('YamlDataLoader', () => {
 
         it('should add triggers to the items', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const casks = building?.findItem('casks', true);
@@ -148,7 +181,9 @@ describe('YamlDataLoader', () => {
 
         it('should not add conditions to the triggers for "drop lamp"', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const lamp = building?.findItem('lantern', true);
@@ -182,7 +217,9 @@ describe('YamlDataLoader', () => {
 
         it('should add conditions to the triggers for "look hole"', async () => {
             const rooms = realm.rooms;
-            const building = rooms.find((room) => room.getName() === 'building');
+            const building = rooms.find(
+                (room) => room.getName() === 'building',
+            );
             expect(building).toBeDefined();
 
             const hole = building?.findItem('hole', true);
@@ -249,7 +286,9 @@ describe('YamlDataLoader', () => {
             const startDialog = getDialog('buy-something');
             if (isBaseDialog(startDialog)) {
                 expect(startDialog.text).toBe('I’ll take something.');
-                expect(startDialog.response).toBe('npc-shopkeeper-what-will-it-be');
+                expect(startDialog.response).toBe(
+                    'npc-shopkeeper-what-will-it-be',
+                );
                 expect(startDialog.next).toBe('what-will-it-be');
             } else {
                 fail('Expected dialog to be a BaseDialog');
@@ -309,11 +348,13 @@ describe('YamlDataLoader', () => {
             const payForLighterDialog = getDialog('pay-for-lighter');
             if (isConditionDialog(payForLighterDialog)) {
                 expect(payForLighterDialog.postConditions).toHaveLength(1);
-                expect(payForLighterDialog.postConditions?.at(0)).toStrictEqual({
-                    type: 'hasItem',
-                    key: 'coin',
-                    value: '10',
-                });
+                expect(payForLighterDialog.postConditions?.at(0)).toStrictEqual(
+                    {
+                        type: 'hasItem',
+                        key: 'coin',
+                        value: '10',
+                    },
+                );
                 expect(payForLighterDialog.success).toBe('buy-lighter-success');
                 expect(payForLighterDialog.failure).toBe('buy-lighter-failure');
             } else {
@@ -322,10 +363,16 @@ describe('YamlDataLoader', () => {
         });
 
         it('should pre-condition to the "ask-about-treasure-island" dialog', () => {
-            const askAboutTreasureIslandDialog = getDialog('ask-about-treasure-island');
+            const askAboutTreasureIslandDialog = getDialog(
+                'ask-about-treasure-island',
+            );
             if (isConditionDialog(askAboutTreasureIslandDialog)) {
-                expect(askAboutTreasureIslandDialog.preConditions).toHaveLength(1);
-                expect(askAboutTreasureIslandDialog.preConditions?.at(0)).toStrictEqual({
+                expect(askAboutTreasureIslandDialog.preConditions).toHaveLength(
+                    1,
+                );
+                expect(
+                    askAboutTreasureIslandDialog.preConditions?.at(0),
+                ).toStrictEqual({
                     type: 'hasItem',
                     key: 'book',
                     value: '',

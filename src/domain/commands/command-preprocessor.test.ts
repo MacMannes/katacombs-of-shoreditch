@@ -29,9 +29,12 @@ describe('CommandPreprocessor', () => {
         ['   Say  Hello  ', 'say hello'],
         ['bag', 'inventory'],
         ['i', 'inventory'],
-    ])(`Processing input "%s" should return "%s"`, (input: string, expected: string) => {
-        const result = preprocessor.process(input);
+    ])(
+        `Processing input "%s" should return "%s"`,
+        (input: string, expected: string) => {
+            const result = preprocessor.process(input);
 
-        expect(result).toBe(expected);
-    });
+            expect(result).toBe(expected);
+        },
+    );
 });

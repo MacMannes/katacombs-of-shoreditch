@@ -1,9 +1,13 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "bracketSpacing": true,
-  "arrowParens": "always",
-  "printWidth": 120,
-  "semi": true,
-  "tabWidth": 4
+  'singleQuote': true,
+  'trailingComma': 'all',
+  'bracketSpacing': true,
+  'arrowParens': 'always',
+  'semi': true,
+  'tabWidth': 4,
+  'overrides':
+    [
+      { 'files': ['*.md'], 'options': { 'tabWidth': 2, 'proseWrap': always } },
+      { 'files': ['*.json', '.prettierrc'], 'options': { 'tabWidth': 2 } },
+    ],
 }

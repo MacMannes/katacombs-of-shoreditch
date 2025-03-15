@@ -17,7 +17,11 @@ export class Game {
     private readonly roomRepository: RoomRepository;
     private readonly textRepository: TextRepository;
 
-    constructor(roomRepository: RoomRepository, itemRepository: ItemRepository, textRepository: TextRepository) {
+    constructor(
+        roomRepository: RoomRepository,
+        itemRepository: ItemRepository,
+        textRepository: TextRepository,
+    ) {
         const initialRoom = roomRepository.getRoomByName('start');
         this.player = new Player(initialRoom, itemRepository);
         this.roomRepository = roomRepository;
@@ -37,7 +41,9 @@ export class Game {
     }
 
     public findItem(itemName: string): Item | undefined {
-        return this.findItemInRoom(itemName) ?? this.findItemInInventory(itemName);
+        return (
+            this.findItemInRoom(itemName) ?? this.findItemInInventory(itemName)
+        );
     }
 
     public findItemInRoom(itemName: string): Item | undefined {
@@ -69,24 +75,39 @@ export class Game {
     }
 
     public getTextWithAudioFiles(key: string): TextWithAudioFiles {
-        return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [key]);
+        return new TextWithAudioFiles(this.textRepository.getText(key) ?? '', [
+            key,
+        ]);
     }
 
     public getConcatenatedText(keys: string[], separator = ' '): string {
         return this.textRepository.getConcatenatedText(keys, separator);
     }
 
-    public getConcatenatedTextForItemKeys(keys: string[][], separator: string): string {
-        return this.textRepository.getConcatenatedTextForItemKeys(keys, separator);
+    public getConcatenatedTextForItemKeys(
+        keys: string[][],
+        separator: string,
+    ): string {
+        return this.textRepository.getConcatenatedTextForItemKeys(
+            keys,
+            separator,
+        );
     }
 
-    public describeRoom(preferredLength?: 'short' | 'long'): TextWithAudioFiles {
-        return this.textRepository.getRoomDescription(this.getCurrentRoom(), preferredLength);
+    public describeRoom(
+        preferredLength?: 'short' | 'long',
+    ): TextWithAudioFiles {
+        return this.textRepository.getRoomDescription(
+            this.getCurrentRoom(),
+            preferredLength,
+        );
     }
 
     public findRoom(direction: string): Room | undefined {
         const roomName = this.findConnection(direction)?.roomName;
-        return roomName ? this.roomRepository.findRoomByName(roomName) : undefined;
+        return roomName
+            ? this.roomRepository.findRoomByName(roomName)
+            : undefined;
     }
 
     public findConnection(direction: string): Connection | undefined {
@@ -98,4 +119,7 @@ export class Game {
     }
 }
 
-export type TakeItemResult = FunctionResult<Item, NotFoundError | ItemImmovableError>;
+export type TakeItemResult = FunctionResult<
+    Item,
+    NotFoundError | ItemImmovableError
+>;

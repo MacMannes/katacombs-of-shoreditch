@@ -18,7 +18,9 @@ export class Connection {
     }
 
     public matchesDirection(direction: string): boolean {
-        return isDirection(direction) ? this.direction === direction : this.words.includes(direction);
+        return isDirection(direction)
+            ? this.direction === direction
+            : this.words.includes(direction);
     }
 
     public matchesRoom(roomName?: string): boolean {

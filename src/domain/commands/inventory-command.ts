@@ -14,7 +14,9 @@ export class InventoryCommand extends Command {
     async execute(params: []): Promise<boolean> {
         const items = this.game.getInventory();
         if (items.length == 0) {
-            this.ui.displayMessage(this.game.getTextWithAudioFiles('msg-not-carrying-anything'));
+            this.ui.displayMessage(
+                this.game.getTextWithAudioFiles('msg-not-carrying-anything'),
+            );
             return true;
         }
 

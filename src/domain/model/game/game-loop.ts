@@ -16,7 +16,8 @@ export class GameLoop {
 
         while (isPlaying) {
             const userInput = (await this.ui.getUserInput()) ?? '';
-            const result = await this.commandProcessor.processUserInput(userInput);
+            const result =
+                await this.commandProcessor.processUserInput(userInput);
             isPlaying = result.isPlaying;
         }
     }

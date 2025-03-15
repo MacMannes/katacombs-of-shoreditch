@@ -1,4 +1,11 @@
-const directionValues = ['north', 'east', 'south', 'west', 'up', 'down'] as const;
+const directionValues = [
+    'north',
+    'east',
+    'south',
+    'west',
+    'up',
+    'down',
+] as const;
 
 // Define `Direction` as a union of the values in `directionValues`
 export type Direction = (typeof directionValues)[number];

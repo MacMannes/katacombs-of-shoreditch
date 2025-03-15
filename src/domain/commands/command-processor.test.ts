@@ -1,6 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CountableItem, NPC, TextWithAudioFiles } from 'src/domain';
-import { commandProcessor, createTestGame, expectToBeDefined, game, ui } from 'src/utils/test';
+import {
+    commandProcessor,
+    createTestGame,
+    expectToBeDefined,
+    game,
+    ui,
+} from 'src/utils/test';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {
@@ -18,24 +24,32 @@ describe('CommandProcessor', () => {
 
         it('should say "What?" when the command could not be interpreted', async () => {
             await commandProcessor.processUserInput('print invoice');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should say "What?" when an invalid commands with only a verb was given', async () => {
             await commandProcessor.processUserInput('relax');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should not say "What?" when command "look" was given without a target', async () => {
             await commandProcessor.processUserInput('look');
-            expect(ui.displayMessage).not.toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).not.toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should display the current room when command "look" was given without a target', async () => {
             await commandProcessor.processUserInput('look');
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('You are standing at the end of a brick lane'),
+                    text: expect.stringContaining(
+                        'You are standing at the end of a brick lane',
+                    ),
                 }),
             );
         });
@@ -43,55 +57,75 @@ describe('CommandProcessor', () => {
         it('should process look commands with a target', async () => {
             await commandProcessor.processUserInput('look north');
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('I see a brick building with a sign saying') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'I see a brick building with a sign saying',
+                    ),
+                }),
             );
         });
 
         it('should say "What?" when the go command was given without a direction', async () => {
             await commandProcessor.processUserInput('go');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should process the go command when a direction was given', async () => {
             await commandProcessor.processUserInput('go building');
-            expect(ui.displayRoomTitle).toHaveBeenCalledWith('Inside the building');
+            expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                'Inside the building',
+            );
         });
 
         it('should process the take command', async () => {
             await commandProcessor.processUserInput('take watch');
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("Can't find that here.", ['msg-cant-find-that']),
+                new TextWithAudioFiles("Can't find that here.", [
+                    'msg-cant-find-that',
+                ]),
             );
         });
 
         it('should say "What?" when the take command was given without a target', async () => {
             await commandProcessor.processUserInput('take');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should process the drop command', async () => {
             await commandProcessor.processUserInput('drop watch');
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("You're not carrying it!", ['msg-not-carrying-it']),
+                new TextWithAudioFiles("You're not carrying it!", [
+                    'msg-not-carrying-it',
+                ]),
             );
         });
 
         it('should say "What?" when the drop command was given without a target', async () => {
             await commandProcessor.processUserInput('drop');
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
 
         it('should process the inventory command', async () => {
             await commandProcessor.processUserInput('inventory');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('carrying') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('carrying'),
+                }),
             );
         });
 
         it('should say "What?" when the speak command is used by the user', async () => {
             await commandProcessor.processUserInput('speak HelloWorld!');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
     });
@@ -100,13 +134,17 @@ describe('CommandProcessor', () => {
         describe('to an ordinal direction', () => {
             it('should print the new room when the direction is valid', async () => {
                 await commandProcessor.processUserInput('go north');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith('Inside the building');
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                    'Inside the building',
+                );
             });
 
             it('should print a message when direction is invalid', async () => {
                 await commandProcessor.processUserInput('go west');
                 expect(ui.displayMessage).toHaveBeenCalledWith(
-                    expect.objectContaining({ text: expect.stringContaining('no way') }),
+                    expect.objectContaining({
+                        text: expect.stringContaining('no way'),
+                    }),
                 );
             });
         });
@@ -114,13 +152,17 @@ describe('CommandProcessor', () => {
         describe('using synonyms of the connection', () => {
             it('should print the new room when traveling to a synonym of the connection was successful', async () => {
                 await commandProcessor.processUserInput('go building');
-                expect(ui.displayRoomTitle).toHaveBeenCalledWith('Inside the building');
+                expect(ui.displayRoomTitle).toHaveBeenCalledWith(
+                    'Inside the building',
+                );
             });
 
             it('should print a message when synonym could not be found', async () => {
                 await commandProcessor.processUserInput('go left');
                 expect(ui.displayMessage).toHaveBeenCalledWith(
-                    expect.objectContaining({ text: expect.stringContaining('no way') }),
+                    expect.objectContaining({
+                        text: expect.stringContaining('no way'),
+                    }),
                 );
             });
         });
@@ -131,7 +173,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('forest of') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('forest of'),
+                }),
             );
         });
 
@@ -139,7 +183,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look  north');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('I see a brick building with a sign saying') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'I see a brick building with a sign saying',
+                    ),
+                }),
             );
         });
 
@@ -147,7 +195,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look  building');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('I see a brick building with a sign saying') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'I see a brick building with a sign saying',
+                    ),
+                }),
             );
         });
 
@@ -155,7 +207,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look  west');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Nothing interesting') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('Nothing interesting'),
+                }),
             );
         });
 
@@ -165,7 +219,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look  outside');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Nothing interesting') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('Nothing interesting'),
+                }),
             );
         });
 
@@ -176,7 +232,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'The shopkeeper stands behind the counter',
+                    ),
+                }),
             );
         });
 
@@ -188,7 +248,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('go  east');
 
             expect(ui.displayMessage).not.toHaveBeenLastCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('The shopkeeper stands behind the counter') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'The shopkeeper stands behind the counter',
+                    ),
+                }),
             );
         });
     });
@@ -200,7 +264,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look note');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('The note is crumpled') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('The note is crumpled'),
+                }),
             );
         });
 
@@ -208,7 +274,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look gully');
 
             expect(ui.displayMessage).not.toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('(2)') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('(2)'),
+                }),
             );
         });
 
@@ -219,7 +287,9 @@ describe('CommandProcessor', () => {
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('It’s so polished you can see your' + ' reflection'),
+                    text: expect.stringContaining(
+                        'It’s so polished you can see your' + ' reflection',
+                    ),
                 }),
             );
         });
@@ -232,7 +302,9 @@ describe('CommandProcessor', () => {
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('It’s so polished you can see your reflection'),
+                    text: expect.stringContaining(
+                        'It’s so polished you can see your reflection',
+                    ),
                 }),
             );
         });
@@ -240,7 +312,9 @@ describe('CommandProcessor', () => {
         it('should show "I see no ... here" when looking at something that is not here', async () => {
             await commandProcessor.processUserInput('look note');
 
-            expect(ui.displayMessage).toHaveBeenCalledWith(expect.objectContaining({ text: "Can't see that here." }));
+            expect(ui.displayMessage).toHaveBeenCalledWith(
+                expect.objectContaining({ text: "Can't see that here." }),
+            );
         });
 
         it('should show "I see no ... here" when looking at something that is not visible', async () => {
@@ -262,7 +336,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('The shopkeeper’s sun-kissed skin') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'The shopkeeper’s sun-kissed skin',
+                    ),
+                }),
             );
         });
     });
@@ -274,9 +352,13 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look hole');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('The rat blocks the hole') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('The rat blocks the hole'),
+                }),
             );
-            expect(ui.displayMessage).not.toHaveBeenLastCalledWith(expect.stringContaining(' The rat blocks the hole'));
+            expect(ui.displayMessage).not.toHaveBeenLastCalledWith(
+                expect.stringContaining(' The rat blocks the hole'),
+            );
         });
 
         it('should tell a key is found when looking at the hole and the rat is gone', async () => {
@@ -287,7 +369,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look hole');
 
             expect(ui.displayMessage).toHaveBeenLastCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('tiny key') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('tiny key'),
+                }),
             );
         });
 
@@ -310,13 +394,17 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('go north');
             await commandProcessor.processUserInput('take note');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('OK.', ['msg-ok']),
+            );
         });
 
         it('should say something like can not find ..." when the item can not be found in the room', async () => {
             await commandProcessor.processUserInput('take note');
 
-            expect(ui.displayMessage).toBeCalledWith(expect.objectContaining({ text: "Can't find that here." }));
+            expect(ui.displayMessage).toBeCalledWith(
+                expect.objectContaining({ text: "Can't find that here." }),
+            );
         });
 
         it('should say something like can not find ..." when the item in the room is invisible', async () => {
@@ -326,7 +414,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take coin');
 
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("Can't find that here.", ['msg-cant-find-that']),
+                new TextWithAudioFiles("Can't find that here.", [
+                    'msg-cant-find-that',
+                ]),
             );
         });
 
@@ -336,14 +426,18 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take note');
 
             expect(game.getCurrentRoom().findItem('note')).toBeUndefined();
-            expect(game.getInventory().find((item) => item.matches('note'))).toBeDefined();
+            expect(
+                game.getInventory().find((item) => item.matches('note')),
+            ).toBeDefined();
         });
 
         it('should say "OK." when taking an item using a synonym', async () => {
             await commandProcessor.processUserInput('go north');
             await commandProcessor.processUserInput('take lamp');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('OK.', ['msg-ok']),
+            );
         });
 
         it('should not allow immovable objects to be taken', async () => {
@@ -359,7 +453,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take desk');
 
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("You can't be serious!", ['msg-cant-be-serious']),
+                new TextWithAudioFiles("You can't be serious!", [
+                    'msg-cant-be-serious',
+                ]),
             );
         });
 
@@ -370,7 +466,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('look casks');
             await commandProcessor.processUserInput('take coin');
 
-            const coins = game.getInventory().filter((item) => item.name === 'coin');
+            const coins = game
+                .getInventory()
+                .filter((item) => item.name === 'coin');
             expect(coins).toHaveLength(1);
             expect((coins[0] as unknown) instanceof CountableItem).toBeTruthy();
             expect((coins[0] as unknown as CountableItem).getCount()).toBe(3);
@@ -385,7 +483,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('drop note');
 
             expect(game.getCurrentRoom().findItem('note')).toBeDefined();
-            expect(game.getInventory().find((item) => item.matches('note'))).toBeUndefined();
+            expect(
+                game.getInventory().find((item) => item.matches('note')),
+            ).toBeUndefined();
         });
 
         it('should say "OK" when the item is dropped', async () => {
@@ -396,7 +496,9 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('drop note');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('OK.', ['msg-ok']),
+            );
         });
 
         it('should NOT say "OK" when an item is dropped by a trigger action', async () => {
@@ -414,7 +516,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('drop note');
 
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("You're not carrying it!", ['msg-not-carrying-it']),
+                new TextWithAudioFiles("You're not carrying it!", [
+                    'msg-not-carrying-it',
+                ]),
             );
         });
 
@@ -425,7 +529,9 @@ describe('CommandProcessor', () => {
             vi.resetAllMocks();
             await commandProcessor.processUserInput('drop memo');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('OK.', ['msg-ok']),
+            );
         });
 
         it('should merge countable items to one item when dropped', async () => {
@@ -452,7 +558,9 @@ describe('CommandProcessor', () => {
             vi.resetAllMocks();
             await commandProcessor.processUserInput('drop cheese');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('OK.', ['msg-ok']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('OK.', ['msg-ok']),
+            );
         });
 
         it('should not say "OK." when dropping cheese in building, because trigger conditions are met', async () => {
@@ -511,7 +619,9 @@ describe('CommandProcessor', () => {
         it('should say the success response after giving the command "light lamp"', async () => {
             await commandProcessor.processUserInput('light lamp');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('bursts into a steady flame') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('bursts into a steady flame'),
+                }),
             );
         });
 
@@ -521,7 +631,9 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('light lamp');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('overachieve') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('overachieve'),
+                }),
             );
         });
 
@@ -531,7 +643,9 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('extinguish lamp');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('you extinguish the lantern') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('you extinguish the lantern'),
+                }),
             );
         });
 
@@ -541,7 +655,9 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('extinguish lamp');
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('An epic battle') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('An epic battle'),
+                }),
             );
         });
 
@@ -561,7 +677,9 @@ describe('CommandProcessor', () => {
             vi.resetAllMocks();
             await commandProcessor.processUserInput('changeState lamp');
 
-            expect(ui.displayMessage).toBeCalledWith(new TextWithAudioFiles('What?', ['msg-what']));
+            expect(ui.displayMessage).toBeCalledWith(
+                new TextWithAudioFiles('What?', ['msg-what']),
+            );
         });
     });
 
@@ -596,7 +714,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('inventory');
 
             expect(ui.displayMessage).toBeCalledWith(
-                new TextWithAudioFiles("You're not carrying anything.", ['msg-not-carrying-anything']),
+                new TextWithAudioFiles("You're not carrying anything.", [
+                    'msg-not-carrying-anything',
+                ]),
             );
             expect(ui.displayMessage).toHaveBeenCalledTimes(1);
         });
@@ -611,7 +731,9 @@ describe('CommandProcessor', () => {
 
             expect(ui.displayMessage).toBeCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('You are currently holding the following:\n- '),
+                    text: expect.stringContaining(
+                        'You are currently holding the following:\n- ',
+                    ),
                 }),
             );
             expect(ui.displayMessage).toBeCalledWith(
@@ -620,7 +742,9 @@ describe('CommandProcessor', () => {
                 }),
             );
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('note') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('note'),
+                }),
             );
             expect(ui.displayMessage).toBeCalledWith(
                 expect.objectContaining({
@@ -646,17 +770,25 @@ describe('CommandProcessor', () => {
 
             expect(ui.displayMessage).toBeCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('You are currently holding the following:\n- '),
+                    text: expect.stringContaining(
+                        'You are currently holding the following:\n- ',
+                    ),
                 }),
             );
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Brass lantern') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('Brass lantern'),
+                }),
             );
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('flame') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('flame'),
+                }),
             );
             expect(ui.displayMessage).toBeCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('note') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('note'),
+                }),
             );
             expect(ui.displayMessage).toBeCalledTimes(1);
         });
@@ -694,7 +826,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('talk shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Welcome, traveler') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('Welcome, traveler'),
+                }),
             );
         });
 
@@ -703,7 +837,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('talk shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('it’s lonely out here') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('it’s lonely out here'),
+                }),
             );
         });
 
@@ -742,7 +878,9 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            const dialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'why-only-two-items');
+            const dialog = shopkeeper?.dialogs?.find(
+                (dialog) => dialog.id === 'why-only-two-items',
+            );
             expect(dialog?.enabled).toBeFalsy();
         });
 
@@ -752,10 +890,14 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            const askAboutShovelDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'ask-about-shovel');
+            const askAboutShovelDialog = shopkeeper?.dialogs?.find(
+                (dialog) => dialog.id === 'ask-about-shovel',
+            );
             expect(askAboutShovelDialog?.enabled).toBeFalsy();
 
-            const areYouSeriousDialog = shopkeeper?.dialogs?.find((dialog) => dialog.id === 'are-you-serious');
+            const areYouSeriousDialog = shopkeeper?.dialogs?.find(
+                (dialog) => dialog.id === 'are-you-serious',
+            );
             expect(areYouSeriousDialog?.enabled).toBeTruthy();
         });
 
@@ -789,7 +931,11 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('talk shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('Ah, a fine question! Well, it all started') }),
+                expect.objectContaining({
+                    text: expect.stringContaining(
+                        'Ah, a fine question! Well, it all started',
+                    ),
+                }),
             );
         });
 
@@ -802,7 +948,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('talk shopkeeper');
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
-                expect.objectContaining({ text: expect.stringContaining('That’ll be 100 coins.') }),
+                expect.objectContaining({
+                    text: expect.stringContaining('That’ll be 100 coins.'),
+                }),
             );
         });
 
@@ -816,7 +964,9 @@ describe('CommandProcessor', () => {
 
             expect(ui.displayMessage).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    text: expect.stringContaining('Oh dear… looks like your purse is feeling a little light'),
+                    text: expect.stringContaining(
+                        'Oh dear… looks like your purse is feeling a little light',
+                    ),
                 }),
             );
         });
@@ -866,7 +1016,9 @@ describe('CommandProcessor', () => {
             await commandProcessor.processUserInput('take coins');
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            expect(game.getInventory().find((item) => item.name === 'shovel')).toBeDefined();
+            expect(
+                game.getInventory().find((item) => item.name === 'shovel'),
+            ).toBeDefined();
         });
 
         it('should not say "OK" after taking the bought item', async () => {
@@ -892,7 +1044,9 @@ describe('CommandProcessor', () => {
             vi.resetAllMocks();
 
             //TODO: introduce Game.findItemInInventory
-            const coins = game.getInventory().find((item) => item.name === 'coin');
+            const coins = game
+                .getInventory()
+                .find((item) => item.name === 'coin');
             expectToBeDefined(coins);
             const numberOfCoins = (coins as CountableItem).getCount();
 
@@ -903,14 +1057,18 @@ describe('CommandProcessor', () => {
 
             await commandProcessor.processUserInput('talk shopkeeper');
 
-            expect((coins as CountableItem).getCount()).toBe(numberOfCoins - 100);
+            expect((coins as CountableItem).getCount()).toBe(
+                numberOfCoins - 100,
+            );
         });
 
         it('should remove the coins from inventory when the user has paid everything they had', async () => {
             await commandProcessor.processUserInput('take coins');
             vi.resetAllMocks();
 
-            let coins = game.getInventory().find((item) => item.name === 'coin');
+            let coins = game
+                .getInventory()
+                .find((item) => item.name === 'coin');
             expect(coins).toBeDefined();
 
             ui.getUserChoice.mockResolvedValueOnce('buy-something');

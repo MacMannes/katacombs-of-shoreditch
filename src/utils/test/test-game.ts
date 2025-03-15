@@ -9,7 +9,10 @@ import { createMockedObject } from 'src/utils/test/create-mocked-object';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const gameDataPath = path.resolve(__dirname, '../../resources/test-game-data.yaml'); // Converts to absolute path
+const gameDataPath = path.resolve(
+    __dirname,
+    '../../resources/test-game-data.yaml',
+); // Converts to absolute path
 const gameFactory = new GameFactory(new YamlDataLoader());
 
 export const ui = createMockedObject(NoOpUserInterface);

@@ -37,11 +37,15 @@ export function toDialog(dialog: DialogData, npcName?: string): Dialog {
         (result as ChoiceDialog).choices = dialog.choices;
     }
     if (dialog.actions) {
-        (result as ActionDialog).actions = dialog.actions?.map((action) => mapAction(action, npcName));
+        (result as ActionDialog).actions = dialog.actions?.map((action) =>
+            mapAction(action, npcName),
+        );
     }
     if (dialog['post-conditions']) {
         const conditionDialog = result as ConditionDialog;
-        conditionDialog.postConditions = toConditions(dialog['post-conditions']);
+        conditionDialog.postConditions = toConditions(
+            dialog['post-conditions'],
+        );
         conditionDialog.success = dialog.success;
         conditionDialog.failure = dialog.failure;
     }
@@ -56,7 +60,10 @@ export function toDialog(dialog: DialogData, npcName?: string): Dialog {
 }
 
 function mapAction(action: CommandActionData, npcName?: string) {
-    if (npcName && ['enable-dialog', 'disable-dialog'].includes(action.command)) {
+    if (
+        npcName &&
+        ['enable-dialog', 'disable-dialog'].includes(action.command)
+    ) {
         action.parameter = action.argument;
         action.argument = npcName;
     }

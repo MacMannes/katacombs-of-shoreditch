@@ -1,4 +1,12 @@
-import { toItems, ConnectionData, ItemData, Room, toConnections, NpcData, toNPC } from 'src/domain';
+import {
+    toItems,
+    ConnectionData,
+    ItemData,
+    Room,
+    toConnections,
+    NpcData,
+    toNPC,
+} from 'src/domain';
 import { isDefined } from 'src/utils/array';
 
 export type RoomData = {
@@ -11,8 +19,17 @@ export type RoomData = {
     npcs?: string[];
 };
 
-export function toRoom(roomData: RoomData, globalItems: ItemData[], globalNpcs: NpcData[]): Room {
-    const room = new Room(roomData.name, roomData.title, roomData.description, roomData['short-description']);
+export function toRoom(
+    roomData: RoomData,
+    globalItems: ItemData[],
+    globalNpcs: NpcData[],
+): Room {
+    const room = new Room(
+        roomData.name,
+        roomData.title,
+        roomData.description,
+        roomData['short-description'],
+    );
 
     room.addConnections(toConnections(roomData.connections));
     room.addItems(toItems(globalItems, roomData.items));

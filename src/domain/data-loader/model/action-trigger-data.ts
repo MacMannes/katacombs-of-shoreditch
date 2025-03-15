@@ -1,4 +1,9 @@
-import { ActionTrigger, CommandAction, ConditionData, toConditions } from 'src/domain';
+import {
+    ActionTrigger,
+    CommandAction,
+    ConditionData,
+    toConditions,
+} from 'src/domain';
 
 export type ActionTriggerData = {
     verb: string;
@@ -33,7 +38,9 @@ const commandReplacements: Record<string, string> = {
     'disable-dialog': 'disableDialog',
 };
 
-export function toTriggers(triggers: ActionTriggerData[] | undefined): ActionTrigger[] | undefined {
+export function toTriggers(
+    triggers: ActionTriggerData[] | undefined,
+): ActionTrigger[] | undefined {
     if (!triggers) return undefined;
 
     return triggers.map((trigger) => ({

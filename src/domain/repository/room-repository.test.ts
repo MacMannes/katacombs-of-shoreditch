@@ -10,7 +10,10 @@ describe('RoomRepository', () => {
             });
 
             it('should not allow two rooms with the same title', () => {
-                const rooms = [new Room('room1', 'Room', ''), new Room('room2', 'Room', '')];
+                const rooms = [
+                    new Room('room1', 'Room', ''),
+                    new Room('room2', 'Room', ''),
+                ];
                 expect(() => new RoomRepository(rooms)).toThrowError();
             });
 
@@ -19,7 +22,9 @@ describe('RoomRepository', () => {
                 const room2 = new Room('room2', 'Room 2', '');
 
                 const rooms = [room1, room2];
-                expect(() => new RoomRepository(rooms)).toThrowError('A room with the name "start" does not exist.');
+                expect(() => new RoomRepository(rooms)).toThrowError(
+                    'A room with the name "start" does not exist.',
+                );
             });
         });
 
@@ -80,7 +85,9 @@ describe('RoomRepository', () => {
                     }),
                 );
                 const rooms = [room1, room2];
-                expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique names');
+                expect(() => new RoomRepository(rooms)).toThrowError(
+                    'Items should have unique names',
+                );
             });
 
             it('should not allow two items with the inventory description', () => {
@@ -105,7 +112,9 @@ describe('RoomRepository', () => {
                     }),
                 );
                 const rooms = [room1, room2];
-                expect(() => new RoomRepository(rooms)).toThrowError('Items should have unique inventory descriptions');
+                expect(() => new RoomRepository(rooms)).toThrowError(
+                    'Items should have unique inventory descriptions',
+                );
             });
         });
     });
