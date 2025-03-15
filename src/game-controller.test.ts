@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TextWithAudioFiles } from 'src/domain';
-import { GameController } from 'src';
 import { createTestGame, game, ui } from 'src/utils/test';
+import { GameController } from 'src/game-controller';
 
 describe('GameController', () => {
     let controller: GameController;
