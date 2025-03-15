@@ -57,6 +57,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^2.1.5
         version: 2.1.5(vitest@2.1.5(@types/node@22.9.1))
+      '@vitest/spy':
+        specifier: ^3.0.8
+        version: 3.0.8
       eslint:
         specifier: ^9.15.0
         version: 9.15.0
@@ -692,6 +695,9 @@ packages:
 
   '@vitest/spy@2.1.5':
     resolution: {integrity: sha512-aWZF3P0r3w6DiYTVskOYuhBc7EMc3jvn1TkBg8ttylFFRqNN2XGD7V5a4aQdk6QiUzZQ4klNBSpCLJgWNdIiNw==}
+
+  '@vitest/spy@3.0.8':
+    resolution: {integrity: sha512-MR+PzJa+22vFKYb934CejhR4BeRpMSoxkvNoDit68GQxRLSf11aT6CTj3XaqUU9rxgWJFnqicN/wxw6yBRkI1Q==}
 
   '@vitest/utils@2.1.5':
     resolution: {integrity: sha512-yfj6Yrp0Vesw2cwJbP+cl04OC+IHFsuQsrsJBL9pyGeQXE56v1UAOQco+SR55Vf1nQzfV0QJg1Qum7AaWUwwYg==}
@@ -2095,6 +2101,10 @@ snapshots:
       pathe: 1.1.2
 
   '@vitest/spy@2.1.5':
+    dependencies:
+      tinyspy: 3.0.2
+
+  '@vitest/spy@3.0.8':
     dependencies:
       tinyspy: 3.0.2
 
