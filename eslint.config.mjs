@@ -18,7 +18,10 @@ export default tseslint.config(
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
             'prettier/prettier': 'error',
-            'no-relative-import-paths/no-relative-import-paths': ['error', { allowSameFolder: false, prefix: '' }],
+            'no-relative-import-paths/no-relative-import-paths': [
+                'error',
+                { allowSameFolder: false, prefix: '' },
+            ],
         },
     },
     eslintConfigPrettier,
