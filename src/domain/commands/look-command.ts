@@ -1,6 +1,6 @@
 import type { UserInterface } from 'src/ui/user-interface.ts';
 import type { Connection } from 'src/domain/model/connection.ts';
-import { Direction, isDirection } from 'src/domain/model/direction.ts';
+import { type Direction, isDirection } from 'src/domain/model/direction.ts';
 import type { Game } from 'src/domain/model/game/game.ts';
 import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
 import { Command } from 'src/domain/commands/command.ts';

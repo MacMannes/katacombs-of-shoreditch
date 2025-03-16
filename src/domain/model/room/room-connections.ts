@@ -2,7 +2,7 @@ import {
     Connection,
     type ConnectionOptions,
 } from 'src/domain/model/connection.ts';
-import { Direction } from 'src/domain/model/direction.ts';
+import { type Direction } from 'src/domain/model/direction.ts';
 
 export class RoomConnections {
     private readonly connections: Connection[] = [];
