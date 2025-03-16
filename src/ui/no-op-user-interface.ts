@@ -1,7 +1,8 @@
 /* v8 ignore start */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Choice, UserInterface } from 'src/ui';
-import { Room, TextWithAudioFiles } from 'src/domain';
+
+import type { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
+import type { UserInterface, Choice } from 'src/ui/user-interface.ts';
 
 export class NoOpUserInterface implements UserInterface {
     public async displayWelcomeMessage(): Promise<void> {

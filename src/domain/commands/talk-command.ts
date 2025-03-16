@@ -1,18 +1,18 @@
-import { Command } from 'src/domain/commands';
+import type { UserInterface, Choice } from 'src/ui/user-interface.ts';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import { ActionTriggerExecutor } from 'src/domain/model/action-trigger-executor.ts';
+import type { CommandAction } from 'src/domain/model/command-action.ts';
+import { ConditionVerifier } from 'src/domain/model/condition-verifier.ts';
 import {
-    ActionTriggerExecutor,
-    ChoiceDialog,
-    CommandAction,
-    ConditionVerifier,
-    Dialog,
-    Game,
-    isActionDialog,
+    type Dialog,
     isChoiceDialog,
+    type ChoiceDialog,
     isConditionDialog,
-    NPC,
-} from 'src/domain';
-import { Choice, UserInterface } from 'src/ui';
-import { isDefined } from 'src/utils/array';
+    isActionDialog,
+} from 'src/domain/model/dialog.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class TalkCommand extends Command {
     private readonly conditionVerifier: ConditionVerifier;
@@ -32,6 +32,8 @@ export class TalkCommand extends Command {
 
     async execute(params: string[]): Promise<boolean> {
         const npcName = params[0];
+        if (!npcName) return false;
+
         const npc = this.game.getCurrentRoom().findNpc(npcName);
         if (!npc) {
             const response = this.game.getTextWithAudioFiles(

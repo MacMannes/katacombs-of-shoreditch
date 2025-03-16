@@ -1,5 +1,6 @@
-import { Command } from 'src/domain/commands';
-import { CountableItem, Game } from 'src/domain';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class SubtractCommand extends Command {
     constructor(private readonly game: Game) {

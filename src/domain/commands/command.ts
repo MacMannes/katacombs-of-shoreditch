@@ -1,4 +1,4 @@
-import { CallerId } from 'src/domain';
+import type { CallerId } from 'src/domain/model/caller-id.ts';
 
 export abstract class Command {
     public isInternal: boolean;

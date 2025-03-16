@@ -1,5 +1,6 @@
-import { Connection, isDirection } from 'src/domain';
-import { isDefined } from 'src/utils/array';
+import { Connection } from 'src/domain/model/connection.ts';
+import { isDirection } from 'src/domain/model/direction.ts';
+import { isDefined } from 'src/utils/array/array-utils.ts';
 
 export type ConnectionData = {
     direction: string;

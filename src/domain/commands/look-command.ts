@@ -1,12 +1,9 @@
-import { Command } from 'src/domain/commands';
-import {
-    Connection,
-    Direction,
-    Game,
-    isDirection,
-    TextWithAudioFiles,
-} from 'src/domain';
-import { UserInterface } from 'src/ui';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Connection } from 'src/domain/model/connection.ts';
+import { Direction, isDirection } from 'src/domain/model/direction.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class LookCommand extends Command {
     constructor(
@@ -17,7 +14,7 @@ export class LookCommand extends Command {
     }
 
     async execute(params: string[]): Promise<boolean> {
-        const at = params?.at(0);
+        const at = params[0];
 
         const message = at ? this.look(at) : this.game.describeRoom('long');
         this.ui.displayMessage(message);

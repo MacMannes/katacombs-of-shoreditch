@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { existsSync } from 'node:fs';
-import { getAbsolutePath, RESOURCES_PATH } from 'src/paths';
+import { getAbsolutePath, RESOURCES_PATH } from 'src/paths.ts';
 import path from 'node:path';
-import { createMockedObject } from 'src/utils/test';
-import { TextToSpeechService } from 'src/utils/text-to-speech-service';
-import { TextToSpeechConverter } from 'src/utils/text-to-speech-converter';
+import { TextToSpeechService } from 'src/utils/text-to-speech-service.ts';
+import { TextToSpeechConverter } from 'src/utils/text-to-speech-converter.ts';
+import { createMockedObject } from 'src/utils/test/create-mocked-object.ts';
 
 vi.mock('fs', () => ({
     existsSync: vi.fn(),
@@ -12,7 +12,8 @@ vi.mock('fs', () => ({
 const existsSyncMock = vi.mocked(existsSync);
 
 describe('Text to Speech Converter', () => {
-    const service = createMockedObject(TextToSpeechService);
+    const service: TextToSpeechService =
+        createMockedObject(TextToSpeechService);
     const converter = new TextToSpeechConverter(service);
 
     afterEach(() => {

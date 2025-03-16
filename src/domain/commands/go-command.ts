@@ -1,6 +1,7 @@
-import { Command } from 'src/domain/commands';
-import { Game, Room } from 'src/domain';
-import { UserInterface } from 'src/ui';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class GoCommand extends Command {
     constructor(
@@ -12,6 +13,7 @@ export class GoCommand extends Command {
 
     async execute(params: string[]): Promise<boolean> {
         const to = params[0];
+        if (!to) return false;
 
         const newRoom = this.go(to);
         if (!newRoom) {

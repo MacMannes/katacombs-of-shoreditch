@@ -1,6 +1,9 @@
+import { YamlDataLoader } from 'src/domain/data-loader/yaml-data-loader.ts';
+import { createMockedObject } from 'src/utils/test/create-mocked-object.ts';
 import { describe, expect, it } from 'vitest';
-import { GameFactory, GameRealm, Room, YamlDataLoader } from 'src/domain';
-import { createMockedObject } from 'src/utils/test';
+import { Room } from 'src/domain/model/room/room.ts';
+import { GameFactory } from 'src/domain/model/game/game-factory.ts';
+import type { GameRealm } from 'src/domain/model/game/game-realm.ts';
 
 function createRooms(): Room[] {
     return [

@@ -1,15 +1,15 @@
-import {
+import type {
     Connection,
     ConnectionOptions,
-    Direction,
-    Item,
-    NPC,
-    RoomConnections,
-    RoomDescription,
-    RoomIdentity,
-    RoomInventory,
-    RoomVisits,
-} from 'src/domain/index';
+} from 'src/domain/model/connection.ts';
+import type { Item } from 'src/domain/model/item/item.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
+import { RoomConnections } from 'src/domain/model/room/room-connections.ts';
+import { RoomDescription } from 'src/domain/model/room/room-description.ts';
+import { RoomIdentity } from 'src/domain/model/room/room-identity.ts';
+import { RoomInventory } from 'src/domain/model/room/room-inventory.ts';
+import { RoomVisits } from 'src/domain/model/room/room-visits.ts';
+import type { Direction } from 'src/domain/model/direction.ts';
 
 export class Room {
     private readonly identity: RoomIdentity;

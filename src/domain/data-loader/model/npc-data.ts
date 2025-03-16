@@ -1,4 +1,8 @@
-import { DialogData, NPC, toDialog } from 'src/domain';
+import { NPC } from 'src/domain/model/npc.ts';
+import {
+    type DialogData,
+    toDialog,
+} from 'src/domain/data-loader/model/dialog-data.ts';
 
 export type NpcData = {
     name: string;

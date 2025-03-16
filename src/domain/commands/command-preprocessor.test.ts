@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { CommandPreprocessor } from 'src/domain';
+import { CommandPreprocessor } from 'src/domain/commands/command-preprocessor.ts';
 
 describe('CommandPreprocessor', () => {
     const preprocessor = new CommandPreprocessor();

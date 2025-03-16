@@ -1,12 +1,17 @@
-import { ActionTriggerData, toTriggers } from 'src/domain/data-loader/model';
 import {
-    CountableItemDescription,
+    CountableItem,
+    type CountableItemDescription,
+} from 'src/domain/model/item/countable-item.ts';
+import {
     Item,
-    ContextualItemDescription,
-    ItemOptions,
-} from 'src/domain';
-import { CountableItem } from 'src/domain/model';
-import { isDefined } from 'src/utils/array';
+    type ItemOptions,
+    type ContextualItemDescription,
+} from 'src/domain/model/item/item.ts';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import {
+    type ActionTriggerData,
+    toTriggers,
+} from 'src/domain/data-loader/model/action-trigger-data.ts';
 
 export type ItemData = {
     name: string;

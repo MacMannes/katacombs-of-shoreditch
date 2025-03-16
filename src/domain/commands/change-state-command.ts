@@ -1,5 +1,5 @@
-import { Command } from 'src/domain/commands';
-import { Game } from 'src/domain';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class ChangeStateCommand extends Command {
     constructor(private readonly game: Game) {

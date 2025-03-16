@@ -1,4 +1,4 @@
-import { Item } from 'src/domain';
+import type { Item } from 'src/domain/model/item/item.ts';
 
 export class ItemRepository {
     private items: Item[] = [];

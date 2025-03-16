@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TextRepository } from 'src/domain';
+import { TextRepository } from 'src/domain/repository/text-repository.ts';
 
 describe('TextRepository', () => {
     describe('getText', () => {

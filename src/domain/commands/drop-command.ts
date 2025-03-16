@@ -1,6 +1,10 @@
-import { CommandExecuteOptions, Command } from 'src/domain/commands';
-import { CountableItem, Game } from 'src/domain';
-import { UserInterface } from 'src/ui';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
+import {
+    Command,
+    type CommandExecuteOptions,
+} from 'src/domain/commands/command.ts';
 
 export class DropCommand extends Command {
     constructor(
@@ -15,6 +19,7 @@ export class DropCommand extends Command {
         options?: CommandExecuteOptions,
     ): Promise<boolean> {
         const itemName = params[0];
+        if (!itemName) return false;
 
         const dropped = this.drop(itemName);
         if (options?.caller === 'triggerAction') return dropped;

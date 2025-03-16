@@ -1,10 +1,12 @@
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
 import path from 'node:path';
-import { Game, GameFactory, YamlDataLoader } from 'src/domain';
-import { NoOpUserInterface } from 'src/ui';
-import { CommandProcessor } from 'src/domain/commands';
-import { createMockedObject } from 'src/utils/test/create-mocked-object';
+import { createMockedObject } from 'src/utils/test/create-mocked-object.ts';
+import { CommandProcessor } from 'src/domain/commands/command-processor.ts';
+import { YamlDataLoader } from 'src/domain/data-loader/yaml-data-loader.ts';
+import { GameFactory } from 'src/domain/model/game/game-factory.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { NoOpUserInterface } from 'src/ui/no-op-user-interface.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

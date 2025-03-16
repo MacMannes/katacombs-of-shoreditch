@@ -1,17 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { DefaultAudioPlayer, DefaultUserInterface } from 'src/ui';
-import { TextWithAudioFiles } from 'src/domain';
-import { createMockedObject } from 'src/utils/test';
+import { createMockedObject } from 'src/utils/test/create-mocked-object.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
+import { DefaultAudioPlayer } from 'src/ui/default-audio-player.ts';
+import { DefaultUserInterface } from 'src/ui/default-user-interface.ts';
 
 describe('Default UserInterface', async () => {
-    const audioPlayer = createMockedObject(DefaultAudioPlayer);
+    const audioPlayer: DefaultAudioPlayer =
+        createMockedObject(DefaultAudioPlayer);
     const ui = new DefaultUserInterface(audioPlayer);
     const consoleSpy = vi.spyOn(console, 'log');
 
     // let rooms: Room[];
 
     beforeEach(async () => {
-        audioPlayer.play.mockResolvedValue();
         // rooms = await createTestRooms();
     });
 

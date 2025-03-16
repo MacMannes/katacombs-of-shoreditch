@@ -1,7 +1,9 @@
-import { ActionTriggerExecutor, CommandPreprocessor, Game } from 'src/domain';
-import { UserInterface } from 'src/ui';
-import { CommandFactory } from 'src/domain/commands/command-factory';
-import { QuitCommand } from 'src/domain/commands/quit-command';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import { ActionTriggerExecutor } from 'src/domain/model/action-trigger-executor.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { CommandFactory } from 'src/domain/commands/command-factory.ts';
+import { CommandPreprocessor } from 'src/domain/commands/command-preprocessor.ts';
+import { QuitCommand } from 'src/domain/commands/quit-command.ts';
 
 export type Result = {
     isPlaying: boolean;
@@ -24,9 +26,11 @@ export class CommandProcessor {
     }
 
     public async processCommand(
-        verb: string,
+        verb?: string,
         target?: string,
     ): Promise<Result> {
+        if (!verb) return { isPlaying: true };
+
         const didExecuteTrigger = await this.actionTriggerExecutor.execute(
             target,
             verb,

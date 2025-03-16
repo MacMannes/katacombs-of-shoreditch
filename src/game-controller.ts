@@ -1,5 +1,6 @@
-import { Game, GameLoop } from 'src/domain';
-import { UserInterface } from 'src/ui';
+import { GameLoop } from 'src/domain/model/game/game-loop.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import type { UserInterface } from 'src/ui/user-interface.ts';
 
 export class GameController {
     constructor(

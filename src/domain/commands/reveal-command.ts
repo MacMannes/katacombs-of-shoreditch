@@ -1,5 +1,5 @@
-import { Command } from 'src/domain/commands';
-import { Game } from 'src/domain';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class RevealCommand extends Command {
     constructor(private readonly game: Game) {
@@ -8,6 +8,7 @@ export class RevealCommand extends Command {
 
     async execute(params: string[]): Promise<boolean> {
         const target = params[0];
+        if (!target) return false;
 
         const item = this.game.getCurrentRoom().findItem(target, true);
         if (!item || item.isVisible()) return false;

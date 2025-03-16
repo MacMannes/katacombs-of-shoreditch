@@ -1,16 +1,15 @@
-import {
-    Connection,
-    FunctionResult,
-    Item,
-    ItemRepository,
-    NPC,
-    Room,
-    RoomRepository,
-    TextRepository,
-    TextWithAudioFiles,
-} from 'src/domain';
-import { ItemImmovableError, NotFoundError } from 'src/domain/error';
-import { Player } from 'src/domain/model/player';
+import type { ItemImmovableError } from 'src/domain/error/item-immovable-error.ts';
+import type { NotFoundError } from 'src/domain/error/not-found-error.ts';
+import { Player } from 'src/domain/model/player.ts';
+import type { ItemRepository } from 'src/domain/repository/item-repository.ts';
+import type { RoomRepository } from 'src/domain/repository/room-repository.ts';
+import type { TextRepository } from 'src/domain/repository/text-repository.ts';
+import type { Connection } from 'src/domain/model/connection.ts';
+import type { FunctionResult } from 'src/domain/model/function-result.ts';
+import type { Item } from 'src/domain/model/item/item.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
 
 export class Game {
     private readonly player: Player;

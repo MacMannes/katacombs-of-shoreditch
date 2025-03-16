@@ -1,12 +1,10 @@
+import { ItemRepository } from 'src/domain/repository/item-repository.ts';
+import { RoomRepository } from 'src/domain/repository/room-repository.ts';
+import { TextRepository } from 'src/domain/repository/text-repository.ts';
 import { beforeEach, describe, expect, it } from 'vitest';
-import {
-    Game,
-    Item,
-    ItemRepository,
-    Room,
-    RoomRepository,
-    TextRepository,
-} from 'src/domain';
+import { Item } from 'src/domain/model/item/item.ts';
+import { Room } from 'src/domain/model/room/room.ts';
+import { Game } from 'src/domain/model/game/game.ts';
 
 describe('Game', () => {
     describe('describeRoom', () => {

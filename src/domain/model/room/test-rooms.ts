@@ -1,7 +1,8 @@
-import { Room, YamlDataLoader } from 'src/domain/index';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'path';
+import { YamlDataLoader } from 'src/domain/data-loader/yaml-data-loader.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

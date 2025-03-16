@@ -1,13 +1,8 @@
-import {
-    toItems,
-    ConnectionData,
-    ItemData,
-    Room,
-    toConnections,
-    NpcData,
-    toNPC,
-} from 'src/domain';
-import { isDefined } from 'src/utils/array';
+import { Room } from 'src/domain/model/room/room.ts';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import { type ConnectionData, toConnections } from './connection-data.ts';
+import { type ItemData, toItems } from './item-data.ts';
+import { type NpcData, toNPC } from './npc-data.ts';
 
 export type RoomData = {
     name: string;

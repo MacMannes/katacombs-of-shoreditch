@@ -1,13 +1,17 @@
-import {
-    ActionDialog,
-    ChoiceDialog,
-    CommandActionData,
-    ConditionData,
-    ConditionDialog,
+import type {
     Dialog,
+    ChoiceDialog,
+    ActionDialog,
+    ConditionDialog,
+} from 'src/domain/model/dialog.ts';
+import {
+    type CommandActionData,
     toCommandAction,
+} from 'src/domain/data-loader/model/action-trigger-data.ts';
+import {
+    type ConditionData,
     toConditions,
-} from 'src/domain';
+} from 'src/domain/data-loader/model/condition-data.ts';
 
 export type DialogData = {
     id: string;

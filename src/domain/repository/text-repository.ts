@@ -1,5 +1,6 @@
-import { Room, TextWithAudioFiles } from 'src/domain';
-import { isDefined } from 'src/utils/array';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
 
 export class TextRepository {
     constructor(private readonly texts: Record<string, string>) {}

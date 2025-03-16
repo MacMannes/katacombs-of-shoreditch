@@ -1,4 +1,5 @@
-import { Item, NPC } from 'src/domain/index';
+import type { Item } from 'src/domain/model/item/item.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
 
 export class RoomInventory {
     private items: Item[] = [];

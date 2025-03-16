@@ -1,4 +1,4 @@
-import { Item, ItemOptions } from 'src/domain/model/item/item';
+import { Item, type ItemOptions } from 'src/domain/model/item/item.ts';
 
 export class ContainerItem extends Item {
     private open: boolean;

@@ -1,4 +1,4 @@
-import { Direction, isDirection } from 'src/domain';
+import { isDirection, type Direction } from 'src/domain/model/direction.ts';
 
 export class Connection {
     public readonly description?: string;

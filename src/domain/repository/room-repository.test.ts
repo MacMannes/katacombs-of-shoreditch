@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { Item, Room, RoomRepository } from 'src/domain';
+import { Room } from 'src/domain/model/room/room.ts';
+import { Item } from 'src/domain/model/item/item.ts';
+import { RoomRepository } from 'src/domain/repository/room-repository.ts';
 
 describe('RoomRepository', () => {
     describe('Create new Repository', () => {

@@ -1,5 +1,5 @@
-import { ContextualItemDescription } from 'src/domain/model/item/item';
-import { isDefined } from 'src/utils/array';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import type { ContextualItemDescription } from 'src/domain/model/item/item.ts';
 
 export class StatefulItemDescription {
     private readonly description: ContextualItemDescription;

@@ -1,4 +1,6 @@
-import { Item, ItemRepository, Room } from 'src/domain';
+import type { ItemRepository } from 'src/domain/repository/item-repository.ts';
+import type { Item } from 'src/domain/model/item/item.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
 
 export class Player {
     private currentRoom: Room;

@@ -1,6 +1,6 @@
-import { Command } from 'src/domain/commands';
-import { UserInterface } from 'src/ui';
-import { Game } from 'src/domain';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class SpeakCommand extends Command {
     constructor(
@@ -12,6 +12,7 @@ export class SpeakCommand extends Command {
 
     async execute(params: string[]): Promise<boolean> {
         const textKey = params[0];
+        if (!textKey) return false;
 
         this.ui.displayMessage(this.game.getTextWithAudioFiles(textKey));
         return true;

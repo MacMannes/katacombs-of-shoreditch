@@ -1,5 +1,8 @@
-import { Connection, Item, oppositeOf, Room } from 'src/domain';
-import { groupBy, isDefined } from 'src/utils/array';
+import { isDefined, groupBy } from 'src/utils/array/array-utils.ts';
+import type { Connection } from 'src/domain/model/connection.ts';
+import { oppositeOf } from 'src/domain/model/direction.ts';
+import type { Item } from 'src/domain/model/item/item.ts';
+import type { Room } from 'src/domain/model/room/room.ts';
 
 export class RoomRepository {
     private readonly roomsByName: Record<string, Room>;
@@ -74,9 +77,10 @@ export class RoomRepository {
 
         const groupedRooms = groupBy(rooms, (room) => room.getName());
         for (const name in groupedRooms) {
-            const roomToAdd = groupedRooms[name];
+            const roomToAdd = groupedRooms[name]?.at(0);
+            if (!roomToAdd) continue;
 
-            result[name] = roomToAdd[0];
+            result[name] = roomToAdd;
         }
 
         return result;

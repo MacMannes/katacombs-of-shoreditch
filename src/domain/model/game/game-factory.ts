@@ -1,10 +1,8 @@
-import {
-    DataLoader,
-    Game,
-    ItemRepository,
-    RoomRepository,
-    TextRepository,
-} from 'src/domain';
+import type { DataLoader } from 'src/domain/data-loader/data-loader.ts';
+import { ItemRepository } from 'src/domain/repository/item-repository.ts';
+import { RoomRepository } from 'src/domain/repository/room-repository.ts';
+import { TextRepository } from 'src/domain/repository/text-repository.ts';
+import { Game } from 'src/domain/model/game/game.ts';
 
 export class GameFactory {
     constructor(private readonly dataLoader: DataLoader) {}

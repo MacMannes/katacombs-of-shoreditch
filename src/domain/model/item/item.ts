@@ -1,11 +1,9 @@
-import {
-    ActionTrigger,
-    StatefulItemDescription,
-    ItemIdentifier,
-    ActionTriggers,
-    ItemMovability,
-} from 'src/domain/index';
-import { ItemVisibility } from 'src/domain/model/item/item-visibility';
+import type { ActionTrigger } from 'src/domain/model/action-trigger.ts';
+import { ActionTriggers } from 'src/domain/model/action-triggers.ts';
+import { ItemIdentifier } from 'src/domain/model/item/item-identifier.ts';
+import { ItemMovability } from 'src/domain/model/item/item-movability.ts';
+import { ItemVisibility } from 'src/domain/model/item/item-visibility.ts';
+import { StatefulItemDescription } from 'src/domain/model/item/stateful-item-description.ts';
 
 export class Item {
     private readonly identifier: ItemIdentifier;

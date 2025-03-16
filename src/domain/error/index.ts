@@ -1,2 +1,2 @@
-export * from './not-found-error';
-export * from './item-immovable-error';
+export * from './not-found-error.ts';
+export * from './item-immovable-error.ts';

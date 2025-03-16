@@ -10,8 +10,8 @@ const directionValues = [
 // Define `Direction` as a union of the values in `directionValues`
 export type Direction = (typeof directionValues)[number];
 
-export function isDirection(value: string): value is Direction {
-    return (directionValues as readonly string[]).includes(value);
+export function isDirection(value: unknown): value is Direction {
+    return directionValues.includes(value as Direction);
 }
 
 export function oppositeOf(direction: Direction): Direction {

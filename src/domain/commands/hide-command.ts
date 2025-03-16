@@ -1,6 +1,6 @@
-import { Command } from 'src/domain/commands';
-import { Game } from 'src/domain';
-import { UserInterface } from 'src/ui';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class HideCommand extends Command {
     constructor(
@@ -12,6 +12,7 @@ export class HideCommand extends Command {
 
     async execute(params: string[]): Promise<boolean> {
         const target = params[0];
+        if (!target) return false;
 
         const item = this.game.getCurrentRoom().findItem(target, true);
         if (!item || !item.isVisible()) return false;

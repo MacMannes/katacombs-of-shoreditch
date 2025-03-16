@@ -1,9 +1,9 @@
+import type { ActionTrigger } from 'src/domain/model/action-trigger.ts';
+import type { CommandAction } from 'src/domain/model/command-action.ts';
 import {
-    ActionTrigger,
-    CommandAction,
-    ConditionData,
+    type ConditionData,
     toConditions,
-} from 'src/domain';
+} from 'src/domain/data-loader/model/condition-data.ts';
 
 export type ActionTriggerData = {
     verb: string;

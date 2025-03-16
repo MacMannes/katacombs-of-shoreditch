@@ -1,17 +1,17 @@
+import { fail } from 'assert';
+import path from 'path';
+import { expectToBeDefined } from 'src/utils/test/expect-to-be-defined.ts';
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
-    GameRealm,
-    isActionDialog,
-    isBaseDialog,
     isChoiceDialog,
+    isBaseDialog,
+    isActionDialog,
     isConditionDialog,
-    NPC,
-    YamlDataLoader,
-} from 'src/domain';
-import path from 'node:path';
-import { CountableItem } from 'src/domain/model';
-import { fail } from 'node:assert';
-import { expectToBeDefined } from 'src/utils/test';
+} from 'src/domain/model/dialog.ts';
+import type { GameRealm } from 'src/domain/model/game/game-realm.ts';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
+import { YamlDataLoader } from 'src/domain/data-loader/yaml-data-loader.ts';
 
 describe('YamlDataLoader', () => {
     const gameDataPath = path.resolve(
@@ -248,7 +248,10 @@ describe('YamlDataLoader', () => {
 
             const npcs = shop.getNpcs();
             expect(npcs).toHaveLength(1);
-            shopkeeper = npcs[0];
+            const firstElement = npcs[0];
+            if (firstElement) {
+                shopkeeper = firstElement;
+            }
         });
 
         function getDialog(id: string) {

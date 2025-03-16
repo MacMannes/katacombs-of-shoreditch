@@ -1,12 +1,12 @@
-import { Command, CommandExecuteOptions } from 'src/domain/commands';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import { ItemImmovableError } from 'src/domain/error/item-immovable-error.ts';
+import { NotFoundError } from 'src/domain/error/not-found-error.ts';
+import type { Game, TakeItemResult } from 'src/domain/model/game/game.ts';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
 import {
-    CountableItem,
-    Game,
-    ItemImmovableError,
-    NotFoundError,
-    TakeItemResult,
-} from 'src/domain';
-import { UserInterface } from 'src/ui';
+    Command,
+    type CommandExecuteOptions,
+} from 'src/domain/commands/command.ts';
 
 export class TakeCommand extends Command {
     constructor(
@@ -21,6 +21,7 @@ export class TakeCommand extends Command {
         options?: CommandExecuteOptions,
     ): Promise<boolean> {
         const itemName = params[0];
+        if (!itemName) return false;
 
         const result = this.take(itemName);
         const textKey = result.success ? 'msg-ok' : result.error.message;

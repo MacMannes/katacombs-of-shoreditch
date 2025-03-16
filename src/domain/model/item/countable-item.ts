@@ -1,9 +1,9 @@
+import { isDefined } from 'src/utils/array/array-utils.ts';
 import {
     Item,
-    ContextualItemDescription,
-    ItemOptions,
-} from 'src/domain/model/item/item';
-import { isDefined } from 'src/utils/array';
+    type ContextualItemDescription,
+    type ItemOptions,
+} from 'src/domain/model/item/item.ts';
 
 export class CountableItem extends Item {
     private count: number;

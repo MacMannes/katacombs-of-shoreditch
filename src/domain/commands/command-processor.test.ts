@@ -1,12 +1,14 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { CountableItem, NPC, TextWithAudioFiles } from 'src/domain';
+import { expectToBeDefined } from 'src/utils/test/expect-to-be-defined.ts';
 import {
-    commandProcessor,
     createTestGame,
-    expectToBeDefined,
-    game,
+    commandProcessor,
     ui,
-} from 'src/utils/test';
+    game,
+} from 'src/utils/test/test-game.ts';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
+import type { NPC } from 'src/domain/model/npc.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
 
 describe('CommandProcessor', () => {
     beforeEach(async () => {

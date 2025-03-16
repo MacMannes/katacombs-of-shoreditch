@@ -1,4 +1,5 @@
-import { CommandAction, Condition } from 'src/domain';
+import type { CommandAction } from 'src/domain/model/command-action.ts';
+import type { Condition } from 'src/domain/model/condition.ts';
 
 // Base dialog
 export type BaseDialog = {

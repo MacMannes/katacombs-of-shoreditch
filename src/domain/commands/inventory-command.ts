@@ -1,6 +1,7 @@
-import { Command } from 'src/domain/commands';
-import { Game, TextWithAudioFiles } from 'src/domain';
-import { UserInterface } from 'src/ui';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
+import { Command } from 'src/domain/commands/command.ts';
 
 export class InventoryCommand extends Command {
     constructor(

@@ -1,4 +1,4 @@
-import { Dialog } from 'src/domain';
+import type { Dialog } from 'src/domain/model/dialog.ts';
 
 export class NPC {
     public readonly greeting: string;

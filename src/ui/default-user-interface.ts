@@ -1,11 +1,12 @@
 /* v8 ignore start */
 
-import { AudioPlayer, Choice, UserInterface } from 'src/ui';
 import { createInterface } from 'node:readline/promises';
 import wrap from 'word-wrap';
 import chalk from 'chalk';
 import { pastel } from 'gradient-string';
-import { TextWithAudioFiles } from 'src/domain';
+import type { TextWithAudioFiles } from 'src/domain/model/text-with-audio-files.ts';
+import type { AudioPlayer } from 'src/ui/audio-player.ts';
+import type { UserInterface, Choice } from 'src/ui/user-interface.ts';
 
 export class DefaultUserInterface implements UserInterface {
     private rl = createInterface({
@@ -82,10 +83,13 @@ export class DefaultUserInterface implements UserInterface {
             const input = (await this.getUserInput()) ?? '';
             const index = parseInt(input) - 1;
             if (index >= 0 && index < options.length) {
-                answer = options[index].value;
-                console.log(
-                    chalk.greenBright.bold('❯ ') + options[index].text + `\n`,
-                );
+                const option = options[index];
+                if (option) {
+                    answer = option.value;
+                    console.log(
+                        chalk.greenBright.bold('❯ ') + option.text + `\n`,
+                    );
+                }
             }
         }
 

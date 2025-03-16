@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import { ContainerItem } from 'src/domain/model/item/container-item';
+import { ContainerItem } from 'src/domain/model/item/container-item.ts';
 
 describe('Container Items', () => {
     it('should close when closed', () => {

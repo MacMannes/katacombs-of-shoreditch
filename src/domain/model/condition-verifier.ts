@@ -1,4 +1,6 @@
-import { Condition, CountableItem, Game } from 'src/domain';
+import type { Condition } from 'src/domain/model/condition.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { CountableItem } from 'src/domain/model/item/countable-item.ts';
 
 export class ConditionVerifier {
     constructor(private readonly game: Game) {}

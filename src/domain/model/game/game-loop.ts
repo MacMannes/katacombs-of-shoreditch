@@ -1,6 +1,6 @@
-import { UserInterface } from 'src/ui';
-import { CommandProcessor } from 'src/domain/commands';
-import { Game } from 'src/domain';
+import { CommandProcessor } from 'src/domain/commands/command-processor.ts';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
 
 export class GameLoop {
     private readonly commandProcessor: CommandProcessor;

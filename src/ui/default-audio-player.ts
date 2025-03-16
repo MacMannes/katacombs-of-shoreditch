@@ -1,11 +1,12 @@
 /* v8 ignore start */
 
-import { AudioPlayer, AudioQueue } from 'src/ui';
 import path from 'node:path';
 import play_sound from 'play-sound';
 import { fileURLToPath } from 'node:url';
 import { ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import type { AudioPlayer } from 'src/ui/audio-player.ts';
+import { AudioQueue } from 'src/ui/audio-queue.ts';
 
 const player = play_sound();
 const __filename = fileURLToPath(import.meta.url);

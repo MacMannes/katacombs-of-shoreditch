@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Item, NPC, Room } from 'src/domain/index';
+import { Item } from 'src/domain/model/item/item.ts';
+import { NPC } from 'src/domain/model/npc.ts';
+import { Room } from 'src/domain/model/room/room.ts';
 
 describe('Room', () => {
     let room: Room;
@@ -85,7 +87,7 @@ describe('Room', () => {
         it('should not return invisible items by default', () => {
             const items = room.getItems();
             expect(items).toHaveLength(1);
-            expect(items[0].name).toBe('lantern');
+            expect(items[0]?.name).toBe('lantern');
         });
 
         it('should also return invisible items when explicitly allowing invisible items', () => {

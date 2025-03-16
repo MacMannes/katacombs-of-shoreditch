@@ -1,21 +1,19 @@
-import { Game } from 'src/domain';
-import { UserInterface } from 'src/ui';
-import {
-    ChangeStateCommand,
-    Command,
-    DropCommand,
-    GoCommand,
-    HideCommand,
-    InvalidCommand,
-    InventoryCommand,
-    LookCommand,
-    QuitCommand,
-    RevealCommand,
-    SpeakCommand,
-    SubtractCommand,
-    TakeCommand,
-    TalkCommand,
-} from 'src/domain/commands';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
+import { ChangeStateCommand } from 'src/domain/commands/change-state-command.ts';
+import type { Command } from 'src/domain/commands/command.ts';
+import { DropCommand } from 'src/domain/commands/drop-command.ts';
+import { GoCommand } from 'src/domain/commands/go-command.ts';
+import { HideCommand } from 'src/domain/commands/hide-command.ts';
+import { InvalidCommand } from 'src/domain/commands/invalid-command.ts';
+import { InventoryCommand } from 'src/domain/commands/inventory-command.ts';
+import { LookCommand } from 'src/domain/commands/look-command.ts';
+import { QuitCommand } from 'src/domain/commands/quit-command.ts';
+import { RevealCommand } from 'src/domain/commands/reveal-command.ts';
+import { SpeakCommand } from 'src/domain/commands/speak-command.ts';
+import { SubtractCommand } from 'src/domain/commands/subtract-command.ts';
+import { TakeCommand } from 'src/domain/commands/take-command.ts';
+import { TalkCommand } from 'src/domain/commands/talk-command.ts';
 
 export class CommandFactory {
     constructor(

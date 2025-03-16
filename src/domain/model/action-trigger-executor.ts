@@ -1,12 +1,10 @@
-import {
-    ActionTrigger,
-    CommandAction,
-    ConditionVerifier,
-    Game,
-} from 'src/domain';
-import { UserInterface } from 'src/ui';
-import { CommandFactory } from 'src/domain/commands';
-import { isDefined } from 'src/utils/array';
+import type { UserInterface } from 'src/ui/user-interface.ts';
+import { isDefined } from 'src/utils/array/array-utils.ts';
+import { CommandFactory } from 'src/domain/commands/command-factory.ts';
+import type { ActionTrigger } from 'src/domain/model/action-trigger.ts';
+import type { CommandAction } from 'src/domain/model/command-action.ts';
+import { ConditionVerifier } from 'src/domain/model/condition-verifier.ts';
+import type { Game } from 'src/domain/model/game/game.ts';
 
 export class ActionTriggerExecutor {
     private readonly commandFactory: CommandFactory;

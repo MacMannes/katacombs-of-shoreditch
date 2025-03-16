@@ -1,4 +1,4 @@
-import { ActionTrigger } from 'src/domain';
+import type { ActionTrigger } from 'src/domain/model/action-trigger.ts';
 
 export class ActionTriggers {
     private readonly triggers: ActionTrigger[];
