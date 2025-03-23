@@ -1,8 +1,14 @@
 import { Room } from 'src/domain/model/room/room.ts';
 import { isDefined } from 'src/utils/array/array-utils.ts';
-import { type ConnectionData, toConnections } from './connection-data.ts';
-import { type ItemData, toItems } from './item-data.ts';
-import { type NpcData, toNPC } from './npc-data.ts';
+import {
+    type ConnectionData,
+    toConnections,
+} from 'src/domain/data-loader/model/connection-data.ts';
+import {
+    type ItemData,
+    toItems,
+} from 'src/domain/data-loader/model/item-data.ts';
+import { type NpcData, toNPC } from 'src/domain/data-loader/model/npc-data.ts';
 
 export type RoomData = {
     name: string;
